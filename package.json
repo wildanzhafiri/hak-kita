@@ -1,0 +1,31 @@
+{
+  "name": "hakkita",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @hakkita/web dev",
+    "build": "pnpm --filter @hakkita/web build",
+    "start": "pnpm --filter @hakkita/web start",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "validate:data": "tsx scripts/validate-data.ts",
+    "validate:data:strict": "tsx scripts/validate-data.ts --strict",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm validate:data",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@hakkita/domain": "workspace:*",
+    "@hakkita/schema": "workspace:*",
+    "@types/node": "^22.0.0",
+    "prettier": "^3.9.0",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.1"
+  }
+}
