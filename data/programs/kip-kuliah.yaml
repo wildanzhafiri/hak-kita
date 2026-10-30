@@ -1,0 +1,114 @@
+id: kip-kuliah
+nama: KIP Kuliah
+kategori: Pendidikan
+penyelenggara: Kementerian Pendidikan Tinggi, Sains, dan Teknologi
+ringkasan: Bantuan biaya pendidikan tinggi bagi lulusan SMA/sederajat dari keluarga kurang mampu yang memenuhi syarat.
+untuk:
+  - Calon mahasiswa
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: desil
+syarat:
+  - teks: Memenuhi salah satu kriteria keterbatasan ekonomi, yaitu memiliki Kartu Indonesia Pintar (KIP), terdata di DTSEN maksimum pada desil 4, atau mahasiswa dari panti sosial atau panti asuhan
+    sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+  - teks: Bila tidak memenuhi salah satunya, pendapatan kotor gabungan orang tua atau wali dalam satu bulan di bawah Upah Minimum Provinsi (UMP), dan wajib mengunggah Surat Keterangan Tidak Mampu (SKTM)
+    sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+  - teks: NISN dan NIK terdaftar serta sama dengan data Dapodik
+    sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+  - teks: Lulusan SMA/sederajat yang akan atau sedang menempuh kuliah di perguruan tinggi yang memenuhi ketentuan
+langkah:
+  - Pastikan NISN, NIK, dan NPSN-mu terbaca sesuai data Dapodik sekolah. Bila tidak, minta operator Dapodik atau EMIS sekolah memperbaikinya.
+  - Cek desil dan perbarui data DTSEN bila perlu melalui kanal resmi (dilakukan di situs resmi, bukan di HAKKITA).
+  - Buat akun lewat tombol Login Siswa di situs resmi KIP Kuliah.
+  - Lengkapi berkas sampai Menu Seleksi muncul, lalu pilih jalur seleksi. Jalur yang sudah dipilih tidak bisa dibatalkan.
+dokumen:
+  - NISN dan NIK yang sama dengan data Dapodik
+  - Alamat email aktif
+  - Surat Keterangan Tidak Mampu (SKTM), bila memakai kriteria penghasilan di bawah UMP
+periode:
+  buka: '2026-02-03'
+  tutup: '2026-10-31'
+sumberUtama:
+  url: https://kip-kuliah.kemdiktisaintek.go.id/
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-10-30'
+catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi (SNBP, UTBK-SNBT, Mandiri PTN dan PTS) berbeda dan bisa berubah. Rincian berkas lain ada di dokumen Unduh Panduan di situs resmi dan belum kami periksa.
+berkas:
+  pertanyaan:
+    - id: ekonomi
+      teks: Apa dasar keterbatasan ekonomimu?
+      pilihan:
+        - nilai: kip
+          label: Saya punya Kartu Indonesia Pintar (KIP)
+        - nilai: desil
+          label: Saya terdata di DTSEN dengan desil 4 atau lebih rendah
+        - nilai: panti
+          label: Saya berasal dari panti sosial atau panti asuhan
+        - nilai: penghasilan
+          label: Tidak satu pun di atas, dan penghasilan kotor gabungan orang tua atau wali per bulan di bawah UMP
+        - nilai: belum-tahu
+          label: Saya belum tahu
+  dokumen:
+    - id: nisn
+      label: NISN yang terdaftar di Dapodik
+      catatan: NISN, NPSN, dan tahun lulus harus cocok dengan data Dapodik. NISN bisa tidak terbaca karena perbedaan NISN, NPSN yang berbeda, atau bukan lulusan 2024, 2025, atau 2026.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - id: nik
+      label: NIK yang sama dengan data Dapodik
+      catatan: HAKKITA tidak meminta atau menyimpan NIK. Cukup pastikan NIK-mu sama dengan yang tercatat di sekolah.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - id: email
+      label: Alamat email aktif
+      catatan: Dipakai saat membuat akun siswa. Peserta KIP Kuliah 2025 yang mendaftar lagi perlu mengisi kolom Konfirmasi Email.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - id: nomor-kip
+      label: Nomor KIP
+      catatan: Nomor KIP dan KKS diambil otomatis dari SiPintar dan Dapodik, dan tidak bisa diubah di akun siswa.
+      kondisi:
+        pertanyaan: ekonomi
+        nilai:
+          - kip
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - id: cek-desil
+      label: Status desil DTSEN yang sudah kamu cek
+      catatan: Kriterianya terdata di DTSEN maksimum pada desil 4. Cek dan perbarui datamu lewat dtsen-form.bps.go.id. HAKKITA tidak menghitung atau memeriksa desil.
+      kondisi:
+        pertanyaan: ekonomi
+        nilai:
+          - desil
+          - belum-tahu
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
+    - id: berkas-panti
+      label: Berkas pendukung dari panti sosial atau panti asuhan
+      catatan: Rincian berkasnya ada di dokumen Unduh Panduan di situs resmi dan belum kami baca. Periksa di sana sebelum mengunggah.
+      kondisi:
+        pertanyaan: ekonomi
+        nilai:
+          - panti
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - id: sktm
+      label: Surat Keterangan Tidak Mampu (SKTM)
+      catatan: Wajib diunggah bila kamu tidak memenuhi kriteria KIP, DTSEN desil 4, atau panti, dan pendapatan kotor gabungan orang tua atau wali per bulan di bawah UMP.
+      kondisi:
+        pertanyaan: ekonomi
+        nilai:
+          - penghasilan
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+  kendala:
+    - masalah: NIK, NISN, atau NPSN tidak dikenali saat membuat akun
+      langkah: Minta operator Dapodik atau EMIS sekolah memperbaiki data sumbernya di vervalpd.data.kemendikdasmen.go.id. Lulusan baru bisa mengajukan koreksi lewat Verval Lulusan di pd.data.kemendikdasmen.go.id/verval-lulusan.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
+    - masalah: Salah memasukkan email saat mendaftar
+      langkah: Minta ulang akun lewat tautan klaim akun yang ada di halaman panduan.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - masalah: Mendaftar lagi setelah ikut KIP Kuliah 2025
+      langkah: Login dengan akun yang sama, isi kolom Konfirmasi Email, lalu klik Perbarui Akun.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+    - masalah: Data desil tidak sesuai dengan kondisimu
+      langkah: Perbarui datamu lewat dtsen-form.bps.go.id. Pemutakhiran dilakukan di situs resmi, bukan di HAKKITA.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
+    - masalah: Ingin mengubah jalur seleksi yang sudah dipilih
+      langkah: Jalur yang sudah dipilih tidak bisa dibatalkan, dan sinkronisasi SNBP tidak bisa diulang. Kamu bisa login lagi untuk menambah jalur sesuai jadwal.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
