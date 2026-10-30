@@ -1,0 +1,34 @@
+import type { ReactNode, RefObject } from 'react';
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+export interface PageShellProps {
+  breadcrumbs: BreadcrumbItem[];
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+}
+
+export interface ComingSoonProps {
+  breadcrumbs: BreadcrumbItem[];
+  eyebrow: string;
+  title: string;
+  description: string;
+  body: string;
+  points: readonly string[];
+  action: { href: string; label: string };
+}
+
+export interface ServicesMenuProps {
+  pathname: string;
+}
+
+export interface SearchDialogProps {
+  open: boolean;
+  onClose: () => void;
+  returnFocusRef: RefObject<HTMLElement | null>;
+}
