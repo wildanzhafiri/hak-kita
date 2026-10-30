@@ -1,0 +1,13 @@
+{
+  "versiKode": "Kepmendagri 300.2.2-2138 Tahun 2025 (subset contoh, belum diverifikasi)",
+  "sumber": "https://kemendagri.go.id/",
+  "catatan": "Subset awal. Daftar lengkap (38 provinsi, 514 kabupaten/kota) akan diimpor dari teks resmi Kepmendagri; kode wajib diverifikasi sebelum dipakai. Kode ditulis tanpa titik: provinsi 2 digit, kabupaten/kota 4 digit, 'ID' untuk nasional.",
+  "wilayah": [
+    { "kode": "ID", "nama": "Nasional", "level": "nasional", "parent": null },
+    { "kode": "31", "nama": "DKI Jakarta", "level": "provinsi", "parent": "ID" },
+    { "kode": "32", "nama": "Jawa Barat", "level": "provinsi", "parent": "ID" },
+    { "kode": "34", "nama": "DI Yogyakarta", "level": "provinsi", "parent": "ID" },
+    { "kode": "3205", "nama": "Kabupaten Garut", "level": "kabkota", "parent": "32" },
+    { "kode": "3273", "nama": "Kota Bandung", "level": "kabkota", "parent": "32" }
+  ]
+}
