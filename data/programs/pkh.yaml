@@ -1,0 +1,24 @@
+id: pkh
+nama: Program Keluarga Harapan (PKH)
+kategori: Bantuan Sosial
+penyelenggara: Kementerian Sosial
+ringkasan: Bantuan sosial bersyarat bagi keluarga kurang mampu yang ditetapkan pemerintah berdasarkan data terpadu.
+untuk:
+  - Keluarga
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: desil
+syarat:
+  - teks: Terdata di DTSEN pada desil yang diprioritaskan program (menurut media, desil 1 sampai 4)
+  - teks: Memiliki komponen sasaran yang ditetapkan program (misalnya ibu hamil, anak usia dini, anak sekolah, lansia, atau penyandang disabilitas berat)
+langkah:
+  - Cek status kepesertaan di kanal resmi (butuh NIK, dilakukan di situs resmi, bukan di HAKKITA)
+  - Jika merasa berhak tetapi belum terdaftar, tanyakan prosedur usulan ke kelurahan/desa atau lewat kanal resmi
+dokumen:
+  - Dokumen identitas dan kependudukan keluarga
+sumberUtama:
+  url: https://kemensos.go.id/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Daftar komponen sasaran dan batas desil berasal dari berita media. Ganti sumberUtama dengan halaman program yang spesifik saat diverifikasi.
