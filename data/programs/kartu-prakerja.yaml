@@ -1,0 +1,26 @@
+id: kartu-prakerja
+nama: Kartu Prakerja
+kategori: Pekerjaan & Pelatihan
+penyelenggara: Manajemen Pelaksana Program Kartu Prakerja
+ringkasan: Program pengembangan keterampilan kerja bagi pencari kerja dan pekerja yang memenuhi syarat.
+untuk:
+  - Pencari kerja
+  - Pekerja
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: kategori
+syarat:
+  - teks: Warga Negara Indonesia berusia 18 sampai 64 tahun (menurut media)
+  - teks: Tidak sedang menempuh pendidikan formal (sekolah atau kuliah)
+  - teks: Bukan ASN, anggota TNI/Polri, atau pihak lain yang dikecualikan ketentuan program
+langkah:
+  - Periksa pengumuman gelombang pendaftaran di situs resmi
+  - Daftar dan ikuti seleksi sesuai ketentuan gelombang yang dibuka
+dokumen:
+  - KTP
+sumberUtama:
+  url: https://www.prakerja.go.id/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Status pembukaan gelombang 2026 tidak konsisten di berbagai sumber media; periksa langsung di situs resmi.
