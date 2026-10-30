@@ -1,0 +1,24 @@
+id: kjp-plus-dki
+nama: Kartu Jakarta Pintar Plus (KJP Plus)
+kategori: Pendidikan
+penyelenggara: Pemerintah Provinsi DKI Jakarta (Dinas Pendidikan)
+ringkasan: Bantuan biaya pendidikan dari Pemerintah Provinsi DKI Jakarta bagi peserta didik dari keluarga kurang mampu.
+untuk:
+  - Peserta didik
+  - Orang tua atau wali
+cakupan:
+  level: provinsi
+  kode: '31'
+tipeGerbang: kategori
+syarat:
+  - teks: Berdomisili di DKI Jakarta
+  - teks: Terdaftar sebagai peserta didik pada satuan pendidikan yang memenuhi ketentuan
+  - teks: Memenuhi kriteria ekonomi yang ditetapkan Pemerintah Provinsi DKI Jakarta
+langkah:
+  - Periksa jadwal dan tahap pendaftaran di kanal resmi Pemprov DKI Jakarta
+  - Ikuti verifikasi dan pendaftaran sesuai petunjuk sekolah atau Dinas Pendidikan
+sumberUtama:
+  url: https://jakarta.go.id/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Sumber utama baru berupa portal umum Pemprov DKI. Ganti dengan halaman resmi program yang spesifik saat diverifikasi. Nominal dan jadwal tahap sengaja tidak dicantumkan karena berbeda-beda antar sumber media.
