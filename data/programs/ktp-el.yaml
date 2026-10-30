@@ -1,0 +1,26 @@
+id: ktp-el
+nama: KTP Elektronik (KTP-el)
+kategori: Layanan Administrasi
+penyelenggara: Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Dukcapil)
+ringkasan: Pengurusan KTP elektronik sebagai identitas resmi penduduk, termasuk pembuatan baru dan penggantian.
+untuk:
+  - Penduduk
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Warga Negara Indonesia yang telah berusia 17 tahun atau sudah menikah
+  - teks: Terdaftar dalam Kartu Keluarga
+langkah:
+  - Periksa persyaratan dan jam layanan di kanal Dukcapil kabupaten/kota setempat
+  - Siapkan dokumen lalu ajukan sesuai prosedur setempat
+dokumen:
+  - Kartu Keluarga
+  - Surat pengantar atau dokumen pendukung sesuai jenis permohonan
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://dukcapil.kemendagri.go.id/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Persyaratan rinci dan alur (termasuk IKD) berbeda antar daerah dan perlu diverifikasi ke Dukcapil setempat.
