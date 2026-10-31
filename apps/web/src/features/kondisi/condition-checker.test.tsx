@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { todayWIB } from '@hakkita/domain';
 import { BUILT_ON, makeProgram, WILAYAH } from '@/test/fixtures';
 import { ConditionChecker } from './condition-checker';
+
+const today = todayWIB();
 
 const program = makeProgram({
   id: 'kip-kuliah',
@@ -14,7 +17,7 @@ const program = makeProgram({
     },
   ],
   kriteria: [{ kelompok: ['calon-mahasiswa'], tahunLulus: [2024, 2025, 2026], syaratIndex: 0 }],
-  periode: { buka: '2026-02-03', tutup: '2026-10-31' },
+  periode: { buka: today, tutup: today },
 });
 
 afterEach(() => {
