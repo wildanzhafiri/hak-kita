@@ -1,10 +1,14 @@
 import type { Program } from '@hakkita/schema';
 import { KATEGORI_LAYANAN, STALE_AFTER_DAYS } from './constants';
 import { checkSumberUtama, isOfficialDomain, isStale } from './source';
-import type { CheckResult } from './types';
+import type { CheckResult, ProgramWithBerkas } from './types';
 
 export function isLayanan(program: Program): boolean {
   return program.kategori === KATEGORI_LAYANAN;
+}
+
+export function hasBerkas(program: Program): program is ProgramWithBerkas {
+  return program.berkas !== undefined;
 }
 
 export function programPath(program: Program): string {

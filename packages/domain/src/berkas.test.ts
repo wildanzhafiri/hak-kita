@@ -3,6 +3,7 @@ import { BerkasSchema } from '@hakkita/schema';
 import {
   EMPTY_BERKAS_PROGRESS,
   berkasReadiness,
+  hasBerkasProgress,
   parseBerkasProgress,
   prunedChecked,
   selectDokumen,
@@ -145,5 +146,21 @@ describe('parseBerkasProgress', () => {
   it('truncates a note that is too long', () => {
     const progress = { answers: {}, checked: [], note: 'a'.repeat(900) };
     expect(parseBerkasProgress(serializeBerkasProgress(progress)).note).toHaveLength(500);
+  });
+});
+
+describe('hasBerkasProgress', () => {
+  it('is false for an untouched sheet', () => {
+    expect(hasBerkasProgress(EMPTY_BERKAS_PROGRESS)).toBe(false);
+  });
+
+  it('is false when the note holds only whitespace', () => {
+    expect(hasBerkasProgress({ answers: {}, checked: [], note: '   ' })).toBe(false);
+  });
+
+  it('is true once an answer, a check mark or a note exists', () => {
+    expect(hasBerkasProgress({ answers: { ekonomi: 'kip' }, checked: [], note: '' })).toBe(true);
+    expect(hasBerkasProgress({ answers: {}, checked: ['email'], note: '' })).toBe(true);
+    expect(hasBerkasProgress({ answers: {}, checked: [], note: 'Tanya operator' })).toBe(true);
   });
 });

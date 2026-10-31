@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { daysSince, formatDate, todayWIB } from './date';
+import { daysSince, daysUntil, formatDate, todayWIB } from './date';
 
 describe('formatDate', () => {
   it('formats an ISO date in Indonesian', () => {
@@ -20,6 +20,14 @@ describe('daysSince', () => {
 
   it('crosses month and year boundaries', () => {
     expect(daysSince('2025-12-31', '2026-01-01')).toBe(1);
+  });
+});
+
+describe('daysUntil', () => {
+  it('counts days left until a date and goes negative once it has passed', () => {
+    expect(daysUntil('2026-10-31', '2026-10-30')).toBe(1);
+    expect(daysUntil('2026-10-30', '2026-10-30')).toBe(0);
+    expect(daysUntil('2026-10-29', '2026-10-30')).toBe(-1);
   });
 });
 

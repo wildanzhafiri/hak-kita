@@ -4,6 +4,14 @@ import type { BerkasAnswers, BerkasProgress, BerkasReadiness } from './types';
 
 export const EMPTY_BERKAS_PROGRESS: BerkasProgress = { answers: {}, checked: [], note: '' };
 
+export function hasBerkasProgress(progress: BerkasProgress): boolean {
+  return (
+    Object.keys(progress.answers).length > 0 ||
+    progress.checked.length > 0 ||
+    progress.note.trim() !== ''
+  );
+}
+
 export function selectDokumen(berkas: Berkas, answers: BerkasAnswers): BerkasDokumen[] {
   return berkas.dokumen.filter((dokumen) => {
     if (!dokumen.kondisi) return true;

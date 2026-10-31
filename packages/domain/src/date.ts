@@ -16,6 +16,10 @@ function toUtcMs(iso: string): number {
   return Date.UTC(year ?? 1970, (month ?? 1) - 1, day ?? 1);
 }
 
+export function daysUntil(date: string, today: string): number {
+  return Math.floor((toUtcMs(date) - toUtcMs(today)) / MS_PER_DAY);
+}
+
 export function daysSince(date: string, today: string): number {
   return Math.floor((toUtcMs(today) - toUtcMs(date)) / MS_PER_DAY);
 }

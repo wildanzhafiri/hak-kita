@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ProgramSchema } from '@hakkita/schema';
-import { berkasPath, checkProgram, isLayanan, programPath } from './program';
+import { BerkasSchema, ProgramSchema } from '@hakkita/schema';
+import { berkasPath, checkProgram, hasBerkas, isLayanan, programPath } from './program';
 import { TODAY, makeProgram } from './test-helpers';
 
 describe('ProgramSchema', () => {
@@ -48,6 +48,16 @@ describe('isLayanan', () => {
   it('is true only for the administrative service category', () => {
     expect(isLayanan(makeProgram({ kategori: 'Layanan Administrasi' }))).toBe(true);
     expect(isLayanan(makeProgram({ kategori: 'Pendidikan' }))).toBe(false);
+  });
+});
+
+describe('hasBerkas', () => {
+  it('is true only when the program carries a berkas block', () => {
+    const berkas = BerkasSchema.parse({
+      dokumen: [{ id: 'email', label: 'Email aktif', sumberUrl: 'https://contoh.go.id/panduan' }],
+    });
+    expect(hasBerkas(makeProgram({ berkas }))).toBe(true);
+    expect(hasBerkas(makeProgram())).toBe(false);
   });
 });
 
