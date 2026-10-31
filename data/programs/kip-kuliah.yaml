@@ -12,11 +12,20 @@ tipeGerbang: desil
 syarat:
   - teks: Memenuhi salah satu kriteria keterbatasan ekonomi, yaitu memiliki Kartu Indonesia Pintar (KIP), terdata di DTSEN maksimum pada desil 4, atau mahasiswa dari panti sosial atau panti asuhan
     sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
-  - teks: Bila tidak memenuhi salah satunya, pendapatan kotor gabungan orang tua atau wali dalam satu bulan di bawah Upah Minimum Provinsi (UMP), dan wajib mengunggah Surat Keterangan Tidak Mampu (SKTM)
+  - teks: Bila tidak memenuhi salah satunya, pendapatan kotor gabungan orang tua atau wali dalam satu bulan di bawah Upah Minimum Provinsi (UMP) domisili asal mahasiswa, dan wajib mengunggah Surat Keterangan Tidak Mampu (SKTM)
     sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
-  - teks: NISN dan NIK terdaftar serta sama dengan data Dapodik
+  - teks: NISN, NPSN, dan NIK valid sesuai data Dapodik, serta alamat email aktif
+    sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
+  - teks: Lulusan SMA/sederajat tahun 2024, 2025, atau 2026 yang belum menjadi mahasiswa aktif, memiliki potensi akademik baik, lulus seleksi, dan diterima di PTN atau PTS pada program studi berakreditasi A/Unggul atau B/Baik Sekali, atau C/Baik dengan pertimbangan tertentu
     sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
-  - teks: Lulusan SMA/sederajat yang akan atau sedang menempuh kuliah di perguruan tinggi yang memenuhi ketentuan
+kriteria:
+  - kelompok:
+      - calon-mahasiswa
+    tahunLulus:
+      - 2024
+      - 2025
+      - 2026
+    syaratIndex: 3
 langkah:
   - Pastikan NISN, NIK, dan NPSN-mu terbaca sesuai data Dapodik sekolah. Bila tidak, minta operator Dapodik atau EMIS sekolah memperbaikinya.
   - Cek desil dan perbarui data DTSEN bila perlu melalui kanal resmi (dilakukan di situs resmi, bukan di HAKKITA).
@@ -33,8 +42,8 @@ sumberUtama:
   url: https://kip-kuliah.kemdiktisaintek.go.id/
   jenis: situs-resmi
 verifikasi: dasar
-tanggalDiperiksa: '2026-10-30'
-catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi (SNBP, UTBK-SNBT, Mandiri PTN dan PTS) berbeda dan bisa berubah. Rincian berkas lain ada di dokumen Unduh Panduan di situs resmi dan belum kami periksa.
+tanggalDiperiksa: '2026-10-31'
+catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi (SNBP, UTBK-SNBT, Mandiri PTN dan PTS) berbeda dan bisa berubah. Rincian berkas tambahan belum kami pastikan dari panduan unduhan resmi.
 berkas:
   pertanyaan:
     - id: ekonomi
@@ -47,13 +56,13 @@ berkas:
         - nilai: panti
           label: Saya berasal dari panti sosial atau panti asuhan
         - nilai: penghasilan
-          label: Tidak satu pun di atas, dan penghasilan kotor gabungan orang tua atau wali per bulan di bawah UMP
+          label: Tidak satu pun di atas, dan penghasilan kotor gabungan orang tua atau wali per bulan di bawah UMP domisili asal mahasiswa
         - nilai: belum-tahu
           label: Saya belum tahu
   dokumen:
     - id: nisn
       label: NISN yang terdaftar di Dapodik
-      catatan: NISN, NPSN, dan tahun lulus harus cocok dengan data Dapodik. NISN bisa tidak terbaca karena perbedaan NISN, NPSN yang berbeda, atau bukan lulusan 2024, 2025, atau 2026.
+      catatan: Gunakan NISN dan NPSN sesuai Dapodik. Pendaftaran akun 2026 hanya untuk lulusan 2024, 2025, dan 2026.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
     - id: nik
       label: NIK yang sama dengan data Dapodik
@@ -61,10 +70,10 @@ berkas:
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
     - id: email
       label: Alamat email aktif
-      catatan: Dipakai saat membuat akun siswa. Peserta KIP Kuliah 2025 yang mendaftar lagi perlu mengisi kolom Konfirmasi Email.
+      catatan: Dipakai saat membuat akun siswa. Peserta KIP Kuliah 2025 yang belum lolos dan ingin mendaftar lagi perlu memakai akun yang sama, lalu mengisi kolom Konfirmasi Email.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
     - id: nomor-kip
-      label: Nomor KIP
+      label: Periksa nomor KIP di akun siswa
       catatan: Nomor KIP dan KKS diambil otomatis dari SiPintar dan Dapodik, dan tidak bisa diubah di akun siswa.
       kondisi:
         pertanyaan: ekonomi
@@ -80,17 +89,9 @@ berkas:
           - desil
           - belum-tahu
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
-    - id: berkas-panti
-      label: Berkas pendukung dari panti sosial atau panti asuhan
-      catatan: Rincian berkasnya ada di dokumen Unduh Panduan di situs resmi dan belum kami baca. Periksa di sana sebelum mengunggah.
-      kondisi:
-        pertanyaan: ekonomi
-        nilai:
-          - panti
-      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
     - id: sktm
       label: Surat Keterangan Tidak Mampu (SKTM)
-      catatan: Wajib diunggah bila kamu tidak memenuhi kriteria KIP, DTSEN desil 4, atau panti, dan pendapatan kotor gabungan orang tua atau wali per bulan di bawah UMP.
+      catatan: Wajib diunggah bila kamu tidak memenuhi kriteria KIP, DTSEN desil 4, atau panti, dan pendapatan kotor gabungan orang tua atau wali per bulan di bawah UMP domisili asal mahasiswa.
       kondisi:
         pertanyaan: ekonomi
         nilai:
@@ -98,12 +99,12 @@ berkas:
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
   kendala:
     - masalah: NIK, NISN, atau NPSN tidak dikenali saat membuat akun
-      langkah: Minta operator Dapodik atau EMIS sekolah memperbaiki data sumbernya di vervalpd.data.kemendikdasmen.go.id. Lulusan baru bisa mengajukan koreksi lewat Verval Lulusan di pd.data.kemendikdasmen.go.id/verval-lulusan.
+      langkah: Minta operator Dapodik atau EMIS sekolah memperbaiki data sumbernya di vervalpd.data.kemendikdasmen.go.id. Siswa lulusan dapat mengajukan koreksi lewat Verval Lulusan di pd.data.kemendikdasmen.go.id/verval-lulusan.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
     - masalah: Salah memasukkan email saat mendaftar
-      langkah: Minta ulang akun lewat tautan klaim akun yang ada di halaman panduan.
-      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
-    - masalah: Mendaftar lagi setelah ikut KIP Kuliah 2025
+      langkah: Gunakan tombol Bantuan di kanan bawah halaman pendaftaran akun resmi dan jelaskan kesalahan alamat emailmu.
+      sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/siswa/pendaftaran/baru
+    - masalah: Belum lolos KIP Kuliah 2025 dan ingin mendaftar lagi
       langkah: Login dengan akun yang sama, isi kolom Konfirmasi Email, lalu klik Perbarui Akun.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
     - masalah: Data desil tidak sesuai dengan kondisimu
