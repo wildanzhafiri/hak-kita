@@ -1,7 +1,6 @@
+import type { ReactNode } from 'react';
 import type { Kategori, Program, Wilayah } from '@hakkita/schema';
-import type { DETAIL_TABS } from './constants';
-
-export type DetailTab = (typeof DETAIL_TABS)[number];
+import type { DETAIL_TABS } from './content';
 
 export interface ProgramFilters {
   query: string;
@@ -50,22 +49,49 @@ export interface ProgramDetailProps {
   builtOn: string;
 }
 
-export interface SummaryTabProps {
+export interface SummarySectionProps {
   program: Program;
   namaCakupan: string;
   today: string;
 }
 
-export interface RequirementsTabProps {
+export interface RequirementsSectionProps {
   program: Program;
 }
 
-export interface StepsTabProps {
+export interface StepsSectionProps {
   program: Program;
 }
 
 export interface DetailSidebarProps {
   program: Program;
   today: string;
-  onShowSteps: () => void;
+}
+
+export interface DetailSectionProps {
+  id: string;
+  title: string;
+  children: ReactNode;
+}
+
+export interface DetailFactProps {
+  label: string;
+  children: ReactNode;
+}
+
+export interface DetailNumberedListProps {
+  entries: string[];
+}
+
+export type DetailTab = (typeof DETAIL_TABS)[number]['id'];
+
+export interface DetailTabsProps {
+  activeTab: DetailTab;
+  onSelect: (tab: DetailTab) => void;
+}
+
+export interface DetailTabPanelProps {
+  id: DetailTab;
+  isActive: boolean;
+  children: ReactNode;
 }

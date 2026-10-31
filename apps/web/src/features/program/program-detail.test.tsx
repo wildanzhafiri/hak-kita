@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { BUILT_ON, makeProgram } from '@/test/fixtures';
 import { ProgramDetail } from './program-detail';
@@ -10,19 +10,23 @@ function renderDetail(overrides = {}) {
 }
 
 describe('ProgramDetail', () => {
-  it('opens on the summary tab', () => {
+  it('shows the summary tab first and hides the other panels', () => {
     renderDetail();
-    expect(screen.getByRole('tab', { name: 'Ringkasan' }).getAttribute('aria-selected')).toBe(
-      'true',
-    );
-    expect(screen.getByText('Kementerian Contoh')).toBeTruthy();
+    expect(screen.getByRole('tab', { name: 'Ringkasan', selected: true })).toBeTruthy();
+    expect(within(screen.getByRole('tabpanel')).getByText('Kementerian Contoh')).toBeTruthy();
+    expect(screen.queryByRole('heading', { name: 'Persyaratan dan dokumen' })).toBeNull();
   });
 
-  it('shows requirements from the program data', () => {
+  it('numbers requirements and documents separately', () => {
     renderDetail({ dokumen: ['Fotokopi KTP'] });
     fireEvent.click(screen.getByRole('tab', { name: 'Persyaratan' }));
-    expect(screen.getByText('Syarat contoh')).toBeTruthy();
-    expect(screen.getByText('Fotokopi KTP')).toBeTruthy();
+    const requirements = screen.getByRole('tabpanel');
+    expect(within(requirements).getByText('Syarat contoh')).toBeTruthy();
+    expect(within(requirements).getByText('Fotokopi KTP')).toBeTruthy();
+    const numberedLists = within(requirements)
+      .getAllByRole('list')
+      .filter((list) => list.tagName === 'OL');
+    expect(numberedLists).toHaveLength(2);
   });
 
   it('explains that desil is decided by the government for desil programs', () => {
@@ -37,10 +41,14 @@ describe('ProgramDetail', () => {
     expect(screen.getByText('Periksa informasi terbaru melalui kanal resmi.')).toBeTruthy();
   });
 
-  it('jumps to the steps tab from the sidebar button', () => {
+  it('switches tabs with arrow keys and shows the chosen panel', () => {
     renderDetail({ langkah: ['Daftar di situs resmi'] });
-    fireEvent.click(screen.getByRole('button', { name: /Lihat cara mengajukan/ }));
-    expect(screen.getByText('Daftar di situs resmi')).toBeTruthy();
+    const summaryTab = screen.getByRole('tab', { name: 'Ringkasan' });
+    summaryTab.focus();
+    fireEvent.keyDown(summaryTab, { key: 'ArrowRight' });
+    expect(screen.getByRole('tab', { name: 'Persyaratan', selected: true })).toBeTruthy();
+    fireEvent.click(screen.getByRole('tab', { name: 'Langkah berikutnya' }));
+    expect(within(screen.getByRole('tabpanel')).getByText('Daftar di situs resmi')).toBeTruthy();
   });
 
   it('warns when the last check is stale', () => {
