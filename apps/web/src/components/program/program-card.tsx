@@ -3,6 +3,7 @@ import { ArrowRight, MapPin } from 'lucide-react';
 import { programPath, wilayahName } from '@hakkita/domain';
 import { KATEGORI_STYLE } from './constants';
 import { PeriodChip } from './period-chip';
+import { SaveButton } from './save-button';
 import type { ProgramCardProps } from './types';
 import { VerifikasiBadge } from './verifikasi-badge';
 
@@ -15,6 +16,7 @@ export function ProgramCard({ program, index, today }: ProgramCardProps) {
         <span className={`program-icon ${tone}`}>
           <Icon />
         </span>
+        <SaveButton program={program} />
       </div>
       <span className="category">{program.kategori}</span>
       <h3>

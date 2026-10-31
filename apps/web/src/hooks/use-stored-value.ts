@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
 const listeners = new Set<() => void>();
 const fallback = new Map<string, string>();
@@ -42,4 +42,16 @@ export function useStoredValue(key: string): [string | null, (value: string) => 
   );
   const store = useCallback((next: string) => write(key, next), [key]);
   return [value, store];
+}
+
+export function useStoredValues(
+  keys: readonly string[],
+): [(string | null)[], (key: string, value: string) => void] {
+  const snapshot = useSyncExternalStore(
+    subscribe,
+    () => JSON.stringify(keys.map(read)),
+    () => JSON.stringify(keys.map(() => null)),
+  );
+  const values = useMemo(() => JSON.parse(snapshot) as (string | null)[], [snapshot]);
+  return [values, write];
 }

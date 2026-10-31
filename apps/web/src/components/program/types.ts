@@ -33,6 +33,11 @@ export interface VerifikasiStyle {
   icon: LucideIcon;
 }
 
+export interface SaveButtonProps {
+  program: Pick<Program, 'id' | 'nama'>;
+  variant?: 'icon' | 'button';
+}
+
 export interface OfficialSiteLinkProps {
   url: string;
   className: string;
