@@ -1,9 +1,6 @@
 # HAKKITA
 
-Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi langkah, lalu memetakan di langkah mana prosesnya paling sering tersendat. Setiap informasi bersumber resmi, bertanggal, dan jujur soal tingkat verifikasinya.
-
-> Dikembangkan untuk **Web In Action, MIA 2026** (subtema: Public Service Tracking dan Data-Driven Decision Support) dan masih dalam pengerjaan.
-> Data di repositori ini masih dalam proses verifikasi. Status tiap entri tertera pada berkasnya dan ditampilkan di web.
+Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi langkah. Informasi program dilengkapi rujukan dan keterangan verifikasi, dan kelak situs ini akan memetakan di langkah mana prosesnya paling sering tersendat.
 
 ## Tech stack
 
@@ -16,8 +13,6 @@ Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi
 | Tes UI    | Vitest, jsdom, Testing Library                                     |
 | Monorepo  | pnpm workspaces                                                    |
 | Kualitas  | ESLint, Prettier, GitHub Actions (validasi data, lint, tes, build) |
-
-Direncanakan (belum ada di kode): Supabase (Postgres) untuk laporan hambatan, model AI untuk asisten, PWA offline.
 
 ## Cara menjalankan
 
@@ -32,7 +27,7 @@ pnpm dev
 
 Buka http://localhost:3000. Tidak ada variabel lingkungan atau database yang dibutuhkan untuk menjalankan versi saat ini.
 
-Konfigurasi lingkungan (baru dibutuhkan saat fitur AI dan Supabase dibangun): salin `.env.example` ke `apps/web/.env.local` dan isi nilainya. Berkas `.env.local` tidak pernah di-commit, dan kunci rahasia (`AI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TURNSTILE_SECRET_KEY`) hanya dipakai di server, tanpa awalan `NEXT_PUBLIC_`.
+Konfigurasi lingkungan belum diperlukan untuk menjalankan versi saat ini. Jika integrasi yang memerlukan kunci diaktifkan, salin `.env.example` ke `apps/web/.env.local`. Jangan commit `.env.local` atau mengekspos kunci rahasia di kode sisi browser.
 
 Perintah lain:
 
@@ -43,39 +38,38 @@ pnpm validate:data:strict   # gagal juga bila ada entri belum diverifikasi atau 
 pnpm build && pnpm start    # build produksi lalu jalankan
 ```
 
-## Progress saat ini
+## Fitur
 
-Sudah berjalan:
+### Progres saat ini
 
-- [x] Monorepo (`apps/web`, `packages/schema`, `packages/domain`) dengan CI
-- [x] Skema data bersama (zod): program, wilayah, sumber, tingkat verifikasi
-- [x] Aturan sumber: sumber utama wajib `https` dan berdomain `.go.id`; tanggal diperiksa wajib untuk entri terverifikasi; data usang (>90 hari) diberi peringatan
-- [x] Validator data (`pnpm validate:data`), 111 tes untuk paket `domain`, dan 60 tes komponen untuk `apps/web`
-- [x] Wilayah berjenjang: Nasional → Provinsi → Kabupaten/Kota
-- [x] **Beranda** dengan navigasi, pencarian, dan lima menu layanan
-- [x] **Kenali Hakmu** (program) dan **Urus Kebutuhanmu** (layanan) dengan filter wilayah berjenjang, kategori, dan pencarian; tiap kartu menampilkan sumber resmi, tanggal diperiksa, status verifikasi, dan status periode (dibuka/ditutup)
-- [x] Halaman detail program/layanan (ringkasan, persyaratan, langkah berikutnya), pencarian, **Tentang**, dan **Sumber & batasan data**
-- [x] **Berkas siap bawa** untuk KIP Kuliah: pertanyaan singkat, daftar dokumen sesuai kondisi, kendala umum beserta langkahnya, catatan pribadi, dan lembar yang bisa dicetak atau disimpan sebagai PDF. Isinya tersimpan hanya di perangkat pengguna
-- [x] **Rencanaku** sebagai dasbor di perangkat pengguna: langkah berikutnya yang disarankan, progres berkas (bar bersegmen dan persentase dari dokumen yang dicentang sendiri, bukan status pengajuan resmi), program tersimpan, dan tenggat dari data periode resmi. Semuanya tersimpan hanya di browser, dengan opsi hapus semua data
-- [x] **Periksa Kondisimu**: pertanyaan singkat yang tersimpan di perangkat, pencocokan awal dengan kriteria bersumber resmi, alasan yang dapat ditelusuri, dan tautan pemeriksaan resmi. Hasilnya hanya menyatakan potensi kesesuaian, bukan keputusan penerimaan
-- [x] 5 entri awal: KIP Kuliah berstatus **dasar** (diperiksa ke situs resminya), empat lainnya **belum diverifikasi**
-- [x] Menu yang belum jadi (Pantau Langkahmu dan Awasi Uang Publik) sudah punya halaman yang menjelaskan isinya
+- **Kenali Hakmu:** Cari program berdasarkan wilayah, kategori, atau kata kunci.
+- **Urus Kebutuhanmu:** Cari layanan berdasarkan wilayah, kategori, atau kata kunci.
+- **Detail program dan layanan:** Baca ringkasan, persyaratan, dan langkah pengurusan. Halaman program juga mencantumkan sumber dan status verifikasi.
+- **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar dokumen sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftarnya. Data tersimpan di browser.
+- **Rencanaku:** Simpan program, catat persiapan berkas, dan lihat tenggat. Data tersimpan di browser.
+- **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
+- **Data program:** KIP Kuliah, PKH, Kartu Prakerja, KTP elektronik, dan KJP Plus DKI Jakarta.
+- **Pantau Langkahmu dan Awasi Uang Publik:** Halaman saat ini berisi penjelasan tentang kedua fitur tersebut.
 
-Direncanakan / dalam pengembangan:
+### Fitur mendatang
 
-- [ ] Kriteria pencocokan bersumber resmi untuk program lain dan perluasan profil opsional tanpa NIK
-- [ ] Pelacak langkah pengurusan (Pantau Langkahmu) dan rencana lintas program selain berkas
-- [ ] Peta hambatan per wilayah (laporan anonim dengan ambang minimal)
-- [ ] Asisten AI (cerita bebas → profil → pencarian → rencana)
-- [ ] Verifikasi data ke sumber resmi dan perluasan cakupan program dan wilayah
-- [ ] Radar pemantau sumber resmi dengan tinjauan kurator
+- **Profil awal:** Isi profil singkat atau lewati langkah ini.
+- **Filter verifikasi:** Sembunyikan program yang belum diverifikasi.
+- **Ikuti program:** Terima pemberitahuan saat periode atau persyaratan berubah.
+- **Pantau Langkahmu:** Catat langkah pengurusan dan pantau beberapa program.
+- **Peta hambatan:** Lihat laporan kendala yang dirangkum menurut wilayah.
+- **Awasi Uang Publik:** Lihat anggaran dan realisasi beserta sumber dan tahunnya.
+- **Asisten AI agentik:** Memahami cerita pengguna, merangkum profil untuk dikonfirmasi, mencari program, dan menyusun rencana. Dengan tool calling, asisten dapat melakukan tindakan di HAKKITA, seperti menyimpan program atau memperbarui rencana, setelah pengguna menyetujui. Tindakan dapat dibatalkan; asisten tidak mengajukan layanan ke situs pemerintah.
+- **Cakupan data:** Tambah kriteria pencocokan serta data program dan wilayah.
+- **Pemantauan sumber:** Periksa perubahan di situs resmi sebelum memperbarui informasi.
 
 ## Struktur
 
 ```
 apps/web/            Next.js: app/ (halaman), components/, features/, hooks/, config/, server/
 packages/schema/     Skema zod, konstanta, dan tipe data bersama
-packages/domain/     Logika murni dan diuji: wilayah, sumber, periode, program, pencarian
+packages/domain/     Logika murni dan diuji: wilayah, sumber, periode, program, pencarian,
+                     pencocokan profil, simpanan, rencana, berkas
 data/                Program dan layanan (YAML) serta wilayah (JSON)
 scripts/             validate-data.ts
 ```
@@ -84,7 +78,16 @@ Aturan arsitektur utama: panah dependensi hanya ke bawah (halaman → fitur → 
 
 ## Data dan sumber
 
-Setiap entri membawa sumber utama, tingkat verifikasi (`lengkap` / `dasar` / `belum`), dan tanggal diperiksa. Entri baru **harus** berstatus `belum` sampai isinya dibandingkan dengan sumber resmi.
+Sumber yang digunakan sementara untuk data program dan wilayah saat ini:
+
+- https://kip-kuliah.kemdiktisaintek.go.id/
+- https://kip-kuliah.kemdiktisaintek.go.id/panduan
+- https://kip-kuliah.kemdiktisaintek.go.id/siswa/pendaftaran/baru
+- https://kemensos.go.id/
+- https://www.prakerja.go.id/
+- https://dukcapil.kemendagri.go.id/
+- https://jakarta.go.id/
+- https://kemendagri.go.id/
 
 ## Privasi
 
