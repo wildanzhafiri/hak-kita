@@ -1,4 +1,4 @@
-import type { Kategori } from '@hakkita/schema';
+import type { AgeBand, Kategori } from '@hakkita/schema';
 
 export const KODE_NASIONAL = 'ID';
 
@@ -26,3 +26,10 @@ export const MONTH_NAMES = [
 ] as const;
 
 export const BERKAS_NOTE_MAX_LENGTH = 500;
+
+export const AGE_BAND_LIMITS: Record<AgeBand, { minimum: number; maximum: number | null }> = {
+  'di-bawah-18': { minimum: 0, maximum: 17 },
+  '18-24': { minimum: 18, maximum: 24 },
+  '25-59': { minimum: 25, maximum: 59 },
+  '60-ke-atas': { minimum: 60, maximum: null },
+};
