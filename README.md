@@ -17,7 +17,7 @@ Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi
 | Monorepo  | pnpm workspaces                                                    |
 | Kualitas  | ESLint, Prettier, GitHub Actions (validasi data, lint, tes, build) |
 
-Direncanakan (belum ada di kode): Supabase (Postgres) untuk laporan hambatan, Claude API untuk asisten, PWA offline.
+Direncanakan (belum ada di kode): Supabase (Postgres) untuk laporan hambatan, model AI untuk asisten, PWA offline.
 
 ## Cara menjalankan
 
@@ -32,7 +32,7 @@ pnpm dev
 
 Buka http://localhost:3000. Tidak ada variabel lingkungan atau database yang dibutuhkan untuk menjalankan versi saat ini.
 
-Konfigurasi lingkungan (baru dibutuhkan saat fitur AI dan Supabase dibangun): salin `.env.example` ke `apps/web/.env.local` dan isi nilainya. Berkas `.env.local` tidak pernah di-commit, dan kunci rahasia (`ANTHROPIC_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TURNSTILE_SECRET_KEY`) hanya dipakai di server, tanpa awalan `NEXT_PUBLIC_`.
+Konfigurasi lingkungan (baru dibutuhkan saat fitur AI dan Supabase dibangun): salin `.env.example` ke `apps/web/.env.local` dan isi nilainya. Berkas `.env.local` tidak pernah di-commit, dan kunci rahasia (`AI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TURNSTILE_SECRET_KEY`) hanya dipakai di server, tanpa awalan `NEXT_PUBLIC_`.
 
 Perintah lain:
 
@@ -50,19 +50,21 @@ Sudah berjalan:
 - [x] Monorepo (`apps/web`, `packages/schema`, `packages/domain`) dengan CI
 - [x] Skema data bersama (zod): program, wilayah, sumber, tingkat verifikasi
 - [x] Aturan sumber: sumber utama wajib `https` dan berdomain `.go.id`; tanggal diperiksa wajib untuk entri terverifikasi; data usang (>90 hari) diberi peringatan
-- [x] Validator data (`pnpm validate:data`), 79 tes untuk paket `domain`, dan 33 tes komponen untuk `apps/web`
+- [x] Validator data (`pnpm validate:data`), 111 tes untuk paket `domain`, dan 60 tes komponen untuk `apps/web`
 - [x] Wilayah berjenjang: Nasional → Provinsi → Kabupaten/Kota
 - [x] **Beranda** dengan navigasi, pencarian, dan lima menu layanan
 - [x] **Kenali Hakmu** (program) dan **Urus Kebutuhanmu** (layanan) dengan filter wilayah berjenjang, kategori, dan pencarian; tiap kartu menampilkan sumber resmi, tanggal diperiksa, status verifikasi, dan status periode (dibuka/ditutup)
 - [x] Halaman detail program/layanan (ringkasan, persyaratan, langkah berikutnya), pencarian, **Tentang**, dan **Sumber & batasan data**
 - [x] **Berkas siap bawa** untuk KIP Kuliah: pertanyaan singkat, daftar dokumen sesuai kondisi, kendala umum beserta langkahnya, catatan pribadi, dan lembar yang bisa dicetak atau disimpan sebagai PDF. Isinya tersimpan hanya di perangkat pengguna
+- [x] **Rencanaku** sebagai dasbor di perangkat pengguna: langkah berikutnya yang disarankan, progres berkas (bar bersegmen dan persentase dari dokumen yang dicentang sendiri, bukan status pengajuan resmi), program tersimpan, dan tenggat dari data periode resmi. Semuanya tersimpan hanya di browser, dengan opsi hapus semua data
+- [x] **Periksa Kondisimu**: pertanyaan singkat yang tersimpan di perangkat, pencocokan awal dengan kriteria bersumber resmi, alasan yang dapat ditelusuri, dan tautan pemeriksaan resmi. Hasilnya hanya menyatakan potensi kesesuaian, bukan keputusan penerimaan
 - [x] 5 entri awal: KIP Kuliah berstatus **dasar** (diperiksa ke situs resminya), empat lainnya **belum diverifikasi**
-- [x] Menu yang belum jadi (Periksa Kondisimu, Pantau Langkahmu, Awasi Uang Publik, Rencanaku) sudah punya halaman yang menjelaskan isinya
+- [x] Menu yang belum jadi (Pantau Langkahmu dan Awasi Uang Publik) sudah punya halaman yang menjelaskan isinya
 
 Direncanakan / dalam pengembangan:
 
-- [ ] Profil terpadu (opsional, tanpa NIK) dan mesin aturan syarat dengan jejak penjelasan
-- [ ] Rencana pengurusan dan pelacak langkah
+- [ ] Kriteria pencocokan bersumber resmi untuk program lain dan perluasan profil opsional tanpa NIK
+- [ ] Pelacak langkah pengurusan (Pantau Langkahmu) dan rencana lintas program selain berkas
 - [ ] Peta hambatan per wilayah (laporan anonim dengan ambang minimal)
 - [ ] Asisten AI (cerita bebas → profil → pencarian → rencana)
 - [ ] Verifikasi data ke sumber resmi dan perluasan cakupan program dan wilayah
