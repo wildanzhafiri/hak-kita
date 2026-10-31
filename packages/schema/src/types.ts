@@ -1,8 +1,10 @@
 import type { z } from 'zod';
 import type {
+  AGE_BANDS,
   JENIS_SUMBER,
   KATEGORI,
   LEVEL_WILAYAH,
+  PROFILE_GROUPS,
   TINGKAT_VERIFIKASI,
   TIPE_GERBANG,
 } from './constants';
@@ -16,11 +18,13 @@ import type {
 } from './berkas.schema';
 import type {
   CakupanSchema,
+  KriteriaSchema,
   PeriodeSchema,
   ProgramSchema,
   SumberUtamaSchema,
   SyaratSchema,
 } from './program.schema';
+import type { ProfileSchema } from './profile.schema';
 import type { WilayahFileSchema, WilayahSchema } from './wilayah.schema';
 
 export type LevelWilayah = (typeof LEVEL_WILAYAH)[number];
@@ -34,6 +38,10 @@ export type Periode = z.infer<typeof PeriodeSchema>;
 export type SumberUtama = z.infer<typeof SumberUtamaSchema>;
 export type Cakupan = z.infer<typeof CakupanSchema>;
 export type Program = z.infer<typeof ProgramSchema>;
+export type Kriteria = z.infer<typeof KriteriaSchema>;
+export type Profile = z.infer<typeof ProfileSchema>;
+export type ProfileGroup = (typeof PROFILE_GROUPS)[number];
+export type AgeBand = (typeof AGE_BANDS)[number];
 
 export type Wilayah = z.infer<typeof WilayahSchema>;
 export type WilayahFile = z.infer<typeof WilayahFileSchema>;

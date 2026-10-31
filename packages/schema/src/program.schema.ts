@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { JENIS_SUMBER, KATEGORI, TINGKAT_VERIFIKASI, TIPE_GERBANG } from './constants';
+import {
+  JENIS_SUMBER,
+  KATEGORI,
+  PROFILE_GROUPS,
+  TINGKAT_VERIFIKASI,
+  TIPE_GERBANG,
+} from './constants';
 import { BerkasSchema } from './berkas.schema';
 import { KodeWilayahSchema, LevelWilayahSchema, matchesLevel } from './wilayah.schema';
 
@@ -29,6 +35,22 @@ export const CakupanSchema = z.object({
   kode: KodeWilayahSchema,
 });
 
+export const KriteriaSchema = z
+  .object({
+    kelompok: z.array(z.enum(PROFILE_GROUPS)).min(1),
+    usiaMinimum: z.number().int().min(0).optional(),
+    usiaMaksimum: z.number().int().min(0).optional(),
+    tahunLulus: z.array(z.number().int()).min(1).optional(),
+    syaratIndex: z.number().int().nonnegative(),
+  })
+  .refine(
+    (kriteria) =>
+      kriteria.usiaMinimum === undefined ||
+      kriteria.usiaMaksimum === undefined ||
+      kriteria.usiaMinimum <= kriteria.usiaMaksimum,
+    'usiaMinimum tidak boleh melebihi usiaMaksimum',
+  );
+
 export const ProgramSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id: huruf kecil, angka, dan tanda hubung'),
@@ -40,6 +62,7 @@ export const ProgramSchema = z
     cakupan: CakupanSchema,
     tipeGerbang: z.enum(TIPE_GERBANG),
     syarat: z.array(SyaratSchema).min(1),
+    kriteria: z.array(KriteriaSchema).min(1).optional(),
     langkah: z.array(z.string().min(3)).default([]),
     dokumen: z.array(z.string().min(2)).default([]),
     periode: PeriodeSchema.optional(),
@@ -75,6 +98,15 @@ export const ProgramSchema = z
         }
       });
     }
+    p.kriteria?.forEach((kriteria, index) => {
+      if (!p.syarat[kriteria.syaratIndex]?.sumberUrl) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['kriteria', index, 'syaratIndex'],
+          message: 'Kriteria harus merujuk syarat dengan sumber resmi',
+        });
+      }
+    });
     if (typeof p.periode === 'object' && p.periode.buka > p.periode.tutup) {
       ctx.addIssue({
         code: 'custom',
