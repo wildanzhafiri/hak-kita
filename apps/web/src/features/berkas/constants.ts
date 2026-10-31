@@ -1,5 +1,3 @@
-export const BERKAS_STORAGE_PREFIX = 'hakkita:berkas:';
-
 export const PRIVACY_NOTE =
   'Pilihan, centang, dan catatanmu hanya disimpan di perangkat ini. HAKKITA tidak meminta NIK dan tidak mengirim apa pun ke situs resmi.';
 

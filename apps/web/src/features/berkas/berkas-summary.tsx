@@ -2,32 +2,22 @@ import { Printer, Trash2 } from 'lucide-react';
 import { formatDate } from '@hakkita/domain';
 import { OfficialSiteLink } from '@/components/program/official-site-link';
 import { VerifikasiBadge } from '@/components/program/verifikasi-badge';
+import { ProgressMeter } from '@/components/ui/progress-meter';
 import { PRIVACY_NOTE } from './constants';
 import type { BerkasSummaryProps } from './types';
 
 export function BerkasSummary({ program, readiness, onReset }: BerkasSummaryProps) {
-  const percent = readiness.total === 0 ? 0 : Math.round((readiness.ready / readiness.total) * 100);
   return (
     <aside className="no-print">
       <div className="panel sticky-panel">
         <span className="category">{program.kategori}</span>
         <h3>Berkas siap bawa</h3>
-        <div className="wizard-progress">
-          <span>
-            {readiness.ready} dari {readiness.total} dokumen siap
-          </span>
-          <span>{percent}%</span>
-        </div>
-        <div
-          className="progress-track"
-          role="progressbar"
-          aria-label="Kesiapan berkas"
-          aria-valuemin={0}
-          aria-valuemax={readiness.total}
-          aria-valuenow={readiness.ready}
-        >
-          <span style={{ width: `${percent}%` }} />
-        </div>
+        <ProgressMeter
+          value={readiness.ready}
+          max={readiness.total}
+          summary={`${readiness.ready} dari ${readiness.total} dokumen siap`}
+          label="Kesiapan berkas"
+        />
         <div className={`verify-box ${program.verifikasi}`}>
           <VerifikasiBadge tingkat={program.verifikasi} />
           <span className="when">

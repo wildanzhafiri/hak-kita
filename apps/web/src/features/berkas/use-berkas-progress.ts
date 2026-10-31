@@ -11,7 +11,7 @@ import {
   type BerkasProgress,
 } from '@hakkita/domain';
 import { useStoredValue } from '@/hooks/use-stored-value';
-import { BERKAS_STORAGE_PREFIX } from './constants';
+import { BERKAS_STORAGE_PREFIX } from '@/config/storage';
 import type { UseBerkasProgressResult } from './types';
 
 export function useBerkasProgress(programId: string, berkas: Berkas): UseBerkasProgressResult {

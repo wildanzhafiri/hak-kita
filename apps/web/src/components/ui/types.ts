@@ -32,6 +32,13 @@ export interface SearchBarProps {
   onSubmitted?: () => void;
 }
 
+export interface ProgressMeterProps {
+  value: number;
+  max: number;
+  summary: string;
+  label: string;
+}
+
 export interface DataTableRow {
   key: string;
   cells: ReactNode[];
