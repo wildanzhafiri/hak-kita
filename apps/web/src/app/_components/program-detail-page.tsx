@@ -19,7 +19,7 @@ export async function ProgramDetailPage({ id, layanan }: ProgramDetailPageProps)
           : { label: 'Kenali Hakmu', href: '/kenali-hakmu' },
         { label: program.nama },
       ]}
-      eyebrow={layanan ? 'URUS KEBUTUHANMU' : 'KENALI HAKMU'}
+      compact
       title={program.nama}
       description={program.ringkasan}
     >
