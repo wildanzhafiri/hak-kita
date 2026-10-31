@@ -1,22 +1,25 @@
 import type { Metadata } from 'next';
-import { ComingSoon } from '@/components/layout/coming-soon';
+import { todayWIB } from '@hakkita/domain';
+import { PageShell } from '@/components/layout/page-shell';
+import { ConditionChecker } from '@/features/kondisi/condition-checker';
+import { loadPrograms, loadWilayahFile } from '@/server/data';
 
-export const metadata: Metadata = { title: 'Periksa Kondisimu' };
+export const metadata: Metadata = {
+  title: 'Periksa Kondisimu',
+  description:
+    'Temukan program yang berpotensi sesuai dari jawaban awalmu dan periksa syarat resminya.',
+};
 
-export default function PeriksaKondisimuPage() {
+export default async function PeriksaKondisimuPage() {
+  const [programs, wilayahFile] = await Promise.all([loadPrograms(), loadWilayahFile()]);
   return (
-    <ComingSoon
+    <PageShell
       breadcrumbs={[{ label: 'Periksa Kondisimu' }]}
       eyebrow="PERIKSA KONDISIMU"
-      title="Pahami kondisi kesejahteraan keluargamu."
-      description="Tinjau kondisi sosial ekonomi, ketahui cara memeriksa desil, dan siapkan pembaruan data jika diperlukan."
-      body="Di sini kamu akan menemukan panduan memeriksa desil lewat kanal resmi dan langkah memperbarui data bila ada yang tidak sesuai. HAKKITA tidak menghitung desil dan tidak meminta NIK."
-      points={[
-        'Panduan cek desil melalui kanal pemerintah',
-        'Langkah pemutakhiran data keluarga',
-        'Ringkasan kondisi yang bisa kamu bawa ke petugas',
-      ]}
-      action={{ href: '/kenali-hakmu', label: 'Jelajahi program' }}
-    />
+      title="Cari tahu program yang perlu kamu periksa."
+      description="Jawab pertanyaan singkat untuk menemukan program yang berpotensi sesuai. Keputusan penerimaan tetap ada pada penyelenggara."
+    >
+      <ConditionChecker programs={programs} wilayah={wilayahFile.wilayah} builtOn={todayWIB()} />
+    </PageShell>
   );
 }
