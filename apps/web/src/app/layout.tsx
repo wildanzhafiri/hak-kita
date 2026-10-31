@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
+import { SiteFrame } from '@/components/layout/site-frame';
 import type { RootLayoutProps } from './types';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -25,12 +26,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="id" className={`${inter.variable} ${jakarta.variable}`}>
       <body>
-        <a href="#main" className="skip-link">
-          Lewati ke konten
-        </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        <SiteFrame header={<Header />} footer={<Footer />}>
+          {children}
+        </SiteFrame>
       </body>
     </html>
   );

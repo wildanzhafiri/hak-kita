@@ -7,9 +7,16 @@ export interface BreadcrumbItem {
 
 export interface PageShellProps {
   breadcrumbs: BreadcrumbItem[];
-  eyebrow: string;
+  eyebrow?: string;
+  compact?: boolean;
   title: string;
   description: string;
+  children: ReactNode;
+}
+
+export interface SiteFrameProps {
+  header: ReactNode;
+  footer: ReactNode;
   children: ReactNode;
 }
 
