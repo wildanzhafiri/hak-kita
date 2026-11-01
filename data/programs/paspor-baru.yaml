@@ -1,0 +1,22 @@
+﻿id: paspor-baru
+nama: Permohonan Paspor Baru
+kategori: Layanan Administrasi
+penyelenggara: Direktorat Jenderal Imigrasi
+ringkasan: Panduan permohonan paspor baru bagi warga negara Indonesia melalui kanal resmi Imigrasi.
+untuk:
+  - Warga negara Indonesia
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa dokumen dan prosedur permohonan paspor terbaru melalui kanal Imigrasi.
+langkah:
+  - Buka panduan paspor baru pada situs resmi kantor imigrasi
+  - Ikuti prosedur dan periksa ketentuan kantor imigrasi yang dipilih
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Halaman sumber memuat panduan Kantor Imigrasi Jakarta Pusat; periksa ketersediaan dan ketentuan di kantor imigrasi yang dipilih.
