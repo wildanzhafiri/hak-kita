@@ -13,7 +13,6 @@ export function HowItWorks() {
           alt="Orang-orang berkumpul dan berkontribusi dalam kegiatan komunitas"
           width={900}
           height={1100}
-          unoptimized
         />
         <div className="quote-card">
           <Quote size={25} />

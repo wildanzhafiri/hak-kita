@@ -1,34 +1,36 @@
 'use client';
 
-import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 import { useSavedIds } from '@/hooks/use-saved-ids';
+import { Button } from '@/components/ui/button';
 import type { SaveButtonProps } from './types';
 
 export function SaveButton({ program, variant = 'icon' }: SaveButtonProps) {
   const { ids, toggle } = useSavedIds();
   const saved = ids.includes(program.id);
-  const Icon = saved ? BookmarkCheck : Bookmark;
-
   if (variant === 'button') {
     return (
-      <button
-        className="button secondary full"
+      <Button
+        className="w-full"
+        tone="secondary"
         aria-pressed={saved}
-        onClick={() => toggle(program.id)}
+        onPress={() => toggle(program.id)}
       >
-        {saved ? 'Tersimpan di Rencanaku' : 'Simpan ke Rencanaku'} <Icon size={17} />
-      </button>
+        {saved ? 'Tersimpan di Rencanaku' : 'Simpan ke Rencanaku'}{' '}
+        <Bookmark fill={saved ? 'currentColor' : 'none'} size={17} />
+      </Button>
     );
   }
 
   return (
-    <button
-      className="save-button"
+    <Button
+      className="save-button size-10"
+      tone="icon"
       aria-pressed={saved}
       aria-label={saved ? `Hapus ${program.nama} dari Rencanaku` : `Simpan ${program.nama}`}
-      onClick={() => toggle(program.id)}
+      onPress={() => toggle(program.id)}
     >
-      <Icon size={18} />
-    </button>
+      <Bookmark fill={saved ? 'currentColor' : 'none'} size={18} />
+    </Button>
   );
 }

@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import type { Program, Wilayah } from '@hakkita/schema';
+import type { Program } from '@hakkita/schema';
 
 export interface TitledText {
   title: string;
@@ -17,6 +17,16 @@ export interface PopularSearch {
 
 export interface FeaturedProgramsProps {
   programs: Program[];
-  wilayah: Wilayah[];
-  builtOn: string;
+}
+
+export interface HeroSectionProps {
+  programs: Program[];
+}
+
+export interface HomepageServicesProps {
+  programs: Program[];
+}
+
+export interface ServiceCardProps {
+  program: Program;
 }

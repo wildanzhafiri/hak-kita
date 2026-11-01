@@ -1,17 +1,14 @@
 import type { LucideIcon } from 'lucide-react';
-import type { Program, TingkatVerifikasi, Wilayah } from '@hakkita/schema';
-import type { WilayahIndex } from '@hakkita/domain';
+import type { Program, TingkatVerifikasi } from '@hakkita/schema';
 
 export interface ProgramCardProps {
   program: Program;
-  index: WilayahIndex;
-  today: string;
 }
 
 export interface ProgramGridProps {
   programs: Program[];
-  wilayah: Wilayah[];
-  builtOn: string;
+  horizontal?: boolean;
+  columns?: 2 | 3;
 }
 
 export interface PeriodChipProps {

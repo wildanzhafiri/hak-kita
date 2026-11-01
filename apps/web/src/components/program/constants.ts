@@ -11,6 +11,19 @@ import {
 import type { Kategori, TingkatVerifikasi } from '@hakkita/schema';
 import type { KategoriStyle, VerifikasiStyle } from './types';
 
+export const KATEGORI_IMAGE: Record<Kategori, string> = {
+  Pendidikan: '/program-education.png',
+  Beasiswa: '/program-education.png',
+  Kesehatan: '/program-community.png',
+  'Bantuan Sosial': '/program-community.png',
+  'Pangan & Gizi': '/program-community.png',
+  'Pekerjaan & Pelatihan': '/program-opportunity.png',
+  'Usaha & UMKM': '/program-opportunity.png',
+  Perumahan: '/program-opportunity.png',
+  'Pertanian & Perikanan': '/program-community.png',
+  'Layanan Administrasi': '/transparency-review.png',
+};
+
 export const KATEGORI_STYLE: Record<Kategori, KategoriStyle> = {
   Pendidikan: { icon: GraduationCap, tone: 'mint' },
   Beasiswa: { icon: GraduationCap, tone: 'mint' },

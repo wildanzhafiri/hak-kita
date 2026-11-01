@@ -10,9 +10,14 @@ describe('SaveButton', () => {
     render(<SaveButton program={PROGRAM} />);
     const button = screen.getByRole('button', { name: 'Simpan PKH' });
     expect(button.getAttribute('aria-pressed')).toBe('false');
+    expect(button.classList.contains('button--ghost')).toBe(true);
+    expect(button.classList.contains('button--icon-only')).toBe(true);
+    expect(button.classList.contains('save-button')).toBe(true);
 
     fireEvent.click(button);
-    expect(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' })).toBeTruthy();
+    const savedButton = screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' });
+    expect(savedButton).toBeTruthy();
+    expect(savedButton.querySelector('svg')?.getAttribute('fill')).toBe('currentColor');
     expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('["pkh"]');
 
     fireEvent.click(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }));

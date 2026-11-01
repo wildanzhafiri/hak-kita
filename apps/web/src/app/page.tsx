@@ -1,29 +1,27 @@
-import { isLayanan, todayWIB } from '@hakkita/domain';
-import { ClosingBanner } from '@/features/home/closing-banner';
+import { isLayanan } from '@hakkita/domain';
 import { FEATURED_PROGRAM_COUNT } from '@/features/home/content';
 import { FeaturedPrograms } from '@/features/home/featured-programs';
+import { HomeFaq } from '@/features/home/home-faq';
+import { HomepageIntroduction } from '@/features/home/homepage-introduction';
+import { HomepageServices } from '@/features/home/homepage-services';
 import { HeroSection } from '@/features/home/hero-section';
-import { HowItWorks } from '@/features/home/how-it-works';
-import { SearchSection } from '@/features/home/search-section';
-import { SectionsGrid } from '@/features/home/sections-grid';
+import { ProgramCategories } from '@/features/home/program-categories';
 import { TransparencyPreview } from '@/features/home/transparency-preview';
-import { TrustSection } from '@/features/home/trust-section';
-import { loadPrograms, loadWilayahFile } from '@/server/data';
+import { loadPrograms } from '@/server/data';
 
 export default async function HomePage() {
-  const [programs, wilayahFile] = await Promise.all([loadPrograms(), loadWilayahFile()]);
+  const programs = await loadPrograms();
   const featured = programs.filter((p) => !isLayanan(p)).slice(0, FEATURED_PROGRAM_COUNT);
 
   return (
     <>
-      <HeroSection />
-      <SearchSection />
-      <SectionsGrid />
-      <FeaturedPrograms programs={featured} wilayah={wilayahFile.wilayah} builtOn={todayWIB()} />
-      <HowItWorks />
+      <HeroSection programs={programs} />
+      <HomepageIntroduction />
+      <ProgramCategories />
+      <FeaturedPrograms programs={featured} />
+      <HomepageServices programs={programs} />
       <TransparencyPreview />
-      <TrustSection />
-      <ClosingBanner />
+      <HomeFaq />
     </>
   );
 }

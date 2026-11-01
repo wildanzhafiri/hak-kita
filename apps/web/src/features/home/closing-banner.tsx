@@ -11,7 +11,7 @@ export function ClosingBanner() {
           <h2>Mulai dari kebutuhanmu hari ini.</h2>
           <p>Satu tempat untuk mencari tahu. Banyak jalan untuk maju.</p>
         </div>
-        <ButtonLink href="/kenali-hakmu">Jelajahi HAKKITA</ButtonLink>
+        <ButtonLink href="/program">Jelajahi program</ButtonLink>
         <Sparkles className="closing-spark" size={110} />
       </div>
     </section>

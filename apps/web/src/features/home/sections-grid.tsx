@@ -3,8 +3,6 @@ import { ArrowUpRight, BookOpen, Heart } from 'lucide-react';
 import { SECTIONS } from '@/config/sections';
 import { SectionHead } from '@/components/ui/section-head';
 
-const BAR_COUNT = 6;
-
 function BenefitTags() {
   return (
     <div className="benefit-tags">
@@ -15,16 +13,6 @@ function BenefitTags() {
         <Heart size={13} /> Kesehatan
       </span>
       <span>+ Lainnya</span>
-    </div>
-  );
-}
-
-function BudgetBars() {
-  return (
-    <div className="bento-bars">
-      {Array.from({ length: BAR_COUNT }, (_, i) => (
-        <i key={i} />
-      ))}
     </div>
   );
 }
@@ -42,7 +30,7 @@ export function SectionsGrid() {
           <Link href={`/${slug}`} className={`bento-card ${warna} bento-${i}`} key={slug}>
             <div className="bento-top">
               <span className="bento-icon">
-                <Icon size={29} strokeWidth={1.6} />
+                <Icon size={29} strokeWidth={1.5} />
               </span>
               <span className="card-number">0{i + 1}</span>
             </div>
@@ -50,14 +38,13 @@ export function SectionsGrid() {
               <h3>{nama}</h3>
               <p>{deskripsi}</p>
             </div>
-            {slug === 'kenali-hakmu' && <BenefitTags />}
+            {slug === 'program' && <BenefitTags />}
             <span className="bento-cta">
               {cta}
               <span>
                 <ArrowUpRight size={18} />
               </span>
             </span>
-            {slug === 'awasi-uang-publik' && <BudgetBars />}
           </Link>
         ))}
       </div>
