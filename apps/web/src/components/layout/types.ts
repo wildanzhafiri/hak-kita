@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from 'react';
+import type { ReactNode } from 'react';
 
 export interface BreadcrumbItem {
   label: string;
@@ -30,12 +30,7 @@ export interface ComingSoonProps {
   action: { href: string; label: string };
 }
 
-export interface ServicesMenuProps {
-  pathname: string;
-}
-
 export interface SearchDialogProps {
   open: boolean;
   onClose: () => void;
-  returnFocusRef: RefObject<HTMLElement | null>;
 }

@@ -1,9 +1,9 @@
-import { ChartNoAxesCombined, Files, HeartHandshake, Route, ScanHeart } from 'lucide-react';
+import { ChartNoAxesCombined, Files, HeartHandshake, Route, HeartPulse } from 'lucide-react';
 import type { Section } from './types';
 
 export const SECTIONS: readonly Section[] = [
   {
-    slug: 'kenali-hakmu',
+    slug: 'program',
     nama: 'Kenali Hakmu',
     deskripsi: 'Temukan program bantuan yang sesuai dengan kebutuhanmu.',
     cta: 'Cari program',
@@ -15,12 +15,12 @@ export const SECTIONS: readonly Section[] = [
     nama: 'Periksa Kondisimu',
     deskripsi: 'Pahami kondisi kesejahteraan dan siapkan langkah berikutnya.',
     cta: 'Mulai periksa',
-    icon: ScanHeart,
+    icon: HeartPulse,
     warna: 'mint',
   },
   {
-    slug: 'urus-kebutuhanmu',
-    nama: 'Urus Kebutuhanmu',
+    slug: 'layanan',
+    nama: 'Layanan Publik',
     deskripsi: 'Syarat dan langkah pengurusan layanan. Semua lebih jelas.',
     cta: 'Lihat panduan',
     icon: Files,
@@ -35,15 +35,11 @@ export const SECTIONS: readonly Section[] = [
     warna: 'lavender',
   },
   {
-    slug: 'awasi-uang-publik',
-    nama: 'Awasi Uang Publik',
-    deskripsi: 'Kenali prioritas dan telusuri penggunaan anggaran publik.',
+    slug: 'anggaran',
+    nama: 'Telusuri Anggaran',
+    deskripsi: 'Halaman anggaran dengan rujukan data yang jelas sedang disiapkan.',
     cta: 'Lihat anggaran',
     icon: ChartNoAxesCombined,
     warna: 'dark',
   },
 ];
-
-export const SERVICE_MENU_COUNT = 4;
-
-export const SERVICE_SECTIONS = SECTIONS.slice(0, SERVICE_MENU_COUNT);

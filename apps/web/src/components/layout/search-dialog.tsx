@@ -1,38 +1,21 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { ArrowUpRight, X } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { Dialog } from '../ui/dialog';
 import { SearchBar } from '../ui/search-bar';
 import type { SearchDialogProps } from './types';
 
-export function SearchDialog({ open, onClose, returnFocusRef }: SearchDialogProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    if (open) dialogRef.current?.showModal();
-    else dialogRef.current?.close();
-  }, [open]);
-
+export function SearchDialog({ open, onClose }: SearchDialogProps) {
   return (
-    <dialog
-      ref={dialogRef}
-      className="search-dialog"
-      onCancel={onClose}
-      onClose={() => {
-        onClose();
-        returnFocusRef.current?.focus();
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) onClose();
       }}
-      onClick={(e) => {
-        if (e.target === dialogRef.current) onClose();
-      }}
+      title="Apa yang kamu cari?"
+      description="Temukan program dan layanan dalam satu tempat."
+      closeLabel="Tutup pencarian"
     >
-      <div className="dialog-title">
-        <h2>Apa yang kamu cari?</h2>
-        <button className="icon-button" aria-label="Tutup pencarian" onClick={onClose}>
-          <X />
-        </button>
-      </div>
-      <p>Temukan program dan layanan dalam satu tempat.</p>
       <SearchBar
         autoFocus
         inputLabel="Kata pencarian"
@@ -40,6 +23,6 @@ export function SearchDialog({ open, onClose, returnFocusRef }: SearchDialogProp
         submitIcon={<ArrowUpRight size={20} />}
         onSubmitted={onClose}
       />
-    </dialog>
+    </Dialog>
   );
 }

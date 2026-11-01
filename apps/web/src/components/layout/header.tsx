@@ -3,76 +3,79 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { Bookmark, Menu, Search, X } from 'lucide-react';
+import { Bookmark, Menu, X } from 'lucide-react';
+import { Button } from '../ui/button';
 import { Logo } from './logo';
-import { SearchDialog } from './search-dialog';
-import { ServicesMenu } from './services-menu';
 
-function activeClass(isActive: boolean): string | undefined {
-  return isActive ? 'nav-active' : undefined;
+const NAVIGATION = [
+  { href: '/', label: 'Beranda' },
+  { href: '/program', label: 'Kenali Hakmu' },
+  { href: '/layanan', label: 'Layanan Publik' },
+  { href: '/anggaran', label: 'Telusuri Anggaran' },
+] as const;
+
+function isCurrentPath(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const searchButtonRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <>
-      <header className="header-shell">
-        <div className="nav container">
-          <Logo />
-          <nav
-            className={mobileOpen ? 'nav-links mobile-open' : 'nav-links'}
-            aria-label="Navigasi utama"
-            onClick={(e) => {
-              if (e.target instanceof Element && e.target.closest('a')) setMobileOpen(false);
-            }}
-          >
-            <Link className={activeClass(pathname === '/')} href="/">
-              Beranda
-            </Link>
-            <ServicesMenu pathname={pathname} />
-            <Link
-              className={activeClass(pathname.startsWith('/awasi-uang-publik'))}
-              href="/awasi-uang-publik"
-            >
-              Awasi Uang Publik
-            </Link>
-            <Link className={activeClass(pathname === '/tentang')} href="/tentang">
-              Tentang HAKKITA
-            </Link>
-          </nav>
+    <header className="header-shell">
+      <div className="nav container">
+        <Logo />
+        <Button
+          ref={menuButtonRef}
+          className="mobile-toggle"
+          tone="icon"
+          aria-label={mobileOpen ? 'Tutup navigasi' : 'Buka navigasi'}
+          aria-expanded={mobileOpen}
+          aria-controls="main-navigation"
+          onPress={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? <X size={21} /> : <Menu size={21} />}
+        </Button>
+        <nav
+          id="main-navigation"
+          className={mobileOpen ? 'nav-links mobile-open' : 'nav-links'}
+          aria-label="Navigasi utama"
+          onClick={(event) => {
+            if (event.target instanceof Element && event.target.closest('a')) setMobileOpen(false);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              setMobileOpen(false);
+              menuButtonRef.current?.focus();
+            }
+          }}
+        >
+          <div className="header-main-nav">
+            {NAVIGATION.map(({ href, label }) => (
+              <Link
+                aria-current={isCurrentPath(pathname, href) ? 'page' : undefined}
+                className={isCurrentPath(pathname, href) ? 'nav-active' : undefined}
+                href={href}
+                key={href}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
           <div className="nav-actions">
-            <button
-              ref={searchButtonRef}
-              className="icon-button nav-search"
-              aria-label="Buka pencarian"
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search size={19} />
-            </button>
             <Link className="plan-button" href="/rencanaku">
               <Bookmark size={16} />
               <span>Rencanaku</span>
             </Link>
-            <button
-              className="icon-button mobile-toggle"
-              aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'}
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <X /> : <Menu />}
-            </button>
+            <Link className="nav-login" href="/masuk">
+              Masuk
+            </Link>
           </div>
-        </div>
-      </header>
-      <SearchDialog
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        returnFocusRef={searchButtonRef}
-      />
-    </>
+        </nav>
+      </div>
+    </header>
   );
 }
