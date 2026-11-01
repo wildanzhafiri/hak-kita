@@ -7,7 +7,7 @@ Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi
 | Lapisan   | Pilihan                                                            |
 | --------- | ------------------------------------------------------------------ |
 | Framework | Next.js 16 (App Router) + React 19 + TypeScript (strict)           |
-| UI        | Tailwind CSS 4, lucide-react                                       |
+| UI        | HeroUI v3, Tailwind CSS 4, lucide-react                         |
 | Data      | Berkas YAML/JSON di repo (content-as-code), divalidasi dengan zod  |
 | Logika    | Paket `domain` (TypeScript murni) diuji dengan Vitest              |
 | Tes UI    | Vitest, jsdom, Testing Library                                     |
@@ -42,14 +42,15 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 
 ### Progres saat ini
 
-- **Kenali Hakmu:** Cari program berdasarkan wilayah, kategori, atau kata kunci.
-- **Urus Kebutuhanmu:** Cari layanan berdasarkan wilayah, kategori, atau kata kunci.
+- **Kenali Hakmu:** Cari program di `/program` berdasarkan wilayah, kategori, atau kata kunci.
+- **Layanan Publik:** Cari panduan di `/layanan` berdasarkan wilayah, kategori, atau kata kunci.
 - **Detail program dan layanan:** Baca ringkasan, persyaratan, dan langkah pengurusan. Halaman program juga mencantumkan sumber dan status verifikasi.
 - **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar dokumen sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftarnya. Data tersimpan di browser.
 - **Rencanaku:** Simpan program, catat persiapan berkas, dan lihat tenggat. Data tersimpan di browser.
+- **Masuk dan Daftar:** Halaman akun belum tersedia. HAKKITA tetap dapat digunakan tanpa akun.
 - **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
 - **Data program:** KIP Kuliah, PKH, Kartu Prakerja, KTP elektronik, dan KJP Plus DKI Jakarta.
-- **Pantau Langkahmu dan Awasi Uang Publik:** Halaman saat ini berisi penjelasan tentang kedua fitur tersebut.
+- **Pantau Langkahmu dan Telusuri Anggaran:** Halaman saat ini menjelaskan fitur yang sedang disiapkan.
 
 ### Fitur mendatang
 
@@ -58,7 +59,7 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Ikuti program:** Terima pemberitahuan saat periode atau persyaratan berubah.
 - **Pantau Langkahmu:** Catat langkah pengurusan dan pantau beberapa program.
 - **Peta hambatan:** Lihat laporan kendala yang dirangkum menurut wilayah.
-- **Awasi Uang Publik:** Lihat anggaran dan realisasi beserta sumber dan tahunnya.
+- **Telusuri Anggaran:** Lihat anggaran dan realisasi beserta sumber dan tahunnya.
 - **Asisten AI agentik:** Memahami cerita pengguna, merangkum profil untuk dikonfirmasi, mencari program, dan menyusun rencana. Dengan tool calling, asisten dapat melakukan tindakan di HAKKITA, seperti menyimpan program atau memperbarui rencana, setelah pengguna menyetujui. Tindakan dapat dibatalkan; asisten tidak mengajukan layanan ke situs pemerintah.
 - **Cakupan data:** Tambah kriteria pencocokan serta data program dan wilayah.
 - **Pemantauan sumber:** Periksa perubahan di situs resmi sebelum memperbarui informasi.
