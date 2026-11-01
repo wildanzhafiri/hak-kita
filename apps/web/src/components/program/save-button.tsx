@@ -5,7 +5,7 @@ import { useSavedIds } from '@/hooks/use-saved-ids';
 import { Button } from '@/components/ui/button';
 import type { SaveButtonProps } from './types';
 
-export function SaveButton({ program, variant = 'icon' }: SaveButtonProps) {
+export function SaveButton({ program, variant = 'icon', className = '' }: SaveButtonProps) {
   const { ids, toggle } = useSavedIds();
   const saved = ids.includes(program.id);
   if (variant === 'button') {
@@ -24,7 +24,7 @@ export function SaveButton({ program, variant = 'icon' }: SaveButtonProps) {
 
   return (
     <Button
-      className="save-button size-10"
+      className={`save-button size-10 ${className}`}
       tone="icon"
       aria-pressed={saved}
       aria-label={saved ? `Hapus ${program.nama} dari Rencanaku` : `Simpan ${program.nama}`}
