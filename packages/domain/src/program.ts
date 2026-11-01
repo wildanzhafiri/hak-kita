@@ -12,7 +12,7 @@ export function hasBerkas(program: Program): program is ProgramWithBerkas {
 }
 
 export function programPath(program: Program): string {
-  const section = isLayanan(program) ? '/urus-kebutuhanmu' : '/kenali-hakmu';
+  const section = isLayanan(program) ? '/layanan' : '/program';
   return `${section}/${program.id}`;
 }
 

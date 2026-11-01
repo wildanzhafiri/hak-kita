@@ -62,17 +62,17 @@ describe('hasBerkas', () => {
 });
 
 describe('programPath', () => {
-  it('routes programs to Kenali Hakmu and services to Urus Kebutuhanmu', () => {
-    expect(programPath(makeProgram({ id: 'pkh' }))).toBe('/kenali-hakmu/pkh');
+  it('routes programs to Kenali Hakmu and services to Layanan Publik', () => {
+    expect(programPath(makeProgram({ id: 'pkh' }))).toBe('/program/pkh');
     expect(programPath(makeProgram({ id: 'ktp-el', kategori: 'Layanan Administrasi' }))).toBe(
-      '/urus-kebutuhanmu/ktp-el',
+      '/layanan/ktp-el',
     );
   });
 });
 
 describe('berkasPath', () => {
   it('appends the berkas segment to the program path', () => {
-    expect(berkasPath(makeProgram({ id: 'kip-kuliah' }))).toBe('/kenali-hakmu/kip-kuliah/berkas');
+    expect(berkasPath(makeProgram({ id: 'kip-kuliah' }))).toBe('/program/kip-kuliah/berkas');
   });
 });
 
