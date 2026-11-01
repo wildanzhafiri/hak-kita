@@ -25,10 +25,10 @@ export function BerkasChecklist({
                     <Check aria-hidden="true" size={14} />
                   </Checkbox.Indicator>
                 </Checkbox.Control>
-              <span>
-                <strong>{item.label}</strong>
-                {item.catatan && <small>{item.catatan}</small>}
-              </span>
+                <span>
+                  <strong>{item.label}</strong>
+                  {item.catatan && <small>{item.catatan}</small>}
+                </span>
               </Checkbox.Content>
             </Checkbox>
             <a
