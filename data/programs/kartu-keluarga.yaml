@@ -1,0 +1,22 @@
+﻿id: kartu-keluarga
+nama: Pengurusan Kartu Keluarga
+kategori: Layanan Administrasi
+penyelenggara: Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Dukcapil)
+ringkasan: Panduan pengurusan Kartu Keluarga melalui layanan Dukcapil sesuai domisili.
+untuk:
+  - Penduduk
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa persyaratan pengurusan Kartu Keluarga pada kanal Dukcapil kabupaten atau kota setempat.
+langkah:
+  - Periksa kanal dan persyaratan Dukcapil sesuai domisili
+  - Ikuti prosedur pengajuan yang tersedia di daerahmu
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://dukcapil.kemendagri.go.id/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Jenis permohonan, persyaratan, dan kanal layanan mengikuti Dukcapil kabupaten atau kota.
