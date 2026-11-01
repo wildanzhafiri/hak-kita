@@ -9,7 +9,8 @@ import type { ButtonProps as HeroButtonProps } from '@heroui/react';
 export type ButtonTone = 'primary' | 'secondary' | 'quiet' | 'icon' | 'danger';
 
 export interface ButtonProps
-  extends Omit<HeroButtonProps, 'variant'>,
+  extends
+    Omit<HeroButtonProps, 'variant'>,
     Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'role' | 'tabIndex'> {
   tone?: ButtonTone;
 }
