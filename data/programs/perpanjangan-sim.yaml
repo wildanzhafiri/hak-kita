@@ -1,0 +1,22 @@
+﻿id: perpanjangan-sim
+nama: Perpanjangan SIM
+kategori: Layanan Administrasi
+penyelenggara: Korps Lalu Lintas Kepolisian Negara Republik Indonesia
+ringkasan: Panduan perpanjangan SIM melalui layanan Digital Korlantas POLRI dan SINAR.
+untuk:
+  - Pemegang SIM
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa ketentuan perpanjangan dan ketersediaan layanan melalui Digital Korlantas POLRI.
+langkah:
+  - Buka panduan perpanjangan SIM di situs Digital Korlantas POLRI
+  - Ikuti petunjuk permohonan dan periksa status melalui kanal resmi
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://digitalkorlantas.polri.go.id/sim/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Ketersediaan layanan dan ketentuan dapat berbeda menurut jenis SIM dan SATPAS.
