@@ -16,7 +16,7 @@ export function RencanaDeadlines() {
         <CalendarClock size={38} />
         <h2>Belum ada tenggat yang dipantau.</h2>
         <p>Tenggat muncul setelah kamu menyimpan program atau mulai menyiapkan berkas.</p>
-        <ButtonLink href="/kenali-hakmu">Temukan program</ButtonLink>
+        <ButtonLink href="/program">Temukan program</ButtonLink>
       </div>
     );
   }

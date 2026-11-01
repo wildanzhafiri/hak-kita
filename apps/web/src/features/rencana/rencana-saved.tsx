@@ -6,7 +6,7 @@ import { ButtonLink } from '@/components/ui/button-link';
 import { useRencanaState } from './rencana-context';
 
 export function RencanaSaved() {
-  const { saved, wilayah, builtOn } = useRencanaState();
+  const { saved } = useRencanaState();
 
   if (saved.length === 0) {
     return (
@@ -17,14 +17,14 @@ export function RencanaSaved() {
           Tekan ikon simpan di kartu program atau di halaman detailnya, lalu programnya muncul di
           sini.
         </p>
-        <ButtonLink href="/kenali-hakmu">Temukan program</ButtonLink>
+        <ButtonLink href="/program">Temukan program</ButtonLink>
       </div>
     );
   }
 
   return (
     <div className="rencana-saved">
-      <ProgramGrid programs={saved} wilayah={wilayah} builtOn={builtOn} />
+      <ProgramGrid programs={saved} />
     </div>
   );
 }

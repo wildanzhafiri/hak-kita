@@ -9,7 +9,7 @@ export function RencanaNav({ counts }: RencanaNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="rencana-nav" aria-label="Menu Rencanaku">
+    <nav className="rencana-nav" aria-label="List Rencanaku">
       {RENCANA_NAV.map(({ href, label, icon: Icon, count }) => {
         const active = pathname === href;
         const total = count === null ? 0 : counts[count];

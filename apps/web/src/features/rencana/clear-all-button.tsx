@@ -1,34 +1,41 @@
 'use client';
 
 import { useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Trash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
 import type { ClearAllButtonProps } from './types';
 
 export function ClearAllButton({ onConfirm }: ClearAllButtonProps) {
   const [confirming, setConfirming] = useState(false);
 
-  if (!confirming) {
-    return (
-      <button className="text-button" onClick={() => setConfirming(true)}>
-        <Trash2 size={14} /> Hapus semua data di perangkat ini
-      </button>
-    );
-  }
-
   return (
-    <span className="confirm-clear" role="group" aria-label="Konfirmasi hapus semua data">
-      <button
-        className="text-button danger"
-        onClick={() => {
-          onConfirm();
-          setConfirming(false);
-        }}
+    <>
+      <Button tone="quiet" onPress={() => setConfirming(true)}>
+        <Trash size={14} /> Hapus semua data di perangkat ini
+      </Button>
+      <Dialog
+        open={confirming}
+        onOpenChange={setConfirming}
+        title="Hapus semua data?"
+        description="Semua isian dan catatan yang tersimpan di perangkat ini akan dihapus."
+        closeLabel="Tutup konfirmasi"
       >
-        Ya, hapus semuanya
-      </button>
-      <button className="text-button" onClick={() => setConfirming(false)}>
-        Batal
-      </button>
-    </span>
+        <div className="flex justify-end gap-3">
+          <Button tone="secondary" onPress={() => setConfirming(false)}>
+            Batal
+          </Button>
+          <Button
+            tone="danger"
+            onPress={() => {
+              onConfirm();
+              setConfirming(false);
+            }}
+          >
+            Ya, hapus semuanya
+          </Button>
+        </div>
+      </Dialog>
+    </>
   );
 }

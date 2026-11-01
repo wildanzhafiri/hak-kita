@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { ArrowRight, Trash2 } from 'lucide-react';
+import { ArrowRight, Trash } from 'lucide-react';
 import { berkasPath, isBerkasComplete } from '@hakkita/domain';
 import { OfficialSiteLink } from '@/components/program/official-site-link';
-import { VerifikasiBadge } from '@/components/program/verifikasi-badge';
+import { Button } from '@/components/ui/button';
 import { ProgressMeter } from '@/components/ui/progress-meter';
 import { COMPLETE_NOTE, UNANSWERED_NOTE } from './constants';
 import type { RencanaItemProps } from './types';
@@ -21,7 +21,6 @@ export function RencanaItem({ entry, onClear }: RencanaItemProps) {
             <Link href={href}>{program.nama}</Link>
           </h3>
         </div>
-        <VerifikasiBadge tingkat={program.verifikasi} />
       </div>
       <ProgressMeter
         value={readiness.ready}
@@ -40,9 +39,9 @@ export function RencanaItem({ entry, onClear }: RencanaItemProps) {
             Lanjutkan berkas <ArrowRight size={17} />
           </Link>
         )}
-        <button className="text-button" onClick={onClear}>
-          <Trash2 size={14} /> Hapus isian dari perangkat ini
-        </button>
+        <Button tone="quiet" onPress={onClear}>
+          <Trash size={14} /> Hapus isian dari perangkat ini
+        </Button>
       </div>
     </li>
   );

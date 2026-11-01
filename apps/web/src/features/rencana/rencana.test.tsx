@@ -68,7 +68,7 @@ describe('RencanaSummary', () => {
     renderInRencana(<RencanaSummary />);
     expect(screen.getByRole('heading', { name: 'Mulai dari satu program.' })).toBeTruthy();
     expect(screen.getByRole('link', { name: /Jelajahi program/ }).getAttribute('href')).toBe(
-      '/kenali-hakmu',
+      '/program',
     );
   });
 
@@ -80,7 +80,7 @@ describe('RencanaSummary', () => {
     ).toBeTruthy();
     expect(screen.getByText('Dibuka sampai 5 November 2026 (6 hari lagi)')).toBeTruthy();
     expect(screen.getByRole('link', { name: /Lanjutkan berkas/ }).getAttribute('href')).toBe(
-      '/kenali-hakmu/kip-kuliah/berkas',
+      '/program/kip-kuliah/berkas',
     );
   });
 
@@ -113,7 +113,7 @@ describe('RencanaBerkas', () => {
     renderInRencana(<RencanaBerkas />);
     expect(screen.getByText('Belum ada berkas yang kamu siapkan.')).toBeTruthy();
     expect(screen.getByRole('link', { name: /KIP Kuliah/ }).getAttribute('href')).toBe(
-      '/kenali-hakmu/kip-kuliah/berkas',
+      '/program/kip-kuliah/berkas',
     );
   });
 
@@ -192,7 +192,7 @@ describe('RencanaShell', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Berkas yang kamu siapkan' }),
     ).toBeTruthy();
-    expect(screen.getByRole('navigation', { name: 'Menu Rencanaku' })).toBeTruthy();
+    expect(screen.getByRole('navigation', { name: 'List Rencanaku' })).toBeTruthy();
     expect(screen.getByText('Isi berkas')).toBeTruthy();
   });
 });

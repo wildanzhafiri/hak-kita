@@ -55,7 +55,7 @@ export function nextStepCopy(step: NextStep): NextStepCopy {
         title: 'Mulai dari satu program.',
         detail:
           'Simpan program yang menarik atau mulai Berkas Siap Bawa. Progresmu muncul di sini.',
-        action: { label: 'Jelajahi program', href: '/kenali-hakmu', external: false },
+        action: { label: 'Jelajahi program', href: '/program', external: false },
         readiness: null,
       };
   }
