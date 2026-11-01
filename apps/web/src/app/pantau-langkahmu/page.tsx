@@ -16,7 +16,7 @@ export default function PantauLangkahmuPage() {
         'Ringkasan hambatan per wilayah',
         'Jalur lanjut ke kanal pengaduan resmi',
       ]}
-      action={{ href: '/urus-kebutuhanmu', label: 'Lihat panduan layanan' }}
+      action={{ href: '/layanan', label: 'Lihat panduan layanan' }}
     />
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { todayWIB } from '@hakkita/domain';
 import { PageShell } from '@/components/layout/page-shell';
 import { SearchResults } from '@/features/program/search-results';
 import { loadPrograms, loadWilayahFile } from '@/server/data';
@@ -19,7 +18,7 @@ export default async function PencarianPage() {
       description={DESCRIPTION}
     >
       <Suspense fallback={<p role="status">Menyiapkan pencarian…</p>}>
-        <SearchResults programs={programs} wilayah={wilayahFile.wilayah} builtOn={todayWIB()} />
+        <SearchResults programs={programs} wilayah={wilayahFile.wilayah} />
       </Suspense>
     </PageShell>
   );

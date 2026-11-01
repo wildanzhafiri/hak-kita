@@ -1,4 +1,5 @@
 import { buildWilayahIndex, matchPrograms } from '@hakkita/domain';
+import { Button } from '@/components/ui/button';
 import { DataNote } from '@/components/ui/data-note';
 import { MatchResultCard } from './match-result-card';
 import type { MatchResultsProps } from './types';
@@ -30,12 +31,12 @@ export function MatchResults({
           </p>
         </div>
         <div className="condition-results-actions">
-          <button className="button secondary" type="button" onClick={onEdit}>
+          <Button tone="secondary" type="button" onPress={onEdit}>
             Ubah jawaban
-          </button>
-          <button className="text-button" type="button" onClick={onReset}>
+          </Button>
+          <Button tone="quiet" type="button" onPress={onReset}>
             Mulai ulang
-          </button>
+          </Button>
         </div>
       </div>
       <DataNote>
@@ -44,7 +45,7 @@ export function MatchResults({
       </DataNote>
       <div className="condition-result-list">
         {results.map((result) => (
-          <MatchResultCard key={result.program.id} result={result} today={today} />
+          <MatchResultCard key={result.program.id} result={result} />
         ))}
       </div>
     </div>

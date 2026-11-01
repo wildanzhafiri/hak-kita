@@ -39,7 +39,6 @@ export interface MatchResultsProps {
 
 export interface MatchResultCardProps {
   result: MatchResult;
-  today: string;
 }
 
 export interface UseConditionProfileResult {

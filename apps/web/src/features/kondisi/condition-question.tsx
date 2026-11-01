@@ -1,3 +1,4 @@
+import { ChoiceGroup } from '@/components/ui/choice-group';
 import type { ConditionQuestionProps } from './types';
 
 export function ConditionQuestion({
@@ -11,20 +12,12 @@ export function ConditionQuestion({
     <fieldset className="condition-question">
       <legend>{title}</legend>
       <p>{description}</p>
-      <div className="condition-options">
-        {options.map((option) => (
-          <label key={option.value} className={value === option.value ? 'selected' : undefined}>
-            <input
-              type="radio"
-              name="condition-answer"
-              value={option.value}
-              checked={value === option.value}
-              onChange={() => onSelect(option.value)}
-            />
-            <span>{option.label}</span>
-          </label>
-        ))}
-      </div>
+      <ChoiceGroup
+        name="condition-answer"
+        value={value}
+        options={options}
+        onChange={onSelect}
+      />
     </fieldset>
   );
 }

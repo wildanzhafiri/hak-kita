@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, ShieldCheck } from 'lucide-react';
 import type { Profile } from '@hakkita/schema';
+import { Button } from '@/components/ui/button';
 import { ProgressMeter } from '@/components/ui/progress-meter';
 import { useToday } from '@/hooks/use-today';
 import { AGE_OPTIONS, GRADUATION_OPTIONS, GROUP_OPTIONS, QUESTIONS } from './content';
@@ -100,22 +101,21 @@ export function ConditionChecker({ programs, wilayah, builtOn }: ConditionChecke
           onSelect={(value) => selectAnswer(question.key, value)}
         />
         <div className="condition-actions">
-          <button
-            className="button secondary"
+          <Button
+            tone="secondary"
             type="button"
-            disabled={step === 0}
-            onClick={() => setStep(step - 1)}
+            isDisabled={step === 0}
+            onPress={() => setStep(step - 1)}
           >
             <ArrowLeft size={16} /> Kembali
-          </button>
-          <button
-            className="button"
+          </Button>
+          <Button
             type="button"
-            disabled={selected === null}
-            onClick={() => setStep(step + 1)}
+            isDisabled={selected === null}
+            onPress={() => setStep(step + 1)}
           >
             {step === questions.length - 1 ? 'Lihat hasil' : 'Lanjut'} <ArrowRight size={16} />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

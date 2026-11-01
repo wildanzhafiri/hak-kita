@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { programPath } from '@hakkita/domain';
-import { PeriodChip } from '@/components/program/period-chip';
-import { VerifikasiBadge } from '@/components/program/verifikasi-badge';
 import type { MatchResultCardProps } from './types';
 
-export function MatchResultCard({ result, today }: MatchResultCardProps) {
+export function MatchResultCard({ result }: MatchResultCardProps) {
   const { program, status, reasons, checks, officialCheck } = result;
   return (
     <article className="condition-result panel">
@@ -13,13 +11,11 @@ export function MatchResultCard({ result, today }: MatchResultCardProps) {
         <span className={`condition-status ${status}`}>
           {status === 'berpotensi-sesuai' ? 'Berpotensi sesuai' : 'Perlu dicek ke kanal resmi'}
         </span>
-        <VerifikasiBadge tingkat={program.verifikasi} />
       </div>
       <h3>
         <Link href={programPath(program)}>{program.nama}</Link>
       </h3>
       <p>{program.ringkasan}</p>
-      <PeriodChip program={program} today={today} />
       {reasons.length > 0 && (
         <div className="condition-evidence">
           <h4>Syarat yang dibandingkan</h4>
