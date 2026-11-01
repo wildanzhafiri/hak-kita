@@ -4,11 +4,16 @@ import { SelectField } from '@/components/ui/select-field';
 import { TextInput } from '@/components/ui/text-input';
 import type { ProgramFilterBarProps } from './types';
 
-export function ProgramFilterBar({ filters, placeholder, mode = 'filters' }: ProgramFilterBarProps) {
+export function ProgramFilterBar({
+  filters,
+  placeholder,
+  mode = 'filters',
+  stacked = false,
+}: ProgramFilterBarProps) {
   if (mode === 'search') {
     return (
       <form
-        className="flex min-h-[62px] items-center overflow-hidden rounded-[9px] border border-[#b9c1ca] bg-white focus-within:outline-2 focus-within:outline-[#bed9f8] focus-within:outline-offset-2"
+        className="flex min-h-[62px] w-full max-w-[1275px] items-center overflow-hidden rounded-[9px] border border-[#b9c1ca] bg-white focus-within:outline-2 focus-within:outline-[#bed9f8] focus-within:outline-offset-2"
         onSubmit={(event) => event.preventDefault()}
       >
         <Search className="ml-[22px] shrink-0 text-[#9099a4]" size={20} />
@@ -23,6 +28,7 @@ export function ProgramFilterBar({ filters, placeholder, mode = 'filters' }: Pro
           className="!h-full !min-h-[60px] !min-w-[122px] !shrink-0 !rounded-none !px-5 !text-[17px] max-[480px]:!min-w-[86px]"
           type="submit"
         >
+          <Search aria-hidden="true" className="shrink-0" size={18} />
           Cari
         </Button>
       </form>
@@ -30,13 +36,19 @@ export function ProgramFilterBar({ filters, placeholder, mode = 'filters' }: Pro
   }
 
   return (
-    <div className="grid grid-cols-3 gap-3 max-[760px]:grid-cols-2 max-[480px]:grid-cols-1">
+    <div
+      className={
+        stacked
+          ? 'grid grid-cols-1 gap-5'
+          : 'grid grid-cols-3 gap-3 max-[760px]:grid-cols-2 max-[480px]:grid-cols-1'
+      }
+    >
       <div className="flex min-w-0 flex-col gap-2 text-xs font-medium text-[#536477]">
-        <span>Kategori</span>
+        <span>{stacked ? 'Kategori Layanan' : 'Kategori'}</span>
         <SelectField
           label="Kategori"
           placeholder="Semua kategori"
-          value={filters.kategori}
+          value={filters.kategori ?? '__all__'}
           options={[
             { value: '__all__', label: 'Semua kategori' },
             ...filters.kategoriOptions.map((kategori) => ({ value: kategori, label: kategori })),
@@ -45,11 +57,11 @@ export function ProgramFilterBar({ filters, placeholder, mode = 'filters' }: Pro
         />
       </div>
       <div className="flex min-w-0 flex-col gap-2 text-xs font-medium text-[#536477]">
-        <span>Provinsi</span>
+        <span>{stacked ? 'Wilayah' : 'Provinsi'}</span>
         <SelectField
           label="Provinsi"
           placeholder="Semua wilayah"
-          value={filters.provinsi}
+          value={filters.provinsi ?? '__all__'}
           options={[
             { value: '__all__', label: 'Semua wilayah' },
             ...filters.provinsiOptions.map((wilayah) => ({
@@ -65,7 +77,7 @@ export function ProgramFilterBar({ filters, placeholder, mode = 'filters' }: Pro
         <SelectField
           label="Kabupaten atau kota"
           placeholder={filters.provinsi ? 'Semua di provinsi ini' : 'Pilih provinsi dulu'}
-          value={filters.kabkota}
+          value={filters.provinsi ? (filters.kabkota ?? '__all__') : null}
           options={[
             {
               value: '__all__',

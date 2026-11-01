@@ -1,11 +1,15 @@
 'use client';
 
-import { ChevronRight, HeartHandshake, ListFilter } from 'lucide-react';
+import { ChevronRight, Files, HeartHandshake, ListFilter } from 'lucide-react';
 import { KATEGORI_STYLE } from '@/components/program/constants';
 import { ProgramGrid } from '@/components/program/program-grid';
 import { Button } from '@/components/ui/button';
 import { DataNote } from '@/components/ui/data-note';
-import { DEFAULT_SEARCH_PLACEHOLDER } from './constants';
+import {
+  DEFAULT_SEARCH_PLACEHOLDER,
+  SERVICE_CATEGORY_ICONS,
+  SERVICE_QUICK_LINK_ORDER,
+} from './constants';
 import { ProgramFilterBar } from './program-filter-bar';
 import { ServiceQuickLink } from './service-quick-link';
 import { ServiceResultCard } from './service-result-card';
@@ -19,12 +23,17 @@ export function ProgramList({
   placeholder = DEFAULT_SEARCH_PLACEHOLDER,
   servicePage = false,
 }: ProgramListProps) {
-  const filters = useProgramFilters({ programs, wilayah, initialQuery });
+  const filters = useProgramFilters({ programs, wilayah, initialQuery, servicePage });
   const hasActiveFilters =
     Boolean(filters.query) ||
     Boolean(filters.kategori) ||
     Boolean(filters.provinsi) ||
     Boolean(filters.kabkota);
+  const serviceQuickLinks = [...filters.results].sort(
+    (a, b) =>
+      SERVICE_QUICK_LINK_ORDER.indexOf(a.id as (typeof SERVICE_QUICK_LINK_ORDER)[number]) -
+      SERVICE_QUICK_LINK_ORDER.indexOf(b.id as (typeof SERVICE_QUICK_LINK_ORDER)[number]),
+  );
 
   return (
     <>
@@ -38,11 +47,11 @@ export function ProgramList({
                   className="mb-4 text-2xl font-semibold tracking-[-0.025em] text-[#292b2e] max-[640px]:text-xl"
                   id="service-start-title"
                 >
-                  Mulai dari Layanan Ini
+                  Mulai Dari Layanan Ini
                 </h2>
                 {filters.results.length > 0 ? (
                   <div className="grid grid-cols-3 gap-x-9 gap-y-1 max-[760px]:grid-cols-2 max-[480px]:grid-cols-1">
-                    {filters.results.slice(0, 6).map((program) => (
+                    {serviceQuickLinks.slice(0, 6).map((program) => (
                       <ServiceQuickLink key={program.id} program={program} />
                     ))}
                   </div>
@@ -57,14 +66,16 @@ export function ProgramList({
                   className="mb-4 text-2xl font-semibold tracking-[-0.025em] text-[#292b2e] max-[640px]:text-xl"
                   id="service-categories-title"
                 >
-                  Jelajahi berdasarkan kategori
+                  Jelajahi Berdasarkan Kategori
                 </h2>
                 <div className="grid grid-cols-3 gap-x-[30px] max-[760px]:grid-cols-2 max-[480px]:grid-cols-1">
                   {filters.kategoriOptions.map((kategori) => {
-                    const { icon: CategoryIcon } = KATEGORI_STYLE[kategori];
+                    const CategoryIcon = servicePage
+                      ? (SERVICE_CATEGORY_ICONS[kategori] ?? Files)
+                      : KATEGORI_STYLE[kategori as keyof typeof KATEGORI_STYLE].icon;
                     return (
                       <Button
-                        className="group !h-auto !min-h-[58px] !w-full !justify-start !gap-3 !rounded-none !border-t !border-[#e1e7ee] !px-0 !py-4 !text-left !text-xs !font-medium !text-[#33445b] !transition-colors hover:!bg-transparent hover:!text-[#196dcc]"
+                        className="group !h-auto !min-h-[70px] !w-full !justify-start !gap-3 !rounded-none !border-b !border-[#e1e7ee] !px-0 !py-4 !text-left !text-xs !font-medium !text-[#2674ca] !transition-colors hover:!bg-transparent hover:!text-[#1458a3]"
                         key={kategori}
                         tone="quiet"
                         onPress={() => filters.selectKategori(kategori)}
@@ -88,13 +99,18 @@ export function ProgramList({
               </section>
             </div>
           )}
-          <div className="mt-10 grid items-start gap-[42px] lg:grid-cols-[230px_minmax(0,1fr)] max-[900px]:gap-7 max-[760px]:grid-cols-1">
-            <aside className="border-t border-[#dce1e6] pt-5">
+          <div className="mt-10 grid items-start gap-[42px] border-t border-[#dce1e6] pt-5 lg:grid-cols-[230px_minmax(0,1fr)] max-[900px]:gap-7 max-[760px]:grid-cols-1">
+            <aside>
               <h2 className="mb-6 flex items-center gap-2.5 text-base font-semibold tracking-[-0.01em] text-[#263347]">
                 <ListFilter aria-hidden="true" size={19} />
                 Filter pencarian
               </h2>
-              <ProgramFilterBar filters={filters} placeholder={placeholder} mode="filters" />
+              <ProgramFilterBar
+                filters={filters}
+                placeholder={placeholder}
+                mode="filters"
+                stacked
+              />
             </aside>
             <section aria-live="polite">
               <div className="mb-[18px] flex min-h-[26px] items-center gap-2 text-[13px] text-[#7a8490]">
@@ -103,7 +119,7 @@ export function ProgramList({
                 </strong>
               </div>
               {filters.results.length > 0 ? (
-                <div className="grid grid-cols-2 gap-[23px] max-[640px]:grid-cols-1">
+                <div className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1">
                   {filters.results.map((program) => (
                     <ServiceResultCard key={program.id} program={program} />
                   ))}

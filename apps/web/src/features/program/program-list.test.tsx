@@ -72,14 +72,16 @@ describe('ProgramList', () => {
   it('uses the service catalog sections and links service guides', () => {
     render(
       <ProgramList
-        programs={[makeProgram({ id: 'ktp-el', nama: 'KTP Elektronik', kategori: 'Layanan Administrasi' })]}
+        programs={[
+          makeProgram({ id: 'ktp-el', nama: 'KTP Elektronik', kategori: 'Layanan Administrasi' }),
+        ]}
         wilayah={WILAYAH}
         servicePage
       />,
     );
 
-    expect(screen.getByRole('heading', { name: 'Mulai dari Layanan Ini' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Jelajahi berdasarkan kategori' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Mulai Dari Layanan Ini' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Jelajahi Berdasarkan Kategori' })).toBeTruthy();
     expect(
       screen
         .getAllByRole('link', { name: 'KTP Elektronik' })

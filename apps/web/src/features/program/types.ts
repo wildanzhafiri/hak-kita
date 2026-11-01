@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
-import type { Kategori, Program, Wilayah } from '@hakkita/schema';
+import type { Program, Wilayah } from '@hakkita/schema';
 import type { DETAIL_TABS } from './content';
 
 export interface ProgramFilters {
   query: string;
-  kategori: Kategori | null;
+  kategori: string | null;
   provinsi: string | null;
   kabkota: string | null;
-  kategoriOptions: Kategori[];
+  kategoriOptions: string[];
   provinsiOptions: Wilayah[];
   kabkotaOptions: Wilayah[];
   results: Program[];
@@ -22,6 +22,7 @@ export interface UseProgramFiltersOptions {
   programs: Program[];
   wilayah: Wilayah[];
   initialQuery: string;
+  servicePage?: boolean;
 }
 
 export interface ProgramListProps {
@@ -40,6 +41,7 @@ export interface ProgramFilterBarProps {
   filters: ProgramFilters;
   placeholder: string;
   mode?: 'search' | 'filters';
+  stacked?: boolean;
 }
 
 export interface SearchResultsProps {
