@@ -7,7 +7,7 @@ Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi
 | Lapisan   | Pilihan                                                            |
 | --------- | ------------------------------------------------------------------ |
 | Framework | Next.js 16 (App Router) + React 19 + TypeScript (strict)           |
-| UI        | HeroUI v3, Tailwind CSS 4, lucide-react                         |
+| UI        | HeroUI v3, Tailwind CSS 4, lucide-react                            |
 | Data      | Berkas YAML/JSON di repo (content-as-code), divalidasi dengan zod  |
 | Logika    | Paket `domain` (TypeScript murni) diuji dengan Vitest              |
 | Tes UI    | Vitest, jsdom, Testing Library                                     |
@@ -50,7 +50,8 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Masuk dan Daftar:** Halaman akun belum tersedia. HAKKITA tetap dapat digunakan tanpa akun.
 - **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
 - **Data program:** KIP Kuliah, PKH, Kartu Prakerja, KTP elektronik, dan KJP Plus DKI Jakarta.
-- **Pantau Langkahmu dan Telusuri Anggaran:** Halaman saat ini menjelaskan fitur yang sedang disiapkan.
+- **Telusuri Anggaran:** Lihat ringkasan APBN terbaru yang dicantumkan beserta periode dan sumbernya, atau buka data APBD di portal resmi SIKD.
+- **Pantau Langkahmu:** Halaman saat ini menjelaskan fitur yang sedang disiapkan.
 
 ### Fitur mendatang
 
@@ -59,7 +60,6 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Ikuti program:** Terima pemberitahuan saat periode atau persyaratan berubah.
 - **Pantau Langkahmu:** Catat langkah pengurusan dan pantau beberapa program.
 - **Peta hambatan:** Lihat laporan kendala yang dirangkum menurut wilayah.
-- **Telusuri Anggaran:** Lihat anggaran dan realisasi beserta sumber dan tahunnya.
 - **Asisten AI agentik:** Memahami cerita pengguna, merangkum profil untuk dikonfirmasi, mencari program, dan menyusun rencana. Dengan tool calling, asisten dapat melakukan tindakan di HAKKITA, seperti menyimpan program atau memperbarui rencana, setelah pengguna menyetujui. Tindakan dapat dibatalkan; asisten tidak mengajukan layanan ke situs pemerintah.
 - **Cakupan data:** Tambah kriteria pencocokan serta data program dan wilayah.
 - **Pemantauan sumber:** Periksa perubahan di situs resmi sebelum memperbarui informasi.
