@@ -19,8 +19,8 @@ export function TransparencyPreview() {
               Ketahui Sumber Informasi dan Anggaran Publik
             </h2>
             <p className="mt-3.5 mb-0 max-w-[420px] text-[15px] leading-[1.65] text-[#687385] max-[640px]:text-[13px]">
-              Periksa rujukan informasi program dan layanan, serta jelajahi data anggaran yang
-              sedang disiapkan.
+              Periksa rujukan informasi program dan layanan, lalu telusuri ringkasan APBN dan data
+              APBD dari sumber resmi.
             </p>
           </div>
         </div>
