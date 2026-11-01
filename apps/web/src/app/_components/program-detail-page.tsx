@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
-import { buildWilayahIndex, isLayanan, todayWIB, wilayahName } from '@hakkita/domain';
-import { PageShell } from '@/components/layout/page-shell';
+import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
+import { buildWilayahIndex, isLayanan, wilayahName } from '@hakkita/domain';
 import { ProgramDetail } from '@/features/program/program-detail';
 import { loadPrograms, loadWilayahFile } from '@/server/data';
 import type { ProgramDetailPageProps } from './types';
@@ -12,22 +13,24 @@ export async function ProgramDetailPage({ id, layanan }: ProgramDetailPageProps)
   const index = buildWilayahIndex(wilayahFile.wilayah);
 
   return (
-    <PageShell
-      breadcrumbs={[
-        layanan
-          ? { label: 'Urus Kebutuhanmu', href: '/urus-kebutuhanmu' }
-          : { label: 'Kenali Hakmu', href: '/kenali-hakmu' },
-        { label: program.nama },
-      ]}
-      compact
-      title={program.nama}
-      description={program.ringkasan}
-    >
-      <ProgramDetail
-        program={program}
-        namaCakupan={wilayahName(index, program.cakupan.kode)}
-        builtOn={todayWIB()}
-      />
-    </PageShell>
+    <div className="container pb-16 pt-6 max-[640px]:pb-10 max-[640px]:pt-4">
+      <nav
+        className="mb-7 flex min-w-0 items-center gap-2 text-xs text-[#687385]"
+        aria-label="Jejak navigasi"
+      >
+        <Link className="shrink-0 hover:text-[#196dcc]" href="/">
+          Beranda
+        </Link>
+        <ChevronRight className="shrink-0" size={14} />
+        <Link className="shrink-0 hover:text-[#196dcc]" href={layanan ? '/layanan' : '/program'}>
+          {layanan ? 'Layanan Publik' : 'Kenali Hakmu'}
+        </Link>
+        <ChevronRight className="shrink-0" size={14} />
+        <span className="min-w-0 truncate text-[#25354b]" aria-current="page">
+          {program.nama}
+        </span>
+      </nav>
+      <ProgramDetail program={program} namaCakupan={wilayahName(index, program.cakupan.kode)} />
+    </div>
   );
 }

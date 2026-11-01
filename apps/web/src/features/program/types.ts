@@ -27,32 +27,34 @@ export interface UseProgramFiltersOptions {
 export interface ProgramListProps {
   programs: Program[];
   wilayah: Wilayah[];
-  builtOn: string;
   initialQuery?: string;
   placeholder?: string;
+  servicePage?: boolean;
+}
+
+export interface ServiceCardProps {
+  program: Program;
 }
 
 export interface ProgramFilterBarProps {
   filters: ProgramFilters;
   placeholder: string;
+  mode?: 'search' | 'filters';
 }
 
 export interface SearchResultsProps {
   programs: Program[];
   wilayah: Wilayah[];
-  builtOn: string;
 }
 
 export interface ProgramDetailProps {
   program: Program;
   namaCakupan: string;
-  builtOn: string;
 }
 
 export interface SummarySectionProps {
   program: Program;
   namaCakupan: string;
-  today: string;
 }
 
 export interface RequirementsSectionProps {
@@ -65,7 +67,6 @@ export interface StepsSectionProps {
 
 export interface DetailSidebarProps {
   program: Program;
-  today: string;
 }
 
 export interface DetailSectionProps {

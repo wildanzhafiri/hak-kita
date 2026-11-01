@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import type { KeyboardEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { DETAIL_TABS } from './content';
 import type { DetailTabsProps } from './types';
 
@@ -32,7 +33,7 @@ export function DetailTabs({ activeTab, onSelect }: DetailTabsProps) {
       aria-label="Informasi detail"
     >
       {DETAIL_TABS.map((tab, index) => (
-        <button
+        <Button
           key={tab.id}
           ref={(element) => {
             tabRefs.current[index] = element;
@@ -43,12 +44,13 @@ export function DetailTabs({ activeTab, onSelect }: DetailTabsProps) {
           aria-controls={`detail-panel-${tab.id}`}
           aria-selected={activeTab === tab.id}
           tabIndex={activeTab === tab.id ? 0 : -1}
-          className={`shrink-0 whitespace-nowrap border-b-2 bg-transparent px-[18px] py-[14px] text-xs ${activeTab === tab.id ? 'border-[var(--primary)] font-semibold text-[var(--primary)]' : 'border-transparent text-[var(--muted)]'}`}
-          onClick={() => onSelect(tab.id)}
+          tone="quiet"
+          className={`shrink-0 whitespace-nowrap rounded-none border-b-2 px-[18px] py-[14px] text-xs hover:bg-transparent ${activeTab === tab.id ? 'border-[var(--primary)] font-semibold text-[var(--primary)]' : 'border-transparent text-[var(--muted)]'}`}
+          onPress={() => onSelect(tab.id)}
           onKeyDown={(event) => handleKeyDown(event, index)}
         >
           {tab.label}
-        </button>
+        </Button>
       ))}
     </div>
   );

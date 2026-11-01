@@ -30,8 +30,8 @@ export default async function BerkasPage({ params }: ProgramPageProps) {
   return (
     <PageShell
       breadcrumbs={[
-        { label: 'Kenali Hakmu', href: '/kenali-hakmu' },
-        { label: program.nama, href: `/kenali-hakmu/${program.id}` },
+        { label: 'Kenali Hakmu', href: '/program' },
+        { label: program.nama, href: `/program/${program.id}` },
         { label: 'Berkas siap bawa' },
       ]}
       eyebrow="BERKAS SIAP BAWA"

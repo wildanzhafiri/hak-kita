@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { BUILT_ON, WILAYAH, makeProgram } from '@/test/fixtures';
+import { WILAYAH, makeProgram } from '@/test/fixtures';
 import { ProgramList } from './program-list';
 
 const programs = [
@@ -15,14 +15,7 @@ const programs = [
 ];
 
 function renderList(initialQuery?: string) {
-  return render(
-    <ProgramList
-      programs={programs}
-      wilayah={WILAYAH}
-      builtOn={BUILT_ON}
-      initialQuery={initialQuery}
-    />,
-  );
+  return render(<ProgramList programs={programs} wilayah={WILAYAH} initialQuery={initialQuery} />);
 }
 
 function programNames(): string[] {
@@ -48,21 +41,24 @@ describe('ProgramList', () => {
 
   it('filters by category', () => {
     renderList();
-    fireEvent.change(screen.getByLabelText('Kategori'), { target: { value: 'Kesehatan' } });
+    fireEvent.click(screen.getByLabelText('Kategori'));
+    fireEvent.click(screen.getByRole('option', { name: 'Kesehatan' }));
     expect(programNames()).toEqual(['Sehat Bersama']);
   });
 
   it('keeps national programs and the selected province programs', () => {
     renderList();
-    fireEvent.change(screen.getByLabelText('Provinsi'), { target: { value: '32' } });
+    fireEvent.click(screen.getByLabelText('Provinsi'));
+    fireEvent.click(screen.getByRole('option', { name: 'Jawa Barat' }));
     expect(programNames()).toEqual(['Beasiswa Alfa', 'Sehat Bersama']);
   });
 
   it('enables the regency select only after a province is chosen', () => {
     renderList();
-    const regency = screen.getByLabelText('Kabupaten atau kota') as HTMLSelectElement;
+    const regency = screen.getByLabelText('Kabupaten atau kota') as HTMLButtonElement;
     expect(regency.disabled).toBe(true);
-    fireEvent.change(screen.getByLabelText('Provinsi'), { target: { value: '32' } });
+    fireEvent.click(screen.getByLabelText('Provinsi'));
+    fireEvent.click(screen.getByRole('option', { name: 'Jawa Barat' }));
     expect(regency.disabled).toBe(false);
   });
 
@@ -71,5 +67,24 @@ describe('ProgramList', () => {
     expect(screen.getByText('Belum ada hasil yang sesuai.')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Atur ulang filter' }));
     expect(programNames()).toHaveLength(3);
+  });
+
+  it('uses the service catalog sections and links service guides', () => {
+    render(
+      <ProgramList
+        programs={[makeProgram({ id: 'ktp-el', nama: 'KTP Elektronik', kategori: 'Layanan Administrasi' })]}
+        wilayah={WILAYAH}
+        servicePage
+      />,
+    );
+
+    expect(screen.getByRole('heading', { name: 'Mulai dari Layanan Ini' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Jelajahi berdasarkan kategori' })).toBeTruthy();
+    expect(
+      screen
+        .getAllByRole('link', { name: 'KTP Elektronik' })
+        .some((link) => link.getAttribute('href') === '/layanan/ktp-el'),
+    ).toBe(true);
+    expect(screen.getByText('1 layanan')).toBeTruthy();
   });
 });
