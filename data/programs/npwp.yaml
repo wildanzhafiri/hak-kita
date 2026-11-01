@@ -1,0 +1,22 @@
+﻿id: npwp
+nama: Pendaftaran NPWP Orang Pribadi
+kategori: Layanan Administrasi
+penyelenggara: Direktorat Jenderal Pajak
+ringkasan: Panduan pendaftaran wajib pajak orang pribadi melalui Coretax DJP.
+untuk:
+  - Wajib pajak orang pribadi
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa ketentuan pendaftaran terbaru melalui panduan Coretax DJP.
+langkah:
+  - Buka panduan pendaftaran wajib pajak orang pribadi di situs Direktorat Jenderal Pajak
+  - Ikuti alur pendaftaran yang tercantum pada Coretax DJP
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Panduan dapat berubah mengikuti pembaruan sistem dan ketentuan perpajakan.
