@@ -1,0 +1,22 @@
+﻿id: sim-baru
+nama: Pendaftaran SIM Baru
+kategori: Layanan Administrasi
+penyelenggara: Korps Lalu Lintas Kepolisian Negara Republik Indonesia
+ringkasan: Panduan pendaftaran SIM baru melalui Digital Korlantas POLRI dan SATPAS.
+untuk:
+  - Pemohon SIM
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa jenis SIM, persyaratan, dan ketersediaan layanan melalui Digital Korlantas POLRI.
+langkah:
+  - Buka panduan pendaftaran SIM baru di situs Digital Korlantas POLRI
+  - Ikuti petunjuk pendaftaran, ujian teori, dan ujian praktik di SATPAS
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://digitalkorlantas.polri.go.id/sim/
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Persyaratan dan alur mengikuti jenis SIM serta SATPAS yang dipilih.
