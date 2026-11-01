@@ -27,7 +27,7 @@ export function SelectField({
           <ChevronDown aria-hidden="true" size={16} />
         </Select.Indicator>
       </Select.Trigger>
-      <Select.Popover className="z-50 mt-1 max-h-72 min-w-[var(--trigger-width)] overflow-auto rounded-lg border border-[#dce1e6] bg-white py-1 shadow-lg">
+      <Select.Popover className="z-50 mt-1 max-h-72 min-w-[var(--trigger-width)] overflow-y-auto overscroll-contain rounded-lg border border-[#dce1e6] bg-white py-1 shadow-lg">
         <ListBox className="outline-none">
           {options.map((option) => (
             <ListBox.Item
@@ -38,7 +38,7 @@ export function SelectField({
             >
               <span className="min-w-0 truncate">{option.label}</span>
               <ListBox.ItemIndicator className="shrink-0 text-[#196dcc]">
-                <Check aria-hidden="true" size={15} />
+                {({ isSelected }) => (isSelected ? <Check aria-hidden="true" size={15} /> : null)}
               </ListBox.ItemIndicator>
             </ListBox.Item>
           ))}
