@@ -1,4 +1,4 @@
 export const DEFAULT_DATA_NOTE =
-  'Entri berlabel Belum diverifikasi adalah kandidat. Periksa ketentuan, jadwal, dan ketersediaan melalui kanal resmi.';
+  'Periksa ketentuan, jadwal, dan ketersediaan melalui kanal resmi sebelum mengajukan.';
 
 export const MAX_PROGRESS_SEGMENTS = 24;
