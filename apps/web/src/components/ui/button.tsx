@@ -17,7 +17,13 @@ const TONE_CLASSES = {
 
 export function Button({ tone = 'primary', className, ...props }: ButtonProps) {
   const variant =
-    tone === 'secondary' ? 'secondary' : tone === 'danger' ? 'danger' : tone === 'icon' || tone === 'quiet' ? 'ghost' : 'primary';
+    tone === 'secondary'
+      ? 'secondary'
+      : tone === 'danger'
+        ? 'danger'
+        : tone === 'icon' || tone === 'quiet'
+          ? 'ghost'
+          : 'primary';
 
   return (
     <HeroButton
