@@ -1,9 +1,4 @@
-import {
-  Bookmark,
-  CalendarClock,
-  FileCheck,
-  LayoutDashboard,
-} from 'lucide-react';
+import { Bookmark, CalendarClock, FileCheck, LayoutDashboard } from 'lucide-react';
 import type { RencanaNavItem } from './types';
 
 export const RENCANA_NAV: readonly RencanaNavItem[] = [
