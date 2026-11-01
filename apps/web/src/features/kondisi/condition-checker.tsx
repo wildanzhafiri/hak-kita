@@ -109,11 +109,7 @@ export function ConditionChecker({ programs, wilayah, builtOn }: ConditionChecke
           >
             <ArrowLeft size={16} /> Kembali
           </Button>
-          <Button
-            type="button"
-            isDisabled={selected === null}
-            onPress={() => setStep(step + 1)}
-          >
+          <Button type="button" isDisabled={selected === null} onPress={() => setStep(step + 1)}>
             {step === questions.length - 1 ? 'Lihat hasil' : 'Lanjut'} <ArrowRight size={16} />
           </Button>
         </div>
