@@ -2,8 +2,7 @@ export const PROGRAM_CATALOG_CONTENT = {
   program: {
     name: 'Kenali Hakmu',
     title: 'Kenali Hakmu',
-    description:
-      'Temukan program pemerintah, pahami persyaratannya, dan pilih langkah berikutnya.',
+    description: 'Temukan program pemerintah, pahami persyaratannya, dan pilih langkah berikutnya.',
     searchPlaceholder: 'Cari program...',
   },
   layanan: {
