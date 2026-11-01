@@ -46,7 +46,7 @@ export function SearchBar({
         type="submit"
         aria-label="Cari"
       >
-        {submitIcon}
+        {submitIcon ?? <Search aria-hidden="true" size={18} />}
         {submitLabel && <span>{submitLabel}</span>}
       </Button>
     </form>
