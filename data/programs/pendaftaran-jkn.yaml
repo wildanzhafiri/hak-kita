@@ -1,0 +1,22 @@
+﻿id: pendaftaran-jkn
+nama: Pendaftaran Peserta JKN
+kategori: Layanan Administrasi
+penyelenggara: BPJS Kesehatan
+ringkasan: Panduan pendaftaran peserta Jaminan Kesehatan Nasional melalui Mobile JKN.
+untuk:
+  - Calon peserta JKN
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa syarat pendaftaran peserta JKN melalui panduan resmi BPJS Kesehatan.
+langkah:
+  - Buka panduan pendaftaran peserta JKN di situs BPJS Kesehatan
+  - Ikuti petunjuk pendaftaran melalui Mobile JKN
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Ketentuan pendaftaran mengikuti segmen kepesertaan dan petunjuk terbaru BPJS Kesehatan.
