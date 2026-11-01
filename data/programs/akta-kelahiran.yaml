@@ -1,0 +1,22 @@
+﻿id: akta-kelahiran
+nama: Pencatatan Kelahiran
+kategori: Layanan Administrasi
+penyelenggara: Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Dukcapil)
+ringkasan: Panduan pencatatan kelahiran dan penerbitan akta kelahiran melalui Dukcapil.
+untuk:
+  - Orang tua atau wali anak
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Periksa persyaratan pencatatan kelahiran pada kanal Dukcapil kabupaten atau kota setempat.
+langkah:
+  - Periksa kanal dan persyaratan Dukcapil sesuai domisili
+  - Ikuti prosedur pencatatan kelahiran yang tersedia di daerahmu
+periode: sepanjang-tahun
+sumberUtama:
+  url: https://dukcapil.kemendagri.go.id/files/2023/1681361758Supertajam.pdf
+  jenis: situs-resmi
+verifikasi: belum
+catatan: Dokumen sumber membahas pencatatan kelahiran secara umum; rincian persyaratan dan kanal pengajuan perlu dikonfirmasi ke Dukcapil setempat.
