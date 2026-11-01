@@ -37,7 +37,7 @@ export const SECTIONS: readonly Section[] = [
   {
     slug: 'anggaran',
     nama: 'Telusuri Anggaran',
-    deskripsi: 'Halaman anggaran dengan rujukan data yang jelas sedang disiapkan.',
+    deskripsi: 'Baca ringkasan APBN dan telusuri APBD dari sumber resmi.',
     cta: 'Lihat anggaran',
     icon: ChartNoAxesCombined,
     warna: 'dark',
