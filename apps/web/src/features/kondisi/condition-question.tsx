@@ -12,12 +12,7 @@ export function ConditionQuestion({
     <fieldset className="condition-question">
       <legend>{title}</legend>
       <p>{description}</p>
-      <ChoiceGroup
-        name="condition-answer"
-        value={value}
-        options={options}
-        onChange={onSelect}
-      />
+      <ChoiceGroup name="condition-answer" value={value} options={options} onChange={onSelect} />
     </fieldset>
   );
 }
