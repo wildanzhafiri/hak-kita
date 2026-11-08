@@ -15,8 +15,13 @@ export default function BantuanPage() {
       title="Pertanyaan yang sering diajukan"
       description={DESCRIPTION}
     >
-      <div className="max-w-[850px] py-8 max-[700px]:py-5">
-        <FaqAccordion items={HOME_FAQ_ITEMS} />
+      <div className="grid gap-12 py-8 max-[700px]:gap-9 max-[700px]:py-5">
+        <section aria-labelledby="faq-heading" className="max-w-[850px]">
+          <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#25354b]" id="faq-heading">
+            Pertanyaan yang sering diajukan
+          </h2>
+          <FaqAccordion items={HOME_FAQ_ITEMS} />
+        </section>
       </div>
     </PageShell>
   );
