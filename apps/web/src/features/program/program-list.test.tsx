@@ -33,9 +33,19 @@ describe('ProgramList', () => {
     expect(programNames()).toEqual(['Sehat Bersama']);
   });
 
-  it('filters while the visitor types', () => {
+  it('applies the search only after submitting the form', () => {
     renderList();
     fireEvent.change(screen.getByLabelText('Cari'), { target: { value: 'alfa' } });
+    expect(programNames()).toEqual(['Beasiswa Alfa', 'Kartu Jakarta', 'Sehat Bersama']);
+    fireEvent.click(screen.getByRole('button', { name: 'Cari' }));
+    expect(programNames()).toEqual(['Beasiswa Alfa']);
+  });
+
+  it('keeps the applied results until a new query is submitted', () => {
+    renderList('sehat');
+    fireEvent.change(screen.getByLabelText('Cari'), { target: { value: 'alfa' } });
+    expect(programNames()).toEqual(['Sehat Bersama']);
+    fireEvent.submit(screen.getByLabelText('Cari').closest('form')!);
     expect(programNames()).toEqual(['Beasiswa Alfa']);
   });
 

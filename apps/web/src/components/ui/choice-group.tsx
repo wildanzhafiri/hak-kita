@@ -5,6 +5,7 @@ import type { ChoiceGroupProps } from './types';
 
 export function ChoiceGroup({
   name,
+  ariaLabel,
   value,
   options,
   layout = 'cards',
@@ -16,6 +17,7 @@ export function ChoiceGroup({
     <RadioGroup
       className={cn(isCardLayout ? 'grid gap-3 sm:grid-cols-2' : 'flex flex-wrap gap-2')}
       name={name}
+      aria-label={ariaLabel}
       value={value ?? ''}
       onChange={onChange}
     >

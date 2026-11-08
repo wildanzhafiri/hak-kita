@@ -39,6 +39,7 @@ export interface ChoiceOption {
 
 export interface ChoiceGroupProps {
   name: string;
+  ariaLabel: string;
   value: string | null;
   options: readonly ChoiceOption[];
   layout?: 'cards' | 'pills';
@@ -46,12 +47,14 @@ export interface ChoiceGroupProps {
 }
 
 export interface DialogProps {
+  trigger: ReactNode;
   open: boolean;
   onOpenChange: (isOpen: boolean) => void;
   title: string;
   description?: string;
   closeLabel: string;
   children: ReactNode;
+  side?: boolean;
 }
 
 export interface BreadcrumbEntry {
@@ -74,14 +77,6 @@ export interface EyebrowProps {
   children: ReactNode;
   light?: boolean;
   marker?: boolean;
-}
-
-export interface SectionHeadProps {
-  eyebrow: string;
-  title: string;
-  description?: string;
-  href?: string;
-  linkText?: string;
 }
 
 export interface DataNoteProps {
@@ -122,4 +117,11 @@ export interface DataTableRow {
 export interface DataTableProps {
   columns: string[];
   rows: DataTableRow[];
+}
+
+export interface TurnstileProps {
+  siteKey: string;
+  resetKey: number;
+  label: string;
+  onToken: (token: string) => void;
 }

@@ -23,6 +23,7 @@ export function useProgramFilters({
   servicePage = false,
 }: UseProgramFiltersOptions): ProgramFilters {
   const [query, setQuery] = useState(initialQuery);
+  const [draftQuery, setDraftQuery] = useState(initialQuery);
   const [kategori, setKategori] = useState<string | null>(null);
   const [provinsi, setProvinsi] = useState<string | null>(null);
   const [kabkota, setKabkota] = useState<string | null>(null);
@@ -67,6 +68,7 @@ export function useProgramFilters({
 
   return {
     query,
+    draftQuery,
     kategori,
     provinsi,
     kabkota,
@@ -74,7 +76,8 @@ export function useProgramFilters({
     provinsiOptions,
     kabkotaOptions,
     results,
-    setQuery,
+    setDraftQuery,
+    submitQuery: () => setQuery(draftQuery.trim()),
     selectKategori: (value) => setKategori(kategoriOptions.find((k) => k === value) ?? null),
     selectProvinsi: (value) => {
       setProvinsi(emptyToNull(value));
@@ -83,6 +86,7 @@ export function useProgramFilters({
     selectKabkota: (value) => setKabkota(emptyToNull(value)),
     reset: () => {
       setQuery('');
+      setDraftQuery('');
       setKategori(null);
       setProvinsi(null);
       setKabkota(null);

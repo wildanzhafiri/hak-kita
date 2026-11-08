@@ -14,13 +14,16 @@ export function ProgramFilterBar({
     return (
       <form
         className="flex min-h-[62px] w-full max-w-[1275px] items-center overflow-hidden rounded-[9px] border border-[#b9c1ca] bg-white focus-within:outline-2 focus-within:outline-[#bed9f8] focus-within:outline-offset-2"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+          filters.submitQuery();
+        }}
       >
         <Search className="ml-[22px] shrink-0 text-[#9099a4]" size={20} />
         <TextInput
           className="!min-w-0 !flex-1 !rounded-none !border-0 !bg-transparent !px-3 !py-[18px] !text-[15px] !text-[#292b2e] !shadow-none !outline-none !ring-0 placeholder:!text-[#77808c] focus:!border-0 focus:!shadow-none focus:!ring-0"
-          value={filters.query}
-          onChange={(event) => filters.setQuery(event.target.value)}
+          value={filters.draftQuery}
+          onChange={(event) => filters.setDraftQuery(event.target.value)}
           placeholder={placeholder}
           aria-label="Cari"
         />
