@@ -33,3 +33,9 @@ export const AGE_BAND_LIMITS: Record<AgeBand, { minimum: number; maximum: number
   '25-59': { minimum: 25, maximum: 59 },
   '60-ke-atas': { minimum: 60, maximum: null },
 };
+export const DEFAULT_STEPS = [
+  'Periksa informasi terbaru melalui kanal resmi.',
+  'Siapkan dokumen sesuai ketentuan penyelenggara.',
+  'Ikuti alur pengajuan melalui kanal resmi.',
+  'Simpan bukti pengurusan dari penyelenggara, jika tersedia.',
+] as const;

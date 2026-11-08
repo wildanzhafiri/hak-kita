@@ -45,13 +45,16 @@ function mostUrgent(entries: readonly BerkasEntry[], today: string): NextStep | 
   return entry && first ? { kind: 'continue-berkas', entry, deadline: first } : null;
 }
 
-export function pickNextStep({ entries, saved, today }: NextStepInput): NextStep {
+export function pickNextStep({ entries, saved, guides = [], today }: NextStepInput): NextStep {
   const unfinished = entries.filter((entry) => !isBerkasComplete(entry));
   const urgent = mostUrgent(unfinished, today);
   if (urgent) return urgent;
 
   const [finished] = entries;
   if (finished) return { kind: 'open-official', program: finished.program };
+
+  const [firstGuide] = guides;
+  if (firstGuide) return { kind: 'continue-guide', program: firstGuide };
 
   const [firstSaved] = saved;
   if (firstSaved) {

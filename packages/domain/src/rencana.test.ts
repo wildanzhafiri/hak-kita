@@ -74,6 +74,14 @@ describe('sortDeadlines', () => {
 });
 
 describe('pickNextStep', () => {
+  it('resumes a guide started without saving the program', () => {
+    const guide = makeProgram({ id: 'pkh' });
+    expect(pickNextStep({ entries: [], saved: [], guides: [guide], today: TODAY })).toMatchObject({
+      kind: 'continue-guide',
+      program: { id: 'pkh' },
+    });
+  });
+
   it('continues the unfinished berkas that closes first', () => {
     const later = makeEntry(
       { id: 'later', periode: { buka: '2026-01-01', tutup: '2026-12-31' } },

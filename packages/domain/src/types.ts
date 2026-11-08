@@ -1,4 +1,25 @@
-import type { Berkas, Kategori, Profile, Program, Syarat, Wilayah } from '@hakkita/schema';
+import type {
+  Berkas,
+  Kategori,
+  Periode,
+  Profile,
+  Program,
+  Syarat,
+  TingkatVerifikasi,
+  Wilayah,
+} from '@hakkita/schema';
+
+export interface ProgramFollowSnapshot {
+  periode: Periode | null;
+  periodStatus: PeriodStatus;
+  closingSoon: boolean;
+  syarat: string[];
+  dokumen: string[];
+  verifikasi: TingkatVerifikasi;
+}
+
+export type ProgramChange =
+  'periode' | 'dibuka' | 'ditutup' | 'tenggat' | 'syarat' | 'dokumen' | 'verifikasi';
 
 export type WilayahIndex = ReadonlyMap<string, Wilayah>;
 
@@ -31,6 +52,11 @@ export interface BerkasReadiness {
   total: number;
 }
 
+export interface StepProgress {
+  completed: number[];
+  stuck: number | null;
+}
+
 export interface BerkasEntry {
   program: ProgramWithBerkas;
   readiness: BerkasReadiness;
@@ -46,6 +72,7 @@ export interface Deadline {
 
 export type NextStep =
   | { kind: 'continue-berkas'; entry: BerkasEntry; deadline: Deadline }
+  | { kind: 'continue-guide'; program: Program }
   | { kind: 'open-official'; program: Program }
   | { kind: 'start-berkas'; program: ProgramWithBerkas }
   | { kind: 'review-saved'; program: Program }
@@ -54,6 +81,7 @@ export type NextStep =
 export interface NextStepInput {
   entries: readonly BerkasEntry[];
   saved: readonly Program[];
+  guides?: readonly Program[];
   today: string;
 }
 
@@ -71,4 +99,23 @@ export interface MatchOptions {
   profile: Profile;
   today: string;
   wilayahIndex: WilayahIndex;
+}
+
+export type ProgramKnowledgeSection = 'syarat' | 'berkas' | 'kendala' | 'panduan';
+
+export interface ProgramKnowledgePassage {
+  id: string;
+  programId: string;
+  programName: string;
+  section: ProgramKnowledgeSection;
+  title: string;
+  text: string;
+  sourceUrl: string;
+  checkedOn: string;
+  verification: Exclude<TingkatVerifikasi, 'belum'>;
+}
+
+export interface ProgramKnowledgeSearchOptions {
+  programId?: string;
+  limit?: number;
 }
