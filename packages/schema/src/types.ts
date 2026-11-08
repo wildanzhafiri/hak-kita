@@ -4,6 +4,7 @@ import type {
   JENIS_SUMBER,
   KATEGORI,
   LEVEL_WILAYAH,
+  OBSTACLE_REPORT_STAGES,
   PROFILE_GROUPS,
   TINGKAT_VERIFIKASI,
   TIPE_GERBANG,
@@ -25,6 +26,7 @@ import type {
   SyaratSchema,
 } from './program.schema';
 import type { ProfileSchema } from './profile.schema';
+import type { KnowledgeDocumentSchema } from './knowledge.schema';
 import type { WilayahFileSchema, WilayahSchema } from './wilayah.schema';
 
 export type LevelWilayah = (typeof LEVEL_WILAYAH)[number];
@@ -40,8 +42,10 @@ export type Cakupan = z.infer<typeof CakupanSchema>;
 export type Program = z.infer<typeof ProgramSchema>;
 export type Kriteria = z.infer<typeof KriteriaSchema>;
 export type Profile = z.infer<typeof ProfileSchema>;
+export type KnowledgeDocument = z.infer<typeof KnowledgeDocumentSchema>;
 export type ProfileGroup = (typeof PROFILE_GROUPS)[number];
 export type AgeBand = (typeof AGE_BANDS)[number];
+export type ObstacleReportStage = (typeof OBSTACLE_REPORT_STAGES)[number];
 
 export type Wilayah = z.infer<typeof WilayahSchema>;
 export type WilayahFile = z.infer<typeof WilayahFileSchema>;
