@@ -18,5 +18,6 @@ periode: sepanjang-tahun
 sumberUtama:
   url: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
   jenis: situs-resmi
-verifikasi: belum
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-05'
 catatan: Panduan dapat berubah mengikuti pembaruan sistem dan ketentuan perpajakan.

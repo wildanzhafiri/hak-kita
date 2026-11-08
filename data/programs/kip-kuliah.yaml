@@ -37,12 +37,12 @@ dokumen:
   - Surat Keterangan Tidak Mampu (SKTM), bila memakai kriteria penghasilan di bawah UMP
 periode:
   buka: '2026-02-03'
-  tutup: '2026-10-31'
+  tutup: '2026-11-09'
 sumberUtama:
   url: https://kip-kuliah.kemdiktisaintek.go.id/
   jenis: situs-resmi
 verifikasi: dasar
-tanggalDiperiksa: '2026-10-31'
+tanggalDiperiksa: '2026-11-08'
 catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi (SNBP, UTBK-SNBT, Mandiri PTN dan PTS) berbeda dan bisa berubah. Rincian berkas tambahan belum kami pastikan dari panduan unduhan resmi.
 berkas:
   pertanyaan:

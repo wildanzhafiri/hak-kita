@@ -18,5 +18,6 @@ periode: sepanjang-tahun
 sumberUtama:
   url: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
   jenis: situs-resmi
-verifikasi: belum
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-05'
 catatan: Halaman sumber memuat panduan Kantor Imigrasi Jakarta Pusat; periksa ketersediaan dan ketentuan di kantor imigrasi yang dipilih.

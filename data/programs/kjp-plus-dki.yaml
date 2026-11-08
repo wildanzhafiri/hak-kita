@@ -18,7 +18,8 @@ langkah:
   - Periksa jadwal dan tahap pendaftaran di kanal resmi Pemprov DKI Jakarta
   - Ikuti verifikasi dan pendaftaran sesuai petunjuk sekolah atau Dinas Pendidikan
 sumberUtama:
-  url: https://jakarta.go.id/
+  url: https://www.jakarta.go.id/kjp-plus
   jenis: situs-resmi
-verifikasi: belum
-catatan: Sumber utama baru berupa portal umum Pemprov DKI. Ganti dengan halaman resmi program yang spesifik saat diverifikasi. Nominal dan jadwal tahap sengaja tidak dicantumkan karena berbeda-beda antar sumber media.
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-05'
+catatan: Halaman program memuat ketentuan umum; periksa jadwal, tahap, dan persyaratan terbaru pada kanal resmi Dinas Pendidikan DKI Jakarta.

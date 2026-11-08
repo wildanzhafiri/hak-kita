@@ -18,5 +18,6 @@ periode: sepanjang-tahun
 sumberUtama:
   url: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
   jenis: situs-resmi
-verifikasi: belum
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-05'
 catatan: Ketentuan pendaftaran mengikuti segmen kepesertaan dan petunjuk terbaru BPJS Kesehatan.
