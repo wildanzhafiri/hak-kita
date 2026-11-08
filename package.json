@@ -16,6 +16,11 @@
     "test": "pnpm -r --if-present test",
     "validate:data": "tsx scripts/validate-data.ts",
     "validate:data:strict": "tsx scripts/validate-data.ts --strict",
+    "import:data": "tsx scripts/import-programs.ts",
+    "import:knowledge": "tsx scripts/import-knowledge.ts",
+    "knowledge:search": "tsx scripts/search-knowledge.ts",
+    "add:news": "tsx scripts/add-program-news.ts",
+    "email:test": "tsx scripts/test-program-email.ts",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm validate:data",
     "format": "prettier --write ."
   },

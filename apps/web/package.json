@@ -11,9 +11,14 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.86",
+    "@ai-sdk/react": "^4.0.168",
     "@hakkita/domain": "workspace:*",
     "@hakkita/schema": "workspace:*",
     "@heroui/react": "^3.2.7",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "ai": "^7.0.164",
     "lucide-react": "1.61.0",
     "next": "^16.4.3",
     "react": "^19.3.1",
