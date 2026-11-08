@@ -1,5 +1,20 @@
 import type { AgeOption, ConditionOption, ConditionQuestionContent, GroupOption } from './types';
 
+export const CONDITION_ACCOUNT_COPY = {
+  title: 'Penyimpanan jawaban',
+  local: 'Jawabanmu tersimpan di perangkat ini.',
+  accountPrompt: 'Simpan jawaban ke akunku',
+  accountDescription: 'Jika diaktifkan, jawaban profil ini disimpan di akunmu.',
+  accountDeleteHint: 'Matikan pilihan ini untuk menghapus profil dari akunmu.',
+  localOnly: 'Jawabanmu disimpan di perangkat, kecuali kamu memilih menyimpannya ke akun.',
+  signIn: 'Masuk untuk menyimpan jawaban ke akunmu. Tanpa akun, jawaban tetap di perangkat ini.',
+  loading: 'Memeriksa profil yang tersimpan di akunmu.',
+  saving: 'Menyimpan perubahan profil.',
+  loadingError: 'Profil akun belum dapat dimuat. Jawaban di perangkat tetap bisa digunakan.',
+  saveError: 'Profil belum berhasil disimpan ke akun. Coba lagi.',
+  deleteError: 'Profil belum berhasil dihapus dari akun. Coba lagi.',
+};
+
 export const QUESTIONS: ConditionQuestionContent[] = [
   {
     key: 'kelompok',

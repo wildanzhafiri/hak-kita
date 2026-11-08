@@ -9,6 +9,7 @@ export function BerkasQuestions({ questions, answers, onAnswer }: BerkasQuestion
           <legend>{question.teks}</legend>
           <ChoiceGroup
             name={question.id}
+            ariaLabel={question.teks}
             value={answers[question.id] ?? null}
             options={question.pilihan.map((choice) => ({
               value: choice.nilai,

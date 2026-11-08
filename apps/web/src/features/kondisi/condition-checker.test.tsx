@@ -27,6 +27,8 @@ afterEach(() => {
 describe('ConditionChecker', () => {
   it('shows question progress and a sourced potential result', () => {
     render(<ConditionChecker programs={[program]} wilayah={WILAYAH} builtOn={BUILT_ON} />);
+    expect(screen.getByText('Jawabanmu tersimpan di perangkat ini.')).toBeTruthy();
+    expect(screen.queryByRole('checkbox', { name: /Simpan jawaban ke akunku/ })).toBeNull();
     expect(
       screen.getByRole('progressbar', { name: 'Progres pertanyaan' }).getAttribute('aria-valuenow'),
     ).toBe('0');

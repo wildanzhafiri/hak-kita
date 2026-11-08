@@ -6,8 +6,15 @@ import type { Profile } from '@hakkita/schema';
 import { Button } from '@/components/ui/button';
 import { ProgressMeter } from '@/components/ui/progress-meter';
 import { useToday } from '@/hooks/use-today';
-import { AGE_OPTIONS, GRADUATION_OPTIONS, GROUP_OPTIONS, QUESTIONS } from './content';
+import {
+  AGE_OPTIONS,
+  CONDITION_ACCOUNT_COPY,
+  GRADUATION_OPTIONS,
+  GROUP_OPTIONS,
+  QUESTIONS,
+} from './content';
 import { OTHER_REGION } from './constants';
+import { ConditionAccountControls } from './condition-account-controls';
 import { ConditionQuestion } from './condition-question';
 import { MatchResults } from './match-results';
 import type { ConditionCheckerProps, ConditionOption, QuestionKey } from './types';
@@ -19,11 +26,33 @@ function answerValue(profile: Profile, key: QuestionKey): string | null {
 }
 
 export function ConditionChecker({ programs, wilayah, builtOn }: ConditionCheckerProps) {
-  const { profile, update, reset } = useConditionProfile();
+  const {
+    profile,
+    isAccountAuthenticated,
+    isAccountConfigured,
+    isAccountLoading,
+    isSaving,
+    isSavedToAccount,
+    error,
+    update,
+    setAccountSaveEnabled,
+    reset,
+  } = useConditionProfile();
   const [step, setStep] = useState(0);
   const today = useToday(builtOn);
   const questions = profile.kelompok === 'calon-mahasiswa' ? QUESTIONS : QUESTIONS.slice(0, 3);
   const question = questions[step];
+  const accountControls = (
+    <ConditionAccountControls
+      error={error}
+      isAuthenticated={isAccountAuthenticated}
+      isConfigured={isAccountConfigured}
+      isLoading={isAccountLoading}
+      isSaving={isSaving}
+      isSavedToAccount={isSavedToAccount}
+      onSaveChange={setAccountSaveEnabled}
+    />
+  );
 
   function optionsFor(key: QuestionKey): ConditionOption[] {
     if (key === 'kelompok') return GROUP_OPTIONS;
@@ -56,64 +85,78 @@ export function ConditionChecker({ programs, wilayah, builtOn }: ConditionChecke
     setStep(0);
   }
 
+  if (isAccountLoading) {
+    return <p className="panel" role="status">{CONDITION_ACCOUNT_COPY.loading}</p>;
+  }
+
   if (!question) {
     return (
-      <MatchResults
-        programs={programs}
-        wilayah={wilayah}
-        profile={profile}
-        today={today}
-        onEdit={() => setStep(0)}
-        onReset={startOver}
-      />
+      <>
+        {accountControls}
+        <MatchResults
+          programs={programs}
+          wilayah={wilayah}
+          profile={profile}
+          today={today}
+          onEdit={() => setStep(0)}
+          onReset={startOver}
+        />
+      </>
     );
   }
 
   const selected = answerValue(profile, question.key);
   return (
-    <div className="condition-layout">
-      <aside className="condition-side panel mint">
-        <ShieldCheck size={30} />
-        <h2>Kenali pilihanmu.</h2>
-        <p>Jawab beberapa pertanyaan tanpa NIK atau dokumen pribadi.</p>
-        <ol>
-          {questions.map((entry, index) => (
-            <li key={entry.key} className={index === step ? 'active' : undefined}>
-              <span>{index + 1}</span>
-              {entry.title}
-            </li>
-          ))}
-        </ol>
-        <small>Jawaban tersimpan di perangkat ini dan dapat kamu hapus kapan saja.</small>
-      </aside>
-      <div className="condition-form panel">
-        <ProgressMeter
-          value={step}
-          max={questions.length}
-          summary={`Pertanyaan ${step + 1} dari ${questions.length}`}
-          label="Progres pertanyaan"
-        />
-        <ConditionQuestion
-          title={question.title}
-          description={question.description}
-          value={selected}
-          options={optionsFor(question.key)}
-          onSelect={(value) => selectAnswer(question.key, value)}
-        />
-        <div className="condition-actions">
-          <Button
-            tone="secondary"
-            type="button"
-            isDisabled={step === 0}
-            onPress={() => setStep(step - 1)}
-          >
-            <ArrowLeft size={16} /> Kembali
-          </Button>
-          <Button type="button" isDisabled={selected === null} onPress={() => setStep(step + 1)}>
-            {step === questions.length - 1 ? 'Lihat hasil' : 'Lanjut'} <ArrowRight size={16} />
-          </Button>
+    <>
+      {accountControls}
+      <div className="condition-layout">
+        <aside className="condition-side panel mint">
+          <ShieldCheck size={30} />
+          <h2>Kenali pilihanmu.</h2>
+          <p>Jawab beberapa pertanyaan tanpa NIK atau dokumen pribadi.</p>
+          <ol>
+            {questions.map((entry, index) => (
+              <li key={entry.key} className={index === step ? 'active' : undefined}>
+                <span>{index + 1}</span>
+                {entry.title}
+              </li>
+            ))}
+          </ol>
+          <small>{CONDITION_ACCOUNT_COPY.localOnly}</small>
+        </aside>
+        <div className="condition-form panel">
+          <ProgressMeter
+            value={step}
+            max={questions.length}
+            summary={`Pertanyaan ${step + 1} dari ${questions.length}`}
+            label="Progres pertanyaan"
+          />
+          <ConditionQuestion
+            title={question.title}
+            description={question.description}
+            value={selected}
+            options={optionsFor(question.key)}
+            onSelect={(value) => selectAnswer(question.key, value)}
+          />
+          <div className="condition-actions">
+            <Button
+              tone="secondary"
+              type="button"
+              isDisabled={step === 0 || isSaving}
+              onPress={() => setStep(step - 1)}
+            >
+              <ArrowLeft size={16} /> Kembali
+            </Button>
+            <Button
+              type="button"
+              isDisabled={selected === null || isSaving}
+              onPress={() => setStep(step + 1)}
+            >
+              {step === questions.length - 1 ? 'Lihat hasil' : 'Lanjut'} <ArrowRight size={16} />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

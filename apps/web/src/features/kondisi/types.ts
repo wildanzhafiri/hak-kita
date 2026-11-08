@@ -43,8 +43,30 @@ export interface MatchResultCardProps {
 
 export interface UseConditionProfileResult {
   profile: Profile;
+  isAccountAuthenticated: boolean;
+  isAccountConfigured: boolean;
+  isAccountLoading: boolean;
+  isSaving: boolean;
+  isSavedToAccount: boolean;
+  error: string | null;
   update: (changes: Partial<Profile>) => void;
+  setAccountSaveEnabled: (enabled: boolean) => void;
   reset: () => void;
+}
+
+export interface ConditionProfileStoreResult {
+  profile: Profile | null;
+  error: string | null;
+}
+
+export interface ConditionAccountControlsProps {
+  isAuthenticated: boolean;
+  isConfigured: boolean;
+  isLoading: boolean;
+  isSaving: boolean;
+  isSavedToAccount: boolean;
+  error: string | null;
+  onSaveChange: (enabled: boolean) => void;
 }
 
 export interface GroupOption extends ConditionOption {

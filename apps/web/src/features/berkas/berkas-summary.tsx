@@ -22,7 +22,7 @@ export function BerkasSummary({ program, readiness, onReset }: BerkasSummaryProp
         </Button>
         <OfficialSiteLink url={program.sumberUtama.url} className="button secondary full" />
         <Button tone="quiet" onPress={onReset}>
-          <Trash size={14} /> Hapus isian dari perangkat ini
+          <Trash size={14} /> Hapus isian berkas
         </Button>
         <small>{PRIVACY_NOTE}</small>
       </div>

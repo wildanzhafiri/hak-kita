@@ -15,10 +15,22 @@ export interface BerkasSheetProps {
 
 export interface UseBerkasProgressResult {
   progress: BerkasProgress;
+  isLoading: boolean;
+  isSaving: boolean;
+  error: string | null;
   answer: (questionId: string, value: string) => void;
   toggle: (dokumenId: string) => void;
   setNote: (note: string) => void;
   reset: () => void;
+}
+
+export interface BerkasProgressSnapshot {
+  answers: BerkasAnswers;
+  checked: string[];
+  note: string;
+  isLoading: boolean;
+  isSaving: boolean;
+  error: string | null;
 }
 
 export interface BerkasQuestionsProps {

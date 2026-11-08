@@ -57,7 +57,7 @@ describe('BerkasSheet', () => {
   it('clears the saved progress on reset', () => {
     renderSheet();
     fireEvent.click(screen.getByLabelText(/Alamat email aktif/));
-    fireEvent.click(screen.getByRole('button', { name: /Hapus isian dari perangkat ini/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Hapus isian berkas/ }));
     expect(screen.getByText('0 dari 1 dokumen siap')).toBeTruthy();
   });
 
