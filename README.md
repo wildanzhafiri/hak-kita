@@ -8,7 +8,7 @@ Platform yang memandu warga mengurus program dan layanan pemerintah langkah demi
 | --------- | ------------------------------------------------------------------ |
 | Framework | Next.js 16 (App Router) + React 19 + TypeScript (strict)           |
 | UI        | HeroUI v3, Tailwind CSS 4, lucide-react                            |
-| Data      | Berkas YAML/JSON di repo (content-as-code), divalidasi dengan zod  |
+| Data      | Supabase dengan fallback YAML/JSON, divalidasi dengan zod          |
 | Logika    | Paket `domain` (TypeScript murni) diuji dengan Vitest              |
 | Tes UI    | Vitest, jsdom, Testing Library                                     |
 | Monorepo  | pnpm workspaces                                                    |
@@ -45,24 +45,20 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Kenali Hakmu:** Cari program di `/program` berdasarkan wilayah, kategori, atau kata kunci.
 - **Layanan Publik:** Cari panduan di `/layanan` berdasarkan wilayah, kategori, atau kata kunci.
 - **Detail program dan layanan:** Baca ringkasan, persyaratan, dan langkah pengurusan. Halaman program juga mencantumkan sumber dan status verifikasi.
-- **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar dokumen sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftarnya. Data tersimpan di browser.
-- **Rencanaku:** Simpan program, catat persiapan berkas, dan lihat tenggat. Data tersimpan di browser.
-- **Masuk dan Daftar:** Halaman akun belum tersedia. HAKKITA tetap dapat digunakan tanpa akun.
+- **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar dokumen sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftarnya. Jawaban dan catatan tersimpan di browser; centang berkas tersinkron ke akun saat masuk.
+- **Rencanaku:** Simpan program, ikuti panduan langkah, catat persiapan berkas, dan lihat tenggat. Program tersimpan dan progres centang berkas terhubung ke akun saat masuk; jawaban dan catatan berkas tetap di browser.
+- **Masuk dan Daftar:** Masuk dengan email atau Google untuk menyimpan data ke akun. Informasi publik tetap bisa dijelajahi tanpa akun.
+- **Ikuti program:** Ikuti program melalui halaman detailnya. Perubahan periode, syarat, atau dokumen yang tercatat pada data terverifikasi ditampilkan di Rencanaku setelah situs diperbarui. Pengguna dapat mengaktifkan pemberitahuan email untuk perubahan tersebut dan kabar resmi yang ditambahkan secara manual jika Supabase, Resend, dan jadwal harian sudah dikonfigurasi.
 - **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
+- **Asisten:** Tanyakan program, panduan, atau kabar resmi. Asisten mencari bahan terkurasi saat dibutuhkan, menyertakan sumber, memahami halaman yang sedang dibuka, dan meminta persetujuan sebelum menyimpan program ke akun.
 - **Data program:** KIP Kuliah, PKH, Kartu Prakerja, KTP elektronik, dan KJP Plus DKI Jakarta.
 - **Telusuri Anggaran:** Lihat ringkasan APBN terbaru yang dicantumkan beserta periode dan sumbernya, atau buka data APBD di portal resmi SIKD.
-- **Pantau Langkahmu:** Halaman saat ini menjelaskan fitur yang sedang disiapkan.
 
 ### Fitur mendatang
 
-- **Profil awal:** Isi profil singkat atau lewati langkah ini.
 - **Filter verifikasi:** Sembunyikan program yang belum diverifikasi.
-- **Ikuti program:** Terima pemberitahuan saat periode atau persyaratan berubah.
-- **Pantau Langkahmu:** Catat langkah pengurusan dan pantau beberapa program.
 - **Peta hambatan:** Lihat laporan kendala yang dirangkum menurut wilayah.
-- **Asisten AI agentik:** Memahami cerita pengguna, merangkum profil untuk dikonfirmasi, mencari program, dan menyusun rencana. Dengan tool calling, asisten dapat melakukan tindakan di HAKKITA, seperti menyimpan program atau memperbarui rencana, setelah pengguna menyetujui. Tindakan dapat dibatalkan; asisten tidak mengajukan layanan ke situs pemerintah.
 - **Cakupan data:** Tambah kriteria pencocokan serta data program dan wilayah.
-- **Pemantauan sumber:** Periksa perubahan di situs resmi sebelum memperbarui informasi.
 
 ## Struktur
 
@@ -90,6 +86,24 @@ Sumber yang digunakan sementara untuk data program dan wilayah saat ini:
 - https://jakarta.go.id/
 - https://kemendagri.go.id/
 
+### Bahan pencarian dan pemantauan sumber
+
+Ringkasan panduan resmi yang sudah diperiksa tersimpan di `data/knowledge/`. Setiap bagian membawa URL sumber dan tanggal pemeriksaan. Asisten mencari bahan tersebut bersama persyaratan dan panduan berkas yang memiliki tautan sumber saat pertanyaan memerlukannya. Program dengan status `belum` tidak masuk ke bahan pencarian. Retrieval saat ini memakai pencocokan kata tanpa embedding.
+
+Setelah migrasi `20261109110000_program_source_observations.sql` diterapkan, jalankan `pnpm import:data` lalu `pnpm import:knowledge` untuk mengisi Supabase. YAML tetap menjadi fallback ketika Supabase tidak tersedia. Perintah `pnpm validate:data` memeriksa bahan pencarian sekaligus data program.
+
+Jadwal harian `/api/cron/program-sources` memeriksa apakah respons laman sumber berubah. Pemeriksaan pertama membuat titik pembanding; perubahan berikutnya tercatat di `program_source_observations.changed_at`. Perubahan HTML belum tentu berarti ketentuan berubah. Periksa sumber resmi dan sunting data terkurasi sebelum menjadikan respons baru sebagai titik pembanding. Pemeriksaan ini tidak mengubah syarat program atau mengirim pemberitahuan kepada pengguna secara otomatis.
+
+Setelah pemeriksaan manual selesai dan data yang relevan sudah diimpor ulang, pembanding untuk satu URL dapat diterima melalui SQL Editor Supabase:
+
+```sql
+update public.program_source_observations
+set baseline_fingerprint = latest_fingerprint,
+    changed_at = null
+where source_url = 'https://alamat-sumber-resmi.go.id/'
+  and changed_at is not null;
+```
+
 ## Privasi
 
-Versi saat ini tidak meminta NIK, tidak meminta unggahan dokumen, tidak memakai akun, dan tidak mengirim data pengguna ke server mana pun. HAKKITA tidak menentukan kelayakan penerima dan tidak menghitung desil; pengecekan status resmi dilakukan di kanal pemerintah.
+HAKKITA tidak meminta NIK atau unggahan dokumen. Program yang disimpan, progres berkas, dan jawaban profil yang dipilih untuk disimpan ke akun menggunakan Supabase; informasi publik tetap dapat dijelajahi tanpa akun. HAKKITA tidak menentukan penerima program dan tidak menghitung desil; pengecekan status resmi dilakukan di kanal pemerintah.
