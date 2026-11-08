@@ -2,7 +2,12 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
-import { ProgramSchema, WilayahFileSchema, type Program } from '@hakkita/schema';
+import {
+  KnowledgeDocumentSchema,
+  ProgramSchema,
+  WilayahFileSchema,
+  type Program,
+} from '@hakkita/schema';
 import {
   buildWilayahIndex,
   checkProgram,
@@ -13,7 +18,7 @@ import {
 import type { ZodIssue } from './types';
 
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DATA_DIR = process.env.HAKKITA_DATA_DIR ?? path.join(ROOT_DIR, 'data');
+const DATA_DIR = process.env.HAKKITA_DATA_DIR?.trim() || path.join(ROOT_DIR, 'data');
 const WILAYAH_FILE = 'wilayah/wilayah.json';
 const strict = process.argv.includes('--strict');
 const today = todayWIB();
@@ -92,7 +97,7 @@ function checkCoverage(label: string, program: Program, index: WilayahIndex): vo
   }
 }
 
-function validatePrograms(index: WilayahIndex | null): void {
+function validatePrograms(index: WilayahIndex | null): Map<string, Program> {
   const dir = path.join(DATA_DIR, 'programs');
   const files = existsSync(dir)
     ? readdirSync(dir)
@@ -102,6 +107,7 @@ function validatePrograms(index: WilayahIndex | null): void {
   if (files.length === 0) reportError('programs/', 'tidak ada berkas .yaml');
 
   const seenIds = new Map<string, string>();
+  const programs = new Map<string, Program>();
   const levels = { lengkap: 0, dasar: 0, belum: 0 };
 
   for (const fileName of files) {
@@ -116,6 +122,7 @@ function validatePrograms(index: WilayahIndex | null): void {
     const duplicateOf = seenIds.get(program.id);
     if (duplicateOf) reportError(label, `id ganda dengan ${duplicateOf}`);
     seenIds.set(program.id, label);
+    programs.set(program.id, program);
 
     if (index) checkCoverage(label, program, index);
 
@@ -128,10 +135,49 @@ function validatePrograms(index: WilayahIndex | null): void {
     `\n${files.length} program: ${levels.lengkap} lengkap, ${levels.dasar} dasar, ` +
       `${levels.belum} belum diverifikasi`,
   );
+  return programs;
+}
+
+function validateKnowledgeDocuments(programs: ReadonlyMap<string, Program>): void {
+  const dir = path.join(DATA_DIR, 'knowledge');
+  const files = existsSync(dir)
+    ? readdirSync(dir)
+        .filter((file) => file.endsWith('.yaml'))
+        .sort()
+    : [];
+  if (files.length === 0) reportError('knowledge/', 'tidak ada berkas .yaml');
+
+  const seenIds = new Set<string>();
+  for (const fileName of files) {
+    const label = `knowledge/${fileName}`;
+    let raw: unknown;
+    try {
+      raw = parse(readFileSync(path.join(dir, fileName), 'utf8'));
+    } catch (error) {
+      reportError(label, `YAML tidak valid: ${(error as Error).message}`);
+      continue;
+    }
+    const parsed = KnowledgeDocumentSchema.safeParse(raw);
+    if (!parsed.success) {
+      describeIssues(parsed.error.issues).forEach((message) => reportError(label, message));
+      continue;
+    }
+    const document = parsed.data;
+    if (`${document.id}.yaml` !== fileName) reportError(label, 'ID harus sama dengan nama berkas');
+    if (seenIds.has(document.id)) reportError(label, 'ID bahan ganda');
+    seenIds.add(document.id);
+    const program = programs.get(document.programId);
+    if (!program) reportError(label, `programId ${document.programId} tidak ditemukan`);
+    else if (program.verifikasi === 'belum') {
+      reportError(label, 'Bahan dari program yang belum diverifikasi tidak boleh diindeks');
+    }
+    if (document.checkedOn > today) reportError(label, 'Tanggal pemeriksaan berada di masa depan');
+  }
+  console.log(`  bahan pengetahuan: ${files.length} berkas`);
 }
 
 console.log(`Validasi data HAKKITA (${today})${strict ? ' [strict]' : ''}\n`);
-validatePrograms(validateWilayahFile());
+validateKnowledgeDocuments(validatePrograms(validateWilayahFile()));
 console.log(`${errorCount} galat, ${warningCount} peringatan`);
 
 const failed = errorCount > 0 || (strict && warningCount > 0);

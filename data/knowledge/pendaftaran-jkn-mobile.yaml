@@ -1,0 +1,11 @@
+id: pendaftaran-jkn-mobile
+programId: pendaftaran-jkn
+sourceUrl: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+checkedOn: '2026-11-08'
+passages:
+  - id: langkah-pendaftaran
+    title: Langkah mendaftar peserta melalui Mobile JKN
+    text: Di Mobile JKN, buka menu pendaftaran peserta baru dan baca syaratnya. Proses berikutnya mencakup pengisian nomor KK di aplikasi resmi, data peserta, pilihan kelas rawat, serta verifikasi email dan nomor telepon. HAKKITA tidak menerima atau menyimpan nomor identitas tersebut.
+  - id: setelah-pendaftaran
+    title: Informasi setelah pendaftaran peserta JKN
+    text: Panduan BPJS Kesehatan menyebutkan bahwa setelah pendaftaran berhasil, informasi virtual account untuk pembayaran dikirim ke alamat email yang didaftarkan di Mobile JKN. Periksa langkah dan ketentuan terbaru di panduan resmi.

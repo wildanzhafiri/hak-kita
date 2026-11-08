@@ -1,0 +1,17 @@
+id: kip-kuliah-faq
+programId: kip-kuliah
+sourceUrl: https://kip-kuliah.kemdiktisaintek.go.id/panduan
+checkedOn: '2026-11-08'
+passages:
+  - id: tanpa-kip-kks
+    title: Mendaftar tanpa KIP atau KKS
+    text: Calon peserta yang tidak memiliki KIP atau KKS masih dapat mendaftar melalui jalur bukti keterbatasan ekonomi sesuai ketentuan. Pendapatan gabungan orang tua atau wali harus di bawah UMP domisili asal mahasiswa; pada jalur ini diperlukan SKTM. Penetapan penerima dilakukan oleh pihak resmi setelah registrasi ulang.
+  - id: nisn-tidak-terdaftar
+    title: NISN tidak terdaftar saat mendaftar
+    text: Periksa kecocokan NISN dan NPSN dengan data Dapodik sekolah. Bila data berbeda, minta operator sekolah memperbarui data sumbernya. Siswa lulusan dapat menggunakan kanal Verval Lulusan yang ditautkan dari situs resmi KIP Kuliah.
+  - id: pilihan-jalur-seleksi
+    title: Mengubah pilihan jalur seleksi
+    text: Pilihan jalur seleksi yang sudah dipilih tidak dapat dibatalkan. Peserta dapat masuk kembali untuk menambah pilihan jalur sesuai prosedur dan jadwal resmi yang berlaku.
+  - id: penetapan-penerima
+    title: Kapan penerima KIP Kuliah ditetapkan
+    text: Pengumuman penerima dilakukan setelah peserta lulus seleksi masuk perguruan tinggi dan mendaftar ulang. Perguruan tinggi melakukan pemeriksaan sebelum keputusan penerima ditetapkan.

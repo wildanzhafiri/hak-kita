@@ -1,0 +1,11 @@
+id: pkh-cek-bansos
+programId: pkh
+sourceUrl: https://cekbansos.kemensos.go.id/
+checkedOn: '2026-11-08'
+passages:
+  - id: desil-dan-usulan
+    title: Desil dan usulan bantuan sosial PKH
+    text: Situs Cek Bansos menjelaskan bahwa keluarga dalam desil 1 sampai 4 dapat diusulkan sebagai penerima PKH. Usulan tidak berarti keputusan penerima; penetapan mengikuti proses resmi pemerintah. HAKKITA tidak menghitung desil.
+  - id: pembaruan-data
+    title: Memperbarui data kesejahteraan
+    text: Bila data kesejahteraan tidak sesuai dengan keadaan sebenarnya, pembaruan dapat diajukan melalui desa atau kelurahan, dinas sosial, atau aplikasi Cek Bansos. Penghitungan ulang desil dilakukan secara berkala oleh BPS.
