@@ -16,7 +16,8 @@ import type { RencanaShellProps } from './types';
 export function RencanaShell({ children }: RencanaShellProps) {
   const pathname = usePathname();
   const hydrated = useHydrated();
-  const { entries, saved, deadlines } = useRencanaState();
+  const { entries, saved, deadlines, savedIsLoading, berkasIsLoading, berkasError } =
+    useRencanaState();
   const page =
     RENCANA_PAGE_CONTENT.find((entry) => entry.href === pathname) ?? RENCANA_SUMMARY_CONTENT;
   const section = RENCANA_NAV.find((entry) => entry.href === pathname)?.label ?? 'Ringkasan';
@@ -41,7 +42,9 @@ export function RencanaShell({ children }: RencanaShellProps) {
             tenggat: hydrated ? deadlines.length : 0,
           }}
         />
-        <p className="rencana-sidebar-note">Pilihan dan progresmu tersimpan di perangkat ini.</p>
+        <p className="rencana-sidebar-note">
+          Program dan berkasmu tersimpan di akun saat masuk. Progres langkah ada di perangkat ini.
+        </p>
       </aside>
       <div className="rencana-workspace">
         <RencanaHeader section={section} />
@@ -53,6 +56,21 @@ export function RencanaShell({ children }: RencanaShellProps) {
           <div className="rencana-main">
             {hydrated ? (
               <>
+                {savedIsLoading && (
+                  <p className="small-note" aria-live="polite">
+                    Memuat program tersimpan dari akunmu
+                  </p>
+                )}
+                {berkasIsLoading && !berkasError && (
+                  <p className="small-note" role="status">
+                    Memuat progres berkas dari akunmu
+                  </p>
+                )}
+                {berkasError && (
+                  <p role="alert" className="small-note">
+                    {berkasError}
+                  </p>
+                )}
                 {children}
                 <DeviceDataPanel />
               </>

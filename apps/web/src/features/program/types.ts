@@ -4,6 +4,7 @@ import type { DETAIL_TABS } from './content';
 
 export interface ProgramFilters {
   query: string;
+  draftQuery: string;
   kategori: string | null;
   provinsi: string | null;
   kabkota: string | null;
@@ -11,7 +12,8 @@ export interface ProgramFilters {
   provinsiOptions: Wilayah[];
   kabkotaOptions: Wilayah[];
   results: Program[];
-  setQuery: (value: string) => void;
+  setDraftQuery: (value: string) => void;
+  submitQuery: () => void;
   selectKategori: (value: string) => void;
   selectProvinsi: (value: string) => void;
   selectKabkota: (value: string) => void;
@@ -68,6 +70,14 @@ export interface StepsSectionProps {
 }
 
 export interface DetailSidebarProps {
+  program: Program;
+}
+
+export interface StartGuideButtonProps {
+  program: Program;
+}
+
+export interface FollowProgramButtonProps {
   program: Program;
 }
 

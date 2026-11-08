@@ -38,10 +38,3 @@ export const GERBANG_LABEL: Record<TipeGerbang, string> = {
   kategori: 'Syarat kategori umum',
   prosedur: 'Prosedur administrasi tanpa seleksi',
 };
-
-export const DEFAULT_STEPS = [
-  'Periksa informasi terbaru melalui kanal resmi.',
-  'Siapkan dokumen sesuai ketentuan penyelenggara.',
-  'Ikuti alur pengajuan melalui kanal resmi.',
-  'Simpan bukti pengurusan dari penyelenggara, jika tersedia.',
-] as const;

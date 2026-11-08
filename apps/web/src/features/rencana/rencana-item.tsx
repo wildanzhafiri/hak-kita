@@ -40,7 +40,7 @@ export function RencanaItem({ entry, onClear }: RencanaItemProps) {
           </Link>
         )}
         <Button tone="quiet" onPress={onClear}>
-          <Trash size={14} /> Hapus isian dari perangkat ini
+          <Trash size={14} /> Hapus isian berkas
         </Button>
       </div>
     </li>

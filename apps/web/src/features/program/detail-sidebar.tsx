@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { FileCheck } from 'lucide-react';
-import { berkasPath, hostnameOf } from '@hakkita/domain';
+import { berkasPath, hostnameOf, isLayanan } from '@hakkita/domain';
 import { OfficialSiteLink } from '@/components/program/official-site-link';
 import { SaveButton } from '@/components/program/save-button';
+import { StartGuideButton } from './start-guide-button';
+import { FollowProgramButton } from './follow-program-button';
 import type { DetailSidebarProps } from './types';
 
 export function DetailSidebar({ program }: DetailSidebarProps) {
@@ -29,6 +31,8 @@ export function DetailSidebar({ program }: DetailSidebarProps) {
         className={program.berkas ? 'button secondary full' : 'button full'}
       />
       <SaveButton program={program} variant="button" />
+      {!isLayanan(program) && <FollowProgramButton program={program} />}
+      <StartGuideButton program={program} />
       <small className="mt-5 block border-t border-[#dbe5ef] pt-4 text-xs leading-5 text-[#617087]">
         Sumber: {host}. HAKKITA tidak mengajukan permohonan atas namamu.
       </small>

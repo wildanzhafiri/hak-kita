@@ -2,7 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { serializeBerkasProgress } from '@hakkita/domain';
-import { BERKAS_STORAGE_PREFIX, SAVED_STORAGE_KEY } from '@/config/storage';
+import {
+  BERKAS_STORAGE_PREFIX,
+  SAVED_STORAGE_KEY,
+  STEP_PROGRESS_STORAGE_PREFIX,
+} from '@/config/storage';
 import { BERKAS, BUILT_ON, WILAYAH, makeProgram } from '@/test/fixtures';
 import { DeviceDataPanel } from './device-data-panel';
 import { RencanaBerkas } from './rencana-berkas';
@@ -15,6 +19,60 @@ import { RencanaSummary } from './rencana-summary';
 import { useRencanaState } from './rencana-context';
 
 vi.mock('next/navigation', () => ({ usePathname: () => '/rencanaku/berkas' }));
+vi.mock('@/hooks/use-auth', () => ({
+  useAuth: () => ({ user: null, isReady: true, isConfigured: true }),
+}));
+vi.mock('@/hooks/use-saved-ids', async () => {
+  const React = await import('react');
+  const { SAVED_STORAGE_KEY } = await import('@/config/storage');
+  const listeners = new Set<() => void>();
+  let lastValue: string | null = null;
+  let lastIds: string[] = [];
+
+  function readIds() {
+    const saved = window.localStorage.getItem(SAVED_STORAGE_KEY);
+    if (saved !== lastValue) {
+      lastValue = saved;
+      lastIds = saved ? (JSON.parse(saved) as string[]) : [];
+    }
+    return lastIds;
+  }
+
+  function writeIds(ids: string[]) {
+    lastValue = JSON.stringify(ids);
+    lastIds = ids;
+    window.localStorage.setItem(SAVED_STORAGE_KEY, lastValue);
+    listeners.forEach((listener) => listener());
+  }
+
+  return {
+    useSavedIds() {
+      const ids = React.useSyncExternalStore(
+        (listener) => {
+          listeners.add(listener);
+          return () => listeners.delete(listener);
+        },
+        readIds,
+        readIds,
+      );
+      const toggle = async (id: string) => {
+        const nextIds = ids.includes(id) ? ids.filter((savedId) => savedId !== id) : [...ids, id];
+        writeIds(nextIds);
+      };
+      const clear = async () => {
+        writeIds([]);
+      };
+      return {
+        ids,
+        toggle,
+        clear,
+        isLoading: false,
+        isSaving: false,
+        error: null,
+      };
+    },
+  };
+});
 
 const PROGRAMS = [
   makeProgram({
@@ -64,6 +122,38 @@ afterEach(() => {
 });
 
 describe('RencanaSummary', () => {
+  it('resumes a guide started without saving a program to an account', () => {
+    window.localStorage.setItem(
+      `${STEP_PROGRESS_STORAGE_PREFIX}pkh`,
+      '{"completed":[],"stuck":null}',
+    );
+    renderInRencana(<RencanaSummary />);
+    expect(screen.getByRole('heading', { name: 'Lanjutkan panduan PKH.' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Lihat panduan/ }).getAttribute('href')).toBe(
+      '#panduan-langkah',
+    );
+  });
+
+  it('keeps self-marked progress and shows sourced help for a stuck step', async () => {
+    saveProgramIds(['kip-kuliah']);
+    renderInRencana(<RencanaSummary />);
+    expect(screen.getByRole('heading', { name: 'Panduan langkahmu' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Tandai selesai langkah 1 KIP Kuliah' }));
+    expect(window.localStorage.getItem(`${STEP_PROGRESS_STORAGE_PREFIX}kip-kuliah`)).toContain(
+      '"completed":[0]',
+    );
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Saya terkendala pada langkah 2 KIP Kuliah' }),
+    );
+    fireEvent.click(screen.getByRole('button', { name: /Pilih kendala berkas/ }));
+    fireEvent.click(await screen.findByRole('option', { name: 'NISN tidak dikenali' }));
+    expect(screen.getByText('Minta operator sekolah memperbaiki data.')).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Lihat sumber/ }).getAttribute('href')).toBe(
+      'https://contoh.go.id/panduan',
+    );
+    expect(screen.getByText(/bukan status pengajuan di kanal pemerintah/)).toBeTruthy();
+  });
+
   it('invites the visitor to explore when nothing has been saved or started', () => {
     renderInRencana(<RencanaSummary />);
     expect(screen.getByRole('heading', { name: 'Mulai dari satu program.' })).toBeTruthy();
@@ -133,19 +223,19 @@ describe('RencanaBerkas', () => {
   it('moves a sheet back to the suggestions after its entries are cleared', () => {
     saveBerkas({ ekonomi: 'kip' }, ['email']);
     renderInRencana(<RencanaBerkas />);
-    fireEvent.click(screen.getByRole('button', { name: /Hapus isian dari perangkat ini/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Hapus isian berkas/ }));
     expect(screen.getByText('Belum ada berkas yang kamu siapkan.')).toBeTruthy();
     expect(screen.getByRole('link', { name: /KIP Kuliah/ })).toBeTruthy();
   });
 });
 
 describe('RencanaSaved', () => {
-  it('lists saved programs and removes one when it is unsaved', () => {
+  it('asks a signed-out visitor to log in before saving a program', () => {
     saveProgramIds(['pkh']);
     renderInRencana(<RencanaSaved />);
     expect(screen.getByRole('link', { name: 'PKH' })).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }));
-    expect(screen.getByText('Belum ada program tersimpan.')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Simpan PKH' }));
+    expect(screen.getByRole('dialog', { name: 'Simpan program ke akunmu' })).toBeTruthy();
   });
 });
 
@@ -202,9 +292,9 @@ describe('DeviceDataPanel', () => {
     saveProgramIds(['pkh']);
     saveBerkas({ ekonomi: 'kip' }, ['email']);
     renderInRencana(<DeviceDataPanel />);
-    fireEvent.click(screen.getByRole('button', { name: /Hapus semua data di perangkat ini/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Kosongkan Rencanaku/ }));
     expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('["pkh"]');
-    fireEvent.click(screen.getByRole('button', { name: 'Ya, hapus semuanya' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ya, kosongkan' }));
     expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('[]');
     expect(window.localStorage.getItem(`${BERKAS_STORAGE_PREFIX}kip-kuliah`)).toBe(
       serializeBerkasProgress({ answers: {}, checked: [], note: '' }),
@@ -214,9 +304,9 @@ describe('DeviceDataPanel', () => {
   it('can be cancelled without deleting anything', () => {
     saveProgramIds(['pkh']);
     renderInRencana(<DeviceDataPanel />);
-    fireEvent.click(screen.getByRole('button', { name: /Hapus semua data di perangkat ini/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Kosongkan Rencanaku/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Batal' }));
     expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('["pkh"]');
-    expect(screen.getByRole('button', { name: /Hapus semua data di perangkat ini/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Kosongkan Rencanaku/ })).toBeTruthy();
   });
 });

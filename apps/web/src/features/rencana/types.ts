@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import type { Program, Wilayah } from '@hakkita/schema';
+import type { ObstacleReportStage, Program, Wilayah } from '@hakkita/schema';
 import type {
   BerkasEntry,
   BerkasReadiness,
@@ -20,18 +20,33 @@ export interface UseRencanaOptions {
 }
 
 export interface RencanaState {
+  programs: Program[];
   today: string;
   wilayah: Wilayah[];
   builtOn: string;
   entries: RencanaEntry[];
   untouched: ProgramWithBerkas[];
   saved: Program[];
+  guided: Program[];
+  savedIsLoading: boolean;
+  savedError: string | null;
+  berkasIsLoading: boolean;
+  berkasError: string | null;
   deadlines: Deadline[];
   nextStep: NextStep;
   overall: BerkasReadiness;
   clearBerkas: (programId: string) => void;
   toggleSaved: (programId: string) => void;
   clearAll: () => void;
+}
+
+export interface RencanaFollowUpdatesProps {
+  programs: Program[];
+  isEmailAvailable: boolean;
+}
+
+export interface RencanaSummaryProps {
+  isEmailAvailable?: boolean;
 }
 
 export interface RencanaProviderProps extends UseRencanaOptions {
@@ -97,3 +112,28 @@ export interface DeadlineRowProps {
 export interface ClearAllButtonProps {
   onConfirm: () => void;
 }
+
+export interface RencanaStepGuideProps {
+  program: Program;
+}
+
+export interface RencanaStepHelpProps {
+  program: Program;
+}
+
+export interface RencanaObstacleReportProps {
+  programId: string;
+}
+
+export interface RencanaTurnstileProps {
+  siteKey: string;
+  resetKey: number;
+  onToken: (token: string) => void;
+}
+
+export interface ObstacleReportResponse {
+  accepted?: boolean;
+  error?: string;
+}
+
+export type SelectedObstacleStage = ObstacleReportStage | '';

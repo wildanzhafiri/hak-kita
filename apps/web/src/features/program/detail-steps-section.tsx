@@ -1,9 +1,9 @@
-import { DEFAULT_STEPS } from './constants';
+import { programSteps } from '@hakkita/domain';
 import { DetailSection } from './detail-section';
 import type { StepsSectionProps } from './types';
 
 export function DetailStepsSection({ program }: StepsSectionProps) {
-  const steps = program.langkah.length > 0 ? program.langkah : DEFAULT_STEPS;
+  const steps = programSteps(program);
   return (
     <DetailSection id="langkah" title="Langkah pengurusan">
       <ol className="mt-5 flex flex-col gap-[23px]">

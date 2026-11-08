@@ -35,6 +35,13 @@ export function nextStepCopy(step: NextStep): NextStepCopy {
         action: { label: 'Buka situs resmi', href: step.program.sumberUtama.url, external: true },
         readiness: null,
       };
+    case 'continue-guide':
+      return {
+        title: `Lanjutkan panduan ${step.program.nama}.`,
+        detail: 'Lihat langkah yang sudah kamu tandai dan lanjutkan dari sana.',
+        action: { label: 'Lihat panduan', href: '#panduan-langkah', external: false },
+        readiness: null,
+      };
     case 'start-berkas':
       return {
         title: `Siapkan berkas untuk ${step.program.nama}.`,

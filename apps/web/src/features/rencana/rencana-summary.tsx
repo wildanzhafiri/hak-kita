@@ -6,14 +6,38 @@ import { BerkasMiniRow } from './berkas-mini-row';
 import { PROGRESS_NOTE, SUMMARY_PREVIEW_COUNT } from './constants';
 import { DeadlineRow } from './deadline-row';
 import { NextStepCard } from './next-step-card';
+import { RencanaStepGuide } from './rencana-step-guide';
+import { RencanaFollowUpdates } from './rencana-follow-updates';
 import { useRencanaState } from './rencana-context';
+import type { RencanaSummaryProps } from './types';
 
-export function RencanaSummary() {
-  const { nextStep, entries, deadlines, overall } = useRencanaState();
+export function RencanaSummary({ isEmailAvailable = false }: RencanaSummaryProps) {
+  const { programs, nextStep, entries, deadlines, overall, guided } = useRencanaState();
 
   return (
     <>
       <NextStepCard step={nextStep} />
+      <RencanaFollowUpdates programs={programs} isEmailAvailable={isEmailAvailable} />
+      {guided.length > 0 && (
+        <section
+          id="panduan-langkah"
+          className="grid gap-5 scroll-mt-28"
+          aria-labelledby="panduan-langkah-title"
+        >
+          <div>
+            <h2 id="panduan-langkah-title" className="text-2xl font-bold text-[#1b304c]">
+              Panduan langkahmu
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[#617087]">
+              Tandai langkah yang sudah kamu lakukan. Progres ini kamu isi sendiri dan bukan status
+              pengajuan di kanal pemerintah.
+            </p>
+          </div>
+          {guided.map((program) => (
+            <RencanaStepGuide key={program.id} program={program} />
+          ))}
+        </section>
+      )}
       {entries.length > 1 && (
         <section className="panel">
           <h2>Kesiapan semua berkas</h2>
