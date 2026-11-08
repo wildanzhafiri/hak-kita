@@ -30,7 +30,10 @@ export interface ComingSoonProps {
   action: { href: string; label: string };
 }
 
-export interface SearchDialogProps {
-  open: boolean;
-  onClose: () => void;
+export interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export interface AuthNavActionProps {
+  currentPath: string;
 }

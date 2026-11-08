@@ -1,12 +1,33 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { SAVED_STORAGE_KEY } from '@/config/storage';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SaveButton } from './save-button';
+
+const { authState, savedState } = vi.hoisted(() => ({
+  authState: { user: null as { id: string } | null, isReady: true, isConfigured: true },
+  savedState: {
+    ids: [] as string[],
+    toggle: vi.fn<() => Promise<void>>(),
+    clear: vi.fn<() => Promise<void>>(),
+    isLoading: false,
+    isSaving: false,
+    error: null as string | null,
+  },
+}));
+
+vi.mock('@/hooks/use-auth', () => ({ useAuth: () => authState }));
+vi.mock('@/hooks/use-saved-ids', () => ({ useSavedIds: () => savedState }));
 
 const PROGRAM = { id: 'pkh', nama: 'PKH' };
 
 describe('SaveButton', () => {
-  it('saves and unsaves a program on the device', () => {
+  beforeEach(() => {
+    authState.user = null;
+    savedState.ids = [];
+    savedState.error = null;
+    savedState.toggle.mockClear();
+  });
+
+  it('asks the visitor to sign in before saving a program', () => {
     render(<SaveButton program={PROGRAM} />);
     const button = screen.getByRole('button', { name: 'Simpan PKH' });
     expect(button.getAttribute('aria-pressed')).toBe('false');
@@ -15,26 +36,28 @@ describe('SaveButton', () => {
     expect(button.classList.contains('save-button')).toBe(true);
 
     fireEvent.click(button);
-    const savedButton = screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' });
-    expect(savedButton).toBeTruthy();
-    expect(savedButton.querySelector('svg')?.getAttribute('fill')).toBe('currentColor');
-    expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('["pkh"]');
-
-    fireEvent.click(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }));
-    expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('[]');
+    expect(screen.getByRole('dialog', { name: 'Simpan program ke akunmu' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Masuk' }).getAttribute('href')).toContain('save=pkh');
+    expect(savedState.toggle).not.toHaveBeenCalled();
   });
 
-  it('restores the saved state on the next visit', () => {
-    window.localStorage.setItem(SAVED_STORAGE_KEY, '["pkh"]');
+  it('saves for the signed-in account', () => {
+    authState.user = { id: 'user-1' };
     render(<SaveButton program={PROGRAM} />);
-    expect(
-      screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }).getAttribute('aria-pressed'),
-    ).toBe('true');
+    fireEvent.click(screen.getByRole('button', { name: 'Simpan PKH' }));
+    expect(savedState.toggle).toHaveBeenCalledWith('pkh');
   });
 
-  it('shows a labelled text button in the detail sidebar variant', () => {
+  it('shows the account prompt in the detail sidebar variant', () => {
     render(<SaveButton program={PROGRAM} variant="button" />);
     fireEvent.click(screen.getByRole('button', { name: /Simpan ke Rencanaku/ }));
-    expect(screen.getByRole('button', { name: /Tersimpan di Rencanaku/ })).toBeTruthy();
+    expect(screen.getByRole('dialog', { name: 'Simpan program ke akunmu' })).toBeTruthy();
+  });
+
+  it('does not render account errors inside each program card button', () => {
+    authState.user = { id: 'user-1' };
+    savedState.error = 'Simpanan akun belum dapat dimuat. Coba muat ulang halaman.';
+    render(<SaveButton program={PROGRAM} />);
+    expect(screen.queryByRole('alert')).toBeNull();
   });
 });

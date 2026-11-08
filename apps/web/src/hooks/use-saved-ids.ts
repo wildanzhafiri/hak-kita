@@ -1,20 +1,50 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
-import { parseSavedIds, serializeSavedIds, toggleSavedId } from '@hakkita/domain';
-import { SAVED_STORAGE_KEY } from '@/config/storage';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
+import { useAuth } from './use-auth';
+import {
+  clearSavedPrograms,
+  getSavedProgramsSnapshot,
+  loadSavedPrograms,
+  retrySavedPrograms,
+  subscribeSavedPrograms,
+  toggleSavedProgram,
+} from './saved-program-store';
 import type { UseSavedIdsResult } from './types';
-import { useStoredValue } from './use-stored-value';
 
 export function useSavedIds(): UseSavedIdsResult {
-  const [raw, store] = useStoredValue(SAVED_STORAGE_KEY);
-  const ids = useMemo(() => parseSavedIds(raw), [raw]);
+  const { user, isReady, isConfigured } = useAuth();
+  const userId = user?.id ?? null;
+  const snapshot = useSyncExternalStore(
+    (listener) => subscribeSavedPrograms(userId, listener),
+    () => getSavedProgramsSnapshot(userId),
+    () => getSavedProgramsSnapshot(null),
+  );
+
+  useEffect(() => {
+    if (userId) void loadSavedPrograms(userId);
+  }, [userId]);
 
   const toggle = useCallback(
-    (id: string) => store(serializeSavedIds(toggleSavedId(ids, id))),
-    [ids, store],
+    async (programId: string) => {
+      if (userId) await toggleSavedProgram(userId, programId);
+    },
+    [userId],
   );
-  const clear = useCallback(() => store(serializeSavedIds([])), [store]);
 
-  return { ids, toggle, clear };
+  const clear = useCallback(async () => {
+    if (userId) await clearSavedPrograms(userId);
+  }, [userId]);
+
+  const retry = useCallback(async () => {
+    if (userId) await retrySavedPrograms(userId);
+  }, [userId]);
+
+  return {
+    ...snapshot,
+    isLoading: snapshot.isLoading || (isConfigured && !isReady),
+    toggle,
+    clear,
+    retry,
+  };
 }

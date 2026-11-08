@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import type { Program, TingkatVerifikasi } from '@hakkita/schema';
 
@@ -34,6 +35,15 @@ export interface SaveButtonProps {
   program: Pick<Program, 'id' | 'nama'>;
   variant?: 'icon' | 'button';
   className?: string;
+}
+
+export interface SavePromptProps {
+  trigger: ReactNode;
+  open: boolean;
+  onOpenChange: (isOpen: boolean) => void;
+  programId: string;
+  currentPath: string;
+  isConfigured: boolean;
 }
 
 export interface OfficialSiteLinkProps {

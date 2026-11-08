@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { Bookmark, Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Logo } from './logo';
+import { AuthNavAction } from './auth-nav-action';
 
 const NAVIGATION = [
   { href: '/', label: 'Beranda' },
@@ -70,9 +71,7 @@ export function Header() {
               <Bookmark size={16} />
               <span>Rencanaku</span>
             </Link>
-            <Link className="nav-login" href="/masuk">
-              Masuk
-            </Link>
+            <AuthNavAction currentPath={pathname} />
           </div>
         </nav>
       </div>

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { ComingSoon } from '@/components/layout/coming-soon';
-import { DAFTAR_CONTENT } from './content';
+import { AuthPage } from '@/features/auth/auth-page';
+import type { AuthPageProps } from '@/features/auth/types';
 
 export const metadata: Metadata = { title: 'Daftar' };
 
-export default function DaftarPage() {
-  return <ComingSoon {...DAFTAR_CONTENT} />;
+export default function DaftarPage({ searchParams }: Pick<AuthPageProps, 'searchParams'>) {
+  return <AuthPage mode="signup" searchParams={searchParams} />;
 }

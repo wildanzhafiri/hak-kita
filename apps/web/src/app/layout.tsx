@@ -3,6 +3,8 @@ import './globals.css';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { SiteFrame } from '@/components/layout/site-frame';
+import { AuthProvider } from '@/components/layout/auth-provider';
+import { AssistantChat } from '@/features/assistant/assistant-chat';
 import type { RootLayoutProps } from './types';
 
 export const metadata: Metadata = {
@@ -16,11 +18,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="id">
+    <html lang="id" data-scroll-behavior="smooth">
       <body>
-        <SiteFrame header={<Header />} footer={<Footer />}>
-          {children}
-        </SiteFrame>
+        <AuthProvider>
+          <SiteFrame header={<Header />} footer={<Footer />}>
+            {children}
+          </SiteFrame>
+          <AssistantChat />
+        </AuthProvider>
       </body>
     </html>
   );
