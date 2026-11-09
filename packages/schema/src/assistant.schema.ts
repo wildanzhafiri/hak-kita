@@ -16,7 +16,6 @@ export const AssistantRequestSchema = z.object({
     )
     .min(1)
     .max(MAX_ASSISTANT_MESSAGE_COUNT),
-  turnstileToken: z.string().max(2_048).optional(),
   currentPath: z.string().max(180).regex(/^\/[a-z0-9/-]*$/).optional(),
 });
 
