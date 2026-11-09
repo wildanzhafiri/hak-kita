@@ -16,30 +16,6 @@ function getClientKey(request: NextRequest): string {
   return forwardedFor?.split(',')[0]?.trim().slice(0, 100) || 'unknown';
 }
 
-async function verifyTurnstile(token: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return false;
-
-  try {
-    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ secret, response: token }),
-      signal: AbortSignal.timeout(5_000),
-    });
-    if (!response.ok) return false;
-    const result: unknown = await response.json();
-    return (
-      typeof result === 'object' &&
-      result !== null &&
-      'success' in result &&
-      result.success === true
-    );
-  } catch {
-    return false;
-  }
-}
-
 export async function POST(request: NextRequest) {
   const contentLength = Number(request.headers.get('content-length'));
   if (Number.isFinite(contentLength) && contentLength > REQUEST_BODY_LIMIT) {
@@ -95,15 +71,6 @@ export async function POST(request: NextRequest) {
     userId = data.user?.id ?? null;
   }
 
-  if (!userId) {
-    if (!parsed.data.turnstileToken) {
-      return NextResponse.json({ error: 'Selesaikan verifikasi keamanan dulu.' }, { status: 400 });
-    }
-    if (!(await verifyTurnstile(parsed.data.turnstileToken))) {
-      return NextResponse.json({ error: 'Verifikasi gagal. Coba ulangi.' }, { status: 400 });
-    }
-  }
-
   try {
     const tools = createAssistantTools(accountClient, userId);
     const uiMessages = await validateUIMessages({ messages: parsed.data.messages, tools });
@@ -129,7 +96,7 @@ export async function POST(request: NextRequest) {
       model: gateway.chatModel(model),
       system: userId
         ? `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}`
-        : `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}\n\nPengguna belum masuk. Jangan panggil getMyPlan atau saveProgramToPlan. Jelaskan bahwa pengguna perlu masuk sebelum menyimpan program atau melihat Rencanaku.`,
+        : `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}\n\nPengguna belum masuk. Jawab pertanyaan umum dari data publik seperti biasa tanpa meminta pengguna masuk. Jangan panggil getMyPlan atau saveProgramToPlan dan jangan menyiratkan bahwa kamu dapat melihat data akun pengguna. Jika ditanya tentang Rencanaku atau data akun lain, jelaskan bahwa kamu tidak dapat mengaksesnya sebelum pengguna masuk. Menyimpan program ke Rencanaku juga memerlukan akun.`,
       messages: await convertToModelMessages(uiMessages, { tools }),
       tools,
       toolApproval: { saveProgramToPlan: 'user-approval' },
