@@ -4,27 +4,19 @@ import { ArrowUp, LoaderCircle, MessageCircle, RotateCcw, ShieldCheck } from 'lu
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { TextAreaInput } from '@/components/ui/text-area';
-import { Turnstile } from '@/components/ui/turnstile';
 import { AssistantMessage } from './assistant-message';
 import { ASSISTANT_ERROR_COPY, ASSISTANT_PRIVACY_NOTE, ASSISTANT_PROMPTS } from './content';
 import { useAssistantChat } from './use-assistant-chat';
 
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-
 export function AssistantChat() {
   const {
-    user,
     isOpen,
     setIsOpen,
     input,
     setInput,
-    turnstileResetKey,
-    setTurnstileToken,
     listRef,
     messages,
     isBusy,
-    isTurnstileReady,
-    isConfiguredForGuests,
     isMessageLimitReached,
     canSend,
     pageLabel,
@@ -110,7 +102,7 @@ export function AssistantChat() {
           ) : (
             messages.map((message) => (
               <AssistantMessage
-                isApprovalReady={isTurnstileReady && !isBusy}
+                isApprovalReady={!isBusy}
                 key={message.id}
                 message={message}
                 onApproval={handleApproval}
@@ -134,18 +126,10 @@ export function AssistantChat() {
           className="shrink-0 border-t border-[#e1e7ee] bg-white px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 md:px-8 md:pb-6"
           onSubmit={handleSubmit}
         >
-          {!user && TURNSTILE_SITE_KEY && (
-            <Turnstile
-              label="Verifikasi keamanan sebelum mengirim pesan"
-              onToken={setTurnstileToken}
-              resetKey={turnstileResetKey}
-              siteKey={TURNSTILE_SITE_KEY}
-            />
-          )}
           <label className="sr-only" htmlFor="assistant-message">
             Tulis pertanyaan
           </label>
-          <div className="flex items-end gap-2 rounded-xl border border-[#cbd7e4] bg-white p-2 shadow-[0_2px_8px_#17395b0a] focus-within:border-[#196dcc] focus-within:ring-2 focus-within:ring-[#196dcc]/10">
+          <div className="assistant-message-input flex items-end gap-2 rounded-xl border border-[#cbd7e4] bg-white p-2 shadow-[0_2px_8px_#17395b0a] focus-within:border-[#196dcc] focus-within:ring-2 focus-within:ring-[#196dcc]/10">
             <TextAreaInput
               className="max-h-32 min-h-10 flex-1 resize-none border-0 px-2 py-2 shadow-none focus:ring-0 focus-visible:outline-none"
               id="assistant-message"
@@ -168,9 +152,6 @@ export function AssistantChat() {
           <p className="mt-2 hidden text-[11px] leading-4 text-[#728095] sm:block">
             Enter untuk mengirim, Shift+Enter untuk baris baru.
           </p>
-          {!isConfiguredForGuests && (
-            <p className="mt-2 text-xs text-[#68788d]">Masuk ke akun untuk menggunakan asisten.</p>
-          )}
           {isMessageLimitReached && (
             <p className="mt-2 text-xs text-[#68788d]">Mulai percakapan baru untuk melanjutkan.</p>
           )}

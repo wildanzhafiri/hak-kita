@@ -157,6 +157,9 @@ summary:focus-visible {
   outline: 3px solid #e5a328;
   outline-offset: 4px;
 }
+.assistant-message-input textarea:focus-visible {
+  outline: none;
+}
 ::selection {
   background: var(--lime);
   color: var(--dark);

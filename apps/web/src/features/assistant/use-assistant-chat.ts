@@ -9,33 +9,22 @@ import { useAuth } from '@/hooks/use-auth';
 import { markSavedProgram } from '@/hooks/saved-program-store';
 import { getSavedProgramIds } from './assistant-result';
 
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-
 export function useAssistantChat() {
   const pathname = usePathname();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const [transport] = useState(() => new DefaultChatTransport({ api: '/api/assistant' }));
-
-  function clearTurnstile() {
-    setTurnstileToken('');
-    setTurnstileResetKey((value) => value + 1);
-  }
 
   const { messages, sendMessage, addToolApprovalResponse, setMessages, status, error } = useChat({
     transport,
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
     onFinish: ({ message }) => {
-      clearTurnstile();
       const userId = user?.id;
       if (!userId) return;
       getSavedProgramIds(message).forEach((programId) => markSavedProgram(userId, programId));
     },
-    onError: clearTurnstile,
   });
 
   useEffect(() => {
@@ -44,10 +33,8 @@ export function useAssistantChat() {
   }, [isOpen, messages, status]);
 
   const isBusy = status === 'submitted' || status === 'streaming';
-  const isTurnstileReady = Boolean(user) || Boolean(turnstileToken);
-  const isConfiguredForGuests = Boolean(user) || Boolean(TURNSTILE_SITE_KEY);
   const isMessageLimitReached = messages.length >= MAX_ASSISTANT_MESSAGE_COUNT;
-  const canSend = Boolean(input.trim()) && !isBusy && isTurnstileReady && !isMessageLimitReached;
+  const canSend = Boolean(input.trim()) && !isBusy && !isMessageLimitReached;
   const pageSegments = pathname.split('/').filter(Boolean);
   const pagePart = ['program', 'layanan', 'kenali-hakmu', 'urus-kebutuhanmu'].includes(pageSegments[0] ?? '')
     ? pageSegments[1] ?? pageSegments[0]
@@ -59,7 +46,7 @@ export function useAssistantChat() {
   function handleSend() {
     const text = input.trim();
     if (!text || !canSend) return;
-    void sendMessage({ text }, { body: { turnstileToken, currentPath: pathname } });
+    void sendMessage({ text }, { body: { currentPath: pathname } });
     setInput('');
   }
 
@@ -75,17 +62,16 @@ export function useAssistantChat() {
   }
 
   function handleApproval(approvalId: string, approved: boolean) {
-    if (isBusy || !isTurnstileReady) return;
+    if (isBusy) return;
     void addToolApprovalResponse({
       id: approvalId,
       approved,
-      options: { body: { turnstileToken, currentPath: pathname } },
+      options: { body: { currentPath: pathname } },
     });
   }
 
   function handleNewConversation() {
     setMessages([]);
-    clearTurnstile();
   }
 
   return {
@@ -94,13 +80,9 @@ export function useAssistantChat() {
     setIsOpen,
     input,
     setInput,
-    turnstileResetKey,
-    setTurnstileToken,
     listRef,
     messages,
     isBusy,
-    isTurnstileReady,
-    isConfiguredForGuests,
     isMessageLimitReached,
     canSend,
     pageLabel,

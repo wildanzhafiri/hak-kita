@@ -8,7 +8,7 @@ export const ASSISTANT_PROMPTS = [
 ] as const;
 
 export const ASSISTANT_PRIVACY_NOTE =
-  'Percakapan tidak disimpan ke akun HAKKITA. Pesan dikirim ke layanan AI untuk diproses. Jangan masukkan NIK, alamat, kata sandi, atau data pribadi.';
+  'Kamu bisa bertanya tanpa masuk. Data Rencanaku hanya bisa dibaca setelah kamu masuk. Pesan dikirim ke layanan AI untuk diproses; jangan masukkan NIK, alamat, kata sandi, atau data pribadi.';
 
 export const ASSISTANT_ERROR_COPY =
   'Pesan belum terkirim. Periksa koneksi atau konfigurasi asisten, lalu coba lagi.';
