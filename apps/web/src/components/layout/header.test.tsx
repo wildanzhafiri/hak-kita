@@ -4,7 +4,10 @@ import { Header } from './header';
 
 let pathname = '/';
 
-vi.mock('next/navigation', () => ({ usePathname: () => pathname }));
+vi.mock('next/navigation', () => ({
+  usePathname: () => pathname,
+  useRouter: () => ({ replace: vi.fn(), refresh: vi.fn() }),
+}));
 
 afterEach(() => {
   pathname = '/';
