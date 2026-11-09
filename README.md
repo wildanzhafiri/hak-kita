@@ -22,12 +22,40 @@ Prasyarat: **Node.js 22.12 atau lebih baru** dan **pnpm 11** (`corepack enable` 
 git clone <url-repositori-ini>
 cd hakkita
 pnpm install
+```
+
+Untuk menjalankan aplikasi lokal, salin template env ke folder aplikasi lalu isi nilai yang dibutuhkan:
+
+```powershell
+Copy-Item .env.example apps/web/.env.local
 pnpm dev
 ```
 
-Buka http://localhost:3000. Tidak ada variabel lingkungan atau database yang dibutuhkan untuk menjalankan versi saat ini.
+Buka http://localhost:3000. Tanpa env, halaman publik tetap memakai data YAML/JSON lokal. Login, sinkronisasi akun, asisten AI, dan email memerlukan layanan serta env masing-masing. Jangan commit file `.env.local`.
 
-Konfigurasi lingkungan belum diperlukan untuk menjalankan versi saat ini. Jika integrasi yang memerlukan kunci diaktifkan, salin `.env.example` ke `apps/web/.env.local`. Jangan commit `.env.local` atau mengekspos kunci rahasia di kode sisi browser.
+### Environment variables
+
+`.env.example` di root repo adalah daftar lengkap nama variabel. Isi hanya nilai untuk layanan yang ingin kamu jalankan.
+
+| Variabel | Dipakai untuk | Jenis |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Alamat proyek Supabase | Publik |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Koneksi browser ke Supabase | Publik |
+| `SUPABASE_SERVICE_ROLE_KEY` | Akses server untuk data dan proses akun | Rahasia |
+| `DEMO_OFFLINE` | Isi `true` untuk memaksa fallback YAML/JSON | Opsional |
+| `AI_API_KEY` | Kunci API AI | Rahasia |
+| `AI_GATEWAY_BASE_URL` | URL endpoint AI | Konfigurasi |
+| `AI_GATEWAY_MODEL` | ID model AI | Konfigurasi |
+| `TOOL_APPROVAL_SECRET` | Menandatangani persetujuan tindakan asisten | Rahasia |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Widget Turnstile di browser | Publik |
+| `TURNSTILE_SECRET_KEY` | Verifikasi Turnstile di server | Rahasia |
+| `RESEND_API_KEY` | Mengirim pemberitahuan email | Rahasia |
+| `EMAIL_FROM` | Alamat pengirim yang diverifikasi di Resend | Konfigurasi |
+| `HAKKITA_SITE_URL` | URL utama situs untuk tautan email | Konfigurasi |
+| `CRON_SECRET` | Melindungi endpoint jadwal harian | Rahasia |
+| `HAKKITA_DATA_DIR` | Folder data alternatif untuk skrip impor | Opsional |
+
+Nilai dengan awalan `NEXT_PUBLIC_` memang digunakan browser dan tidak boleh berisi rahasia. Jangan pernah membagikan atau memasukkan kunci rahasia ke variabel tersebut. Aplikasi dan skrip impor membaca satu file `apps/web/.env.local`, jadi tidak perlu membuat salinan kedua di root repo. Di Vercel, masukkan variabel melalui **Project Settings → Environment Variables**, bukan melalui file repo.
 
 Perintah lain:
 
@@ -45,8 +73,8 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Kenali Hakmu:** Cari program di `/program` berdasarkan wilayah, kategori, atau kata kunci.
 - **Layanan Publik:** Cari panduan di `/layanan` berdasarkan wilayah, kategori, atau kata kunci.
 - **Detail program dan layanan:** Baca ringkasan, persyaratan, dan langkah pengurusan. Halaman program juga mencantumkan sumber dan status verifikasi.
-- **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar dokumen sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftarnya. Jawaban dan catatan tersimpan di browser; centang berkas tersinkron ke akun saat masuk.
-- **Rencanaku:** Simpan program, ikuti panduan langkah, catat persiapan berkas, dan lihat tenggat. Program tersimpan dan progres centang berkas terhubung ke akun saat masuk; jawaban dan catatan berkas tetap di browser.
+- **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar hal yang perlu disiapkan sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftar pengingatnya. HAKKITA tidak membuat, menerima, atau mengirim dokumen. Saat masuk, jawaban, centang, dan catatan tersimpan di akun; tanpa akun, data berada di perangkat.
+- **Rencanaku:** Simpan program, ikuti panduan langkah, catat persiapan berkas, dan lihat tenggat. Program tersimpan dan progres berkas terhubung ke akun saat masuk.
 - **Masuk dan Daftar:** Masuk dengan email atau Google untuk menyimpan data ke akun. Informasi publik tetap bisa dijelajahi tanpa akun.
 - **Ikuti program:** Ikuti program melalui halaman detailnya. Perubahan periode, syarat, atau dokumen yang tercatat pada data terverifikasi ditampilkan di Rencanaku setelah situs diperbarui. Pengguna dapat mengaktifkan pemberitahuan email untuk perubahan tersebut dan kabar resmi yang ditambahkan secara manual jika Supabase, Resend, dan jadwal harian sudah dikonfigurasi.
 - **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
@@ -106,4 +134,4 @@ where source_url = 'https://alamat-sumber-resmi.go.id/'
 
 ## Privasi
 
-HAKKITA tidak meminta NIK atau unggahan dokumen. Program yang disimpan, progres berkas, dan jawaban profil yang dipilih untuk disimpan ke akun menggunakan Supabase; informasi publik tetap dapat dijelajahi tanpa akun. HAKKITA tidak menentukan penerima program dan tidak menghitung desil; pengecekan status resmi dilakukan di kanal pemerintah.
+HAKKITA tidak meminta NIK atau unggahan dokumen. Program tersimpan dan progres berkas menggunakan Supabase saat pengguna masuk; progres tanpa akun berada di perangkat. Jawaban profil tetap di perangkat. Informasi publik dapat dijelajahi tanpa akun. HAKKITA tidak menentukan penerima program dan tidak menghitung desil; pengecekan status resmi dilakukan di kanal pemerintah.
