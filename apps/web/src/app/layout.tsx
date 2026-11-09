@@ -9,7 +9,7 @@ import type { RootLayoutProps } from './types';
 
 export const metadata: Metadata = {
   title: {
-    default: 'HAKKITA — Program dan layanan publik',
+    default: 'HAKKITA | Program dan layanan publik',
     template: '%s · HAKKITA',
   },
   description:
