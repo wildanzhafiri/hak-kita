@@ -8,9 +8,8 @@ import { ProgramSchema, type Program } from '@hakkita/schema';
 
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-if (existsSync(path.join(ROOT_DIR, '.env.local'))) {
-  loadEnvFile(path.join(ROOT_DIR, '.env.local'));
-}
+const ENV_FILE = path.join(ROOT_DIR, 'apps', 'web', '.env.local');
+if (existsSync(ENV_FILE)) loadEnvFile(ENV_FILE);
 
 const DATA_DIR = process.env.HAKKITA_DATA_DIR?.trim() || path.join(ROOT_DIR, 'data');
 const PROGRAMS_DIR = path.join(DATA_DIR, 'programs');
