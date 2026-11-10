@@ -1,64 +1,54 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { APBN_METRICS, ANGGARAN_CONTENT } from './content';
+import { APBN_SOURCES } from './content';
 import { BudgetOverview } from './budget-overview';
 
-const composition = [
-  { label: 'Belanja Pegawai', allocation: 506149.33, realization: 361365.08 },
-  { label: 'Belanja Barang dan Jasa', allocation: 381466, realization: 215491.89 },
-  { label: 'Belanja Modal', allocation: 156012.68, realization: 56302.1 },
-  { label: 'Belanja Lainnya', allocation: 223047.32, realization: 121204.75 },
-];
-
 describe('BudgetOverview', () => {
-  it('shows the APBN snapshot and the APBD allocation and realization chart', () => {
-    render(
-      <BudgetOverview
-        metrics={APBN_METRICS}
-        year={2026}
-        period="Desember 2026"
-        dataReceived="31 Oktober 2026"
-        composition={composition}
-      />,
-    );
+  it('shows the verified APBN snapshot and functional breakdown', () => {
+    render(<BudgetOverview />);
 
-    expect(screen.getByRole('heading', { name: 'Ringkasan APBN 2026' })).toBeTruthy();
-    expect(screen.getByText('Rp2.341,5 T')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Komposisi Belanja Daerah 2026' })).toBeTruthy();
-    expect(screen.getByText('Alokasi')).toBeTruthy();
-    expect(screen.getByText('Realisasi')).toBeTruthy();
-    expect(screen.getByText('506.149,33')).toBeTruthy();
-    expect(screen.getByText('361.365,08')).toBeTruthy();
-    expect(
-      screen.getByText(
-        'Data diterima SIKD per 31 Oktober 2026. Realisasi APBD s.d. Desember 2026. Grafik diperbarui otomatis setiap jam mengikuti data yang tersedia di sumber resmi.',
-      ),
-    ).toBeTruthy();
+    expect(screen.getByText('Rp3.842,7 T')).toBeTruthy();
+    expect(screen.getByText('Rp2.660,5 T')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Ke Mana Anggaran Dialokasikan?' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Ekonomi' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Pendidikan/ })).toBeTruthy();
   });
 
-  it('links to official APBN and APBD sources', () => {
-    render(
-      <BudgetOverview
-        metrics={APBN_METRICS}
-        year={2026}
-        period="Desember 2026"
-        dataReceived="31 Oktober 2026"
-        composition={composition}
-      />,
-    );
+  it('updates the selected field and exposes all eleven functions', () => {
+    render(<BudgetOverview />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Pendidikan/ }));
+
+    expect(screen.getByRole('heading', { name: 'Pendidikan' })).toBeTruthy();
+    expect(screen.getAllByText('Rp459,7 T').length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole('button', { name: /Lihat seluruh bidang/ }));
+
+    expect(screen.getByRole('button', { name: /Pariwisata/ })).toBeTruthy();
+  });
+
+  it('links the source list to the official APBN publications', () => {
+    render(<BudgetOverview />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sumber informasi' }));
 
     expect(
-      screen
-        .getByRole('link', { name: /APBN KiTa edisi Oktober 2026 di situs Kementerian Keuangan/ })
-        .getAttribute('href'),
-    ).toBe('https://www.kemenkeu.go.id/APBNKITAOktober2026');
-    expect(
-      screen
-        .getByRole('link', { name: /Portal Data SIKD, DJPK Kementerian Keuangan/ })
-        .getAttribute('href'),
-    ).toBe(ANGGARAN_CONTENT.apbdSourceUrl);
-    expect(screen.getByRole('link', { name: 'Buka data APBD' }).getAttribute('href')).toBe(
-      ANGGARAN_CONTENT.apbdSourceUrl,
+      screen.getByRole('link', { name: /UU Nomor 17 Tahun 2025, Lampiran I/ }).getAttribute('href'),
+    ).toBe(APBN_SOURCES[1]?.url);
+  });
+
+  it('opens spending and revenue details with their official figures', () => {
+    render(<BudgetOverview />);
+
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Belanja Pemerintah Pusat dan Transfer ke Daerah' }),
     );
+
+    expect(screen.getByRole('columnheader', { name: 'Realisasi (%)' })).toBeTruthy();
+    expect(screen.getByText('Rp2.061,3 T')).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Rincian pendapatan' }));
+
+    expect(screen.getByText('Rp2.341,5 T')).toBeTruthy();
   });
 });
