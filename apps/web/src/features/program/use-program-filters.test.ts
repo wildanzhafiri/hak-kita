@@ -30,11 +30,31 @@ describe('useProgramFilters', () => {
     );
 
     act(() => {
-      result.current.toggleSasaran('Keluarga berpenghasilan rendah');
+      result.current.toggleSasaran('Keluarga');
       result.current.selectPeriodeStatus('dibuka');
     });
 
     expect(result.current.results.map((program) => program.id)).toEqual(['dibuka']);
+  });
+
+  it('offers the shared audience list even when no program uses a group', () => {
+    const { result } = renderHook(() =>
+      useProgramFilters({ programs, wilayah: WILAYAH, initialQuery: '', today: '2026-11-10' }),
+    );
+
+    expect(result.current.sasaranOptions).toEqual([
+      'Pelajar',
+      'Mahasiswa',
+      'Lulusan Baru',
+      'Pencari Kerja',
+      'Pekerja',
+      'Keluarga',
+      'Pelaku UMKM',
+      'Petani',
+      'Lansia',
+      'Penyandang Disabilitas',
+      'Masyarakat Umum',
+    ]);
   });
 
   it('sorts by most recently checked first and resets added filters', () => {
@@ -59,6 +79,38 @@ describe('useProgramFilters', () => {
     expect(result.current.kategoriOptions).toHaveLength(KATEGORI_PROGRAM.length);
     expect(result.current.manfaatOptions).toContain('Subsidi');
     expect(result.current.jenjangOptions).toContain('S3');
+  });
+
+  it('starts with the requested category selected and filters its programs', () => {
+    const { result } = renderHook(() =>
+      useProgramFilters({
+        programs: [
+          ...programs,
+          makeProgram({ id: 'health', kategori: 'Kesehatan', nama: 'Program Kesehatan' }),
+        ],
+        wilayah: WILAYAH,
+        initialQuery: '',
+        initialCategory: 'Pendidikan',
+        today: '2026-11-10',
+      }),
+    );
+
+    expect(result.current.kategori).toBe('Pendidikan');
+    expect(result.current.results.map((program) => program.id)).toEqual(['dibuka', 'ditutup']);
+  });
+
+  it('ignores an unknown initial category', () => {
+    const { result } = renderHook(() =>
+      useProgramFilters({
+        programs,
+        wilayah: WILAYAH,
+        initialQuery: '',
+        initialCategory: 'Kategori tidak dikenal',
+      }),
+    );
+
+    expect(result.current.kategori).toBeNull();
+    expect(result.current.results).toHaveLength(programs.length);
   });
 
   it('filters by benefit type and education level', () => {

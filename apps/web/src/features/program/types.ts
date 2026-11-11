@@ -16,7 +16,7 @@ export interface ProgramFilters {
   kategoriOptions: Kategori[];
   provinsiOptions: Wilayah[];
   kabkotaOptions: Wilayah[];
-  sasaranOptions: string[];
+  sasaranOptions: readonly string[];
   manfaatOptions: readonly string[];
   jenjangOptions: readonly string[];
   results: Program[];
@@ -70,6 +70,7 @@ export interface UseProgramFiltersOptions {
   programs: Program[];
   wilayah: Wilayah[];
   initialQuery: string;
+  initialCategory?: string;
   servicePage?: boolean;
   today?: string;
 }
@@ -78,6 +79,7 @@ export interface ProgramListProps {
   programs: Program[];
   wilayah: Wilayah[];
   initialQuery?: string;
+  initialCategory?: string;
   placeholder?: string;
   servicePage?: boolean;
   today?: string;
@@ -100,12 +102,6 @@ export interface ProgramFilterBarProps {
   mode?: 'search' | 'filters';
   stacked?: boolean;
   servicePage?: boolean;
-}
-
-export interface SearchResultsProps {
-  programs: Program[];
-  wilayah: Wilayah[];
-  today: string;
 }
 
 export interface ProgramDetailProps {

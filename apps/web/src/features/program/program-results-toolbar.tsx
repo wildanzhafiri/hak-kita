@@ -3,6 +3,12 @@ import { SORT_OPTIONS } from './constants';
 import { FILTER_CONTENT } from './content';
 import type { ProgramFiltersProps } from './types';
 
+function resultNoun(filters: ProgramFiltersProps['filters']): string {
+  const kinds = new Set(filters.results.map((result) => result.jenis));
+  if (kinds.size > 1) return 'hasil';
+  return kinds.has('layanan') ? 'layanan' : 'program';
+}
+
 export function ProgramResultsToolbar({ filters }: ProgramFiltersProps) {
   return (
     <div className="mb-7 mt-6 flex flex-wrap items-center justify-between gap-3 max-[640px]:mb-5 max-[640px]:mt-5">
@@ -11,7 +17,7 @@ export function ProgramResultsToolbar({ filters }: ProgramFiltersProps) {
         className="m-0 text-[17px] font-bold text-[#1b304c] max-[640px]:text-lg"
         role="status"
       >
-        {FILTER_CONTENT.resultCount(filters.results.length)}
+        {FILTER_CONTENT.resultCount(filters.results.length, resultNoun(filters))}
       </p>
       <div className="flex min-w-0 items-center gap-2.5 text-[13px] text-[#687385] max-[640px]:w-full max-[640px]:justify-between max-[640px]:rounded-[9px] max-[640px]:border max-[640px]:border-[#e1e8f1] max-[640px]:bg-[#f5f8fc] max-[640px]:px-3 max-[640px]:py-2">
         <span className="shrink-0">{FILTER_CONTENT.sort}:</span>

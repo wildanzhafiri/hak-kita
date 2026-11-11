@@ -5,4 +5,6 @@ export interface ProgramDetailPageProps {
 
 export interface ProgramCatalogPageProps {
   layanan: boolean;
+  initialQuery?: string;
+  initialCategory?: string;
 }

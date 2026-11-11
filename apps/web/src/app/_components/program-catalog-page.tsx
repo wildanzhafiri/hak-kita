@@ -5,7 +5,11 @@ import { loadPrograms, loadPublicServices, loadWilayahFile } from '@/server/data
 import { PROGRAM_CATALOG_CONTENT } from './content';
 import type { ProgramCatalogPageProps } from './types';
 
-export async function ProgramCatalogPage({ layanan }: ProgramCatalogPageProps) {
+export async function ProgramCatalogPage({
+  layanan,
+  initialQuery = '',
+  initialCategory,
+}: ProgramCatalogPageProps) {
   const [items, wilayahFile] = await Promise.all([
     layanan ? loadPublicServices() : loadPrograms(),
     loadWilayahFile(),
@@ -19,6 +23,9 @@ export async function ProgramCatalogPage({ layanan }: ProgramCatalogPageProps) {
       description={content.description}
     >
       <ProgramList
+        key={JSON.stringify([initialQuery, initialCategory])}
+        initialQuery={initialQuery}
+        initialCategory={initialCategory}
         programs={items}
         wilayah={wilayahFile.wilayah}
         placeholder={content.searchPlaceholder}

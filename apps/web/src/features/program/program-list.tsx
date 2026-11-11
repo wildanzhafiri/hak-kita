@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Files, HeartHandshake } from 'lucide-react';
+import { Files, HeartHandshake, X } from 'lucide-react';
 import { ProgramGrid } from '@/components/program/program-grid';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,11 +22,19 @@ export function ProgramList({
   programs,
   wilayah,
   initialQuery = '',
+  initialCategory,
   placeholder = DEFAULT_SEARCH_PLACEHOLDER,
   servicePage = false,
   today,
 }: ProgramListProps) {
-  const filters = useProgramFilters({ programs, wilayah, initialQuery, servicePage, today });
+  const filters = useProgramFilters({
+    programs,
+    wilayah,
+    initialQuery,
+    initialCategory,
+    servicePage,
+    today,
+  });
   const filterKey = JSON.stringify([
     filters.query,
     filters.kategori,
@@ -75,18 +83,18 @@ export function ProgramList({
             </h2>
             <div className="grid grid-cols-4 gap-3 max-[1023px]:grid-cols-2 max-[540px]:grid-cols-1">
               {filters.kategoriOptions.map((kategori) => {
+                const isSelected = filters.kategori === kategori;
                 const CategoryIcon =
                   Object.entries(SERVICE_CATEGORY_DETAILS).find(([name]) => name === kategori)?.[1]
                     .icon ?? Files;
                 return (
                   <Button
-                    aria-pressed={filters.kategori === kategori}
-                    className={`!h-auto !min-h-[76px] !w-full !justify-start !gap-3 !rounded-xl !border !px-4 !py-3 !text-left !text-sm !font-medium !text-[#253044] !transition-colors max-[540px]:!min-h-[64px] ${filters.kategori === kategori ? '!border-[#1769c2] !bg-[#eaf3ff]' : '!border-[#e1e9f2] !bg-[#f5f8fc] hover:!border-[#c9dbef] hover:!bg-[#edf5ff]'}`}
+                    aria-label={isSelected ? `Hapus kategori ${kategori}` : kategori}
+                    aria-pressed={isSelected}
+                    className={`!h-auto !min-h-[76px] !w-full !justify-start !gap-3 !rounded-xl !border !px-4 !py-3 !text-left !text-sm !font-medium !text-[#253044] !transition-colors max-[540px]:!min-h-[64px] ${isSelected ? '!border-[#1769c2] !bg-[#eaf3ff] !text-[#1769c2]' : '!border-[#e1e9f2] !bg-[#f5f8fc] hover:!border-[#c9dbef] hover:!bg-[#edf5ff]'}`}
                     key={kategori}
                     tone="secondary"
-                    onPress={() =>
-                      filters.selectKategori(filters.kategori === kategori ? '' : kategori)
-                    }
+                    onPress={() => filters.selectKategori(isSelected ? '' : kategori)}
                   >
                     <CategoryIcon
                       aria-hidden="true"
@@ -95,6 +103,7 @@ export function ProgramList({
                       strokeWidth={1.6}
                     />
                     <span className="min-w-0 flex-1 leading-5">{kategori}</span>
+                    {isSelected && <X aria-hidden="true" className="shrink-0" size={18} />}
                   </Button>
                 );
               })}

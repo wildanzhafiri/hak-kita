@@ -136,6 +136,41 @@ describe('ProgramList', () => {
     expect(screen.queryByRole('navigation', { name: 'Halaman layanan' })).toBeNull();
   });
 
+  it('shows a clear control on the selected service category and removes the filter when pressed', () => {
+    render(
+      <ProgramList
+        initialCategory="Perpajakan"
+        programs={[
+          makeProgram({
+            id: 'ktp-el',
+            jenis: 'layanan',
+            kategori: 'Kependudukan & Dokumen Pribadi',
+            nama: 'KTP Elektronik',
+          }),
+          makeProgram({
+            id: 'npwp',
+            jenis: 'layanan',
+            kategori: 'Perpajakan',
+            nama: 'Nomor Pokok Wajib Pajak',
+          }),
+        ]}
+        wilayah={WILAYAH}
+        servicePage
+      />,
+    );
+
+    const selectedCategory = screen.getByRole('button', { name: 'Hapus kategori Perpajakan' });
+    expect(selectedCategory.getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByRole('heading', { name: 'Layanan Perpajakan' })).toBeTruthy();
+
+    fireEvent.click(selectedCategory);
+
+    expect(screen.getByRole('button', { name: 'Perpajakan' }).getAttribute('aria-pressed')).toBe(
+      'false',
+    );
+    expect(screen.getByRole('heading', { name: 'Semua layanan' })).toBeTruthy();
+  });
+
   it('paginates service results in groups of twelve', () => {
     const servicePrograms = Array.from({ length: 13 }, (_, index) =>
       makeProgram({
@@ -183,5 +218,25 @@ describe('ProgramList', () => {
     fireEvent.click(screen.getByRole('option', { name: 'Kesehatan' }));
     expect(programNames()).toEqual(['Sehat Bersama']);
     expect(screen.queryByRole('navigation', { name: 'Halaman program' })).toBeNull();
+  });
+  it('counts programs and public services together as results when both match', () => {
+    render(
+      <ProgramList
+        programs={[
+          makeProgram({ id: 'sim-program', nama: 'Bantuan SIM Mahasiswa' }),
+          makeProgram({
+            id: 'sim-layanan',
+            nama: 'Perpanjangan SIM',
+            jenis: 'layanan',
+            kategori: 'Kendaraan & Transportasi',
+          }),
+        ]}
+        wilayah={WILAYAH}
+        initialQuery="sim"
+        today="2026-11-10"
+      />,
+    );
+
+    expect(screen.getByText('2 hasil ditemukan')).toBeTruthy();
   });
 });

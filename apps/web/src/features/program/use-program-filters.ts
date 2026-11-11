@@ -5,6 +5,8 @@ import { JENJANG, KATEGORI_PROGRAM, MANFAAT, type Kategori } from '@hakkita/sche
 import { SERVICE_CATEGORY_ORDER } from './constants';
 import {
   KODE_NASIONAL,
+  AUDIENCE_OPTIONS,
+  audienceGroups,
   buildWilayahIndex,
   childrenOfWilayah,
   filterPrograms,
@@ -21,12 +23,20 @@ export function useProgramFilters({
   programs,
   wilayah,
   initialQuery,
+  initialCategory,
   servicePage = false,
   today = todayWIB(),
 }: UseProgramFiltersOptions): ProgramFilters {
   const [query, setQuery] = useState(initialQuery);
   const [draftQuery, setDraftQuery] = useState(initialQuery);
-  const [kategori, setKategori] = useState<string | null>(null);
+  const [kategori, setKategori] = useState<string | null>(
+    initialCategory &&
+      (servicePage
+        ? programs.some((program) => program.kategori === initialCategory)
+        : KATEGORI_PROGRAM.some((category) => category === initialCategory))
+      ? initialCategory
+      : null,
+  );
   const [provinsi, setProvinsi] = useState<string | null>(null);
   const [kabkota, setKabkota] = useState<string | null>(null);
   const [sasaran, setSasaran] = useState<string[]>([]);
@@ -56,13 +66,7 @@ export function useProgramFilters({
     () => (provinsi ? childrenOfWilayah(wilayah, provinsi) : []),
     [wilayah, provinsi],
   );
-  const sasaranOptions = useMemo(
-    () =>
-      [...new Set(programs.flatMap((program) => program.untuk))].sort((a, b) =>
-        a.localeCompare(b, 'id'),
-      ),
-    [programs],
-  );
+  const sasaranOptions = AUDIENCE_OPTIONS;
 
   const results = useMemo(() => {
     const filtered = filterPrograms(
@@ -75,7 +79,9 @@ export function useProgramFilters({
       index,
     );
     const byAudience = sasaran.length
-      ? filtered.filter((program) => sasaran.some((audience) => program.untuk.includes(audience)))
+      ? filtered.filter((program) =>
+          audienceGroups(program).some((audience) => sasaran.includes(audience)),
+        )
       : filtered;
     const byBenefit = manfaat.length
       ? byAudience.filter((program) =>
