@@ -2,9 +2,7 @@ import type {
   Berkas,
   Kategori,
   Periode,
-  Profile,
   Program,
-  Syarat,
   TingkatVerifikasi,
   Wilayah,
 } from '@hakkita/schema';
@@ -85,22 +83,6 @@ export interface NextStepInput {
   today: string;
 }
 
-export type MatchStatus = 'berpotensi-sesuai' | 'perlu-dicek';
-
-export interface MatchResult {
-  program: Program;
-  status: MatchStatus;
-  reasons: Syarat[];
-  checks: string[];
-  officialCheck: string;
-}
-
-export interface MatchOptions {
-  profile: Profile;
-  today: string;
-  wilayahIndex: WilayahIndex;
-}
-
 export type ProgramKnowledgeSection = 'syarat' | 'langkah' | 'berkas' | 'kendala' | 'panduan';
 
 export interface ProgramKnowledgePassage {
@@ -118,4 +100,19 @@ export interface ProgramKnowledgePassage {
 export interface ProgramKnowledgeSearchOptions {
   programId?: string;
   limit?: number;
+}
+
+export type ProfileCompleteness = 'kosong' | 'sebagian' | 'cukup';
+
+export interface RecommendationOptions {
+  today: string;
+  wilayahIndex: WilayahIndex;
+}
+
+export interface Recommendation {
+  program: Program;
+  score: number;
+  reasons: string[];
+  checks: string[];
+  periodStatus: PeriodStatus;
 }

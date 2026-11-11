@@ -1,4 +1,10 @@
-import type { AgeBand, Kategori } from '@hakkita/schema';
+import type {
+  AktivitasProfil,
+  Jenjang,
+  JenjangPendidikanProfil,
+  Kategori,
+  ProfileGroup,
+} from '@hakkita/schema';
 
 export const KODE_NASIONAL = 'ID';
 
@@ -27,12 +33,6 @@ export const MONTH_NAMES = [
 
 export const BERKAS_NOTE_MAX_LENGTH = 500;
 
-export const AGE_BAND_LIMITS: Record<AgeBand, { minimum: number; maximum: number | null }> = {
-  'di-bawah-18': { minimum: 0, maximum: 17 },
-  '18-24': { minimum: 18, maximum: 24 },
-  '25-59': { minimum: 25, maximum: 59 },
-  '60-ke-atas': { minimum: 60, maximum: null },
-};
 export const DEFAULT_STEPS = [
   'Periksa informasi terbaru melalui kanal resmi.',
   'Siapkan dokumen sesuai ketentuan penyelenggara.',
@@ -92,3 +92,29 @@ export const RANK_ALIAS_WEIGHT = 4;
 export const RANK_CATEGORY_WEIGHT = 2;
 export const RANK_TEXT_WEIGHT = 1;
 export const RANK_RELATIVE_THRESHOLD = 0.5;
+
+export const ACTIVITY_GROUPS: Record<AktivitasProfil, readonly ProfileGroup[]> = {
+  pelajar: ['peserta-didik'],
+  mahasiswa: ['peserta-didik'],
+  bekerja: ['pekerja'],
+  'mencari-kerja': ['pencari-kerja'],
+  usaha: ['pelaku-usaha'],
+  lainnya: [],
+};
+
+export const SCHOOL_LEAVER_EDUCATION: JenjangPendidikanProfil = 'sma';
+
+export const EDUCATION_LEVELS: Record<JenjangPendidikanProfil, readonly Jenjang[]> = {
+  sd: ['SD/Sederajat'],
+  smp: ['SMP/Sederajat'],
+  sma: ['SMA/SMK/Sederajat'],
+  diploma: ['Diploma'],
+  sarjana: ['S1'],
+  pascasarjana: ['S2', 'S3'],
+};
+
+export const RECOMMENDATION_INTEREST_WEIGHT = 3;
+export const RECOMMENDATION_GROUP_WEIGHT = 2;
+export const RECOMMENDATION_LEVEL_WEIGHT = 1;
+export const RECOMMENDATION_LOCAL_WEIGHT = 1;
+export const RECOMMENDATION_CLOSED_PENALTY = 2;
