@@ -3,12 +3,13 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AssistantChat } from './assistant-chat';
 
 const mocks = vi.hoisted(() => ({
+  pathname: '/kenali-hakmu/kip-kuliah',
   sendMessage: vi.fn(),
   addToolApprovalResponse: vi.fn(),
   user: { id: 'user-1' } as { id: string } | null,
 }));
 
-vi.mock('next/navigation', () => ({ usePathname: () => '/kenali-hakmu/kip-kuliah' }));
+vi.mock('next/navigation', () => ({ usePathname: () => mocks.pathname }));
 vi.mock('@/hooks/use-auth', () => ({ useAuth: () => ({ user: mocks.user }) }));
 vi.mock('@/components/ui/turnstile', () => ({
   Turnstile: ({ onToken }: { onToken: (token: string) => void }) => (
@@ -33,6 +34,17 @@ describe('AssistantChat', () => {
     mocks.sendMessage.mockClear();
     mocks.addToolApprovalResponse.mockClear();
     mocks.user = { id: 'user-1' };
+    mocks.pathname = '/kenali-hakmu/kip-kuliah';
+  });
+
+  it('stays out of the way on the profile pages', () => {
+    for (const path of ['/profil', '/profil/edit']) {
+      mocks.pathname = path;
+      const { unmount } = render(<AssistantChat />);
+
+      expect(screen.queryByRole('button', { name: 'Buka asisten HAKKITA' })).toBeNull();
+      unmount();
+    }
   });
 
   it('sends a question with the current page when Enter is pressed', () => {

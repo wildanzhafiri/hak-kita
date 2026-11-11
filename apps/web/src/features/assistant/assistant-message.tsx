@@ -45,7 +45,7 @@ function getToolDestinations(output: unknown): AssistantDestination[] {
         '/layanan',
         '/anggaran',
         '/rencanaku',
-        '/periksa-kondisimu',
+        '/kenali-hakmu/rekomendasi',
         '/bantuan',
       ].includes(candidate.href)
     )

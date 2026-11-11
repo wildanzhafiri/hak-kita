@@ -14,7 +14,7 @@ import type { Database } from '@/lib/supabase/types';
 import { createAssistantTools, getAssistantPageContext } from '@/server/assistant';
 import { checkAssistantRateLimit } from '@/server/assistant-rate-limit';
 import { ASSISTANT_INSTRUCTIONS } from '@/server/content';
-import { createFallbackModel } from '@/server/fallback-model';
+import { createGatewayModel } from '@/server/gateway-model';
 import { verifyTurnstileToken } from '@/server/turnstile';
 
 const REQUEST_BODY_LIMIT = 60_000;
@@ -131,16 +131,9 @@ export async function POST(request: NextRequest) {
     }
 
     const gateway = createOpenAICompatible({ name: 'menvora', baseURL, apiKey });
-    const fallbackModels = (process.env.AI_GATEWAY_FALLBACK_MODEL ?? '')
-      .split(',')
-      .map((name) => name.trim())
-      .filter((name) => name && name !== model);
     const pageContext = await getAssistantPageContext(parsed.data.currentPath);
     const result = streamText({
-      model: createFallbackModel([
-        gateway.chatModel(model),
-        ...fallbackModels.map((name) => gateway.chatModel(name)),
-      ]),
+      model: createGatewayModel(gateway, model),
       system: userId
         ? `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}`
         : `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}\n\nPengguna belum masuk. Jawab pertanyaan umum dari data publik seperti biasa tanpa meminta pengguna masuk. Jangan panggil getMyPlan atau saveProgramToPlan dan jangan menyiratkan bahwa kamu dapat melihat data akun pengguna. Jika ditanya tentang Rencanaku atau data akun lain, jelaskan bahwa kamu tidak dapat mengaksesnya sebelum pengguna masuk. Menyimpan program ke Rencanaku juga memerlukan akun.`,

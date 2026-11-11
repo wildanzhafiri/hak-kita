@@ -24,7 +24,7 @@ describe('createFallbackModel', () => {
   it('uses the primary model when it works', async () => {
     const primary = fakeModel('haiku', 'ok');
     const backup = fakeModel('luna', 'ok');
-    const model = createFallbackModel([primary.model, backup.model]);
+    const model = createFallbackModel([primary.model, backup.model], Date.now, new Map());
 
     await expect(model.doStream(options)).resolves.toEqual({ stream: 'haiku' });
     expect(backup.doStream).not.toHaveBeenCalled();
@@ -33,7 +33,7 @@ describe('createFallbackModel', () => {
   it('switches to the next model when the primary fails', async () => {
     const primary = fakeModel('haiku', 'fail');
     const backup = fakeModel('luna', 'ok');
-    const model = createFallbackModel([primary.model, backup.model]);
+    const model = createFallbackModel([primary.model, backup.model], Date.now, new Map());
 
     await expect(model.doStream(options)).resolves.toEqual({ stream: 'luna' });
     expect(primary.doStream).toHaveBeenCalledTimes(1);
@@ -43,7 +43,7 @@ describe('createFallbackModel', () => {
     const primary = fakeModel('haiku', 'fail');
     const backup = fakeModel('luna', 'ok');
     let time = 0;
-    const model = createFallbackModel([primary.model, backup.model], () => time);
+    const model = createFallbackModel([primary.model, backup.model], () => time, new Map());
 
     await model.doStream(options);
     await model.doStream(options);
@@ -55,10 +55,11 @@ describe('createFallbackModel', () => {
   });
 
   it('throws the last error when every model fails', async () => {
-    const model = createFallbackModel([
-      fakeModel('haiku', 'fail').model,
-      fakeModel('luna', 'fail').model,
-    ]);
+    const model = createFallbackModel(
+      [fakeModel('haiku', 'fail').model, fakeModel('luna', 'fail').model],
+      Date.now,
+      new Map(),
+    );
 
     await expect(model.doStream(options)).rejects.toThrow('luna unavailable');
   });
@@ -68,7 +69,7 @@ describe('createFallbackModel', () => {
     const backup = fakeModel('luna', 'ok');
     const controller = new AbortController();
     controller.abort();
-    const model = createFallbackModel([primary.model, backup.model]);
+    const model = createFallbackModel([primary.model, backup.model], Date.now, new Map());
 
     await expect(model.doStream({ abortSignal: controller.signal } as never)).rejects.toThrow(
       'haiku unavailable',

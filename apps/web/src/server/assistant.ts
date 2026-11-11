@@ -208,14 +208,19 @@ export function createAssistantTools(
         'Baca isi satu halaman situs resmi pemerintah (.go.id atau .desa.id), biasanya dari hasil searchOfficialWeb, untuk mengambil langkah, syarat, atau biaya yang tertulis di sana.',
       inputSchema: AssistantPageReadQuerySchema,
       execute: async ({ url }, { abortSignal }) => {
-        if (!isOfficialHttpsUrl(url)) return { available: false, reason: 'Hanya situs resmi .go.id atau .desa.id.' };
+        if (!isOfficialHttpsUrl(url))
+          return { available: false, reason: 'Hanya situs resmi .go.id atau .desa.id.' };
         const data = await callOfficialWeb(
           OFFICIAL_EXTRACT_URL,
           { urls: [url], extract_depth: 'advanced', format: 'markdown', include_images: false },
           abortSignal,
         );
         const first = data && Array.isArray(data.results) ? data.results[0] : null;
-        if (!isRecord(first) || typeof first.raw_content !== 'string' || !isOfficialHttpsUrl(first.url)) {
+        if (
+          !isRecord(first) ||
+          typeof first.raw_content !== 'string' ||
+          !isOfficialHttpsUrl(first.url)
+        ) {
           return { available: false, reason: 'Halaman tidak dapat dibaca.' };
         }
         return {
@@ -368,7 +373,6 @@ export async function getAssistantPageContext(currentPath: string | undefined): 
     anggaran: 'Telusuri Anggaran',
     'awasi-uang-publik': 'Telusuri Anggaran',
     rencanaku: 'Rencanaku',
-    'periksa-kondisimu': 'Periksa Kondisimu',
     bantuan: 'Pusat Bantuan',
   };
   return `Pengguna sedang melihat halaman ${pageNames[section ?? ''] ?? 'HAKKITA'}. Gunakan tools bila pertanyaan membutuhkan data spesifik.`;

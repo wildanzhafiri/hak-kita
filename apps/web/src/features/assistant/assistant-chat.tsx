@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Modal } from '@heroui/react';
 import { MessageSquareText, MessagesSquare, RotateCcw, X } from 'lucide-react';
@@ -8,11 +9,14 @@ import { AssistantComposer } from './assistant-composer';
 import { AssistantMessage } from './assistant-message';
 import { AssistantWelcome } from './assistant-welcome';
 import { ASSISTANT_COPY, ASSISTANT_LOADING_COPY } from './content';
+import { ASSISTANT_HIDDEN_PATHS, ASSISTANT_OPEN_EVENT } from './constants';
 import { useAssistantChat } from './use-assistant-chat';
 
 export function AssistantChat() {
   const pathname = usePathname();
-  if (pathname.startsWith('/admin')) return null;
+  if (pathname.startsWith('/admin') || ASSISTANT_HIDDEN_PATHS.some((path) => path === pathname)) {
+    return null;
+  }
   return <AssistantChatPanel />;
 }
 
@@ -41,6 +45,17 @@ function AssistantChatPanel() {
     handleNewConversation,
     submitText,
   } = useAssistantChat();
+
+  useEffect(() => {
+    function handleAssistantOpen(event: Event) {
+      const prompt = (event as CustomEvent<{ prompt?: string }>).detail?.prompt;
+      if (prompt) setInput(prompt);
+      setIsOpen(true);
+    }
+
+    window.addEventListener(ASSISTANT_OPEN_EVENT, handleAssistantOpen);
+    return () => window.removeEventListener(ASSISTANT_OPEN_EVENT, handleAssistantOpen);
+  }, [setInput, setIsOpen]);
 
   return (
     <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
