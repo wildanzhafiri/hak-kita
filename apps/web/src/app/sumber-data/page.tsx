@@ -1,83 +1,65 @@
 import type { Metadata } from 'next';
-import { TINGKAT_VERIFIKASI } from '@hakkita/schema';
-import { VERIFIKASI_STYLE } from '@/components/program/constants';
+import { ShieldCheck } from 'lucide-react';
 import { PageShell } from '@/components/layout/page-shell';
-import { DataNote } from '@/components/ui/data-note';
-import { DataTable } from '@/components/ui/data-table';
-import { loadPrograms, loadPublishedInformation, loadWilayahFile } from '@/server/data';
-import { SOURCE_RULES, VERIFIKASI_MEANING } from './content';
+import { loadPublishedInformation } from '@/server/data';
+import { SOURCE_PAGE_CONTENT } from './content';
+import { SourceInformationList } from './source-information-list';
+import type { SourceInformationEntry } from './types';
 
-const DESCRIPTION = 'Kenali asal informasi, cakupan, dan batasan data yang ditampilkan di HAKKITA.';
-
-export const metadata: Metadata = { title: 'Sumber & batasan data', description: DESCRIPTION };
+export const metadata: Metadata = {
+  title: 'Sumber Informasi',
+  description: SOURCE_PAGE_CONTENT.description,
+};
 
 export default async function SumberDataPage() {
-  const [programs, allInformation, wilayahFile] = await Promise.all([
-    loadPrograms(),
-    loadPublishedInformation(),
-    loadWilayahFile(),
-  ]);
-  const coveredWilayah = wilayahFile.wilayah.filter((w) => w.level !== 'kabkota');
+  const information = await loadPublishedInformation();
+  const entries: SourceInformationEntry[] = information
+    .map((item) => ({
+      id: item.id,
+      name: item.nama,
+      agency: item.penyelenggara,
+      checkedAt: item.tanggalDiperiksa ?? null,
+      sourceUrl: item.sumberUtama.url,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'id'));
 
   return (
     <PageShell
-      breadcrumbs={[{ label: 'Sumber & batasan data' }]}
-      eyebrow="SUMBER & BATASAN DATA"
-      title="Transparansi dimulai dari sumbernya."
-      description={DESCRIPTION}
+      breadcrumbs={[{ label: 'Sumber Informasi' }]}
+      title={SOURCE_PAGE_CONTENT.title}
+      description={SOURCE_PAGE_CONTENT.subtitle}
     >
-      <DataNote>
-        HAKKITA tidak menjamin informasi selalu terbaru. Selalu periksa ketentuan melalui kanal
-        resmi penyelenggara sebelum mengajukan.
-      </DataNote>
-      <div className="panel">
-        <h2>Tingkat verifikasi</h2>
-        <p>
-          Setiap entri menampilkan seberapa jauh isinya sudah diperiksa. Yang belum diperiksa tetap
-          ditampilkan, tetapi diberi label, bukan disembunyikan.
-        </p>
-        <DataTable
-          columns={['Tingkat', 'Artinya', 'Jumlah entri']}
-          rows={TINGKAT_VERIFIKASI.map((tingkat) => ({
-            key: tingkat,
-            cells: [
-              VERIFIKASI_STYLE[tingkat].label,
-              VERIFIKASI_MEANING[tingkat],
-              allInformation.filter((p) => p.verifikasi === tingkat).length,
-            ],
-          }))}
-        />
+      <div className="flex items-start gap-4 rounded-[9px] bg-[#f1f6fc] px-5 py-5 text-[#6383ad] sm:gap-4 sm:px-[22px] sm:py-[22px]">
+        <ShieldCheck aria-hidden="true" className="mt-0.5 shrink-0" size={23} />
+        <p className="max-w-[78ch] text-sm leading-[1.8]">{SOURCE_PAGE_CONTENT.notice}</p>
       </div>
-      <div className="panel">
-        <h2>Sumber yang kami pakai</h2>
-        <DataTable
-          columns={['Jenis sumber', 'Peran']}
-          rows={SOURCE_RULES.map(({ type, role }) => ({ key: type, cells: [type, role] }))}
-        />
-        <p className="small-note">
-          Data yang tidak bisa dibuktikan dengan sumber resmi tidak ditampilkan sebagai fakta.
-        </p>
-      </div>
-      <div className="panel">
-        <h2>Cakupan wilayah saat ini</h2>
-        <p>
-          Pengguna di sebuah wilayah melihat program nasional dan program yang berlaku di wilayah
-          itu. Wilayah yang belum terkurasi hanya menampilkan program nasional.
-        </p>
-        <DataTable
-          columns={['Wilayah', 'Tingkat', 'Program tingkat wilayah ini']}
-          rows={coveredWilayah.map((w) => ({
-            key: w.kode,
-            cells: [
-              w.nama,
-              w.level === 'nasional' ? 'Nasional' : 'Provinsi',
-              programs.filter((p) => p.cakupan.kode === w.kode).length,
-            ],
-          }))}
-        />
-        <p className="small-note">
-          Daftar wilayah masih terus diperluas. Cakupan kabupaten dan kota menyusul.
-        </p>
+
+      <SourceInformationList entries={entries} />
+
+      <div className="mt-9 max-w-[790px] border-t border-[#e1e9f2] pt-7">
+        <section aria-labelledby="source-method-title">
+          <h2
+            id="source-method-title"
+            className="text-[clamp(21px,2.4vw,24px)] font-semibold leading-[1.35] tracking-[-.02em] text-[#253044]"
+          >
+            {SOURCE_PAGE_CONTENT.methodologyTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-[1.85] text-[#617087] sm:text-[15px]">
+            {SOURCE_PAGE_CONTENT.methodology}
+          </p>
+        </section>
+
+        <section aria-labelledby="source-budget-title" className="mt-7">
+          <h2
+            id="source-budget-title"
+            className="text-[clamp(21px,2.4vw,24px)] font-semibold leading-[1.35] tracking-[-.02em] text-[#253044]"
+          >
+            {SOURCE_PAGE_CONTENT.budgetTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-[1.85] text-[#617087] sm:text-[15px]">
+            {SOURCE_PAGE_CONTENT.budget}
+          </p>
+        </section>
       </div>
     </PageShell>
   );
