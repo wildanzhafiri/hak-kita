@@ -19,6 +19,7 @@ export function makeProgram(overrides: Partial<Program> = {}): Program {
   return ProgramSchema.parse({
     id: 'contoh',
     nama: 'Program Contoh',
+    jenis: 'program',
     kategori: 'Pendidikan',
     penyelenggara: 'Kementerian Contoh',
     ringkasan: 'Ringkasan program contoh untuk pengujian.',
@@ -27,6 +28,7 @@ export function makeProgram(overrides: Partial<Program> = {}): Program {
     tipeGerbang: 'kategori',
     syarat: [{ teks: 'Syarat contoh', sumberUrl: 'https://contoh.go.id/syarat' }],
     sumberUtama: { url: 'https://contoh.go.id/', jenis: 'situs-resmi' },
+    sumberTambahan: [],
     verifikasi: 'dasar',
     tanggalDiperiksa: '2026-10-20',
     ...overrides,
