@@ -1,5 +1,5 @@
 import type { ProgramFollowSnapshot } from '@hakkita/domain';
-import type { Program, RadarProgramDraft, RadarRunEvent } from '@hakkita/schema';
+import type { PreferensiProfil, Program, RadarProgramDraft, RadarRunEvent } from '@hakkita/schema';
 import type { Database } from '@/lib/supabase/types';
 
 export type EmailPreference = Database['public']['Tables']['program_email_preferences']['Row'];
@@ -29,6 +29,18 @@ export interface RadarProgramCandidateView extends RadarProgramCandidate {
 
 export interface ProgramEmailRunOptions {
   onlyRecipientEmail?: string;
+  onlyProgramId?: string;
+  note?: string;
+}
+
+export interface ProgramUpdateEmailPreview {
+  followers: number;
+  recipients: number;
+  changes: string[];
+  subject: string | null;
+  html: string | null;
+  text: string | null;
+  isExample: boolean;
 }
 
 export interface ProgramEmailBaseline {
@@ -78,16 +90,40 @@ export interface ProgramSourceTarget {
   programs: Program[];
 }
 
+export interface RadarRunCarry {
+  searched?: number;
+  queued?: number;
+  failed?: string[];
+  usedFallbackSearch?: boolean;
+  checked?: number;
+  changed?: string[];
+}
+
+export interface RadarRunCursor {
+  index: number;
+  seed: number | null;
+  carry: RadarRunCarry;
+}
+
+export interface RadarRunSlice {
+  startIndex: number;
+  deadline: number;
+  seed?: number | null;
+  carry?: RadarRunCarry;
+}
+
 export interface ProgramSourceMonitorResult {
   checked: number;
   changed: string[];
   failed: string[];
+  next?: RadarRunCursor | null;
 }
 
 export interface ProgramDiscoveryResult {
   searched: number;
   queued: number;
   failed: string[];
+  next?: RadarRunCursor | null;
 }
 
 export type RadarRunReporter = (event: RadarRunEvent) => void;
@@ -183,3 +219,13 @@ export interface ProgramEmailRunResult {
 export type GatewayLanguageModel = ReturnType<
   ReturnType<typeof import('@ai-sdk/openai-compatible').createOpenAICompatible>['chatModel']
 >;
+
+export type UserProfileResult =
+  | { status: 'anonymous' }
+  | { status: 'error' }
+  | { status: 'ready'; nama: string; preferensi: PreferensiProfil };
+
+export interface CurrentUser {
+  id: string;
+  email: string;
+}
