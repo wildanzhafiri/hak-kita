@@ -36,7 +36,7 @@ export function ProgramFinderPromo() {
           </div>
           <Link
             className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-lg bg-[#196dcc] px-6 text-[15px] font-semibold text-white transition-colors hover:bg-[#1458a3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#196dcc] motion-reduce:transition-none max-[767px]:w-full"
-            href="/periksa-kondisimu"
+            href="/kenali-hakmu/rekomendasi"
           >
             {PROGRAM_FINDER_PROMO.action}
             <ArrowRight aria-hidden="true" size={18} />

@@ -82,8 +82,8 @@ export const HOME_FAQ_ITEMS = [
 export const PROGRAM_FINDER_PROMO = {
   title: 'Bingung Memilih Program Yang Sesuai?',
   description:
-    'Jawab beberapa pertanyaan singkat untuk menemukan program yang relevan dengan kebutuhanmu.',
-  action: 'Cari program untukmu',
+    'Lengkapi profil dan preferensimu agar HAKKITA dapat menyarankan program yang relevan dengan kebutuhanmu.',
+  action: 'Lihat rekomendasi untukmu',
 } as const;
 
 export const TRANSPARENCY_PREVIEW = {
