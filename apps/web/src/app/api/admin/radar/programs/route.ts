@@ -1,13 +1,18 @@
 import type { NextRequest } from 'next/server';
+import { todayWIB } from '@hakkita/domain';
 import { ProgramSchema, RadarProgramReviewRequestSchema } from '@hakkita/schema';
+import type { Program } from '@hakkita/schema';
 import { getRadarAdminId } from '@/server/admin-access';
-import { validateAdminProgram } from '@/server/admin-programs';
+import { updateProgramRecord, validateAdminProgram } from '@/server/admin-programs';
 import {
   loadPendingDiscoveredPrograms,
   reviewDiscoveredProgram,
+  updateDiscoveredProgramDraft,
 } from '@/server/radar-program-discovery';
 
 export const dynamic = 'force-dynamic';
+
+const PUBLISHED_VERIFICATION = 'dasar';
 
 export async function GET() {
   if (!(await getRadarAdminId()))
@@ -40,10 +45,11 @@ export async function POST(request: NextRequest) {
   if (!parsed.success) return Response.json({ error: 'Isi tinjauan tidak valid' }, { status: 400 });
 
   try {
-    let program = null;
-    if (parsed.data.action === 'approve') {
+    let program: Program | null = null;
+    let published: Program | null = null;
+    if (parsed.data.action !== 'reject') {
       const validated = ProgramSchema.safeParse(parsed.data.program);
-      if (!validated.success || validated.data.verifikasi !== 'belum') {
+      if (!validated.success) {
         return Response.json({ error: 'Draf program belum valid' }, { status: 400 });
       }
       const [candidate] = (await loadPendingDiscoveredPrograms()).filter(
@@ -64,9 +70,23 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         );
       }
-      const validationMessage = await validateAdminProgram(validated.data);
+      const pending: Program = {
+        ...validated.data,
+        verifikasi: 'belum',
+        tanggalDiperiksa: undefined,
+      };
+      if (parsed.data.action === 'update') {
+        await updateDiscoveredProgramDraft(parsed.data.candidateId, pending);
+        return Response.json({ updated: true, program: pending });
+      }
+      published = {
+        ...validated.data,
+        verifikasi: PUBLISHED_VERIFICATION,
+        tanggalDiperiksa: todayWIB(),
+      };
+      const validationMessage = await validateAdminProgram(published);
       if (validationMessage) return Response.json({ error: validationMessage }, { status: 400 });
-      program = validated.data;
+      program = pending;
     }
     const programId = await reviewDiscoveredProgram(
       parsed.data.candidateId,
@@ -74,6 +94,19 @@ export async function POST(request: NextRequest) {
       parsed.data.action,
       program,
     );
+    if (published && programId) {
+      try {
+        await updateProgramRecord(programId, published);
+      } catch {
+        return Response.json(
+          {
+            error:
+              'Disetujui, tetapi belum berhasil dipublikasikan. Buka Kelola Informasi dan atur status verifikasinya.',
+          },
+          { status: 500 },
+        );
+      }
+    }
     return Response.json({ reviewed: true, programId });
   } catch {
     return Response.json(

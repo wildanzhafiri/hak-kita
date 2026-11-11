@@ -10,7 +10,7 @@ import { queueRadarCandidate } from './radar-candidates';
 import { ignoreRadarEvent, readSourceHost } from './radar-run-report';
 import { extractRadarSourceText } from './radar-source-text';
 import { loadRadarSettings } from './radar-settings';
-import type { ProgramSourceMonitorResult, RadarRunReporter } from './types';
+import type { ProgramSourceMonitorResult, RadarRunReporter, RadarRunSlice } from './types';
 
 export function collectProgramSourceUrls(
   programs: readonly Program[],
@@ -68,6 +68,7 @@ export async function runProgramSourceMonitor(
   force = false,
   report: RadarRunReporter = ignoreRadarEvent,
   signal: AbortSignal = new AbortController().signal,
+  slice?: RadarRunSlice,
 ): Promise<ProgramSourceMonitorResult> {
   const settings = await loadRadarSettings();
   if (!force && !settings.monitoring_enabled) return { checked: 0, changed: [], failed: [] };
@@ -85,8 +86,14 @@ export async function runProgramSourceMonitor(
   const client = createClient<Database>(url, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
-  const result: ProgramSourceMonitorResult = { checked: 0, changed: [], failed: [] };
-  let processed = 0;
+  const startIndex = slice?.startIndex ?? 0;
+  const result: ProgramSourceMonitorResult = {
+    checked: slice?.carry?.checked ?? 0,
+    changed: [...(slice?.carry?.changed ?? [])],
+    failed: [...(slice?.carry?.failed ?? [])],
+    next: null,
+  };
+  let processed = startIndex;
   const reportSource = (sourceUrl: string, outcome: RadarSourceOutcome) => {
     processed += 1;
     report({
@@ -97,10 +104,22 @@ export async function runProgramSourceMonitor(
       total: sourceUrls.length,
     });
   };
-  report({ type: 'started', run: 'monitoring', total: sourceUrls.length });
+  if (startIndex === 0) report({ type: 'started', run: 'monitoring', total: sourceUrls.length });
 
-  for (let offset = 0; offset < sourceUrls.length; offset += SOURCE_CHECK_BATCH_SIZE) {
+  for (let offset = startIndex; offset < sourceUrls.length; offset += SOURCE_CHECK_BATCH_SIZE) {
     if (signal.aborted) break;
+    if (slice && offset > startIndex && Date.now() >= slice.deadline) {
+      result.next = {
+        index: offset,
+        seed: null,
+        carry: {
+          checked: result.checked,
+          changed: [...result.changed],
+          failed: [...result.failed],
+        },
+      };
+      return result;
+    }
     const batch = sourceUrls.slice(offset, offset + SOURCE_CHECK_BATCH_SIZE);
     await Promise.all(
       batch.map(async (sourceUrl) => {

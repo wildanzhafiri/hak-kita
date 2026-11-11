@@ -6,7 +6,7 @@ export const ASSISTANT_PAGE_LINKS = {
   layanan: { label: 'Layanan Publik', href: '/layanan' },
   anggaran: { label: 'Telusuri Anggaran', href: '/anggaran' },
   rencanaku: { label: 'Rencanaku', href: '/rencanaku' },
-  kondisi: { label: 'Periksa Kondisimu', href: '/periksa-kondisimu' },
+  rekomendasi: { label: 'Rekomendasi Untukmu', href: '/kenali-hakmu/rekomendasi' },
   bantuan: { label: 'Pusat Bantuan', href: '/bantuan' },
 } as const;
 
@@ -101,3 +101,12 @@ export const OFFICIAL_SEARCH_RESULT_LIMIT = 5;
 export const OFFICIAL_SNIPPET_LIMIT = 700;
 export const OFFICIAL_PAGE_TEXT_LIMIT = 7000;
 export const OFFICIAL_WEB_TIMEOUT_MS = 25_000;
+
+export const RADAR_RUN_SLICE_MS = 170_000;
+export const RADAR_RUN_LEASE_MS = 15_000;
+export const RADAR_RUN_ABANDONED_MS = 900_000;
+export const RADAR_RUN_RESUME_AFTER_MS = 20_000;
+export const RADAR_RUN_CONTINUE_TIMEOUT_MS = 10_000;
+export const RADAR_RUN_HEARTBEAT_MS = 4_000;
+export const RADAR_RUN_SAVE_INTERVAL_MS = 1_500;
+export const RADAR_RUN_HISTORY_MS = 86_400_000;
