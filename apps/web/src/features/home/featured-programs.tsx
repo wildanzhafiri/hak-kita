@@ -5,7 +5,7 @@ import type { FeaturedProgramsProps } from './types';
 
 export function FeaturedPrograms({ programs }: FeaturedProgramsProps) {
   return (
-    <section className="bg-white py-[43px] pb-[7px] max-[640px]:py-8">
+    <section className="bg-white pb-[7px] pt-8 max-[640px]:py-8">
       <div className="container">
         <div className="mb-[30px] flex items-end justify-between gap-6 max-[640px]:mb-[26px] max-[640px]:flex-wrap">
           <div>
@@ -18,7 +18,7 @@ export function FeaturedPrograms({ programs }: FeaturedProgramsProps) {
           </div>
           <Link
             className="inline-flex shrink-0 items-center gap-2.5 text-sm font-semibold text-[#196dcc]"
-            href="/program"
+            href="/kenali-hakmu"
           >
             Lihat semua program <ArrowRight size={19} />
           </Link>

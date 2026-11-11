@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Header } from './header';
 
@@ -15,11 +15,11 @@ afterEach(() => {
 
 describe('Header', () => {
   it('shows the redesign navigation and marks the current page', () => {
-    pathname = '/program/kip-kuliah';
+    pathname = '/kenali-hakmu/kip-kuliah';
     render(<Header />);
 
     expect(screen.getByRole('link', { name: 'Kenali Hakmu' }).getAttribute('href')).toBe(
-      '/program',
+      '/kenali-hakmu',
     );
     expect(screen.getByRole('link', { name: 'Kenali Hakmu' }).getAttribute('aria-current')).toBe(
       'page',
@@ -29,17 +29,42 @@ describe('Header', () => {
     );
   });
 
-  it('opens the compact navigation and returns focus after Escape', () => {
+  it('keeps the compact navigation hidden until the toggle is pressed', () => {
+    render(<Header />);
+
+    const toggle = screen.getByRole('button', { name: 'Buka navigasi' });
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    expect(screen.queryByRole('navigation', { name: 'Menu navigasi' })).toBeNull();
+  });
+
+  it('opens the compact navigation dropdown with the menu and both actions', () => {
+    pathname = '/anggaran';
     render(<Header />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Buka navigasi' }));
-    expect(
-      screen.getByRole('button', { name: 'Tutup navigasi' }).getAttribute('aria-expanded'),
-    ).toBe('true');
+    const menu = within(screen.getByRole('navigation', { name: 'Menu navigasi' }).parentElement!);
 
-    fireEvent.keyDown(screen.getByRole('navigation'), { key: 'Escape' });
-    const menuButton = screen.getByRole('button', { name: 'Buka navigasi' });
-    expect(menuButton.getAttribute('aria-expanded')).toBe('false');
-    expect(document.activeElement).toBe(menuButton);
+    expect(menu.getByRole('link', { name: 'Telusuri Anggaran' }).getAttribute('aria-current')).toBe(
+      'page',
+    );
+    expect(menu.getByRole('link', { name: 'Beranda' }).getAttribute('href')).toBe('/');
+    expect(menu.getByRole('link', { name: 'Rencanaku' }).getAttribute('href')).toBe('/rencanaku');
+    expect(menu.getByRole('link', { name: 'Masuk' }).getAttribute('href')).toBe(
+      '/masuk?next=%2Fanggaran',
+    );
+  });
+
+  it('closes the compact navigation with the toggle and with Escape', () => {
+    render(<Header />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Buka navigasi' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Tutup navigasi' }));
+    expect(screen.getByRole('button', { name: 'Buka navigasi' })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Buka navigasi' }));
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(
+      screen.getByRole('button', { name: 'Buka navigasi' }).getAttribute('aria-expanded'),
+    ).toBe('false');
   });
 });

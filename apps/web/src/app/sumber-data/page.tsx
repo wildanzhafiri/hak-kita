@@ -4,7 +4,7 @@ import { VERIFIKASI_STYLE } from '@/components/program/constants';
 import { PageShell } from '@/components/layout/page-shell';
 import { DataNote } from '@/components/ui/data-note';
 import { DataTable } from '@/components/ui/data-table';
-import { loadPrograms, loadWilayahFile } from '@/server/data';
+import { loadPrograms, loadPublishedInformation, loadWilayahFile } from '@/server/data';
 import { SOURCE_RULES, VERIFIKASI_MEANING } from './content';
 
 const DESCRIPTION = 'Kenali asal informasi, cakupan, dan batasan data yang ditampilkan di HAKKITA.';
@@ -12,7 +12,11 @@ const DESCRIPTION = 'Kenali asal informasi, cakupan, dan batasan data yang ditam
 export const metadata: Metadata = { title: 'Sumber & batasan data', description: DESCRIPTION };
 
 export default async function SumberDataPage() {
-  const [programs, wilayahFile] = await Promise.all([loadPrograms(), loadWilayahFile()]);
+  const [programs, allInformation, wilayahFile] = await Promise.all([
+    loadPrograms(),
+    loadPublishedInformation(),
+    loadWilayahFile(),
+  ]);
   const coveredWilayah = wilayahFile.wilayah.filter((w) => w.level !== 'kabkota');
 
   return (
@@ -39,7 +43,7 @@ export default async function SumberDataPage() {
             cells: [
               VERIFIKASI_STYLE[tingkat].label,
               VERIFIKASI_MEANING[tingkat],
-              programs.filter((p) => p.verifikasi === tingkat).length,
+              allInformation.filter((p) => p.verifikasi === tingkat).length,
             ],
           }))}
         />

@@ -9,7 +9,7 @@ export interface HeroSectionProps {
 }
 
 export interface HomepageServicesProps {
-  programs: Program[];
+  services: Program[];
 }
 
 export interface ServiceCardProps {

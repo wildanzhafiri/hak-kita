@@ -1,12 +1,9 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { isLayanan } from '@hakkita/domain';
 import { HomepageServiceCard } from './homepage-service-card';
 import type { HomepageServicesProps } from './types';
 
-export function HomepageServices({ programs }: HomepageServicesProps) {
-  const services = programs.filter(isLayanan);
-
+export function HomepageServices({ services }: HomepageServicesProps) {
   return (
     <section className="bg-[#f5f8fc] py-20 max-[900px]:py-16 max-[640px]:py-[50px]">
       <div className="container">

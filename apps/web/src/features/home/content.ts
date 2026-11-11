@@ -1,6 +1,7 @@
 import type { FaqItem } from '@/components/ui/types';
 
 export const FEATURED_PROGRAM_COUNT = 6;
+export const FEATURED_SERVICE_COUNT = 6;
 
 export const PROGRAM_CATEGORY_CARDS = [
   {
@@ -77,3 +78,18 @@ export const HOME_FAQ_ITEMS = [
       'Periksa tanggal pemeriksaan dan sumber pada halaman detail. Ketentuan terbaru tetap mengacu pada pengumuman penyelenggara resmi.',
   },
 ] satisfies readonly FaqItem[];
+
+export const PROGRAM_FINDER_PROMO = {
+  title: 'Bingung Memilih Program Yang Sesuai?',
+  description:
+    'Jawab beberapa pertanyaan singkat untuk menemukan program yang relevan dengan kebutuhanmu.',
+  action: 'Cari program untukmu',
+} as const;
+
+export const TRANSPARENCY_PREVIEW = {
+  title: 'Ketahui Sumber Informasi Dan Anggaran Publik',
+  description:
+    'Periksa rujukan informasi program dan layanan, serta jelajahi data anggaran yang tersedia.',
+  sourcesLink: 'Tentang sumber informasi',
+  budgetLink: 'Telusuri anggaran',
+} as const;

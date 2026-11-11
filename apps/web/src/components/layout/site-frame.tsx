@@ -6,15 +6,17 @@ import type { SiteFrameProps } from './types';
 export function SiteFrame({ header, footer, children }: SiteFrameProps) {
   const pathname = usePathname();
   const isRencanaku = pathname === '/rencanaku' || pathname.startsWith('/rencanaku/');
+  const isAdmin = pathname.startsWith('/admin');
+  const isPublicFrameHidden = isRencanaku || isAdmin;
 
   return (
     <>
-      <a href="#main" className="skip-link">
-        Lewati ke konten
+      <a href={isAdmin ? '#admin-main' : '#main'} className="skip-link">
+        {isAdmin ? 'Lewati ke konten admin' : 'Lewati ke konten'}
       </a>
-      {!isRencanaku && header}
-      <main id="main">{children}</main>
-      {!isRencanaku && footer}
+      {!isPublicFrameHidden && header}
+      {isAdmin ? children : <main id="main">{children}</main>}
+      {!isPublicFrameHidden && footer}
     </>
   );
 }

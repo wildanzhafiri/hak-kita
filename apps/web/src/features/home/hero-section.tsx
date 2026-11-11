@@ -6,9 +6,7 @@ import type { HeroSectionProps } from './types';
 import { HeroArt } from './hero-art';
 
 export function HeroSection({ programs }: HeroSectionProps) {
-  const featuredPrograms = programs
-    .filter((program) => program.kategori !== 'Layanan Administrasi')
-    .slice(0, 4);
+  const featuredPrograms = programs.slice(0, 4);
 
   return (
     <section className="overflow-hidden bg-white text-center">

@@ -32,7 +32,7 @@ export function HomepageIntroduction() {
             </p>
             <Link
               className="mt-3.5 inline-flex min-h-[30px] w-fit items-center gap-2.5 text-[13px] font-semibold text-[#196dcc]"
-              href="/program"
+              href="/kenali-hakmu"
             >
               Jelajahi Program <ArrowRight size={17} />
             </Link>

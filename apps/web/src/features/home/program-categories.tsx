@@ -19,7 +19,7 @@ export function ProgramCategories() {
           </div>
           <Link
             className="inline-flex shrink-0 items-center gap-2.5 text-sm font-semibold text-[#196dcc]"
-            href="/program"
+            href="/kenali-hakmu"
           >
             Lihat Semua Program <ChevronRight size={19} />
           </Link>
