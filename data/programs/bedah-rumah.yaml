@@ -1,0 +1,35 @@
+id: bedah-rumah
+nama: Bedah Rumah untuk Renovasi Rumah Tidak Layak Huni
+jenis: program
+kategori: Perumahan
+penyelenggara: Kementerian Perumahan dan Kawasan Permukiman bersama pemerintah daerah
+ringkasan: Bantuan stimulan untuk meningkatkan kualitas rumah tidak layak huni milik atau yang ditempati masyarakat berpenghasilan rendah.
+untuk:
+  - Warga negara Indonesia berpenghasilan rendah yang memiliki atau menempati satu-satunya rumah tidak layak huni
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: kategori
+syarat:
+  - teks: Warga negara Indonesia yang memiliki atau menempati satu-satunya rumah dengan kondisi tidak layak huni.
+    sumberUrl: https://jdih.pkp.go.id/produk-hukum/file/2026pmpkp006_1785395434.pdf
+  - teks: Status kepemilikan atau penguasaan tanah jelas, sesuai peruntukan kawasan permukiman, dan tidak dalam sengketa.
+    sumberUrl: https://jdih.pkp.go.id/produk-hukum/file/2026pmpkp006_1785395434.pdf
+  - teks: Berada pada desil 1 sampai 4 DTSEN terkini atau berpenghasilan paling tinggi sebesar upah minimum provinsi atau kabupaten/kota.
+    sumberUrl: https://jdih.pkp.go.id/produk-hukum/file/2026pmpkp006_1785395434.pdf
+  - teks: Belum pernah menerima bantuan Bedah Rumah atau program bantuan pembiayaan perumahan pemerintah bagi masyarakat berpenghasilan rendah.
+    sumberUrl: https://jdih.pkp.go.id/produk-hukum/file/2026pmpkp006_1785395434.pdf
+langkah:
+  - Tanyakan alokasi dan jadwal program kepada pemerintah daerah atau BP3KP sesuai wilayah tempat tinggal.
+  - Calon penerima diusulkan oleh pejabat atau pihak yang disebutkan dalam peraturan melalui sistem resmi Kementerian PKP; warga tidak mengajukan langsung ke HAKKITA.
+  - Ikuti verifikasi usulan dan pemeriksaan faktual oleh petugas Kementerian sebelum penerima ditetapkan.
+sumberUtama:
+  url: https://jdih.pkp.go.id/produk-hukum/file/2026pmpkp006_1785395434.pdf
+  jenis: peraturan
+  dasarHukum: Peraturan Menteri Perumahan dan Kawasan Permukiman Nomor 6 Tahun 2026 tentang Bedah Rumah
+sumberTambahan:
+  - url: https://pkp.go.id/unor/direktorat-jenderal-tata-kelola-dan-pengendalian-risiko/berita/detail/bsps-resmi-berganti-nama-jadi-bedah-rumah-kementerian-pkp-gencarkan-sosialisasi-aturan-baru
+    jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Entri ini merangkum jalur renovasi. Ketentuan pembangunan rumah baru berbeda. Pengusulan, verifikasi, dan penetapan mengikuti alokasi wilayah serta anggaran pemerintah.

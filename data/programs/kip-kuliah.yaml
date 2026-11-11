@@ -1,10 +1,13 @@
 id: kip-kuliah
 nama: KIP Kuliah
+jenis: program
 kategori: Pendidikan
 penyelenggara: Kementerian Pendidikan Tinggi, Sains, dan Teknologi
 ringkasan: Bantuan biaya pendidikan tinggi bagi lulusan SMA/sederajat dari keluarga kurang mampu yang memenuhi syarat.
 untuk:
   - Calon mahasiswa
+manfaat:
+  - Bantuan Biaya Pendidikan
 cakupan:
   level: nasional
   kode: ID
@@ -30,20 +33,20 @@ langkah:
   - Pastikan NISN, NIK, dan NPSN-mu terbaca sesuai data Dapodik sekolah. Bila tidak, minta operator Dapodik atau EMIS sekolah memperbaikinya.
   - Cek desil dan perbarui data DTSEN bila perlu melalui kanal resmi (dilakukan di situs resmi, bukan di HAKKITA).
   - Buat akun lewat tombol Login Siswa di situs resmi KIP Kuliah.
-  - Lengkapi berkas sampai Menu Seleksi muncul, lalu pilih jalur seleksi. Jalur yang sudah dipilih tidak bisa dibatalkan.
+  - Lengkapi berkas sampai Menu Seleksi muncul, lalu pilih jalur seleksi sesuai jadwal resmi.
 dokumen:
   - NISN dan NIK yang sama dengan data Dapodik
   - Alamat email aktif
   - Surat Keterangan Tidak Mampu (SKTM), bila memakai kriteria penghasilan di bawah UMP
 periode:
   buka: '2026-02-03'
-  tutup: '2026-11-09'
+  tutup: '2026-11-10'
 sumberUtama:
   url: https://kip-kuliah.kemdiktisaintek.go.id/
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-08'
-catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi (SNBP, UTBK-SNBT, Mandiri PTN dan PTS) berbeda dan bisa berubah. Rincian berkas tambahan belum kami pastikan dari panduan unduhan resmi.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Periode ini untuk pembuatan akun siswa. Jadwal tiap jalur seleksi berbeda dan dapat berubah. Daftar berkas di HAKKITA hanya memuat item yang dikonfirmasi di halaman resmi, bukan seluruh isian aplikasi pendaftaran.
 berkas:
   pertanyaan:
     - id: ekonomi
@@ -110,6 +113,6 @@ berkas:
     - masalah: Data desil tidak sesuai dengan kondisimu
       langkah: Perbarui datamu lewat dtsen-form.bps.go.id. Pemutakhiran dilakukan di situs resmi, bukan di HAKKITA.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/
-    - masalah: Ingin mengubah jalur seleksi yang sudah dipilih
-      langkah: Jalur yang sudah dipilih tidak bisa dibatalkan, dan sinkronisasi SNBP tidak bisa diulang. Kamu bisa login lagi untuk menambah jalur sesuai jadwal.
+    - masalah: Sinkronisasi jalur SNBP terlanjur dibatalkan
+      langkah: Sinkronisasi SNBP yang telah berhasil lalu dibatalkan tidak dapat dilakukan ulang. Periksa pilihan yang tersedia pada akun resmi dan hubungi bantuan KIP Kuliah bila masih terkendala.
       sumberUrl: https://kip-kuliah.kemdiktisaintek.go.id/

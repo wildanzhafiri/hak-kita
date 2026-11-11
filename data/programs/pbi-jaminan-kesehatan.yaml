@@ -1,0 +1,31 @@
+id: pbi-jaminan-kesehatan
+nama: Penerima Bantuan Iuran Jaminan Kesehatan (PBI-JK)
+jenis: program
+kategori: Kesehatan
+penyelenggara: Pemerintah Republik Indonesia melalui Kementerian Sosial dan BPJS Kesehatan
+ringkasan: Iuran Jaminan Kesehatan Nasional dibayarkan pemerintah bagi penduduk yang ditetapkan sebagai peserta PBI-JK.
+untuk:
+  - Penduduk pada desil kesejahteraan 5 yang dapat diusulkan sebagai peserta PBI-JK
+manfaat:
+  - Bantuan Sosial
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: desil
+syarat:
+  - teks: Penduduk pada desil 5 DTSEN dapat diusulkan sebagai peserta PBI-JK; penetapan kepesertaan dilakukan pemerintah.
+    sumberUrl: https://cekbansos.kemensos.go.id/
+langkah:
+  - Periksa status data bantuan sosial melalui situs resmi Cek Bansos Kemensos.
+  - Jika data kesejahteraan tidak sesuai, ajukan pemutakhiran melalui desa atau kelurahan dan dinas sosial, atau gunakan aplikasi Cek Bansos resmi.
+  - Konfirmasikan status kepesertaan JKN melalui kanal resmi BPJS Kesehatan.
+sumberUtama:
+  url: https://cekbansos.kemensos.go.id/
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://ayosehat.kemkes.go.id/?p=1534
+    jenis: situs-resmi
+periode: sepanjang-tahun
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Desil 5 dapat diusulkan, bukan jaminan otomatis menjadi peserta PBI-JK. Peserta ditetapkan pemerintah; HAKKITA tidak memeriksa atau menyimpan NIK dan tidak menghitung desil.

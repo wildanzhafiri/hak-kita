@@ -1,0 +1,48 @@
+id: gratispol-pendidikan-kaltim
+nama: Gratispol Pendidikan Dalam Daerah
+jenis: program
+kategori: Pendidikan
+penyelenggara: Pemerintah Provinsi Kalimantan Timur
+ringkasan: Bantuan biaya UKT atau SPP bagi mahasiswa aktif asal Kalimantan Timur yang berkuliah di perguruan tinggi dalam provinsi.
+untuk:
+  - Mahasiswa asal Kalimantan Timur
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - Diploma
+  - S1
+  - S2
+  - S3
+cakupan:
+  level: provinsi
+  kode: '64'
+tipeGerbang: kategori
+syarat:
+  - teks: Mahasiswa aktif asal Kalimantan Timur pada perguruan tinggi di Kalimantan Timur, dari jenjang diploma hingga doktor sesuai petunjuk teknis.
+    sumberUrl: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+  - teks: Menyiapkan KTP dan KK Kalimantan Timur yang memenuhi ketentuan tanggal penerbitan KK pada petunjuk teknis 2026.
+    sumberUrl: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+  - teks: Memiliki bukti diterima atau aktif kuliah dan keterangan besaran UKT atau SPP dari perguruan tinggi.
+    sumberUrl: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+  - teks: Menyatakan tidak sedang menerima beasiswa lain dan tidak menerima Beasiswa Kaltim Tuntas pada jenjang yang sama.
+    sumberUrl: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+  - teks: Menyiapkan pas foto terbaru serta surat pernyataan kesediaan menyelesaikan studi, kebenaran data, dan pengabdian bila dibutuhkan pemerintah provinsi.
+    sumberUrl: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+langkah:
+  - "Buat akun di portal Gratispol Pendidikan dengan nama lengkap, email aktif, dan password; verifikasi email dengan kode OTP lalu aktifkan notifikasi WhatsApp."
+  - "Isi NIK dan nomor KK (masing-masing 16 digit) serta alamat sesuai KTP dan domisili di menu Profil Saya."
+  - "Buka menu Form Pengajuan, pilih program yang berstatus aktif dan jenjang studi (D3, D4, S1, S2, atau S3) sesuai aturan usia dan semester. Setiap pendaftar hanya boleh memiliki satu pengajuan aktif dalam satu periode."
+  - "Isi data akademik: kampus dan program studi sesuai PDDIKTI, NIM, semester, jenis kelas, IPK atau rapor terakhir, rincian biaya kuliah (SPP), dan rekening bank. Riwayat prestasi beserta sertifikat bersifat opsional."
+  - "Unggah scan KTP, KK, pas foto terbaru berlatar merah, serta ijazah, transkrip nilai, atau rapor terakhir (PDF atau JPG, maksimal 5 MB per berkas)."
+  - "Tinjau halaman Resume, centang pernyataan keabsahan data, lalu klik Kirim Pengajuan. Data terkunci setelah dikirim kecuali dikembalikan ke draf oleh verifikator."
+  - "Pantau status (Draft, Review, Verifikasi, hingga Penyaluran) dan gunakan menu Sanggahan bila berkas ditolak."
+dokumen:
+  - Pas foto digital terbaru, KTP, dan KK Kalimantan Timur
+  - Bukti diterima atau surat aktif kuliah dan keterangan besaran UKT atau SPP
+  - Surat pernyataan sesuai petunjuk teknis 2026
+sumberUtama:
+  url: https://pendidikan.gratispol.kaltimprov.go.id/api/proxy/public/beasiswa/v2/guest/file/ref/regulation/4?filename=100.3.3.1-K.210-2026.pdf
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Keputusan Gubernur Nomor 100.3.3.1/K.210/2026 mencabut juknis 2025. Pendaftaran bantuan Dalam Daerah 2026 ditutup 30 Juni menurut kanal resmi Pemerintah Provinsi; jadwal berikutnya belum tercatat. Rumusan usia penerbitan KK pada juknis perlu dibaca langsung sebelum mendaftar. Panduan pendaftaran di portal tidak memuat periode, batas waktu, maupun rincian tahap verifikasi.

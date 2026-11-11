@@ -1,0 +1,36 @@
+id: beasiswa-pemuda-padang-pariaman-2026
+nama: Beasiswa Pemuda Berprestasi Padang Pariaman 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Pemerintah Kabupaten Padang Pariaman
+ringkasan: Bantuan UKT bagi calon mahasiswa baru dan mahasiswa aktif berprestasi dari Kabupaten Padang Pariaman.
+untuk:
+  - Calon mahasiswa baru berprestasi asal Padang Pariaman
+  - Mahasiswa aktif berprestasi asal Padang Pariaman
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: kabkota
+  kode: '1305'
+tipeGerbang: kategori
+syarat:
+  - teks: Calon mahasiswa jalur akademik memiliki prestasi akademik, atau jalur nonakademik memiliki prestasi di bidang yang diakui penyelenggara.
+    sumberUrl: https://padangpariamankab.go.id/blog/berita_tampil/pemkab-padang-pariaman-buka-beasiswa-pemuda-berprestasi-2026-kesempatan-emas-kuliah-di-kampus-top-indonesia-dan-mesir-bupati-jka-ayo-daftar-segera
+  - teks: Mahasiswa aktif memiliki IPK minimal 3,00 dan menunjukkan capaian prestasi.
+    sumberUrl: https://padangpariamankab.go.id/blog/berita_tampil/pemkab-padang-pariaman-buka-beasiswa-pemuda-berprestasi-2026-kesempatan-emas-kuliah-di-kampus-top-indonesia-dan-mesir-bupati-jka-ayo-daftar-segera
+langkah:
+  - "Pastikan kategorimu: calon mahasiswa baru dengan prestasi akademik terbaik, atau mahasiswa aktif dengan IPK minimal 3,00 ditambah prestasi."
+  - "Isi formulir online di s.id/formulirbeasiswa2026 dan unggah berkas di s.id/berkasbeasiswa2026, atau serahkan berkas langsung ke Bagian Kesejahteraan Rakyat Kantor Bupati Padang Pariaman, atau kirim lewat pos."
+  - "Pada periode 2026, pendaftaran dibuka 11 Mei sampai 5 Juni, seleksi administrasi 8 sampai 12 Juni, dan hasilnya diumumkan 17 Juni."
+periode:
+  buka: '2026-05-11'
+  tutup: '2026-06-05'
+sumberUtama:
+  url: https://padangpariamankab.go.id/blog/berita_tampil/pemkab-padang-pariaman-buka-beasiswa-pemuda-berprestasi-2026-kesempatan-emas-kuliah-di-kampus-top-indonesia-dan-mesir-bupati-jka-ayo-daftar-segera
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://padangpariamankab.go.id/blog/berita_tampil/pemberitahuan-perubahan-jadwal-seleksi-beasiswa-pemuda-berprestasi-kabupaten-padang-pariaman-tahun-2026?tahun=2020
+    jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Pendaftaran 2026 telah ditutup. Pengumuman susulan mengubah jadwal seleksi, bukan periode pendaftaran. Daftar lengkap perguruan tinggi dan rincian berkas perlu diperiksa di pengumuman resmi sebelum periode berikutnya. Halaman sumber tidak memuat daftar berkas, tahap seleksi lanjutan, atau alamat pos.

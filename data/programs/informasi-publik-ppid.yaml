@@ -1,0 +1,39 @@
+id: informasi-publik-ppid
+nama: Permohonan Informasi Publik melalui PPID DKI Jakarta
+jenis: layanan
+kategori: Pengaduan & Informasi Publik
+penyelenggara: PPID Pemerintah Provinsi DKI Jakarta
+ringkasan: Ajukan permintaan informasi publik kepada Pemprov DKI Jakarta lewat formulir daring PPID.
+untuk:
+  - Perorangan, lembaga/organisasi, atau kelompok orang yang meminta informasi publik Pemprov DKI Jakarta
+cakupan:
+  level: provinsi
+  kode: "31"
+tipeGerbang: prosedur
+syarat:
+  - teks: "Pilih kategori pemohon: perorangan, lembaga/organisasi, atau kelompok orang."
+    sumberUrl: https://ppid.jakarta.go.id/permohonan-informasi
+  - teks: Perorangan mengunggah KTP (maksimal 3 MB); lembaga/organisasi mengunggah akta notaris (maksimal 6 MB).
+    sumberUrl: https://ppid.jakarta.go.id/permohonan-informasi
+langkah:
+  - Buka formulir di ppid.jakarta.go.id/permohonan-informasi.
+  - "Isi tab Identitas: NIK, nama, alamat, email, nomor telepon, dan pekerjaan."
+  - "Isi tab Rincian Informasi: tujuan penggunaan, cara memperoleh informasi, format salinan, dan cara pengiriman."
+  - Klik Ajukan Permohonan dan simpan bukti pengajuan.
+dokumen:
+  - KTP (perorangan)
+  - Akta notaris (lembaga/organisasi)
+kanal:
+  - online
+alias:
+  - ppid
+  - keterbukaan informasi
+  - minta informasi
+terkait:
+  - sengketa-informasi
+sumberUtama:
+  url: https://ppid.jakarta.go.id/permohonan-informasi
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Khusus Pemprov DKI Jakarta. Tenggat jawaban dan biaya tercantum pada halaman Waktu & Biaya Layanan situs PPID dan belum diperiksa di sini.

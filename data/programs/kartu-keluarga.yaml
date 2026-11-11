@@ -1,6 +1,7 @@
 ﻿id: kartu-keluarga
 nama: Pengurusan Kartu Keluarga
-kategori: Layanan Administrasi
+jenis: layanan
+kategori: "Kependudukan & Dokumen Pribadi"
 penyelenggara: Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Dukcapil)
 ringkasan: Panduan pengurusan Kartu Keluarga melalui layanan Dukcapil sesuai domisili.
 untuk:
@@ -10,13 +11,32 @@ cakupan:
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa persyaratan pengurusan Kartu Keluarga pada kanal Dukcapil kabupaten atau kota setempat.
+  - teks: Untuk KK baru karena membentuk keluarga, siapkan buku nikah atau kutipan akta perkawinan, atau surat pernyataan tanggung jawab mutlak sesuai kondisi.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/penerbitan-kartu-keluarga-baru-karena-membentuk-keluarga-baru
+  - teks: Untuk penggantian kepala keluarga karena meninggal, siapkan kutipan akta kematian dan KK lama.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/penerbitan-kartu-keluarga-baru-karena-penggantian-kepala-keluarga-kematian-kepala-keluarga
+  - teks: Untuk pisah KK dalam satu alamat, siapkan KK lama; pemohon berusia sekurang-kurangnya 17 tahun atau sudah kawin.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/penerbitan-kartu-keluarga-baru-karena-pisah-kk-dalam-1-satu-alamat
+  - teks: Untuk perubahan data, siapkan KK lama dan bukti perubahan peristiwa kependudukan atau peristiwa penting.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/penerbitan-kartu-keluarga-karena-perubahan-data
+  - teks: Untuk KK hilang atau rusak, siapkan surat keterangan kehilangan dari kepolisian atau KK yang rusak.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/penerbitan-kartu-keluarga-karena-hilang-rusak
 langkah:
-  - Periksa kanal dan persyaratan Dukcapil sesuai domisili
-  - Ikuti prosedur pengajuan yang tersedia di daerahmu
-periode: sepanjang-tahun
+  - "Isi formulir F-1.02."
+  - "Lampirkan dokumen sesuai keperluan: untuk KK baru karena membentuk keluarga, fotokopi buku nikah, kutipan akta perkawinan, atau kutipan akta perceraian; untuk pisah KK, KK lama; untuk penggantian kepala keluarga karena meninggal, fotokopi akta kematian dan KK lama."
+  - "Untuk perubahan data, lampirkan KK lama, isi formulir F-1.06, dan lampirkan fotokopi bukti peristiwa kependudukan atau peristiwa penting. Untuk KK hilang atau rusak, serahkan KK yang rusak atau surat keterangan kehilangan dari kepolisian."
+  - "Pada layanan daring, dokumen yang dipindai atau difoto untuk diunggah harus aslinya."
+  - "Dinas kependudukan menerbitkan KK baru."
 sumberUtama:
-  url: https://dukcapil.kemendagri.go.id/
+  url: https://dukcapil.kemendagri.go.id/page/read/syarat-prosedur
   jenis: situs-resmi
-verifikasi: belum
-catatan: Jenis permohonan, persyaratan, dan kanal layanan mengikuti Dukcapil kabupaten atau kota.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Persyaratan bergantung pada jenis penerbitan KK. Kanal layanan mengikuti Disdukcapil kabupaten atau kota.
+alias:
+  - kk
+  - pecah kk
+  - ubah kk
+terkait:
+  - ktp-el
+  - akta-kelahiran

@@ -1,6 +1,7 @@
 ﻿id: perpanjangan-sim
 nama: Perpanjangan SIM
-kategori: Layanan Administrasi
+jenis: layanan
+kategori: "Kendaraan & Transportasi"
 penyelenggara: Korps Lalu Lintas Kepolisian Negara Republik Indonesia
 ringkasan: Panduan perpanjangan SIM melalui layanan Digital Korlantas POLRI dan SINAR.
 untuk:
@@ -10,14 +11,33 @@ cakupan:
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa ketentuan perpanjangan dan ketersediaan layanan melalui Digital Korlantas POLRI.
+  - teks: SIM lama masih berlaku; SIM yang masa berlakunya telah lewat tidak dapat diperpanjang melalui aplikasi Digital Korlantas POLRI.
+    sumberUrl: https://digitalkorlantas.polri.go.id/sim/
+  - teks: Menyiapkan SIM lama, E-KTP, pas foto latar biru, foto tanda tangan, serta hasil pemeriksaan kesehatan jasmani dan psikologi.
+    sumberUrl: https://digitalkorlantas.polri.go.id/sim/
 langkah:
-  - Buka panduan perpanjangan SIM di situs Digital Korlantas POLRI
-  - Ikuti petunjuk permohonan dan periksa status melalui kanal resmi
-periode: sepanjang-tahun
+  - "Unduh aplikasi Digital Korlantas POLRI, daftar dengan nomor ponsel, masukkan kode OTP, lalu buat dan konfirmasi PIN."
+  - "Lengkapi profil (NIK, nama, email), aktifkan akun lewat email, lalu verifikasi e-KTP dengan foto liveness."
+  - "Siapkan e-KTP, foto SIM lama, foto tanda tangan, dan pas foto berlatar biru (bukan selfie)."
+  - "Lakukan tes kesehatan di erikkes.id dan tes psikologi di app.eppsi.id lewat browser ponsel."
+  - "Buka menu SIM, pilih perpanjangan SIM, lalu pilih SATPAS penerbit."
+  - "Unggah dokumen, klik Cek Kelengkapan Data, lalu isi nomor rekening untuk pengembalian dana bila pengajuan ditolak."
+  - "Pilih pengiriman oleh POS Indonesia (isi alamat) atau ambil sendiri di SATPAS; metode tidak dapat diubah setelah ambil sendiri dipilih."
+  - "Pilih metode pembayaran, klik Lihat Nomor Rekening, lalu bayar lewat virtual account BNI."
+  - "Pantau status di menu Transaksi; proses memakan 3 sampai 7 hari kerja tergantung antrean."
+  - "Setelah SIM diterima, isi indeks kepuasan pelanggan dan klik Perbarui agar SIM digital terbarui."
 sumberUtama:
   url: https://digitalkorlantas.polri.go.id/sim/
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Ketersediaan layanan dan ketentuan dapat berbeda menurut jenis SIM dan SATPAS.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+biaya: "SIM A Rp80.000 dan SIM C Rp75.000, belum termasuk biaya admin, pengemasan, dan pengiriman; tes kesehatan dan tes psikologi dibayar terpisah."
+catatan: Ketersediaan layanan dan ketentuan dapat berbeda menurut jenis SIM dan SATPAS. Ajukan paling lambat 90 hari sebelum SIM habis dan disarankan 30 hari sebelumnya; SIM yang sudah mati tidak dapat diperpanjang lewat aplikasi.
+alias:
+  - sim
+  - perpanjang sim
+  - surat izin mengemudi
+  - sinar
+terkait:
+  - ktp-el
+  - sim-baru

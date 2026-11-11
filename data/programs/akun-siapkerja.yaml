@@ -1,0 +1,39 @@
+id: akun-siapkerja
+nama: Pendaftaran Akun SIAPkerja
+jenis: layanan
+kategori: Pekerjaan & Usaha
+penyelenggara: Kementerian Ketenagakerjaan
+ringkasan: Buat akun Kemnaker dan lengkapi profil untuk mengakses layanan ketenagakerjaan.
+untuk:
+  - Pencari kerja dan masyarakat umum
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Isi data sesuai KTP dan KK karena sistem terintegrasi dengan Dukcapil.
+    sumberUrl: https://paskerid.kemnaker.go.id/pusat-bantuan
+  - teks: Email atau nomor ponsel aktif, karena kode OTP dikirim ke kontak yang terdaftar.
+    sumberUrl: https://paskerid.kemnaker.go.id/pusat-bantuan
+langkah:
+  - Buka kemnaker.go.id dan klik Daftar di pojok kanan atas.
+  - Pilih Daftar Sekarang.
+  - Isi data identitas sesuai KTP dan KK, lalu ikuti langkah sampai selesai.
+  - Jika akun belum terverifikasi, masuk lalu lengkapi semua tahap pada Edit Profil.
+dokumen:
+  - Data KTP dan KK
+  - Email atau nomor ponsel aktif
+kanal:
+  - online
+alias:
+  - siap kerja
+  - kemnaker
+  - karirhub
+terkait:
+  - ak1
+sumberUtama:
+  url: https://paskerid.kemnaker.go.id/pusat-bantuan
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Pembuatan akun bukan penetapan penerimaan kerja atau pelatihan. Layanan berikutnya memiliki ketentuan masing-masing. Halaman sumber tidak mencantumkan biaya.

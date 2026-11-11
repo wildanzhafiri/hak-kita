@@ -1,0 +1,32 @@
+id: sultan-muda-sumsel
+nama: Program 100.000 Sultan Muda Sumatera Selatan
+jenis: program
+kategori: Usaha & UMKM
+penyelenggara: Pemerintah Provinsi Sumatera Selatan
+ringkasan: Program pengembangan wirausaha muda Sumatera Selatan melalui pelatihan, mentoring, inkubasi, dan akses jejaring usaha.
+untuk:
+  - Warga muda Sumatera Selatan yang memiliki usaha atau ide bisnis
+manfaat:
+  - Pelatihan & Pengembangan Keterampilan
+  - Layanan & Pendampingan
+cakupan:
+  level: provinsi
+  kode: '16'
+tipeGerbang: kategori
+syarat:
+  - teks: Berusia 17 sampai 40 tahun dan ber-KTP Sumatera Selatan.
+    sumberUrl: https://sultanmuda.sumselprov.go.id/
+  - teks: Memiliki usaha rintisan atau ide bisnis yang siap dikembangkan.
+    sumberUrl: https://sultanmuda.sumselprov.go.id/
+  - teks: Memiliki gagasan usaha yang inovatif dan memberi nilai tambah bagi masyarakat atau ekosistem lokal.
+    sumberUrl: https://sultanmuda.sumselprov.go.id/
+langkah:
+  - "Buka sultanmuda.sumselprov.go.id dan klik Daftar Sekarang; peserta yang sudah terdaftar masuk lewat Login."
+  - "Pastikan memenuhi syarat: ber-KTP Sumatera Selatan, berusia 17 sampai 40 tahun, dan memiliki usaha yang sudah berjalan atau ide bisnis yang siap divalidasi."
+  - "Peserta yang lolos mengikuti rangkaian program: pelatihan kewirausahaan, mentoring, inkubasi bisnis (termasuk verifikasi kualitas dan cetak identitas), dan akses permodalan."
+sumberUtama:
+  url: https://sultanmuda.sumselprov.go.id/
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Portal menjelaskan pelatihan, mentoring, inkubasi, dan akses permodalan sebagai bagian ekosistem. Penyaluran akses pembiayaan pada portal ditujukan kepada peserta yang terverifikasi oleh perangkat daerah. Halaman sumber tidak memuat formulir, daftar dokumen, jadwal, maupun mekanisme verifikasi pendaftaran.

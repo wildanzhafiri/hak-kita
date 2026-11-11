@@ -1,0 +1,44 @@
+id: lapor
+nama: Pengaduan Pelayanan Publik melalui LAPOR!
+jenis: layanan
+kategori: Pengaduan & Informasi Publik
+penyelenggara: Kementerian PANRB bersama Kemendagri, Komdigi, Kantor Staf Presiden, dan Ombudsman RI
+ringkasan: Sampaikan pengaduan, aspirasi, atau permintaan informasi kepada instansi pemerintah melalui LAPOR!.
+untuk:
+  - Masyarakat umum
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Isi judul laporan, isi laporan, tanggal kejadian, dan lokasi kejadian.
+    sumberUrl: https://prod.lapor.go.id/
+  - teks: Instansi tujuan, kategori laporan, dan lampiran bersifat opsional; tersedia pilihan Anonim dan Rahasia.
+    sumberUrl: https://prod.lapor.go.id/
+langkah:
+  - Buka kanal LAPOR! yang sesuai dengan instansi tujuan.
+  - Masuk untuk lapor, pilih jenis laporan (pengaduan, aspirasi, atau permintaan informasi), lalu isi formulir.
+  - Laporan diverifikasi dan diteruskan ke instansi dalam 3 hari, lalu instansi menindaklanjuti dan menjawab dalam 5 hari.
+  - Beri tanggapan atas jawaban instansi dalam 10 hari; laporan tetap ditindaklanjuti sampai selesai.
+dokumen:
+  - Uraian kejadian, tanggal, dan lokasi
+  - Lampiran pendukung jika ada
+kanal:
+  - online
+alias:
+  - lapor
+  - pengaduan
+  - keluhan pelayanan publik
+  - sp4n
+terkait:
+  - ombudsman
+sumberUtama:
+  url: https://lapor.go.id/
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://prod.lapor.go.id/
+    jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Pada 11 November 2026, lapor.go.id menyebut sepuluh instansi sudah pindah ke versi 4.0 (prod.lapor.go.id) dan lebih dari 700 instansi masih memakai versi 3.5; laporan ranah kepolisian dan pidana diarahkan ke versi 3.5. Halaman sumber tidak mencantumkan biaya.
+tentang: "LAPOR! meneruskan laporan ke instansi tujuan, lalu instansi menindaklanjuti dan menjawabnya."

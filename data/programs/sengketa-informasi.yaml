@@ -1,0 +1,44 @@
+id: sengketa-informasi
+nama: Pengajuan Sengketa Informasi Publik melalui SIPSI
+jenis: layanan
+kategori: Pengaduan & Informasi Publik
+penyelenggara: Komisi Informasi
+ringkasan: Ajukan sengketa informasi publik dan unggah buktinya melalui Sistem Informasi Penyelesaian Sengketa Informasi (SIPSI).
+untuk:
+  - Pemohon informasi publik yang keberatannya belum terselesaikan
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: "Daftar akun SIPSI sesuai jenis pemohon: perorangan dengan KTP atau paspor, badan hukum dengan SK Kemenkumham atau akta pendirian, kelompok orang dengan KTP penerima kuasa."
+    sumberUrl: https://sipsi.komisiinformasi.go.id/faq
+  - teks: "Dokumen wajib: identitas, surat atau formulir permohonan informasi, serta surat atau formulir pengajuan keberatan."
+    sumberUrl: https://sipsi.komisiinformasi.go.id/faq
+  - teks: Semua dokumen berformat PDF dengan ukuran maksimal 2000 KB per berkas.
+    sumberUrl: https://sipsi.komisiinformasi.go.id/faq
+langkah:
+  - Daftar akun dan verifikasi melalui tautan di email.
+  - Masuk lalu ajukan permohonan sengketa beserta dokumen.
+  - "Lengkapi kekurangan dokumen jika diminta: admin memberi tahu paling lambat 3 hari, dan kekurangan dilengkapi dalam 7 hari sejak surat diterima."
+  - Pantau jadwal sidang pada menu Jadwal Sidang dan unduh salinan putusan setelah sidang selesai.
+dokumen:
+  - KTP, paspor, atau akta pendirian
+  - Surat atau formulir permohonan informasi
+  - Surat atau formulir pengajuan keberatan
+  - Surat kuasa, tanggapan atasan PPID, atau jawaban PPID jika ada
+kanal:
+  - online
+biaya: Seluruh proses penyelesaian sengketa di Komisi Informasi tidak dipungut biaya.
+alias:
+  - sipsi
+  - komisi informasi
+  - sengketa ppid
+terkait:
+  - informasi-publik-ppid
+sumberUtama:
+  url: https://sipsi.komisiinformasi.go.id/faq
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Ringkasan ini tidak menentukan kewenangan atau menghitung tenggat kasusmu. Konfirmasikan kepada kepaniteraan sebelum mengajukan.

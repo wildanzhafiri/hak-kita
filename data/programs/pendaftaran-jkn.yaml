@@ -1,6 +1,7 @@
 ﻿id: pendaftaran-jkn
 nama: Pendaftaran Peserta JKN
-kategori: Layanan Administrasi
+jenis: layanan
+kategori: "Kesehatan & Jaminan Sosial"
 penyelenggara: BPJS Kesehatan
 ringkasan: Panduan pendaftaran peserta Jaminan Kesehatan Nasional melalui Mobile JKN.
 untuk:
@@ -10,14 +11,30 @@ cakupan:
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa syarat pendaftaran peserta JKN melalui panduan resmi BPJS Kesehatan.
+  - teks: Menyiapkan nomor KK untuk memulai pendaftaran peserta baru di Mobile JKN.
+    sumberUrl: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+  - teks: Menyiapkan alamat email dan nomor ponsel aktif untuk verifikasi pendaftaran.
+    sumberUrl: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
 langkah:
-  - Buka panduan pendaftaran peserta JKN di situs BPJS Kesehatan
-  - Ikuti petunjuk pendaftaran melalui Mobile JKN
-periode: sepanjang-tahun
+  - "Di beranda Mobile JKN, pilih menu pendaftaran peserta baru."
+  - "Baca syarat dan ketentuan BPJS Kesehatan, lalu lanjutkan."
+  - "Masukkan nomor KK dan captcha, lalu lanjut dan pilih tambah."
+  - "Isi formulir pendaftaran dengan teliti, lalu simpan."
+  - "Pilih kelas rawat inap; sistem menampilkan iuran per jiwa dan iuran satu keluarga."
+  - "Masukkan email dan nomor telepon, lalu masukkan kode OTP yang dikirim ke ponsel dan verifikasi."
+  - "Baca dengan teliti halaman persetujuan peserta, lalu lanjutkan."
+  - "Setelah pendaftaran berhasil, informasi virtual account untuk pembayaran iuran dikirim ke email terdaftar dan terhubung dengan Mobile JKN."
 sumberUtama:
   url: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
 catatan: Ketentuan pendaftaran mengikuti segmen kepesertaan dan petunjuk terbaru BPJS Kesehatan.
+alias:
+  - bpjs
+  - jkn
+  - bpjs kesehatan
+  - daftar bpjs
+terkait:
+  - data-peserta-jkn
+  - ktp-el

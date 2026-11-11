@@ -1,6 +1,7 @@
 ﻿id: sim-baru
 nama: Pendaftaran SIM Baru
-kategori: Layanan Administrasi
+jenis: layanan
+kategori: "Kendaraan & Transportasi"
 penyelenggara: Korps Lalu Lintas Kepolisian Negara Republik Indonesia
 ringkasan: Panduan pendaftaran SIM baru melalui Digital Korlantas POLRI dan SATPAS.
 untuk:
@@ -10,14 +11,30 @@ cakupan:
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa jenis SIM, persyaratan, dan ketersediaan layanan melalui Digital Korlantas POLRI.
+  - teks: Memenuhi batas usia untuk golongan SIM yang dimohon; SIM A, C, D, dan DI sekurang-kurangnya 17 tahun, sedangkan golongan lain memiliki batas berbeda.
+    sumberUrl: https://peraturan.bpk.go.id/Download/210908/Perpol%20Nomor%205%20Tahun%202021.pdf
+  - teks: Menyiapkan KTP elektronik bagi WNI, bukti kepesertaan JKN aktif, serta sertifikat pelatihan mengemudi atau surat hasil verifikasi kompetensi sesuai jalur belajar.
+    sumberUrl: https://peraturan.bpk.go.id/Download/303603/Perpolri%20No.2%20Tahun%202023.pdf
+  - teks: Memenuhi persyaratan kesehatan jasmani dan psikologi menurut ketentuan penerbitan SIM.
+    sumberUrl: https://peraturan.bpk.go.id/Download/210908/Perpol%20Nomor%205%20Tahun%202021.pdf
+  - teks: Mengikuti ujian teori dan, setelah lulus, ujian praktik di SATPAS yang dipilih.
+    sumberUrl: https://digitalkorlantas.polri.go.id/sim/
 langkah:
-  - Buka panduan pendaftaran SIM baru di situs Digital Korlantas POLRI
-  - Ikuti petunjuk pendaftaran, ujian teori, dan ujian praktik di SATPAS
-periode: sepanjang-tahun
+  - "Unduh aplikasi Digital Korlantas POLRI dan verifikasi data."
+  - "Siapkan foto e-KTP, foto tanda tangan di kertas putih dengan tinta hitam, dan pas foto terbaru berlatar biru (480 x 640 piksel, maksimal 100 KB, format JPEG, JPG, atau PNG)."
+  - "Buka menu SIM, pilih pendaftaran SIM, isi data sesuai petunjuk, lalu bayar biaya pendaftaran."
+  - "Ikuti ujian teori yang dapat dilakukan online dari rumah. Jika lulus, pilih tanggal ujian praktik di SATPAS."
+  - "Ikuti ujian praktik di SATPAS pada tanggal yang dipilih, lalu ambil SIM setelah lulus."
 sumberUtama:
   url: https://digitalkorlantas.polri.go.id/sim/
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Persyaratan dan alur mengikuti jenis SIM serta SATPAS yang dipilih.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Ketentuan rinci berbeda menurut golongan SIM dan SATPAS. Bila bukti JKN aktif belum tersedia, Perpol 2 Tahun 2023 meminta pemohon memproses kepesertaan sebelum SIM diserahkan. Halaman sumber tidak menegaskan apakah daftar foto dokumen berlaku khusus SIM baru, dan tidak memuat biaya, lama proses, maupun cara pengambilan SIM baru.
+alias:
+  - bikin sim
+  - surat izin mengemudi baru
+  - sim a
+  - sim c
+terkait:
+  - perpanjangan-sim

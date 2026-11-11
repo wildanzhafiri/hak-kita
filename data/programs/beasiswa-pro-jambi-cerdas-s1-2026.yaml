@@ -1,0 +1,41 @@
+id: beasiswa-pro-jambi-cerdas-s1-2026
+nama: Beasiswa Pro-Jambi Cerdas S1 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Pemerintah Provinsi Jambi
+ringkasan: Bantuan beasiswa bagi mahasiswa S1 aktif asal Jambi melalui jalur kurang mampu atau prestasi.
+untuk:
+  - Mahasiswa S1 aktif ber-KTP Provinsi Jambi
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - S1
+cakupan:
+  level: provinsi
+  kode: '15'
+tipeGerbang: kategori
+syarat:
+  - teks: Mahasiswa aktif ber-KTP Provinsi Jambi yang telah duduk di semester III atau lebih.
+    sumberUrl: https://beasiswa.jambiprov.go.id/web/
+  - teks: IPK memenuhi batas jalur kurang mampu atau prestasi yang berbeda menurut rumpun ilmu eksakta dan sosial pada ketentuan resmi.
+    sumberUrl: https://beasiswa.jambiprov.go.id/web/
+  - teks: Tidak sedang menerima bantuan dari pihak lain.
+    sumberUrl: https://beasiswa.jambiprov.go.id/web/
+langkah:
+  - "Buka halaman pendaftaran di beasiswa.jambiprov.go.id, masukkan NIK berkode wilayah Provinsi Jambi dan nomor WhatsApp yang aktif, lalu isi formulir."
+  - "Gunakan nomor WhatsApp yang benar; jika salah, username dan password login tidak diterima. Gunakan PC atau laptop untuk registrasi, login, dan unggah data."
+  - "Login, isi data, dan unggah dokumen sesuai jalur kurang mampu atau berprestasi; jadwal tiap tahap ada di menu Rundown."
+  - "Tahap I adalah seleksi administrasi. Pada Tahap II (verifikasi faktual), calon penerima mengirim berkas autentik lewat pos ke PO BOX 2025; data palsu atau tidak benar membuat peserta didiskualifikasi."
+  - "Penerima ditetapkan lewat pengumuman penetapan penerima beasiswa Provinsi Jambi."
+periode:
+  buka: '2026-06-02'
+  tutup: '2026-06-11'
+sumberUtama:
+  url: https://beasiswa.jambiprov.go.id/web/
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://beasiswa.jambiprov.go.id/uploads/juknis_s1_2026.pdf
+    jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Pendaftaran kedua jalur tahun 2026 telah ditutup. Batas IPK jalur kurang mampu dan prestasi berbeda menurut rumpun ilmu; periksa angka tepatnya di FAQ dan petunjuk teknis resmi sebelum mendaftar pada periode berikutnya.

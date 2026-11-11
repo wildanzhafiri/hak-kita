@@ -1,25 +1,36 @@
 id: kjp-plus-dki
 nama: Kartu Jakarta Pintar Plus (KJP Plus)
+jenis: program
 kategori: Pendidikan
 penyelenggara: Pemerintah Provinsi DKI Jakarta (Dinas Pendidikan)
 ringkasan: Bantuan biaya pendidikan dari Pemerintah Provinsi DKI Jakarta bagi peserta didik dari keluarga kurang mampu.
 untuk:
   - Peserta didik
   - Orang tua atau wali
+manfaat:
+  - Bantuan Biaya Pendidikan
 cakupan:
   level: provinsi
   kode: '31'
 tipeGerbang: kategori
 syarat:
-  - teks: Berdomisili di DKI Jakarta
-  - teks: Terdaftar sebagai peserta didik pada satuan pendidikan yang memenuhi ketentuan
-  - teks: Memenuhi kriteria ekonomi yang ditetapkan Pemerintah Provinsi DKI Jakarta
+  - teks: Memiliki NIK sebagai penduduk DKI Jakarta dan berdomisili paling singkat 5 tahun berturut-turut di DKI Jakarta; ketentuan ini dikecualikan bagi peserta didik Sekolah Rakyat.
+    sumberUrl: https://jdih.jakarta.go.id/dokumenPeraturanDirectory/0031/2026PERGUB003120.pdf
+  - teks: Terdaftar sebagai peserta didik di satuan pendidikan negeri atau swasta di DKI Jakarta, atau Sekolah Rakyat.
+    sumberUrl: https://jdih.jakarta.go.id/dokumenPeraturanDirectory/0031/2026PERGUB003120.pdf
+  - teks: Berusia 6 sampai 21 tahun pada saat pengusulan; ketentuan ini dikecualikan bagi peserta didik Sekolah Rakyat.
+    sumberUrl: https://jdih.jakarta.go.id/dokumenPeraturanDirectory/0031/2026PERGUB003120.pdf
+  - teks: Terdaftar dalam DTSEN atau data lain yang sah menurut ketentuan, atau merupakan penerima manfaat panti sosial Pemprov DKI Jakarta.
+    sumberUrl: https://jdih.jakarta.go.id/dokumenPeraturanDirectory/0031/2026PERGUB003120.pdf
 langkah:
-  - Periksa jadwal dan tahap pendaftaran di kanal resmi Pemprov DKI Jakarta
-  - Ikuti verifikasi dan pendaftaran sesuai petunjuk sekolah atau Dinas Pendidikan
+  - "Sekolah mendata calon penerima KJP Plus secara daring; operator sekolah masuk dengan NPSN dan password, dan sekolah yang belum punya akun mendaftar lewat tautan Daftar Akun Sekolah."
+  - "Orang tua atau wali datang ke sekolah pada masa pendaftaran dengan membawa surat permohonan kepada Gubernur, surat pernyataan ketaatan penggunaan dana (keduanya memakai format dari sekolah), fotokopi Kartu Keluarga, dan fotokopi KTP orang tua atau wali."
+  - "Sekolah memverifikasi data dan mengunggah SPTJM, lalu Dinas Pendidikan memverifikasi."
+  - "Penerima ditetapkan lewat Keputusan Gubernur, kemudian dana disalurkan. Pada Tahap II 2026: pendaftaran 22 sampai 30 Juli, verifikasi Dinas Pendidikan 4 sampai 7 Agustus, penetapan 10 Agustus sampai 3 September, penyaluran 4 September."
+  - "Pendataan tidak dipungut biaya. Pertanyaan dapat disampaikan ke P4OP di telepon (021) 3528 9335 atau WhatsApp 0852 1124 7089, pukul 08.00 sampai 16.00 WIB pada hari kerja."
 sumberUtama:
-  url: https://www.jakarta.go.id/kjp-plus
+  url: https://edu.jakarta.go.id/kjp/login
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Halaman program memuat ketentuan umum; periksa jadwal, tahap, dan persyaratan terbaru pada kanal resmi Dinas Pendidikan DKI Jakarta.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Kriteria mengikuti Pergub DKI Jakarta 20 Tahun 2026. Jadwal di portal saat diperiksa adalah untuk pendataan Tahap II 2026 yang telah berakhir; periksa tahap berikutnya di portal resmi. Halaman sumber tidak menjelaskan cara orang tua mengecek status atau mengajukan sanggahan.

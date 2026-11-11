@@ -1,23 +1,45 @@
 ﻿id: paspor-baru
-nama: Permohonan Paspor Baru
-kategori: Layanan Administrasi
+nama: Permohonan Paspor Baru untuk WNI Dewasa
+jenis: layanan
+kategori: "Kependudukan & Dokumen Pribadi"
 penyelenggara: Direktorat Jenderal Imigrasi
-ringkasan: Panduan permohonan paspor baru bagi warga negara Indonesia melalui kanal resmi Imigrasi.
+ringkasan: Panduan permohonan paspor baru bagi warga negara Indonesia dewasa melalui kanal resmi Imigrasi.
 untuk:
-  - Warga negara Indonesia
+  - Warga negara Indonesia dewasa
 cakupan:
   level: nasional
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa dokumen dan prosedur permohonan paspor terbaru melalui kanal Imigrasi.
+  - teks: Menyiapkan KTP yang masih berlaku atau surat keterangan pindah ke luar negeri, serta Kartu Keluarga.
+    sumberUrl: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
+  - teks: Menyiapkan salah satu dokumen berupa akta kelahiran, akta perkawinan, buku nikah, ijazah, atau surat baptis yang memuat identitas sesuai ketentuan.
+    sumberUrl: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
+  - teks: Menyiapkan surat pewarganegaraan bila memperoleh kewarganegaraan Indonesia, atau surat penetapan ganti nama bila pernah mengganti nama.
+    sumberUrl: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
 langkah:
-  - Buka panduan paspor baru pada situs resmi kantor imigrasi
-  - Ikuti prosedur dan periksa ketentuan kantor imigrasi yang dipilih
-periode: sepanjang-tahun
+  - "Unduh dan daftar lewat aplikasi M-Paspor."
+  - "Isi data pemohon, pilih kantor imigrasi dan tanggal kedatangan, lalu bayar."
+  - "Datang sesuai jadwal dengan dokumen asli: e-KTP, Kartu Keluarga, dan salah satu dari akta kelahiran, ijazah, buku nikah, atau surat baptis. Nama, tempat dan tanggal lahir, serta nama orang tua harus tercantum di dokumen; bawa juga fotokopi satu kali."
+  - "Petugas memeriksa kelengkapan dokumen, mewawancarai, dan mengambil data biometrik."
+  - "Jika dokumen lengkap, kamu menerima tanda terima permohonan. Jika belum lengkap, dokumen dikembalikan dan permohonan dianggap batal."
 sumberUtama:
-  url: https://jakartapusat.imigrasi.go.id/layanan/warga-negara-indonesia-wni/paspor-baru
+  url: https://jakartabarat.imigrasi.go.id/paspor-baru/
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Halaman sumber memuat panduan Kantor Imigrasi Jakarta Pusat; periksa ketersediaan dan ketentuan di kantor imigrasi yang dipilih.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+biaya: "Paspor 5 tahun Rp650.000, paspor 10 tahun Rp950.000, dan layanan percepatan Rp1.000.000; penyelesaian reguler 4 hari kerja, percepatan di hari yang sama selama kuota tersedia."
+kanal:
+  - online
+  - offline
+catatan: Syarat utama KTP, KK, dan dokumen identitas dikonfirmasi ulang pada halaman Kantor Imigrasi Jakarta Barat 2026. Syarat paspor anak berbeda; ketentuan naturalisasi dan perubahan nama dirujuk dari halaman Kantor Imigrasi Jakarta Pusat. Periksa ketentuan di kantor yang dipilih.
+alias:
+  - passport
+  - paspor baru
+  - bikin paspor
+  - imigrasi
+  - m-paspor
+terkait:
+  - ktp-el
+  - perpanjangan-sim
+tentang: "Panduan ini untuk paspor baru WNI dewasa. Syarat paspor anak berbeda, jadi periksa ketentuannya di kantor imigrasi yang dipilih."

@@ -1,22 +1,38 @@
 ﻿id: akta-kelahiran
-nama: Pencatatan Kelahiran
-kategori: Layanan Administrasi
+nama: Pencatatan Kelahiran WNI
+jenis: layanan
+kategori: "Kependudukan & Dokumen Pribadi"
 penyelenggara: Direktorat Jenderal Kependudukan dan Pencatatan Sipil (Dukcapil)
-ringkasan: Panduan pencatatan kelahiran dan penerbitan akta kelahiran melalui Dukcapil.
+ringkasan: Panduan pencatatan kelahiran WNI di Indonesia dan penerbitan kutipan akta melalui Dukcapil.
 untuk:
-  - Orang tua atau wali anak
+  - Penduduk WNI yang melaporkan kelahiran
 cakupan:
   level: nasional
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa persyaratan pencatatan kelahiran pada kanal Dukcapil kabupaten atau kota setempat.
+  - teks: Menyiapkan surat keterangan kelahiran; bila tidak ada, ikuti ketentuan surat pernyataan tanggung jawab mutlak pada prosedur Dukcapil.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/pencatatan-kelahiran-wni-dalam-wilayah-nkri
+  - teks: Menyiapkan buku nikah, kutipan akta perkawinan, atau bukti lain sesuai kondisi orang tua yang diatur dalam prosedur.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/pencatatan-kelahiran-wni-dalam-wilayah-nkri
+  - teks: Menyiapkan Kartu Keluarga tempat anak akan didaftarkan.
+    sumberUrl: https://dukcapil.kemendagri.go.id/page/read/pencatatan-kelahiran-wni-dalam-wilayah-nkri
 langkah:
-  - Periksa kanal dan persyaratan Dukcapil sesuai domisili
-  - Ikuti prosedur pencatatan kelahiran yang tersedia di daerahmu
-periode: sepanjang-tahun
+  - "Isi formulir F-2.01."
+  - "Lampirkan fotokopi surat keterangan kelahiran, fotokopi buku nikah atau kutipan akta perkawinan, dan fotokopi KK. Bila syarat surat keterangan kelahiran atau bukti perkawinan tidak terpenuhi, isi surat pernyataan tanggung jawab mutlak (F-2.03 untuk data kelahiran, F-2.04 untuk status perkawinan) bersama dua orang saksi."
+  - "Pada layanan tatap muka, serahkan fotokopi dan perlihatkan dokumen aslinya; pada layanan daring, dokumen yang dipindai atau difoto untuk diunggah harus aslinya."
+  - "Fotokopi KTP-el saksi tidak perlu dilampirkan karena identitas saksi sudah tercantum di formulir F-2.01."
+  - "Dinas kependudukan menerbitkan kutipan akta kelahiran."
 sumberUtama:
-  url: https://dukcapil.kemendagri.go.id/files/2023/1681361758Supertajam.pdf
+  url: https://dukcapil.kemendagri.go.id/page/read/pencatatan-kelahiran-wni-dalam-wilayah-nkri
   jenis: situs-resmi
-verifikasi: belum
-catatan: Dokumen sumber membahas pencatatan kelahiran secara umum; rincian persyaratan dan kanal pengajuan perlu dikonfirmasi ke Dukcapil setempat.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Prosedur sumber berlaku untuk pencatatan kelahiran WNI di wilayah NKRI. Kanal pengajuan setempat perlu dikonfirmasi ke Disdukcapil kabupaten atau kota.
+alias:
+  - akte lahir
+  - akta lahir
+  - bayi
+terkait:
+  - kartu-keluarga
+  - kia

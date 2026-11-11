@@ -1,0 +1,45 @@
+id: beasiswa-motivasi-nak-badung-2026
+nama: Beasiswa Motivasi Nak Badung 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Pemerintah Kabupaten Badung
+ringkasan: Bantuan biaya pendidikan menengah bagi siswa SMA atau SMK dari Kabupaten Badung.
+untuk:
+  - Siswa SMA atau SMK dari Kabupaten Badung
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - SMA/SMK/Sederajat
+cakupan:
+  level: kabkota
+  kode: '5103'
+tipeGerbang: kategori
+syarat:
+  - teks: Berusia paling tinggi 18 tahun pada 1 Juli saat diterima sebagai siswa baru.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Kepala keluarga telah bertempat tinggal berturut-turut di Kabupaten Badung sesuai ketentuan program.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Telah diterima dan terdaftar sebagai siswa di sekolah yang diakui.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Tidak menerima beasiswa untuk tujuan serupa dari pihak lain dan tidak terdaftar di sekolah yang bekerja sama dengan lembaga pendidikan asing sebagaimana ketentuan resmi.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+langkah:
+  - Buat akun pada portal resmi Beasiswa Nak Badung.
+  - Ajukan Beasiswa Motivasi dan unggah dokumen yang diminta dalam format PDF.
+  - Pantau verifikasi sekolah, verifikasi tim pengelola, dan penetapan penerima.
+dokumen:
+  - Akta kelahiran siswa dan kartu keluarga
+  - KTP elektronik kepala keluarga dan surat keterangan bertempat tinggal
+  - Surat keterangan sekolah
+  - Rekening BPD Bali aktif atas nama kepala keluarga untuk siswa
+  - Surat pernyataan bermeterai sesuai format resmi
+periode:
+  buka: '2026-07-01'
+  tutup: '2026-09-18'
+sumberUtama:
+  url: https://beasiswa.badungkab.go.id/
+  jenis: situs-resmi
+  dasarHukum: Peraturan Bupati Badung Nomor 8 Tahun 2026
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Pengajuan Beasiswa Motivasi tahun 2026 telah ditutup. Portal masih memuat tahap penetapan dan pencairan hingga akhir tahun; pembuatan akun bukan berarti pengajuan baru masih dibuka.

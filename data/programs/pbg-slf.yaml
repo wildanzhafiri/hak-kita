@@ -1,0 +1,36 @@
+id: pbg-slf
+nama: Pengajuan PBG dan SLF melalui SIMBG
+jenis: layanan
+kategori: Pertanahan & Bangunan
+penyelenggara: Kementerian Pekerjaan Umum (SIMBG)
+ringkasan: Ajukan Persetujuan Bangunan Gedung (PBG) dan Sertifikat Laik Fungsi (SLF) melalui Sistem Informasi Manajemen Bangunan Gedung.
+untuk:
+  - Pemilik atau pengelola bangunan gedung
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Daftar atau masuk ke akun SIMBG untuk mengajukan permohonan PBG atau SLF.
+    sumberUrl: https://simbg.pu.go.id/dashboard
+langkah:
+  - Buka simbg.pu.go.id lalu daftar atau masuk.
+  - Pilih Ajukan Permohonan untuk PBG atau SLF.
+  - Lengkapi data dan dokumen sesuai petunjuk pada menu Petunjuk Teknis.
+  - Pantau proses melalui fitur Lacak Permohonan.
+kanal:
+  - online
+biaya: Retribusi PBG dihitung sesuai peraturan perundangan dan dapat dihitung melalui menu Kalkulator Retribusi PBG di SIMBG.
+alias:
+  - pbg
+  - slf
+  - simbg
+  - persetujuan bangunan gedung
+  - sertifikat laik fungsi
+  - imb
+sumberUtama:
+  url: https://simbg.pu.go.id/dashboard
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Beranda SIMBG tidak merinci dokumen persyaratan maupun dinas yang memproses permohonan; periksa menu Petunjuk Teknis dan dinas setempat. PBG dan SLF memiliki tujuan berbeda.

@@ -1,0 +1,40 @@
+id: ombudsman
+nama: Laporan Maladministrasi ke Ombudsman RI
+jenis: layanan
+kategori: Pengaduan & Informasi Publik
+penyelenggara: Ombudsman Republik Indonesia
+ringkasan: Laporkan masalah pelayanan publik yang sudah diadukan kepada instansi tetapi belum ditanggapi atau diselesaikan.
+untuk:
+  - Masyarakat yang mengalami dugaan maladministrasi pelayanan publik
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Sudah menyampaikan laporan kepada pihak terkait, tetapi laporan tidak ditanggapi atau tidak diselesaikan sebagaimana mestinya (Pasal 24 ayat 1 UU 37/2008).
+    sumberUrl: https://ombudsman.go.id/faq
+langkah:
+  - Susun kronologi lengkap dengan tanggal dan kumpulkan bukti laporan ke pihak terkait.
+  - Sampaikan laporan secara langsung, lewat pos, email, atau formulir daring di ombudsman.go.id/pengaduan/form.
+  - Laporan diperiksa kelengkapannya (verifikasi formil), lalu ditelaah substansinya untuk menentukan kewenangan.
+dokumen:
+  - Identitas, alamat domisili, dan nomor telepon
+  - Kronologi lengkap dengan tanggal
+  - Bukti bahwa laporan sudah disampaikan kepada pihak terkait
+  - Dokumen pendukung jika ada
+kanal:
+  - online
+  - offline
+alias:
+  - maladministrasi
+  - lapor ombudsman
+  - pelayanan buruk
+terkait:
+  - lapor
+sumberUtama:
+  url: https://ombudsman.go.id/faq
+  jenis: situs-resmi
+  dasarHukum: UU Nomor 37 Tahun 2008 tentang Ombudsman Republik Indonesia
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Halaman FAQ tidak menyebut biaya pelaporan. Ombudsman memeriksa kelengkapan dan kewenangan sebelum menindaklanjuti laporan.

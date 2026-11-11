@@ -1,0 +1,43 @@
+id: papua-barat-cerdas
+nama: Papua Barat Cerdas
+jenis: program
+kategori: Pendidikan
+penyelenggara: Pemerintah Provinsi Papua Barat
+ringkasan: Bantuan pendidikan tahun 2026 bagi mahasiswa S1 Orang Asli Papua dari Papua Barat yang berprestasi.
+untuk:
+  - Mahasiswa S1 Orang Asli Papua asal Papua Barat
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - S1
+cakupan:
+  level: provinsi
+  kode: '92'
+tipeGerbang: kategori
+syarat:
+  - teks: Mahasiswa S1 Orang Asli Papua yang berprestasi sesuai pengumuman bantuan tahun 2026.
+    sumberUrl: https://disdik.papuabaratprov.go.id/pengumuman/penerimaan-proposal-bantuan-dana-pendidikan-program-papua-barat-cerdas-tahun-2026
+  - teks: Orang Asli Papua dengan KTP Papua Barat yang masih berlaku.
+    sumberUrl: https://papuacerdas.papuabaratprov.go.id/
+  - teks: IPK semester terakhir sekurang-kurangnya 2,75.
+    sumberUrl: https://papuacerdas.papuabaratprov.go.id/
+  - teks: Tidak sedang menerima beasiswa lain dari APBD atau APBN.
+    sumberUrl: https://papuacerdas.papuabaratprov.go.id/
+  - teks: Menyiapkan surat pernyataan keaslian dokumen dan kesediaan mengikuti ketentuan program.
+    sumberUrl: https://papuacerdas.papuabaratprov.go.id/
+langkah:
+  - Masuk ke portal resmi Papua Barat Cerdas dengan akun Google.
+  - Isi data awal, lalu lengkapi data akademik dan persyaratan pada portal resmi.
+  - Pantau status pengajuan dan ikuti arahan petugas bila ada perbaikan.
+dokumen:
+  - KTP Papua Barat, KK, dan kartu mahasiswa
+  - Surat keterangan aktif kuliah, bukti PDDIKTI, KHS, dan KRS
+  - Buku rekening Bank Papua atas nama mahasiswa
+  - Surat permohonan pribadi dan rincian biaya pendidikan
+  - Proposal pengajuan beasiswa sebanyak tiga rangkap
+sumberUtama:
+  url: https://papuacerdas.papuabaratprov.go.id/
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Pengumuman Dinas Pendidikan untuk bantuan 2026 menyebut S1, sedangkan laman umum portal masih mencantumkan S1, D3, dan D4. Jenjang yang dibuka pada formulir perlu diperiksa sebelum mengajukan.

@@ -1,0 +1,48 @@
+id: beasiswa-afirmasi-nak-badung-2026
+nama: Beasiswa Afirmasi Nak Badung 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Pemerintah Kabupaten Badung
+ringkasan: Bantuan biaya pendidikan tinggi bagi mahasiswa dari keluarga berpenghasilan terbatas di Kabupaten Badung.
+untuk:
+  - Mahasiswa baru S1, D4, atau program profesi dari Kabupaten Badung
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - Diploma
+  - S1
+cakupan:
+  level: kabkota
+  kode: '5103'
+tipeGerbang: kategori
+syarat:
+  - teks: Usia saat diterima sebagai mahasiswa baru paling tinggi 21 tahun untuk S1 atau D4, atau 25 tahun untuk program profesi.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Belum pernah menikah dan tidak menikah selama menempuh pendidikan.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Pendapatan kepala keluarga per bulan paling banyak Rp5.000.000.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Kepala keluarga telah bertempat tinggal berturut-turut di Kabupaten Badung sesuai ketentuan program.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+  - teks: Telah diterima dan terdaftar sebagai mahasiswa baru, serta tidak menerima beasiswa sejenis dari pihak lain.
+    sumberUrl: https://beasiswa.badungkab.go.id/
+langkah:
+  - Buat akun pada portal resmi Beasiswa Nak Badung.
+  - Ajukan Beasiswa Afirmasi dan unggah dokumen yang diminta dalam format PDF.
+  - Pantau verifikasi perguruan tinggi, verifikasi tim pengelola, dan penetapan penerima.
+dokumen:
+  - KTP elektronik mahasiswa dan kepala keluarga serta kartu keluarga
+  - Surat pernyataan keterbatasan kemampuan ekonomi bermeterai
+  - Surat keterangan bertempat tinggal berturut-turut di Kabupaten Badung
+  - Surat keterangan kuliah dan rekening bank aktif atas nama mahasiswa
+  - Surat pernyataan bermeterai sesuai format resmi
+periode:
+  buka: '2026-08-01'
+  tutup: '2026-10-28'
+sumberUtama:
+  url: https://beasiswa.badungkab.go.id/
+  jenis: situs-resmi
+  dasarHukum: Peraturan Bupati Badung Nomor 8 Tahun 2026
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Pengajuan Beasiswa Afirmasi tahun 2026 telah ditutup. Portal masih memuat tahap penetapan dan pencairan hingga akhir tahun; pembuatan akun bukan berarti pengajuan baru masih dibuka.

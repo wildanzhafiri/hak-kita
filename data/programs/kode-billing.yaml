@@ -1,0 +1,42 @@
+id: kode-billing
+nama: Pembuatan Kode Billing Pajak Mandiri
+jenis: layanan
+kategori: Perpajakan
+penyelenggara: Direktorat Jenderal Pajak
+ringkasan: Buat kode billing secara mandiri untuk pembayaran yang tidak terkait SPT atau tagihan pajak.
+untuk:
+  - Wajib pajak orang pribadi, wakil, atau kuasa
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Layanan ini untuk kewajiban yang tidak terkait dengan SPT dan tagihan pajak.
+    sumberUrl: https://pajak.go.id/panduan-layanan-pajak/konten/pembayaran/2025/pembuatan-kode-billing/layanan-mandiri-pembuatan-kode-billing
+  - teks: Masuk ke Portal Wajib Pajak dengan NIK atau NPWP pribadi 16 digit; wakil atau kuasa memilih badan atau orang pribadi yang diwakili.
+    sumberUrl: https://pajak.go.id/panduan-layanan-pajak/konten/pembayaran/2025/pembuatan-kode-billing/layanan-mandiri-pembuatan-kode-billing
+langkah:
+  - Masuk ke Portal Wajib Pajak.
+  - Pilih menu Pembayaran, lalu Layanan Pembuatan Kode Billing Secara Mandiri.
+  - Verifikasi identitas wajib pajak, lalu klik Lanjut.
+  - Pilih KAP-KJS dan masa atau tahun pajak, lalu klik Lanjut.
+  - Isi nominal dan keterangan bila perlu, lalu klik Unduh Kode Billing.
+  - Kode billing yang belum dibayar dapat dilihat di Daftar Kode Billing Belum Dibayar.
+dokumen:
+  - NIK atau NPWP 16 digit
+  - Kode akun pajak dan kode jenis setoran (KAP-KJS)
+  - Masa atau tahun pajak serta nominal pembayaran
+kanal:
+  - online
+alias:
+  - e billing
+  - ebilling
+  - bayar pajak
+terkait:
+  - aktivasi-coretax
+sumberUtama:
+  url: https://pajak.go.id/panduan-layanan-pajak/konten/pembayaran/2025/pembuatan-kode-billing/layanan-mandiri-pembuatan-kode-billing
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Pembuatan melalui core billing lama atau Coretax bergantung pada masa atau tahun pajak; kewajiban Wajib Pajak Cabang untuk 2024 dan sebelumnya memakai core billing lama. HAKKITA tidak menghitung pajak terutang.

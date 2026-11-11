@@ -1,0 +1,42 @@
+id: bpjs-ketenagakerjaan
+nama: Pendaftaran BPJS Ketenagakerjaan untuk Pekerja Bukan Penerima Upah
+jenis: layanan
+kategori: Pekerjaan & Usaha
+penyelenggara: BPJS Ketenagakerjaan
+ringkasan: Daftar sebagai peserta Bukan Penerima Upah (BPU) lewat kanal daring atau kantor layanan.
+untuk:
+  - Pekerja mandiri atau Bukan Penerima Upah
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Sedang bekerja saat mendaftar, tidak dalam kondisi sakit kritis, perawatan intensif, atau cuti sakit jangka panjang.
+    sumberUrl: https://www.bpjsketenagakerjaan.go.id/bpu
+  - teks: Berusia minimal 15 tahun dan belum mencapai 60 tahun; pekerja usia 13 sampai 15 tahun dapat mendaftar untuk pekerjaan ringan yang tidak mengganggu perkembangannya.
+    sumberUrl: https://www.bpjsketenagakerjaan.go.id/bpu
+  - teks: Memiliki KTP elektronik (NIK).
+    sumberUrl: https://www.bpjsketenagakerjaan.go.id/bpu
+langkah:
+  - Daftar melalui e-form BPU di bpjsketenagakerjaan.go.id/bpu, atau datang ke kantor cabang, kantor SPO bank mitra, PPOB/agregator, Perisai, atau wadah organisasi pekerja.
+  - Isi profil secara lengkap dan benar sesuai NIK.
+  - Bayar iuran setiap bulan melalui aplikasi Perisai; perlindungan aktif setelah iuran pertama dibayar.
+dokumen:
+  - Fotokopi KTP elektronik
+kanal:
+  - online
+  - offline
+biaya: Iuran dibayar rutin setiap bulan. Besaran iuran tidak tercantum pada halaman sumber; periksa kanal BPJS Ketenagakerjaan.
+alias:
+  - bpu
+  - jamsostek
+  - pekerja mandiri
+sumberUtama:
+  url: https://www.bpjsketenagakerjaan.go.id/cara-mendaftar-jadi-peserta.html
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://www.bpjsketenagakerjaan.go.id/bpu
+    jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Khusus pekerja Bukan Penerima Upah. Pekerja penerima upah mendaftar melalui pemberi kerja. Daftar program dan besaran iuran tidak tercantum pada halaman sumber.

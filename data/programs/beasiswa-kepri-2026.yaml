@@ -1,0 +1,32 @@
+id: beasiswa-kepri-2026
+nama: Beasiswa Mahasiswa Kepulauan Riau 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Biro Kesejahteraan Rakyat Pemerintah Provinsi Kepulauan Riau
+ringkasan: Bantuan biaya pendidikan tinggi bagi mahasiswa asal Kepulauan Riau melalui kategori prestasi dan tidak mampu.
+untuk:
+  - Mahasiswa asal Kepulauan Riau yang berkuliah di dalam atau luar provinsi
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - Diploma
+  - S1
+  - S2
+cakupan:
+  level: provinsi
+  kode: '21'
+tipeGerbang: kategori
+syarat:
+  - teks: Mahasiswa asal Kepulauan Riau yang berkuliah di dalam atau di luar daerah.
+    sumberUrl: https://www.kepriprov.go.id/berita/gubernur/pemprov-kepri-tingkatkan-kuota-beasiswa-2026-fokus-pada-keadilan-sosial-dan-mahasiswa-tidak-mampu
+langkah:
+  - "Buka beasiswa.kepriprov.go.id, kanal resmi yang disebut Pemprov Kepri; menu Timeline, Jalur Beasiswa, Persyaratan, dan Tutorial memuat ketentuan tiap jalur."
+  - "Pilih jalur sesuai jenjang dan kondisi: D3 tidak mampu, D4 atau S1 tidak mampu dan prestasi, atau S2 prestasi, lalu daftar lewat portal tersebut."
+  - "Pada periode 2026, pendaftaran dibuka 6 April sampai 2 Juni (tahun pada berita tertulis 20206)."
+  - "Pertanyaan dapat disampaikan ke pengaduan.beasiswa@kepriprov.go.id."
+sumberUtama:
+  url: https://www.kepriprov.go.id/berita/gubernur/pemprov-kepri-tingkatkan-kuota-beasiswa-2026-fokus-pada-keadilan-sosial-dan-mahasiswa-tidak-mampu
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Berita resmi menyebut jalur D3, D4 atau S1, dan S2, tetapi tidak memuat seluruh syarat tiap jalur. Tahun penutupan tertulis 20206 pada berita, sehingga tanggal pendaftaran tidak dicatat sebagai periode terverifikasi. Portal beasiswa yang dirujuk belum dapat diakses saat pemeriksaan. Berita sumber tidak menjelaskan langkah pendaftaran di portal; langkah rincinya ada pada menu Tutorial portal.

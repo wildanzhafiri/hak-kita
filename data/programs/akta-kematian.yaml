@@ -1,0 +1,37 @@
+id: akta-kematian
+nama: Pembuatan Akta Kematian
+jenis: layanan
+kategori: Kependudukan & Dokumen Pribadi
+penyelenggara: Suku Dinas Dukcapil Kota Administrasi Jakarta Pusat
+ringkasan: Persyaratan dan formulir penerbitan akta kematian menurut layanan Dukcapil Jakarta Pusat.
+untuk:
+  - Penduduk yang melaporkan kematian di Jakarta Pusat
+cakupan:
+  level: kabkota
+  kode: "3171"
+tipeGerbang: prosedur
+syarat:
+  - teks: Fotokopi surat kematian.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/aktakematian
+  - teks: "Satu bukti sesuai kondisi: surat keterangan dokter atau Kepala Desa/Lurah; surat kepolisian jika identitas tidak jelas; salinan penetapan pengadilan jika jenazah hilang atau tidak ditemukan; atau surat pernyataan maskapai jika hilang di udara."
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/aktakematian
+langkah:
+  - "Siapkan fotokopi surat kematian."
+  - "Siapkan salah satu dokumen sesuai kondisi: surat keterangan dokter atau kepala desa/lurah; surat kepolisian jika identitas tidak jelas; salinan penetapan pengadilan jika jenazah hilang atau tidak ditemukan; atau surat pernyataan maskapai jika hilang di udara."
+  - "Unduh dan isi Formulir Penerbitan Akta Kematian dari halaman Dukcapil Jakarta Pusat; contoh pengisian tersedia di halaman yang sama."
+  - "Ajukan berkas ke layanan Dukcapil Jakarta Pusat di Kantor Walikota Jakarta Pusat; pertanyaan tentang alur dapat disampaikan ke WhatsApp Helpdesk 0813-9888-3171."
+dokumen:
+  - Fotokopi surat kematian
+  - Bukti kematian sesuai kondisi
+  - Formulir Penerbitan Akta Kematian
+alias:
+  - akte kematian
+  - meninggal
+terkait:
+  - kartu-keluarga
+sumberUtama:
+  url: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/aktakematian
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Tautan "Unduh Persyaratan" pada halaman sumber menuju berkas bernama formulirkelahiran.pdf; pastikan formulir yang dipakai untuk akta kematian. Rujukan ini khusus Sudin Dukcapil Jakarta Pusat. Untuk wilayah lain, periksa Dukcapil sesuai domisili. Halaman sumber tidak mencantumkan biaya maupun lama proses.

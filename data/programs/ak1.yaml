@@ -1,0 +1,39 @@
+id: ak1
+nama: Pengurusan Kartu Pencari Kerja (AK1) di Sidoarjo
+jenis: layanan
+kategori: Pekerjaan & Usaha
+penyelenggara: Dinas Tenaga Kerja Kabupaten Sidoarjo
+ringkasan: Ajukan kartu pencari kerja melalui SIAPkerja dengan alur pencetakan Disnaker Kabupaten Sidoarjo.
+untuk:
+  - Pencari kerja di Kabupaten Sidoarjo
+cakupan:
+  level: kabkota
+  kode: "3515"
+tipeGerbang: prosedur
+syarat:
+  - teks: "Lengkapi profil SIAPkerja: foto setengah badan berpenampilan formal dan rapi, data pribadi, pendidikan, pengalaman kerja, pelatihan atau sertifikat, serta bahasa dan keahlian."
+    sumberUrl: https://disnaker.sidoarjokab.go.id/001/1739850815
+langkah:
+  - Buka siapkerja.kemnaker.go.id, masuk dengan email atau nomor ponsel, atau daftar jika belum punya akun.
+  - Masukkan kode OTP yang dikirim lewat SMS atau email, lalu lengkapi profil.
+  - Dari beranda, pilih Daftar Pencari Kerja, periksa profil, dan lanjutkan pengajuan kartu.
+  - Kirim foto KTP dan email terdaftar ke WhatsApp admin Disnaker sesuai kontak pada halaman sumber; kartu dikirim kembali lewat WhatsApp.
+dokumen:
+  - Foto KTP
+  - Email terdaftar di SIAPkerja
+  - Foto setengah badan berpenampilan formal
+kanal:
+  - online
+alias:
+  - kartu kuning
+  - ak 1
+  - ak i
+  - pencaker
+terkait:
+  - akun-siapkerja
+sumberUtama:
+  url: https://disnaker.sidoarjokab.go.id/001/1739850815
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Alur pencetakan ini khusus Kabupaten Sidoarjo. Untuk wilayah lain, tanyakan ke Disnaker setempat. Halaman sumber tidak mencantumkan biaya.

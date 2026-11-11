@@ -1,0 +1,41 @@
+id: bantuan-kuliah-huma-betang-2026
+nama: Bantuan Biaya Kuliah Huma Betang 2026
+jenis: program
+kategori: Pendidikan
+penyelenggara: Pemerintah Provinsi Kalimantan Tengah
+ringkasan: Bantuan UKT atau SPP bagi calon mahasiswa dan mahasiswa asal Kalimantan Tengah di perguruan tinggi mitra.
+untuk:
+  - Calon mahasiswa dan mahasiswa aktif asal Kalimantan Tengah di perguruan tinggi mitra
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: provinsi
+  kode: '62'
+tipeGerbang: kategori
+syarat:
+  - teks: Berasal dari Kalimantan Tengah dan terdaftar pada perguruan tinggi mitra Pemerintah Provinsi Kalimantan Tengah.
+    sumberUrl: https://kuliahgratis.kalteng.go.id/beasiswa?periode=901e6946-2688-11f1-b672-d0e8d4ae4b32
+  - teks: Menggunakan KTP Kalimantan Tengah yang valid untuk pendaftaran akun.
+    sumberUrl: https://kuliahgratis.kalteng.go.id/beasiswa?periode=901e6946-2688-11f1-b672-d0e8d4ae4b32
+  - teks: Tidak menerima bantuan biaya pendidikan atau beasiswa sejenis dari APBN maupun APBD lain pada tahun anggaran berjalan.
+    sumberUrl: https://kuliahgratis.kalteng.go.id/beasiswa?periode=901e6946-2688-11f1-b672-d0e8d4ae4b32
+langkah:
+  - "Buat akun di portal kuliahgratis.kalteng.go.id dengan NIK KTP Kalimantan Tengah yang valid dan nomor WhatsApp aktif, lalu verifikasi akun."
+  - "Lengkapi profil dan biodata: identitas, nomor Kartu Keluarga, alamat domisili asal, data orang tua atau wali, serta perguruan tinggi dan program studi."
+  - "Pilih program dan perguruan tinggi mitra lewat menu Info Beasiswa."
+  - "Unggah KTP, KK, Surat Keterangan Aktif Kuliah, Transkrip Nilai atau KHS, dan Surat Pernyataan dalam format PDF atau JPG, maksimal 2 MB per berkas."
+  - "Periksa seluruh isian, lalu klik Kirim Lamaran; pengajuan langsung masuk antrean verifikasi kampus. Pantau status di Dashboard Pendaftar."
+  - "Pada periode 2026: verifikasi perguruan tinggi 19 sampai 27 Juli, verifikasi Dinas Pendidikan 28 Juli sampai 4 Agustus, SK Gubernur 5 sampai 10 Agustus, dan penyaluran dana 13 Agustus."
+dokumen:
+  - KTP dan kartu keluarga Kalimantan Tengah
+  - Surat keterangan aktif kuliah dan transkrip nilai atau KHS
+  - Surat pernyataan sesuai ketentuan portal
+periode:
+  buka: '2026-07-19'
+  tutup: '2026-07-20'
+sumberUtama:
+  url: https://kuliahgratis.kalteng.go.id/beasiswa?periode=901e6946-2688-11f1-b672-d0e8d4ae4b32
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Pendaftaran 2026 berakhir 20 Juli. Portal masih menampilkan label Periode Aktif meskipun tanggal pendaftaran telah lewat; status terkini harus dikonfirmasi ke penyelenggara. Bantuan mengikuti alokasi dan ketentuan, bukan jaminan semua pendaftar menerima dana. Halaman sumber tidak menjelaskan prosedur perbaikan bila berkas ditolak.

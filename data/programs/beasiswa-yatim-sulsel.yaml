@@ -1,0 +1,48 @@
+id: beasiswa-yatim-sulsel
+nama: Beasiswa Yatim dan Piatu Sulawesi Selatan 2026
+jenis: program
+kategori: Pendidikan
+penyelenggara: Pemerintah Provinsi Sulawesi Selatan
+ringkasan: Bantuan pendidikan bagi peserta didik yatim dan/atau piatu di Sulawesi Selatan.
+untuk:
+  - Peserta didik SD, SMP, SMA, dan sederajat di Sulawesi Selatan
+manfaat:
+  - Bantuan Biaya Pendidikan
+jenjang:
+  - SD/Sederajat
+  - SMP/Sederajat
+  - SMA/SMK/Sederajat
+cakupan:
+  level: provinsi
+  kode: '73'
+tipeGerbang: kategori
+syarat:
+  - teks: Peserta didik yatim dan/atau piatu pada jenjang SD, SMP, SMA, atau sederajat di Sulawesi Selatan.
+    sumberUrl: https://ppid.sulselprov.go.id/berita/gubernur-andi-sudirman-hadirkan-beasiswa-yatim-pemprov-sulsel-untuk-jenjang-sd-smp-dan-sma-pendaftaran-3-20-november-2026
+  - teks: Kategori umum ditujukan bagi peserta berprestasi akademik atau nonakademik; kategori khusus bagi peserta dari keluarga kurang mampu.
+    sumberUrl: https://ppid.sulselprov.go.id/berita/gubernur-andi-sudirman-hadirkan-beasiswa-yatim-pemprov-sulsel-untuk-jenjang-sd-smp-dan-sma-pendaftaran-3-20-november-2026
+  - teks: Menyiapkan surat keterangan kematian orang tua, KK, dan surat keterangan terdaftar sebagai murid yang ditandatangani kepala sekolah.
+    sumberUrl: https://beasiswa.sulselprov.go.id/beasiswa/beasiswa-yatim-sulawesi-selatan/daftar
+  - teks: Menyiapkan surat permohonan dari kepala sekolah, surat pernyataan orang tua atau wali, serta surat pernyataan tanggung jawab mutlak kepala sekolah.
+    sumberUrl: https://beasiswa.sulselprov.go.id/beasiswa/beasiswa-yatim-sulawesi-selatan/daftar
+  - teks: Untuk kategori umum, menyiapkan bukti nilai belajar atau prestasi; untuk kategori khusus, menyiapkan SKTM, bukti DTSEN desil 1 sampai 5, atau hasil verifikasi faktual sekolah sesuai pilihan formulir.
+    sumberUrl: https://beasiswa.sulselprov.go.id/beasiswa/beasiswa-yatim-sulawesi-selatan/daftar
+langkah:
+  - "Buka formulir pendaftaran di portal Beasiswa Sulsel (tidak perlu membuat akun), lengkapi data, dan unggah berkas persyaratan dalam PDF maksimal 10 MB."
+  - "Verifikator memeriksa data; jika ada yang kurang, tautan perbaikan dikirim ke email."
+  - "Setelah berkas dinyatakan lengkap, buka tautan di email untuk membuat password (berlaku 72 jam)."
+  - "Hasil seleksi dikirim ke email dan dapat dilihat setelah masuk ke portal."
+dokumen:
+  - Surat keterangan kematian orang tua dan Kartu Keluarga
+  - Surat permohonan dan surat keterangan murid dari kepala sekolah
+  - Surat pernyataan orang tua atau wali dan surat tanggung jawab mutlak kepala sekolah
+  - Bukti prestasi untuk kategori umum atau bukti kondisi ekonomi untuk kategori khusus
+periode:
+  buka: '2026-11-04'
+  tutup: '2026-11-20'
+sumberUtama:
+  url: https://beasiswa.sulselprov.go.id/beasiswa/beasiswa-yatim-sulawesi-selatan/daftar
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Portal pendaftaran menulis pembukaan 4 November 2026, sedangkan berita PPID Provinsi menulis 3 November 2026. Keduanya menulis penutupan 20 November 2026. Bukti kategori pada portal diberi label opsional, tetapi jenisnya perlu disiapkan sesuai kategori yang dipilih.

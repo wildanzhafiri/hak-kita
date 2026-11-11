@@ -1,0 +1,38 @@
+id: data-mahasiswa-pddikti
+nama: Pengecekan Data Mahasiswa melalui PDDikti
+jenis: layanan
+kategori: Pendidikan & Dokumen Akademik
+penyelenggara: Kementerian Pendidikan Tinggi, Sains, dan Teknologi
+ringkasan: Telusuri data mahasiswa, dosen, perguruan tinggi, dan program studi pada portal resmi PDDikti.
+untuk:
+  - Masyarakat umum
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Cocokkan identitas dengan teliti karena pencarian bisa menampilkan beberapa nama yang serupa.
+    sumberUrl: https://pddikti.kemdiktisaintek.go.id/
+langkah:
+  - Buka pddikti.kemdiktisaintek.go.id.
+  - "Ketik kata kunci pencarian: nama, perguruan tinggi, program studi, NIM, NIDN, atau NUPTK."
+  - Cocokkan identitas, perguruan tinggi, dan program studi pada hasil.
+  - Jika data tidak sesuai, gunakan tautan "Ada kendala terkait data Pendidikan Tinggi?" di beranda PDDikti atau hubungi bagian akademik perguruan tinggi.
+dokumen:
+  - Nama atau NIM serta perguruan tinggi dan program studi untuk pencocokan
+kanal:
+  - online
+alias:
+  - pd dikti
+  - pddikti
+  - forlap
+  - nim
+  - data mahasiswa
+terkait:
+  - verifikasi-ijazah
+sumberUtama:
+  url: https://pddikti.kemdiktisaintek.go.id/
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Prosedur formal koreksi data tidak dirinci pada beranda PDDikti. Beranda tidak mencantumkan biaya.

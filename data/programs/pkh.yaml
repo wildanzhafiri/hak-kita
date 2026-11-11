@@ -1,10 +1,13 @@
 id: pkh
 nama: Program Keluarga Harapan (PKH)
+jenis: program
 kategori: Bantuan Sosial
 penyelenggara: Kementerian Sosial
-ringkasan: Bantuan sosial bersyarat bagi keluarga kurang mampu yang ditetapkan pemerintah berdasarkan data terpadu.
+ringkasan: Bantuan sosial bersyarat berupa uang bagi keluarga miskin atau rentan yang ditetapkan pemerintah berdasarkan DTSEN.
 untuk:
   - Keluarga
+manfaat:
+  - Bantuan Sosial
 cakupan:
   level: nasional
   kode: ID
@@ -12,15 +15,15 @@ tipeGerbang: desil
 syarat:
   - teks: Desil 1 sampai 4 dalam DTSEN dapat diusulkan sebagai penerima PKH; penetapan penerima tetap dilakukan pemerintah.
     sumberUrl: https://cekbansos.kemensos.go.id/
-  - teks: Memiliki komponen sasaran yang ditetapkan program (misalnya ibu hamil, anak usia dini, anak sekolah, lansia, atau penyandang disabilitas berat)
+  - teks: Memiliki komponen kesehatan dan/atau pendidikan, seperti ibu hamil, anak sampai usia 7 tahun yang belum bersekolah, lansia, penyandang disabilitas, atau anak sekolah.
+    sumberUrl: https://peraturan.bpk.go.id/Download/418019/permensos-no-8-tahun-2026.pdf
 langkah:
-  - Cek status kepesertaan di kanal resmi (butuh NIK, dilakukan di situs resmi, bukan di HAKKITA)
-  - Jika merasa berhak tetapi belum terdaftar, tanyakan prosedur usulan ke kelurahan/desa atau lewat kanal resmi
-dokumen:
-  - Dokumen identitas dan kependudukan keluarga
+  - "Buka cekbansos.kemensos.go.id dan pilih tab Pencarian Berdasarkan NIK."
+  - "Masukkan NIK 16 digit sesuai KTP langsung di situs resmi (bukan di HAKKITA), ketik huruf captcha, lalu klik Cari Data."
+  - "Desil 1 sampai 4 (40% terbawah) dapat diusulkan sebagai penerima PKH dan Sembako. Jika datamu perlu diperbarui, ajukan lewat desa atau kelurahan dan dinas sosial, atau lewat aplikasi Cek Bansos."
 sumberUtama:
   url: https://perlinsos.kemensos.go.id/
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Kanal Cek Bansos menyebut desil 1 sampai 4 dapat diusulkan. Keputusan penerima mengikuti penetapan pemerintah.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Kanal Cek Bansos menyebut desil 1 sampai 4 dapat diusulkan. Komponen mengikuti Permensos 8 Tahun 2026. Keputusan penerima mengikuti penetapan pemerintah. Halaman sumber tidak memuat langkah usul dan sanggah secara rinci.

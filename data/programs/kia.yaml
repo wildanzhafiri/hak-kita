@@ -1,0 +1,42 @@
+id: kia
+nama: Pengurusan Kartu Identitas Anak (KIA)
+jenis: layanan
+kategori: Kependudukan & Dokumen Pribadi
+penyelenggara: Suku Dinas Dukcapil Kota Administrasi Jakarta Pusat
+ringkasan: Persyaratan KIA baru atau pengganti untuk anak menurut layanan Dukcapil Jakarta Pusat.
+untuk:
+  - Anak WNI, orang asing, atau berkewarganegaraan ganda di Jakarta Pusat
+cakupan:
+  level: kabkota
+  kode: "3171"
+tipeGerbang: prosedur
+syarat:
+  - teks: Anak berusia di bawah 17 tahun dan belum kawin.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/kia
+  - teks: Anak yang belum memiliki NIK atau akta kelahiran diproses bersamaan dengan penerbitan NIK, KK, dan akta kelahiran.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/kia
+  - teks: Anak berusia 5 tahun ke atas wajib memakai pas foto berlatar merah.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/kia
+  - teks: KIA yang hilang harus melampirkan surat keterangan kehilangan dari kepolisian.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/kia
+langkah:
+  - "Tentukan jenis pengurusan: KIA baru, habis masa berlaku, pindah datang, atau hilang/rusak."
+  - "Unduh dan isi formulir F1.02 (Formulir Pencetakan KIA) di halaman Dukcapil Jakarta Pusat; contoh pengisian tersedia di halaman yang sama."
+  - "Siapkan sesuai jenis: pas foto untuk KIA baru (anak usia 5 tahun ke atas wajib berlatar merah); surat keterangan kehilangan dari kepolisian untuk KIA hilang; untuk pindah datang, KIA diterbitkan satu paket dengan SKPD dan KK."
+  - "Anak yang belum punya NIK atau akta kelahiran diproses bersamaan dengan penerbitan NIK, KK, dan akta kelahiran."
+  - "Ajukan ke layanan Dukcapil Jakarta Pusat; pertanyaan tentang alur dapat disampaikan ke WhatsApp Helpdesk 0813-9888-3171."
+dokumen:
+  - Formulir F1.02
+  - Pas foto berlatar merah untuk anak berusia 5 tahun ke atas
+  - Surat keterangan kehilangan dari kepolisian (jika KIA hilang)
+alias:
+  - kartu anak
+  - identitas anak
+terkait:
+  - akta-kelahiran
+sumberUtama:
+  url: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/kia
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Untuk kasus pindah datang, KIA diterbitkan satu paket dengan SKPD dan KK. Halaman sumber tidak memuat daftar dokumen lengkap per kondisi. Rujukan ini khusus Sudin Dukcapil Jakarta Pusat. Untuk wilayah lain, periksa Dukcapil sesuai domisili. Halaman sumber tidak mencantumkan biaya maupun lama proses.

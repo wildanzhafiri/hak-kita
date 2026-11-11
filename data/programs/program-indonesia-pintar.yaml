@@ -1,0 +1,33 @@
+id: program-indonesia-pintar
+nama: Program Indonesia Pintar (PIP)
+jenis: program
+kategori: Pendidikan
+penyelenggara: Kementerian Pendidikan Dasar dan Menengah
+ringkasan: Bantuan pendidikan pemerintah untuk mendukung kebutuhan personal belajar peserta didik dari keluarga miskin atau rentan miskin.
+untuk:
+  - Peserta didik usia sekolah dari keluarga miskin atau rentan miskin
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: kategori
+syarat:
+  - teks: Peserta didik berusia 5 tahun sampai belum berusia 22 tahun dan berasal dari keluarga miskin atau rentan miskin; penerima ditetapkan melalui proses pemadanan, verifikasi, dan validasi pemerintah.
+    sumberUrl: https://pusatinformasi.ult.kemendikdasmen.go.id/hc/id/articles/40655511593369-Mengenal-Program-Indonesia-Pintar-PIP-Dikdasmen
+langkah:
+  - Tanyakan kepada sekolah apakah peserta didik telah diusulkan atau ditetapkan sebagai penerima PIP.
+  - Pastikan data peserta didik pada sekolah dan Dapodik akurat; minta bantuan operator sekolah jika ada data yang perlu diperbaiki.
+  - Untuk melihat status, gunakan SIPINTAR resmi atau minta sekolah memeriksanya melalui sistem tersebut.
+  - Jika informasi belum sesuai, hubungi sekolah atau kanal Unit Layanan Terpadu Kemendikdasmen.
+sumberUtama:
+  url: https://pip.kemendikdasmen.go.id/home_v1
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://pusatinformasi.ult.kemendikdasmen.go.id/hc/id/articles/40655511593369-Mengenal-Program-Indonesia-Pintar-PIP-Dikdasmen
+    jenis: situs-resmi
+  - url: https://pusatinformasi.ult.kemendikdasmen.go.id/hc/id/articles/57675686263705-Mekanisme-Pendaftaran-Program-Indonesia-Pintar-PIP
+    jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Penetapan bukan hak otomatis bagi semua peserta didik yang memenuhi gambaran umum sasaran; proses verifikasi, validasi, dan penetapan penerima dilakukan pemerintah. Jangan kirimkan data pribadi melalui HAKKITA.

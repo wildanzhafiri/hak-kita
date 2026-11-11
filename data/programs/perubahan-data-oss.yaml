@@ -1,0 +1,38 @@
+id: perubahan-data-oss
+nama: Perubahan Data Usaha melalui OSS
+jenis: layanan
+kategori: Pekerjaan & Usaha
+penyelenggara: Kementerian Investasi dan Hilirisasi/BKPM (OSS)
+ringkasan: Perbarui data kegiatan usaha pada perizinan berusaha melalui menu Perubahan Data Usaha di OSS.
+untuk:
+  - Pelaku usaha yang sudah mengajukan permohonan di OSS
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Pelaku usaha sudah mengajukan permohonan baru dan memiliki hak akses OSS.
+    sumberUrl: https://s3.oss.go.id/oss/cms/%28z%29-2025_Panduan-Perubahan-Perizinan-Berusaha---Data-Usaha-%281%29-e26cb8a00c330b1c6716af751e4a2203.pdf
+  - teks: Menu Perubahan Data Usaha tidak dapat dipakai untuk mengubah KBLI.
+    sumberUrl: https://s3.oss.go.id/oss/cms/%28z%29-2025_Panduan-Perubahan-Perizinan-Berusaha---Data-Usaha-%281%29-e26cb8a00c330b1c6716af751e4a2203.pdf
+langkah:
+  - Masuk ke oss.go.id lalu pilih Perizinan Berusaha, Kelola Usaha, Perubahan, dan Perubahan Data Usaha.
+  - Klik ikon ubah pada bidang usaha yang akan diperbarui.
+  - Ubah data detail usaha yang diizinkan (misalnya alamat, luas lahan, nama usaha), lalu klik Validasi Risiko.
+  - Ubah daftar produk atau jasa bila perlu, periksa daftar kegiatan usaha, lalu klik Proses Perizinan Berusaha.
+dokumen:
+  - Data usaha yang akan diubah
+kanal:
+  - online
+alias:
+  - oss
+  - ubah nib
+  - data usaha
+terkait:
+  - nib
+sumberUtama:
+  url: https://s3.oss.go.id/oss/cms/%28z%29-2025_Panduan-Perubahan-Perizinan-Berusaha---Data-Usaha-%281%29-e26cb8a00c330b1c6716af751e4a2203.pdf
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Perubahan KBLI dilakukan melalui menu Pembatalan (Permohonan) atau Pencabutan (Non Likuidasi) sesuai status perizinan; penghapusan KBLI melalui menu Pencabutan. Isian formulir menyesuaikan kategori pelaku usaha. Panduan tidak mencantumkan biaya.

@@ -1,0 +1,41 @@
+id: beasiswa-pendidikan-tinggi-mojokerto-2026
+nama: Beasiswa Pendidikan Tinggi Kota Mojokerto 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Dinas Kepemudaan, Olahraga, dan Pariwisata Kota Mojokerto
+ringkasan: Beasiswa bagi mahasiswa berprestasi asal Kota Mojokerto melalui jalur indeks prestasi atau prestasi lomba.
+untuk:
+  - Mahasiswa berprestasi ber-KTP Kota Mojokerto
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: kabkota
+  kode: '3576'
+tipeGerbang: kategori
+syarat:
+  - teks: Memiliki KTP Kota Mojokerto, kartu keluarga, dan kartu mahasiswa.
+    sumberUrl: https://beasiswa-disporapar.mojokertokota.go.id/
+  - teks: Berstatus mahasiswa aktif pada perguruan tinggi negeri nonkedinasan atau swasta dan tidak mendapat sanksi akademik.
+    sumberUrl: https://beasiswa-disporapar.mojokertokota.go.id/
+  - teks: Memenuhi ketentuan khusus jalur indeks prestasi atau prestasi lomba yang dipilih pada portal resmi.
+    sumberUrl: https://beasiswa-disporapar.mojokertokota.go.id/
+langkah:
+  - "Daftar melalui beasiswa-disporapar.mojokertokota.go.id; pada periode 2026 pendaftaran dibuka 17 sampai 30 Agustus."
+  - "Panitia melakukan seleksi administrasi berkas online dan menilai berkas jalur prestasi lomba (1 sampai 8 September 2026)."
+  - "Hasil seleksi diumumkan sebagai perangkingan sesuai kuota tiap jalur (9 sampai 10 September 2026)."
+  - "Mahasiswa yang lolos menyerahkan berkas fisik untuk diverifikasi (11 sampai 18 September 2026)."
+  - "Calon penerima ditetapkan (21 sampai 22 September 2026) dan beasiswa diserahkan secara simbolis pada 28 Oktober 2026."
+dokumen:
+  - Surat permohonan kepada Wali Kota Mojokerto
+  - KTP Kota Mojokerto, kartu keluarga, dan kartu mahasiswa
+  - Surat keterangan mahasiswa aktif dan surat keterangan tidak mendapat sanksi akademik
+  - Bukti indeks prestasi atau sertifikat prestasi sesuai jalur yang dipilih
+periode:
+  buka: '2026-08-17'
+  tutup: '2026-08-30'
+sumberUtama:
+  url: https://beasiswa-disporapar.mojokertokota.go.id/
+  jenis: situs-resmi
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Pendaftaran tahun 2026 telah ditutup. Syarat khusus berbeda antarkategori jalur; lihat portal resmi sebelum menyiapkan berkas untuk periode berikutnya.

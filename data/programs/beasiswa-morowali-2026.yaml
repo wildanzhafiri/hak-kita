@@ -1,0 +1,34 @@
+id: beasiswa-morowali-2026
+nama: Beasiswa Morowali Mahasiswa Semester 1 dan 2 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Dinas Pendidikan Daerah Kabupaten Morowali
+ringkasan: Bantuan pendidikan tinggi bagi mahasiswa semester 1 dan 2 dari Kabupaten Morowali melalui jalur prestasi dan kurang mampu.
+untuk:
+  - Mahasiswa semester 1 atau 2 asal Kabupaten Morowali
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: kabkota
+  kode: '7206'
+tipeGerbang: kategori
+syarat:
+  - teks: Mahasiswa semester 1 atau 2 asal Kabupaten Morowali yang memenuhi ketentuan jalur prestasi atau kurang mampu.
+    sumberUrl: https://beasiswa.morowalikab.go.id/
+langkah:
+  - "Daftar online di beasiswa.morowalikab.go.id: lengkapi data diri dan unggah dokumen persyaratan sesuai jalur prestasi atau kurang mampu. Untuk mahasiswa semester 1 dan 2, pendaftaran 13 Juli sampai 10 Oktober 2026."
+  - "Pastikan data dan dokumen sudah benar sebelum finalisasi, karena sebagian data tidak dapat diubah setelah difinalisasi."
+  - "Dokumen ditinjau pada tahap verifikasi berkas, 13 sampai 21 Oktober 2026."
+  - "Penerima diumumkan pada pengumuman final, 23 Oktober 2026."
+periode:
+  buka: '2026-07-13'
+  tutup: '2026-10-10'
+sumberUtama:
+  url: https://beasiswa.morowalikab.go.id/
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://beasiswa.morowalikab.go.id/pengumuman/f84s4kk8ws4kg488ggosoo04
+    jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Jadwal 13 Juli sampai 10 Oktober 2026 pada portal khusus mahasiswa semester 1 dan 2 dan pendaftarannya telah ditutup. Portal menampilkan dua jalur, tetapi rincian lengkap syarat tiap jalur tidak tersedia di halaman publik yang diperiksa. Pengumuman resmi juga mengubah dokumen jalur prestasi menjadi surat keterangan prestasi dari kampus; periksa aturan terbaru sebelum mendaftar.

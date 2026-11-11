@@ -1,0 +1,39 @@
+id: antrean-mobile-jkn
+nama: Pendaftaran Antrean Berobat melalui Mobile JKN
+jenis: layanan
+kategori: Kesehatan & Jaminan Sosial
+penyelenggara: BPJS Kesehatan
+ringkasan: Ambil nomor antrean poli di FKTP yang terhubung dengan sistem antrean BPJS Kesehatan.
+untuk:
+  - Peserta JKN aktif
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Status kepesertaan aktif.
+    sumberUrl: https://www.bpjs-kesehatan.go.id/user-manual-mobile-jkn/pelayanan%20jkn.html
+  - teks: FKTP harus terdaftar pada aplikasi Antrean Faskes dan sistem antrean BPJS tersedia pada profil FKTP.
+    sumberUrl: https://www.bpjs-kesehatan.go.id/user-manual-mobile-jkn/pelayanan%20jkn.html
+langkah:
+  - Buka sub-menu Pendaftaran Pelayanan di beranda Mobile JKN.
+  - Pilih peserta dan poli yang dituju, lalu tulis keluhan.
+  - Ketuk Daftar Pelayanan untuk mendapatkan nomor antrean.
+  - Segarkan halaman untuk melihat nomor yang sedang dilayani. Gunakan Batalkan atau Ambil Antrean Baru bila perlu.
+dokumen:
+  - Akun Mobile JKN dengan data peserta aktif
+kanal:
+  - online
+alias:
+  - antre bpjs
+  - antrian bpjs
+  - antrean puskesmas
+terkait:
+  - pendaftaran-jkn
+  - data-peserta-jkn
+sumberUtama:
+  url: https://www.bpjs-kesehatan.go.id/user-manual-mobile-jkn/pelayanan%20jkn.html
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Panduan ini untuk antrean di FKTP. Jadwal praktik diinput oleh kantor cabang BPJS Kesehatan. Halaman sumber tidak mencantumkan biaya.

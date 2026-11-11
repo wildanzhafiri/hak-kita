@@ -1,0 +1,33 @@
+id: perubahan-data-wajib-pajak
+nama: Perubahan Data Wajib Pajak di Coretax
+jenis: layanan
+kategori: Perpajakan
+penyelenggara: Direktorat Jenderal Pajak
+ringkasan: Ketahui menu Coretax untuk mengubah identitas, alamat utama, kontak, atau data profil wajib pajak.
+untuk:
+  - Wajib pajak pengguna Coretax
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Masuk ke Coretax dengan akun wajib pajak yang datanya akan diubah.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/bagaimana-mengubah-data
+langkah:
+  - Masuk ke Coretax dan buka Portal Saya.
+  - Untuk identitas wajib pajak (klasifikasi lapangan usaha, rekening bank) atau alamat utama, pilih Perubahan Data.
+  - Untuk kontak (email, ponsel), data kependudukan, alamat selain alamat utama, pihak terkait, atau unit pajak keluarga, pilih Profil Saya, Informasi Umum, lalu Edit.
+kanal:
+  - online
+alias:
+  - ubah npwp
+  - ganti alamat pajak
+  - email pajak
+terkait:
+  - aktivasi-coretax
+sumberUtama:
+  url: https://www.pajak.go.id/coretaxpedia/bagaimana-mengubah-data
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Halaman sumber (diperbarui 17 September 2025) hanya menjelaskan letak menu; dokumen pendukung dan aturan validasi tiap perubahan tidak dirinci. Halaman sumber tidak mencantumkan biaya.

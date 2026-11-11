@@ -1,0 +1,45 @@
+id: pindah-domisili
+nama: Pengurusan Surat Pindah dan Datang Penduduk
+jenis: layanan
+kategori: Kependudukan & Dokumen Pribadi
+penyelenggara: Suku Dinas Dukcapil Kota Administrasi Jakarta Pusat
+ringkasan: Berkas pindah keluar dan datang ke Jakarta menurut layanan Dukcapil Jakarta Pusat.
+untuk:
+  - Penduduk yang pindah dari atau datang ke Jakarta
+cakupan:
+  level: kabkota
+  kode: "3171"
+tipeGerbang: prosedur
+syarat:
+  - teks: "Pindah: siapkan KTP dan Kartu Keluarga."
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/pindahdatang
+  - teks: "Datang: siapkan surat pindah dari daerah asal, biodata penduduk, fotokopi akta kelahiran, serta fotokopi buku nikah atau akta cerai."
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/pindahdatang
+  - teks: Jika menumpang di tempat tinggal orang lain, siapkan surat pernyataan jaminan tempat tinggal dari pemilik rumah atau pengelola rusun/apartemen, beserta KK dan KTP penjamin.
+    sumberUrl: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/pindahdatang
+langkah:
+  - "Pilih alur pada halaman Dukcapil Jakarta Pusat: pindah (ke luar DKI atau dalam lingkup DKI) atau datang (dari luar DKI atau dalam lingkup DKI)."
+  - "Unduh dan isi formulir perubahan biodata; contoh pengisian tersedia di halaman yang sama."
+  - "Untuk pindah, siapkan KTP dan Kartu Keluarga."
+  - "Untuk datang, siapkan Surat Keterangan Pindah dari daerah asal, formulir biodata penduduk, fotokopi akta kelahiran, dan fotokopi akta perkawinan, surat nikah, atau akta perceraian."
+  - "Jika menumpang, tambahkan surat pernyataan jaminan tempat tinggal dari pemilik rumah, pengelola rusun, atau apartemen beserta KK dan KTP penjamin. Jika menempati rumah sendiri, lampirkan Formulir Menempati Rumah Sendiri."
+  - "Ajukan ke layanan Dukcapil Jakarta Pusat."
+dokumen:
+  - KTP dan Kartu Keluarga (pindah)
+  - Surat pindah dari daerah asal dan biodata penduduk (datang)
+  - Fotokopi akta kelahiran serta buku nikah atau akta cerai (datang)
+  - Formulir perubahan biodata
+alias:
+  - skpwni
+  - surat pindah
+  - pindah alamat
+  - domisili
+terkait:
+  - kartu-keluarga
+  - ktp-el
+sumberUtama:
+  url: https://kependudukancapil.jakarta.go.id/sudin-jp/pelayanan/pindahdatang
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Rujukan ini khusus Sudin Dukcapil Jakarta Pusat. Untuk wilayah lain, periksa Dukcapil sesuai domisili. Halaman sumber tidak mencantumkan biaya maupun lama proses.

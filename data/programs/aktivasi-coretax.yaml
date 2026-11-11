@@ -1,0 +1,42 @@
+id: aktivasi-coretax
+nama: Aktivasi Akun Coretax DJP
+jenis: layanan
+kategori: Perpajakan
+penyelenggara: Direktorat Jenderal Pajak
+ringkasan: Aktifkan akses Coretax untuk wajib pajak yang sudah memiliki NPWP tetapi belum punya akun DJP Online.
+untuk:
+  - Wajib pajak yang belum memiliki akun DJP Online
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Sudah memiliki NPWP tetapi belum memiliki akun DJP Online.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/akses-coretax-bagi-bukan-user-djp-online
+  - teks: Email dan nomor ponsel yang terdaftar di DJP.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/akses-coretax-bagi-bukan-user-djp-online
+langkah:
+  - Buka coretaxdjp.pajak.go.id dan pilih menu Aktivasi Akun Wajib Pajak.
+  - Pada Permintaan Akses Digital, centang bahwa kamu sudah terdaftar sebagai wajib pajak.
+  - Masukkan NPWP lalu klik Cari.
+  - Ambil swafoto dan klik Validasi Foto.
+  - Isi email dan nomor ponsel terdaftar, setujui pernyataan, lalu klik Simpan.
+  - Buka email dari DJP dan gunakan tautan aktivasi akun.
+dokumen:
+  - NPWP
+  - Email dan nomor ponsel terdaftar di DJP
+  - Swafoto untuk validasi identitas
+kanal:
+  - online
+alias:
+  - aktifkan coretax
+  - akun pajak
+  - akses digital
+terkait:
+  - npwp
+sumberUtama:
+  url: https://www.pajak.go.id/coretaxpedia/akses-coretax-bagi-bukan-user-djp-online
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Jika tidak bisa mengakses email atau ponsel terdaftar, halaman sumber menyediakan opsi memasukkan kontak baru; OTP dikirim ke keduanya. Halaman sumber tidak mencantumkan biaya.

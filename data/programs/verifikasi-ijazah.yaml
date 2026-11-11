@@ -1,0 +1,38 @@
+id: verifikasi-ijazah
+nama: Verifikasi Ijazah Pendidikan Tinggi
+jenis: layanan
+kategori: Pendidikan & Dokumen Akademik
+penyelenggara: Kementerian Pendidikan Tinggi, Sains, dan Teknologi
+ringkasan: Periksa nomor ijazah, sertifikat profesi, atau NIM melalui PISN yang terhubung dengan PDDikti.
+untuk:
+  - Masyarakat umum
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Isi Perguruan Tinggi, Program Pendidikan, dan Program Studi dengan benar.
+    sumberUrl: https://pisn.kemdiktisaintek.go.id/
+langkah:
+  - Buka bagian verifikasi di pisn.kemdiktisaintek.go.id.
+  - Isi perguruan tinggi, program pendidikan, program studi, dan tipe pencarian.
+  - Masukkan nomor ijazah, nomor sertifikat profesi, atau NIM, lalu isi captcha.
+  - Jika data tidak ditemukan, hubungi perguruan tinggi yang menerbitkan ijazah atau sertifikat profesi.
+dokumen:
+  - Nomor ijazah, nomor sertifikat profesi, atau NIM
+  - Data perguruan tinggi dan program studi
+kanal:
+  - online
+alias:
+  - pisn
+  - sivil
+  - cek ijazah
+  - nomor ijazah
+terkait:
+  - data-mahasiswa-pddikti
+sumberUtama:
+  url: https://pisn.kemdiktisaintek.go.id/
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Hasil tidak ditemukan perlu ditindaklanjuti ke perguruan tinggi dan tidak otomatis berarti ijazah tidak sah. Beranda PISN tidak mencantumkan biaya.

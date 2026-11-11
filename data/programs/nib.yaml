@@ -1,0 +1,44 @@
+id: nib
+nama: Pendaftaran Nomor Induk Berusaha (NIB) untuk Usaha Mikro dan Kecil
+jenis: layanan
+kategori: Pekerjaan & Usaha
+penyelenggara: Kementerian Investasi dan Hilirisasi/BKPM (OSS)
+ringkasan: Panduan OSS untuk perizinan berusaha usaha mikro dan kecil perseorangan berisiko rendah dan menengah rendah.
+untuk:
+  - Pelaku usaha mikro dan kecil perseorangan
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: "Memiliki hak akses OSS: username dan password dikirim ke email yang dicantumkan saat pendaftaran."
+    sumberUrl: https://s3.oss.go.id/oss/cms/%28z%29-2025_Perizinan-Berusaha-UMK-Risiko-Rendah-dan-Menengah-Rendah---Orang-Perseorangan-9a47a94cdbba5065cde976891a2c90f5.pdf
+  - teks: Melengkapi NPWP pribadi. BPJS Ketenagakerjaan dan BPJS Kesehatan diisi jika sudah memiliki; proses tetap dapat dilanjutkan tanpa keduanya.
+    sumberUrl: https://s3.oss.go.id/oss/cms/%28z%29-2025_Perizinan-Berusaha-UMK-Risiko-Rendah-dan-Menengah-Rendah---Orang-Perseorangan-9a47a94cdbba5065cde976891a2c90f5.pdf
+langkah:
+  - Masuk ke oss.go.id dengan username dan password.
+  - Pilih Perizinan Berusaha, Kelola Usaha, lalu Permohonan Baru.
+  - Lengkapi data pelaku usaha (NPWP pribadi) dan data bidang usaha, lalu klik Validasi Risiko.
+  - Tambahkan produk atau jasa, periksa daftar kegiatan usaha, lalu klik Proses Perizinan Berusaha.
+  - Untuk risiko menengah rendah, periksa dan lengkapi dokumen persetujuan lingkungan jika diminta.
+dokumen:
+  - NPWP pribadi
+  - Data bidang usaha (KBLI), alamat usaha, modal usaha, dan jumlah tenaga kerja
+  - Nomor BPJS Ketenagakerjaan dan BPJS Kesehatan jika sudah memiliki
+kanal:
+  - online
+alias:
+  - bikin nib
+  - nomor induk berusaha
+  - oss
+  - izin usaha
+terkait:
+  - npwp
+  - perubahan-data-oss
+sumberUtama:
+  url: https://s3.oss.go.id/oss/cms/%28z%29-2025_Perizinan-Berusaha-UMK-Risiko-Rendah-dan-Menengah-Rendah---Orang-Perseorangan-9a47a94cdbba5065cde976891a2c90f5.pdf
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Panduan ini untuk orang perseorangan dengan usaha mikro dan kecil. NIB tidak selalu menjadi satu-satunya persyaratan usaha; periksa izin dan standar tambahan sesuai tingkat risiko. Panduan tidak mencantumkan biaya.
+tentang: "Kebutuhan izin dan standar tambahan mengikuti kegiatan serta tingkat risiko usaha."

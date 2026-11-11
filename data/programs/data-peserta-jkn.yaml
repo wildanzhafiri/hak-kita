@@ -1,0 +1,48 @@
+id: data-peserta-jkn
+nama: Cek Status dan Perubahan Data Peserta JKN
+jenis: layanan
+kategori: Kesehatan & Jaminan Sosial
+penyelenggara: BPJS Kesehatan
+ringkasan: Lihat info peserta dan ubah nomor ponsel, email, alamat surat, atau FKTP melalui Mobile JKN.
+untuk:
+  - Peserta JKN
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: prosedur
+syarat:
+  - teks: Memiliki akun Mobile JKN dan memilih peserta yang datanya akan diubah.
+    sumberUrl: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+  - teks: Perubahan FKTP sebelum 3 bulan hanya dapat dilakukan jika peserta sebelumnya dipindahkan melalui redistribusi FKTP dan masih dalam jangka 3 bulan.
+    sumberUrl: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+langkah:
+  - Buka menu Info Peserta di beranda Mobile JKN untuk melihat status kepesertaan.
+  - Buka Lainnya, pilih Ubah Data Peserta, lalu pilih peserta.
+  - Ubah nomor ponsel atau email (kode verifikasi dikirim ke email), atau alamat surat dan Faskes 1 (memakai PIN).
+  - Simpan perubahan dan tunggu notifikasi berhasil.
+dokumen:
+  - Akun Mobile JKN
+  - Email terdaftar untuk menerima kode verifikasi
+  - PIN Mobile JKN
+kanal:
+  - online
+alias:
+  - bpjs
+  - jkn
+  - fktp
+  - faskes
+  - pindah faskes
+  - cek status
+  - ubah data bpjs
+terkait:
+  - pendaftaran-jkn
+  - antrean-mobile-jkn
+sumberUtama:
+  url: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/administrasi%20JKN.html
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://bpjs-kesehatan.go.id/user-manual-mobile-jkn/video_mjkn.html
+    jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Opsi perubahan FKTP mengikuti segmen kepesertaan; untuk Prajurit TNI dan Polri non PNS hanya anggota keluarga yang dapat mengubah FKTP. Panduan ini tidak menjamin aktivasi kembali peserta nonaktif. Halaman sumber tidak mencantumkan biaya.

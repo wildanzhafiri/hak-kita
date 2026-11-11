@@ -1,6 +1,7 @@
 ﻿id: npwp
 nama: Pendaftaran NPWP Orang Pribadi
-kategori: Layanan Administrasi
+jenis: layanan
+kategori: "Perpajakan"
 penyelenggara: Direktorat Jenderal Pajak
 ringkasan: Panduan pendaftaran wajib pajak orang pribadi melalui Coretax DJP.
 untuk:
@@ -10,14 +11,28 @@ cakupan:
   kode: ID
 tipeGerbang: prosedur
 syarat:
-  - teks: Periksa ketentuan pendaftaran terbaru melalui panduan Coretax DJP.
+  - teks: Pendaftar orang pribadi penduduk Indonesia memilih pendaftaran dengan aktivasi NIK pada Coretax DJP.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
+  - teks: Menyiapkan alamat email dan nomor ponsel aktif untuk menerima kode verifikasi.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
+  - teks: Melakukan swafoto dan validasi foto pada halaman verifikasi identitas Coretax DJP.
+    sumberUrl: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
 langkah:
-  - Buka panduan pendaftaran wajib pajak orang pribadi di situs Direktorat Jenderal Pajak
-  - Ikuti alur pendaftaran yang tercantum pada Coretax DJP
-periode: sepanjang-tahun
+  - Buka Coretax DJP melalui tautan pada panduan resmi Direktorat Jenderal Pajak.
+  - Pilih pendaftaran perorangan, isi data, verifikasi kontak dan identitas, lalu kirim pengajuan.
+  - Periksa email terdaftar untuk menerima NPWP digital setelah pengajuan berhasil.
 sumberUtama:
   url: https://www.pajak.go.id/coretaxpedia/pendaftaran-wp-orang-pribadi
   jenis: situs-resmi
-verifikasi: dasar
-tanggalDiperiksa: '2026-11-05'
-catatan: Panduan dapat berubah mengikuti pembaruan sistem dan ketentuan perpajakan.
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-10'
+catatan: Panduan ini untuk orang pribadi penduduk Indonesia yang mendaftar pertama kali. Alur lain dapat berbeda.
+alias:
+  - bikin npwp
+  - daftar npwp
+  - nomor pokok wajib pajak
+  - coretax
+terkait:
+  - ktp-el
+  - aktivasi-coretax
+tentang: "Panduan ini untuk orang pribadi penduduk Indonesia yang mendaftar pertama kali melalui aktivasi NIK di Coretax DJP."

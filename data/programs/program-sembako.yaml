@@ -1,0 +1,32 @@
+id: program-sembako
+nama: Program Sembako
+jenis: program
+kategori: Pangan & Gizi
+penyelenggara: Kementerian Sosial Republik Indonesia
+ringkasan: Bantuan pangan bagi keluarga yang masuk sasaran perlindungan sosial pemerintah.
+untuk:
+  - Keluarga pada desil kesejahteraan 1 sampai 4 yang dapat diusulkan sebagai penerima
+manfaat:
+  - Bantuan Sosial
+cakupan:
+  level: nasional
+  kode: ID
+tipeGerbang: desil
+syarat:
+  - teks: Keluarga pada desil 1 sampai 4 DTSEN dapat diusulkan sebagai penerima Program Sembako; penetapan penerima dilakukan pemerintah.
+    sumberUrl: https://cekbansos.kemensos.go.id/
+langkah:
+  - Periksa informasi sasaran bantuan melalui situs resmi Cek Bansos Kemensos.
+  - Jika data kesejahteraan tidak sesuai, ajukan pemutakhiran melalui desa atau kelurahan dan dinas sosial, atau gunakan aplikasi Cek Bansos resmi.
+  - Pantau hasil pemutakhiran dan penetapan penerima melalui kanal resmi pemerintah.
+sumberUtama:
+  url: https://cekbansos.kemensos.go.id/
+  jenis: situs-resmi
+sumberTambahan:
+  - url: https://jdih.kemensos.go.id/view_pdf/eyJpdiI6InYreHQwZnhnSUt0b3kzN2l4bndaSkE9PSIsInZhbHVlIjoidU5waWZoNjV4bjd1cU5YeG5GQlpQZ2p4dlZxcEI5MnNRVjRSTnAvV0REbi81SmhXcGpTcUVlTVpLMzM1dEJWUiIsIm1hYyI6IjdmMDI4NzM2NGU5MzA1NDA0OTNmYmZmZGMzMzkyMzMzODJjOGZmYTY5YmM1YzU4YWYzNDU1YjliZGUyNzI5OWEiLCJ0YWciOiIifQ%3D%3D
+    jenis: peraturan
+    dasarHukum: Peraturan Menteri Sosial Nomor 4 Tahun 2023 tentang Pelaksanaan Program Sembako
+periode: sepanjang-tahun
+verifikasi: lengkap
+tanggalDiperiksa: '2026-11-11'
+catatan: Desil 1 sampai 4 dapat diusulkan, bukan jaminan ditetapkan sebagai penerima. Pemutakhiran DTSEN dan penetapan sasaran dilakukan oleh pemerintah.

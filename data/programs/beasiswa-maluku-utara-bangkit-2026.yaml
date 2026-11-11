@@ -1,0 +1,28 @@
+id: beasiswa-maluku-utara-bangkit-2026
+nama: Beasiswa Maluku Utara Bangkit 2026
+jenis: program
+kategori: Beasiswa
+penyelenggara: Pemerintah Provinsi Maluku Utara
+ringkasan: Bantuan pendidikan bagi mahasiswa dari keluarga kurang mampu di Maluku Utara melalui seleksi dan validasi data kesejahteraan.
+untuk:
+  - Mahasiswa dari keluarga kurang mampu di Maluku Utara
+manfaat:
+  - Bantuan Biaya Pendidikan
+cakupan:
+  level: provinsi
+  kode: '82'
+tipeGerbang: desil
+syarat:
+  - teks: Berasal dari keluarga kurang mampu dan memenuhi batas desil kesejahteraan yang ditetapkan penyelenggara.
+    sumberUrl: https://biroadpim.malutprov.go.id/rapat-penyaluran-beasiswa-maluku-utara-bangkit-2026-bahas-sisa-kuota-2025-validasi-desil-dan-mekanisme-penyaluran
+langkah:
+  - "Pada rekrutmen 2026, pendaftaran dibuka lewat tautan pendaftaran resmi Pemprov Maluku Utara atau diisi di sekolah lewat jalur SNBP/SNMPTN."
+  - "Setelah pendaftaran ditutup, data diserahkan ke Dinas Sosial untuk validasi desil."
+  - "Data yang memenuhi desil dikurasi berdasarkan nilai rapor untuk menetapkan calon penerima."
+  - "Seleksi 2026 selesai pada Juli 2026 dan penyaluran sedang dipersiapkan; pendaftaran periode berikutnya menunggu pengumuman Pemprov Maluku Utara."
+sumberUtama:
+  url: https://biroadpim.malutprov.go.id/rapat-penyaluran-beasiswa-maluku-utara-bangkit-2026-bahas-sisa-kuota-2025-validasi-desil-dan-mekanisme-penyaluran
+  jenis: situs-resmi
+verifikasi: dasar
+tanggalDiperiksa: '2026-11-11'
+catatan: Seleksi penerima baru tahun 2026 telah selesai pada Juli. Berita resmi menjelaskan validasi desil, tetapi tidak memuat panduan lengkap pendaftaran dan menyebut batas desil dengan rumusan yang tidak konsisten; angka batas tidak disajikan di sini. HAKKITA tidak menghitung atau menetapkan desil.
