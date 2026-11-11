@@ -1,11 +1,13 @@
 import type {
   KnowledgeDocument,
   ObstacleReportStage,
-  Profile,
+  PreferensiProfil,
   Program,
   RadarProgramDraft,
 } from '@hakkita/schema';
 import type { ProgramFollowSnapshot } from '@hakkita/domain';
+import type { RadarRunState } from '@/app/admin/validasi/types';
+import type { RadarRunCursor } from '@/server/types';
 
 export interface Database {
   public: {
@@ -209,6 +211,47 @@ export interface Database {
           reviewed_at?: string | null;
           reviewed_by?: string | null;
           program_id?: string | null;
+        };
+        Relationships: [];
+      };
+      program_radar_runs: {
+        Row: {
+          id: string;
+          kind: 'discovery' | 'monitoring';
+          status: 'running' | 'done' | 'failed' | 'stopped';
+          state: RadarRunState;
+          cursor: RadarRunCursor | null;
+          lease_until: string | null;
+          stop_requested: boolean;
+          dismissed: boolean;
+          started_by: string | null;
+          started_at: string;
+          updated_at: string;
+          finished_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          kind: 'discovery' | 'monitoring';
+          status?: 'running' | 'done' | 'failed' | 'stopped';
+          state: RadarRunState;
+          cursor?: RadarRunCursor | null;
+          lease_until?: string | null;
+          stop_requested?: boolean;
+          dismissed?: boolean;
+          started_by?: string | null;
+          started_at?: string;
+          updated_at?: string;
+          finished_at?: string | null;
+        };
+        Update: {
+          status?: 'running' | 'done' | 'failed' | 'stopped';
+          state?: RadarRunState;
+          cursor?: RadarRunCursor | null;
+          lease_until?: string | null;
+          stop_requested?: boolean;
+          dismissed?: boolean;
+          updated_at?: string;
+          finished_at?: string | null;
         };
         Relationships: [];
       };
@@ -434,19 +477,22 @@ export interface Database {
         };
         Relationships: [];
       };
-      condition_profiles: {
+      user_profiles: {
         Row: {
-          profile: Profile;
+          display_name: string;
+          preferences: PreferensiProfil | Record<string, never>;
           updated_at: string;
           user_id: string;
         };
         Insert: {
-          profile: Profile;
+          display_name?: string;
+          preferences?: PreferensiProfil | Record<string, never>;
           updated_at?: string;
           user_id: string;
         };
         Update: {
-          profile?: Profile;
+          display_name?: string;
+          preferences?: PreferensiProfil | Record<string, never>;
           updated_at?: string;
           user_id?: string;
         };
