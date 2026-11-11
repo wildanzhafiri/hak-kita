@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { BerkasSchema, ProgramSchema } from '@hakkita/schema';
-import { berkasPath, checkProgram, hasBerkas, isLayanan, programPath } from './program';
+import { ProgramSchema } from '@hakkita/schema';
+import { checkProgram, isLayanan, programPath } from './program';
 import { TODAY, makeProgram } from './test-helpers';
 
 describe('ProgramSchema', () => {
@@ -74,16 +74,6 @@ describe('isLayanan', () => {
   });
 });
 
-describe('hasBerkas', () => {
-  it('is true only when the program carries a berkas block', () => {
-    const berkas = BerkasSchema.parse({
-      dokumen: [{ id: 'email', label: 'Email aktif', sumberUrl: 'https://contoh.go.id/panduan' }],
-    });
-    expect(hasBerkas(makeProgram({ berkas }))).toBe(true);
-    expect(hasBerkas(makeProgram())).toBe(false);
-  });
-});
-
 describe('programPath', () => {
   it('routes programs to Kenali Hakmu and services to Layanan Publik', () => {
     expect(programPath(makeProgram({ id: 'pkh' }))).toBe('/kenali-hakmu/pkh');
@@ -96,12 +86,6 @@ describe('programPath', () => {
         }),
       ),
     ).toBe('/layanan/ktp-el');
-  });
-});
-
-describe('berkasPath', () => {
-  it('appends the berkas segment to the program path', () => {
-    expect(berkasPath(makeProgram({ id: 'kip-kuliah' }))).toBe('/kenali-hakmu/kip-kuliah/berkas');
   });
 });
 

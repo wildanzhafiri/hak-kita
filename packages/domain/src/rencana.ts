@@ -1,8 +1,7 @@
 import type { Program } from '@hakkita/schema';
 import { daysUntil } from './date';
 import { periodStatus } from './period';
-import { hasBerkas } from './program';
-import type { BerkasEntry, Deadline, NextStep, NextStepInput, PeriodStatus } from './types';
+import type { Deadline, PeriodStatus } from './types';
 
 const DEADLINE_RANK: Record<PeriodStatus, number> = {
   dibuka: 0,
@@ -11,10 +10,6 @@ const DEADLINE_RANK: Record<PeriodStatus, number> = {
   'tidak-diketahui': 3,
   ditutup: 4,
 };
-
-export function isBerkasComplete({ readiness, hasUnanswered }: BerkasEntry): boolean {
-  return readiness.total > 0 && readiness.ready === readiness.total && !hasUnanswered;
-}
 
 export function buildDeadline(program: Program, today: string): Deadline {
   const status = periodStatus(program.periode, today);
@@ -36,32 +31,4 @@ export function sortDeadlines(deadlines: readonly Deadline[]): Deadline[] {
     const byDate = sortKey(a).localeCompare(sortKey(b));
     return a.status === 'ditutup' ? -byDate : byDate;
   });
-}
-
-function mostUrgent(entries: readonly BerkasEntry[], today: string): NextStep | null {
-  if (entries.length === 0) return null;
-  const [first] = sortDeadlines(entries.map((entry) => buildDeadline(entry.program, today)));
-  const entry = entries.find((candidate) => candidate.program.id === first?.program.id);
-  return entry && first ? { kind: 'continue-berkas', entry, deadline: first } : null;
-}
-
-export function pickNextStep({ entries, saved, guides = [], today }: NextStepInput): NextStep {
-  const unfinished = entries.filter((entry) => !isBerkasComplete(entry));
-  const urgent = mostUrgent(unfinished, today);
-  if (urgent) return urgent;
-
-  const [finished] = entries;
-  if (finished) return { kind: 'open-official', program: finished.program };
-
-  const [firstGuide] = guides;
-  if (firstGuide) return { kind: 'continue-guide', program: firstGuide };
-
-  const [firstSaved] = saved;
-  if (firstSaved) {
-    return hasBerkas(firstSaved)
-      ? { kind: 'start-berkas', program: firstSaved }
-      : { kind: 'review-saved', program: firstSaved };
-  }
-
-  return { kind: 'explore' };
 }

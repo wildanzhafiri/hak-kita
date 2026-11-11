@@ -31,8 +31,6 @@ export const MONTH_NAMES = [
   'Desember',
 ] as const;
 
-export const BERKAS_NOTE_MAX_LENGTH = 500;
-
 export const DEFAULT_STEPS = [
   'Periksa informasi terbaru melalui kanal resmi.',
   'Siapkan dokumen sesuai ketentuan penyelenggara.',

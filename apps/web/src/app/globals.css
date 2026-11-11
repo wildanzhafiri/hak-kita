@@ -1548,48 +1548,6 @@ ol.prose-list {
   margin: 8px 0 0 31px;
   font-size: 11px;
 }
-.issue-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 18px;
-}
-.issue-list details {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px 16px;
-  background: var(--bg);
-}
-.issue-list summary {
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.issue-list p {
-  font-size: 12px;
-  margin: 10px 0 0;
-}
-.issue-list .source-link {
-  margin-left: 0;
-}
-.berkas-note {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-}
-.berkas-note textarea {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 400;
-  resize: vertical;
-}
 .wizard-progress {
   display: flex;
   justify-content: space-between;
@@ -1646,10 +1604,6 @@ ol.prose-list {
   .panel {
     box-shadow: none;
     break-inside: avoid;
-  }
-  .issue-list details:not([open]) > p,
-  .issue-list details:not([open]) > a {
-    display: block;
   }
   .source-link {
     display: none;

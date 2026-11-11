@@ -23,7 +23,7 @@ describe('guestDestination', () => {
   it('sends a guest to the catalog instead of a page that needs an account', () => {
     for (const path of [
       '/rencanaku',
-      '/rencanaku/berkas',
+      '/rencanaku/tersimpan',
       '/profil/edit',
       '/selamat-datang',
       '/kenali-hakmu/rekomendasi',

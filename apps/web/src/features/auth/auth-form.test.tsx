@@ -98,7 +98,7 @@ describe('AuthForm', () => {
   });
 
   it('signs in with a trimmed email and goes to the page asked for', async () => {
-    renderForm({ nextPath: '/rencanaku/berkas' });
+    renderForm({ nextPath: '/rencanaku/tersimpan' });
 
     fill('Alamat email', ' budi@contoh.id ');
     fill('Kata sandi', 'rahasia123');
@@ -110,7 +110,7 @@ describe('AuthForm', () => {
         password: 'rahasia123',
       }),
     );
-    await waitFor(() => expect(mocks.replace).toHaveBeenCalledWith('/rencanaku/berkas'));
+    await waitFor(() => expect(mocks.replace).toHaveBeenCalledWith('/rencanaku/tersimpan'));
   });
 
   it('shows a clear message for a wrong password and clears the field', async () => {

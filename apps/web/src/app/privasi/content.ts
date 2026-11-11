@@ -4,7 +4,7 @@ export const PRIVACY_PAGE_CONTENT = {
   sections: [
     {
       heading: 'Data di perangkatmu',
-      body: 'Tanpa akun, checklist berkas, jawaban singkat, dan catatan di halaman program disimpan di penyimpanan browser perangkat ini. Setelah masuk, program yang kamu simpan, checklist berkas, profil dan preferensi rekomendasi, serta pilihan pemberitahuan email disimpan di akunmu. Kamu dapat menghapus setiap rencana dari halaman Rencanaku dan menghapus informasi profil dari halaman Profil Saya kapan saja.',
+      body: 'Tanpa akun, progres panduan langkah dan jawaban pencarian program disimpan sementara di browser perangkat ini. Setelah masuk, program yang kamu simpan, profil dan preferensi rekomendasi, serta pilihan pemberitahuan email disimpan di akunmu. Kamu dapat menghapus setiap rencana dari halaman Rencanaku dan menghapus informasi profil dari halaman Profil Saya kapan saja.',
     },
     {
       heading: 'Tanpa dokumen pribadi',

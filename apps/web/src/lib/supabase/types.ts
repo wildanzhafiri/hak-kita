@@ -447,36 +447,6 @@ export interface Database {
         };
         Relationships: [];
       };
-      berkas_progress: {
-        Row: {
-          answers: Record<string, string>;
-          checked_item_ids: string[];
-          details_updated_at: string | null;
-          note: string;
-          program_id: string;
-          updated_at: string;
-          user_id: string;
-        };
-        Insert: {
-          answers?: Record<string, string>;
-          checked_item_ids?: string[];
-          details_updated_at?: string | null;
-          note?: string;
-          program_id: string;
-          updated_at?: string;
-          user_id: string;
-        };
-        Update: {
-          answers?: Record<string, string>;
-          checked_item_ids?: string[];
-          details_updated_at?: string | null;
-          note?: string;
-          program_id?: string;
-          updated_at?: string;
-          user_id?: string;
-        };
-        Relationships: [];
-      };
       user_profiles: {
         Row: {
           display_name: string;

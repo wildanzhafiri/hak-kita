@@ -283,40 +283,25 @@ export function createAssistantTools(
     }),
     getMyPlan: tool({
       description:
-        'Lihat program tersimpan dan jumlah berkas yang sudah dicentang milik pengguna yang masuk.',
+        'Lihat program dan layanan yang tersimpan di Rencanaku milik pengguna yang masuk.',
       inputSchema: AssistantPlanQuerySchema,
       execute: async () => {
         if (!userId) return { requiresLogin: true, programs: [] };
         if (!accountClient) return { available: false, programs: [] };
 
-        const [
-          { data: savedPrograms, error: savedError },
-          { data: progress, error: progressError },
-        ] = await Promise.all([
-          accountClient.from('saved_programs').select('program_id').eq('user_id', userId),
-          accountClient
-            .from('berkas_progress')
-            .select('program_id,checked_item_ids,updated_at')
-            .eq('user_id', userId),
-        ]);
-        if (savedError || progressError) return { available: false, programs: [] };
+        const { data: savedPrograms, error: savedError } = await accountClient
+          .from('saved_programs')
+          .select('program_id')
+          .eq('user_id', userId);
+        if (savedError) return { available: false, programs: [] };
 
         const programs = await loadPublishedInformation();
         const savedIds = new Set(savedPrograms.map((entry) => entry.program_id));
-        const progressByProgram = new Map(progress.map((entry) => [entry.program_id, entry]));
         return {
           available: true,
           programs: programs
-            .filter((program) => savedIds.has(program.id) || progressByProgram.has(program.id))
-            .map((program) => {
-              const currentProgress = progressByProgram.get(program.id);
-              return {
-                name: program.nama,
-                isSaved: savedIds.has(program.id),
-                checkedDocumentCount: currentProgress?.checked_item_ids.length ?? 0,
-                progressUpdatedAt: currentProgress?.updated_at ?? null,
-              };
-            }),
+            .filter((program) => savedIds.has(program.id))
+            .map((program) => ({ name: program.nama, isSaved: true })),
         };
       },
     }),
@@ -360,8 +345,7 @@ export async function getAssistantPageContext(currentPath: string | undefined): 
   ) {
     const program = (await loadPublishedInformation()).find((entry) => entry.id === id);
     if (program) {
-      const pageKind = segments.includes('berkas') ? 'halaman berkas' : 'halaman rincian';
-      return `Pengguna sedang melihat ${pageKind} ${program.nama}. ID program: ${program.id}. Ringkasan: ${program.ringkasan}. Sumber utama: ${program.sumberUtama.url}. Gunakan tools untuk menjawab rincian yang belum ada di konteks ini.`;
+      return `Pengguna sedang melihat halaman rincian ${program.nama}. ID program: ${program.id}. Ringkasan: ${program.ringkasan}. Sumber utama: ${program.sumberUtama.url}. Gunakan tools untuk menjawab rincian yang belum ada di konteks ini.`;
     }
   }
 

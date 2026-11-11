@@ -58,7 +58,7 @@ describe('SiteFrame', () => {
   });
 
   it('uses the public navigation on Rencanaku pages', () => {
-    pathname = '/rencanaku/berkas';
+    pathname = '/rencanaku/tersimpan';
     render(
       <SiteFrame header={<header>List publik</header>} footer={<footer>Footer publik</footer>}>
         <p>Ruang rencana</p>

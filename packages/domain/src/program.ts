@@ -1,23 +1,15 @@
 import type { Program } from '@hakkita/schema';
 import { STALE_AFTER_DAYS } from './constants';
 import { checkSumberUtama, isOfficialDomain, isStale } from './source';
-import type { CheckResult, ProgramWithBerkas } from './types';
+import type { CheckResult } from './types';
 
 export function isLayanan(program: Program): boolean {
   return program.jenis === 'layanan';
 }
 
-export function hasBerkas(program: Program): program is ProgramWithBerkas {
-  return program.berkas !== undefined;
-}
-
 export function programPath(program: Program): string {
   const section = isLayanan(program) ? '/layanan' : '/kenali-hakmu';
   return `${section}/${program.id}`;
-}
-
-export function berkasPath(program: Program): string {
-  return `${programPath(program)}/berkas`;
 }
 
 export function checkProgram(program: Program, options: { today: string }): CheckResult {
