@@ -6,7 +6,9 @@ import { AUTH_ERROR_COPY } from '@/features/auth/content';
 import { ProgramDetail } from '@/features/admin/program-detail';
 import { getRadarAccessState } from '@/server/admin-access';
 import { isProgramManagementConfigured } from '@/server/admin-programs';
-import { loadAllInformation } from '@/server/data';
+import { buildWilayahIndex, wilayahName } from '@hakkita/domain';
+import { loadAllInformation, loadWilayahFile } from '@/server/data';
+import { PublishedInfo } from './published-info';
 import type { AdminInformationDetailPageProps } from './types';
 
 export const dynamic = 'force-dynamic';
@@ -31,13 +33,20 @@ export default async function AdminInformationDetailPage({
     return <AdminAccess initialMessage={initialMessage} />;
   }
 
-  const [{ id }, programs] = await Promise.all([params, loadAllInformation()]);
+  const [{ id }, programs, wilayahFile] = await Promise.all([
+    params,
+    loadAllInformation(),
+    loadWilayahFile(),
+  ]);
   const program = programs.find((record) => record.id === id);
   if (!program) notFound();
+  const regionName = wilayahName(buildWilayahIndex(wilayahFile.wilayah), program.cakupan.kode);
 
   return (
     <AdminShell activeSection="programs" adminEmail={access.email}>
-      <ProgramDetail canManage={isProgramManagementConfigured()} program={program} />
+      <ProgramDetail canManage={isProgramManagementConfigured()} program={program}>
+        <PublishedInfo program={program} regionName={regionName} />
+      </ProgramDetail>
     </AdminShell>
   );
 }

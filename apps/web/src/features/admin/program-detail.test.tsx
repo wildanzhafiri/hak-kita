@@ -11,6 +11,7 @@ describe('ProgramDetail', () => {
   beforeEach(() => {
     router.refresh.mockReset();
     router.replace.mockReset();
+    vi.stubGlobal('fetch', vi.fn().mockReturnValue(new Promise(() => undefined)));
   });
 
   afterEach(() => {
@@ -19,10 +20,23 @@ describe('ProgramDetail', () => {
 
   it('opens the editor for an admin', () => {
     render(<ProgramDetail canManage program={makeProgram()} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ubah informasi' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Perbarui Informasi' }));
 
     expect(screen.getByRole('heading', { name: 'Ubah informasi' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Simpan perubahan' })).toBeTruthy();
+  });
+
+  it('shows the portal link, the follower notice, and the page children', () => {
+    render(
+      <ProgramDetail canManage program={makeProgram({ nama: 'Program Contoh' })}>
+        <p>Isi informasi terpublikasi</p>
+      </ProgramDetail>,
+    );
+
+    expect(screen.getByRole('heading', { name: 'Program Contoh' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Lihat di Portal/ })).toBeTruthy();
+    expect(screen.getByText('Isi informasi terpublikasi')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Pemberitahuan ke pengikut' })).toBeTruthy();
   });
 
   it('asks for confirmation before deleting an information record', () => {

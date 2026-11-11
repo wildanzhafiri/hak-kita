@@ -2,26 +2,34 @@
 
 import { useState } from 'react';
 import { Plus, Search } from 'lucide-react';
-import { KATEGORI } from '@hakkita/schema';
+import { JENIS_PROGRAM } from '@hakkita/schema';
 import { ButtonLink } from '@/components/ui/button-link';
 import { SelectField } from '@/components/ui/select-field';
 import { TextInput } from '@/components/ui/text-input';
-import { ADMIN_CATEGORY_FILTER_OPTIONS } from './constants';
+import { ResultPagination } from '@/features/program/result-pagination';
+import { ADMIN_KIND_FILTER_OPTIONS, ADMIN_PAGE_SIZE } from './constants';
 import { PROGRAM_ADMIN_COPY } from './content';
-import type { ProgramCategoryFilter, ProgramListProps } from './types';
+import type { ProgramKindFilter, ProgramListProps } from './types';
 import { ProgramAdminRow } from './program-admin-row';
 
 export function ProgramList({ programs, canManage = false }: ProgramListProps) {
   const [query, setQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<ProgramCategoryFilter>('all');
+  const [kindFilter, setKindFilter] = useState<ProgramKindFilter>('all');
+  const [page, setPage] = useState(1);
   const searchTerm = query.trim().toLocaleLowerCase('id');
   const visiblePrograms = programs.filter((program) => {
     const matchesSearch = `${program.nama} ${program.penyelenggara} ${program.kategori}`
       .toLocaleLowerCase('id')
       .includes(searchTerm);
-    const matchesCategory = categoryFilter === 'all' || program.kategori === categoryFilter;
-    return matchesSearch && matchesCategory;
+    const matchesKind = kindFilter === 'all' || program.jenis === kindFilter;
+    return matchesSearch && matchesKind;
   });
+  const pageCount = Math.max(1, Math.ceil(visiblePrograms.length / ADMIN_PAGE_SIZE));
+  const visiblePage = Math.min(page, pageCount);
+  const pagePrograms = visiblePrograms.slice(
+    (visiblePage - 1) * ADMIN_PAGE_SIZE,
+    visiblePage * ADMIN_PAGE_SIZE,
+  );
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
@@ -44,25 +52,29 @@ export function ProgramList({ programs, canManage = false }: ProgramListProps) {
             <TextInput
               aria-label={PROGRAM_ADMIN_COPY.searchLabel}
               className="pl-10"
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setPage(1);
+              }}
               placeholder={PROGRAM_ADMIN_COPY.searchPlaceholder}
               type="search"
               value={query}
             />
           </label>
           <SelectField
-            label="Kategori"
+            label="Jenis"
             onChange={(value) => {
+              setPage(1);
               if (value === 'all') {
-                setCategoryFilter(value);
+                setKindFilter(value);
                 return;
               }
-              const selectedCategory = KATEGORI.find((category) => category === value);
-              if (selectedCategory) setCategoryFilter(selectedCategory);
+              const selectedKind = JENIS_PROGRAM.find((kind) => kind === value);
+              if (selectedKind) setKindFilter(selectedKind);
             }}
-            options={ADMIN_CATEGORY_FILTER_OPTIONS}
-            placeholder="Semua kategori"
-            value={categoryFilter}
+            options={ADMIN_KIND_FILTER_OPTIONS}
+            placeholder="Semua jenis"
+            value={kindFilter}
           />
         </div>
 
@@ -75,7 +87,7 @@ export function ProgramList({ programs, canManage = false }: ProgramListProps) {
                     Program &amp; Layanan
                   </th>
                   <th className="min-w-[210px] px-4 py-3" scope="col">
-                    Kategori
+                    Jenis
                   </th>
                   <th className="min-w-[250px] px-4 py-3" scope="col">
                     Instansi
@@ -89,7 +101,7 @@ export function ProgramList({ programs, canManage = false }: ProgramListProps) {
                 </tr>
               </thead>
               <tbody>
-                {visiblePrograms.map((program) => (
+                {pagePrograms.map((program) => (
                   <ProgramAdminRow key={program.id} program={program} />
                 ))}
               </tbody>
@@ -105,6 +117,16 @@ export function ProgramList({ programs, canManage = false }: ProgramListProps) {
                 ? 'Coba kata kunci lain atau tampilkan semua informasi.'
                 : 'Informasi program dan layanan akan ditampilkan di sini.'}
             </p>
+          </div>
+        )}
+        {pageCount > 1 && (
+          <div className="border-t border-[#e1e9f2] px-4 pb-5">
+            <ResultPagination
+              ariaLabel="Halaman daftar informasi"
+              onPageChange={setPage}
+              page={visiblePage}
+              pageCount={pageCount}
+            />
           </div>
         )}
       </section>

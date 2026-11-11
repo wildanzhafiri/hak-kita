@@ -23,6 +23,8 @@ function createDraft(program?: Program): ProgramEditorDraft {
     category: program?.kategori ?? ADMIN_DEFAULT_CATEGORY_BY_KIND[program?.jenis ?? 'program'],
     organizer: program?.penyelenggara ?? '',
     summary: program?.ringkasan ?? '',
+    about: program?.tentang ?? '',
+    cost: program?.biaya ?? '',
     audience: program?.untuk.join('\n') ?? '',
     coverageLevel: program?.cakupan.level ?? 'nasional',
     coverageCode: program?.cakupan.kode ?? 'ID',
@@ -30,15 +32,18 @@ function createDraft(program?: Program): ProgramEditorDraft {
     requirements: program?.syarat.map((requirement) => ({
       text: requirement.teks,
       sourceUrl: requirement.sumberUrl ?? '',
-    })) ?? [{ text: '', sourceUrl: '' }],
-    steps: program?.langkah ?? [],
+      quote: requirement.kutipan ?? '',
+    })) ?? [{ text: '', sourceUrl: '', quote: '' }],
+    steps: program?.langkah.join('\n') ?? '',
     documents: program?.dokumen.join('\n') ?? '',
     sourceUrl: program?.sumberUtama.url ?? '',
     sourceType: program?.sumberUtama.jenis ?? 'situs-resmi',
+    sourceQuote: program?.sumberUtama.kutipan ?? '',
     additionalSources:
       program?.sumberTambahan.map((source) => ({
         url: source.url,
         type: source.jenis,
+        quote: source.kutipan ?? '',
       })) ?? [],
     periodType: !program?.periode
       ? 'none'
@@ -67,6 +72,8 @@ function readErrorMessage(payload: unknown) {
 export function useProgramEditor(
   program: Program | undefined,
   onCancel: ProgramEditorProps['onCancel'],
+  onSave?: ProgramEditorProps['onSave'],
+  onSaved?: ProgramEditorProps['onSaved'],
 ): UseProgramEditorResult {
   const router = useRouter();
   const [draft, setDraft] = useState(() => createDraft(program));
@@ -93,7 +100,7 @@ export function useProgramEditor(
   function handleAddRequirement() {
     setDraft((current) => ({
       ...current,
-      requirements: [...current.requirements, { text: '', sourceUrl: '' }],
+      requirements: [...current.requirements, { text: '', sourceUrl: '', quote: '' }],
     }));
   }
 
@@ -101,24 +108,6 @@ export function useProgramEditor(
     setDraft((current) => ({
       ...current,
       requirements: current.requirements.filter((_, rowIndex) => rowIndex !== index),
-    }));
-  }
-
-  function handleStepChange(index: number, value: string) {
-    setDraft((current) => ({
-      ...current,
-      steps: current.steps.map((step, stepIndex) => (stepIndex === index ? value : step)),
-    }));
-  }
-
-  function handleAddStep() {
-    setDraft((current) => ({ ...current, steps: [...current.steps, ''] }));
-  }
-
-  function handleRemoveStep(index: number) {
-    setDraft((current) => ({
-      ...current,
-      steps: current.steps.filter((_, stepIndex) => stepIndex !== index),
     }));
   }
 
@@ -134,7 +123,10 @@ export function useProgramEditor(
   function handleAddSource() {
     setDraft((current) => ({
       ...current,
-      additionalSources: [...current.additionalSources, { url: '', type: 'situs-resmi' }],
+      additionalSources: [
+        ...current.additionalSources,
+        { url: '', type: 'situs-resmi', quote: '' },
+      ],
     }));
   }
 
@@ -154,16 +146,11 @@ export function useProgramEditor(
 
     const requirements = draft.requirements
       .filter((requirement) => requirement.text.trim())
-      .map((requirement) => {
-        const previousRequirement = program?.syarat.find(
-          (entry) => entry.teks === requirement.text.trim(),
-        );
-        return {
-          teks: requirement.text.trim(),
-          ...(requirement.sourceUrl.trim() ? { sumberUrl: requirement.sourceUrl.trim() } : {}),
-          ...(previousRequirement?.kutipan ? { kutipan: previousRequirement.kutipan } : {}),
-        };
-      });
+      .map((requirement) => ({
+        teks: requirement.text.trim(),
+        ...(requirement.sourceUrl.trim() ? { sumberUrl: requirement.sourceUrl.trim() } : {}),
+        ...(requirement.quote.trim() ? { kutipan: requirement.quote.trim() } : {}),
+      }));
 
     const candidate: unknown = {
       ...(program ?? {}),
@@ -173,20 +160,27 @@ export function useProgramEditor(
       kategori: draft.category,
       penyelenggara: draft.organizer.trim(),
       ringkasan: draft.summary.trim(),
+      tentang: draft.about.trim() || undefined,
+      biaya: draft.cost.trim() || undefined,
       untuk: splitLines(draft.audience),
       cakupan: { level: draft.coverageLevel, kode: draft.coverageCode.trim() },
       tipeGerbang: draft.gateType,
       syarat: requirements,
-      langkah: draft.steps.map((step) => step.trim()).filter(Boolean),
+      langkah: splitLines(draft.steps),
       dokumen: splitLines(draft.documents),
       sumberUtama: {
         url: draft.sourceUrl.trim(),
         jenis: draft.sourceType,
         ...(program?.sumberUtama.dasarHukum ? { dasarHukum: program.sumberUtama.dasarHukum } : {}),
+        ...(draft.sourceQuote.trim() ? { kutipan: draft.sourceQuote.trim() } : {}),
       },
       sumberTambahan: draft.additionalSources
         .filter((source) => source.url.trim())
-        .map((source) => ({ url: source.url.trim(), jenis: source.type })),
+        .map((source) => ({
+          url: source.url.trim(),
+          jenis: source.type,
+          ...(source.quote.trim() ? { kutipan: source.quote.trim() } : {}),
+        })),
       verifikasi: draft.verification,
       tanggalDiperiksa: draft.verification === 'belum' ? undefined : draft.checkedAt,
       ...(draft.periodType === 'year-round'
@@ -202,6 +196,16 @@ export function useProgramEditor(
     }
 
     setIsSaving(true);
+    if (onSave) {
+      const message = await onSave(parsed.data);
+      setIsSaving(false);
+      if (message) setErrorMessage(message);
+      else {
+        onSaved?.();
+        onCancel?.();
+      }
+      return;
+    }
     try {
       const endpoint = program
         ? `/api/admin/programs/${encodeURIComponent(program.id)}`
@@ -219,6 +223,7 @@ export function useProgramEditor(
       }
       router.refresh();
       if (program && onCancel) {
+        onSaved?.();
         onCancel();
       } else {
         router.replace(`/admin/informasi/${encodeURIComponent(parsed.data.id)}`);
@@ -237,9 +242,6 @@ export function useProgramEditor(
     handleRequirementChange,
     handleAddRequirement,
     handleRemoveRequirement,
-    handleStepChange,
-    handleAddStep,
-    handleRemoveStep,
     handleSourceChange,
     handleAddSource,
     handleRemoveSource,

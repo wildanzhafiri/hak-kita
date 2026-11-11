@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { PROGRAM_ADMIN_COPY } from './content';
-import { ProgramCategoryBadge } from './program-category-badge';
+import { ProgramKindBadge } from './program-kind-badge';
 import type { ProgramRowProps } from './types';
 
 export function ProgramAdminRow({ program }: ProgramRowProps) {
@@ -29,7 +29,7 @@ export function ProgramAdminRow({ program }: ProgramRowProps) {
         {program.nama}
       </td>
       <td className="px-4 py-4 align-middle">
-        <ProgramCategoryBadge category={program.kategori} />
+        <ProgramKindBadge kind={program.jenis} />
       </td>
       <td className="px-4 py-4 align-middle text-[13px] text-[#475569]">{program.penyelenggara}</td>
       <td className="whitespace-nowrap px-4 py-4 align-middle text-[13px] text-[#64748b]">

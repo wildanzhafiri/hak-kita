@@ -1,0 +1,21 @@
+export const PUBLISHED_INFO_COPY = {
+  heading: 'Informasi terpublikasi',
+  sourcesHeading: 'Sumber Informasi',
+  fields: {
+    name: 'Nama',
+    category: 'Kategori',
+    summary: 'Deskripsi singkat',
+    about: 'Ringkasan informasi',
+    organizer: 'Instansi / penyelenggara',
+    coverage: 'Wilayah',
+    audience: 'Untuk siapa',
+    benefits: 'Manfaat atau tujuan',
+    requirements: 'Persyaratan',
+    documents: 'Dokumen',
+    steps: 'Langkah / prosedur',
+    period: 'Jadwal pendaftaran',
+    cost: 'Biaya',
+    officialLink: 'Tautan resmi',
+    yearRound: 'Sepanjang tahun',
+  },
+} as const;

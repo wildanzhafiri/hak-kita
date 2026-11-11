@@ -2,13 +2,21 @@
 
 import { Button } from '@/components/ui/button';
 import { PROGRAM_DETAIL_COPY } from './content';
-import { ProgramEditorFields } from './program-editor-fields';
+import { ProgramEditorIdentityFields } from './program-editor-identity-fields';
+import { ProgramEditorListFields } from './program-editor-list-fields';
+import { ProgramEditorPeriodFields } from './program-editor-period-fields';
 import { ProgramEditorRequirements } from './program-editor-requirements';
-import { ProgramEditorSteps } from './program-editor-steps';
+import { ProgramEditorSourceFields } from './program-editor-source-fields';
 import { useProgramEditor } from './use-program-editor';
 import type { ProgramEditorProps } from './types';
 
-export function ProgramEditor({ program, onCancel }: ProgramEditorProps) {
+export function ProgramEditor({
+  program,
+  onCancel,
+  onSave,
+  onSaved,
+  hideVerification,
+}: ProgramEditorProps) {
   const {
     draft,
     isSaving,
@@ -17,37 +25,35 @@ export function ProgramEditor({ program, onCancel }: ProgramEditorProps) {
     handleRequirementChange,
     handleAddRequirement,
     handleRemoveRequirement,
-    handleStepChange,
-    handleAddStep,
-    handleRemoveStep,
     handleSourceChange,
     handleAddSource,
     handleRemoveSource,
     handleSubmit,
-  } = useProgramEditor(program, onCancel);
+  } = useProgramEditor(program, onCancel, onSave, onSaved);
 
   return (
-    <form className="flex flex-col gap-7" onSubmit={handleSubmit}>
-      <ProgramEditorFields
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+      <ProgramEditorIdentityFields
         draft={draft}
         isIdReadOnly={Boolean(program)}
         onFieldChange={handleFieldChange}
-        onAddSource={handleAddSource}
-        onRemoveSource={handleRemoveSource}
-        onSourceChange={handleSourceChange}
-        sources={draft.additionalSources}
-      />
-      <ProgramEditorSteps
-        onAddStep={handleAddStep}
-        onRemoveStep={handleRemoveStep}
-        onStepChange={handleStepChange}
-        steps={draft.steps}
       />
       <ProgramEditorRequirements
         onAddRequirement={handleAddRequirement}
         onRemoveRequirement={handleRemoveRequirement}
         onRequirementChange={handleRequirementChange}
         requirements={draft.requirements}
+      />
+      <ProgramEditorListFields draft={draft} onFieldChange={handleFieldChange} />
+      <ProgramEditorPeriodFields draft={draft} onFieldChange={handleFieldChange} />
+      <ProgramEditorSourceFields
+        draft={draft}
+        hideVerification={hideVerification}
+        onAddSource={handleAddSource}
+        onFieldChange={handleFieldChange}
+        onRemoveSource={handleRemoveSource}
+        onSourceChange={handleSourceChange}
+        sources={draft.additionalSources}
       />
       {errorMessage && (
         <p
