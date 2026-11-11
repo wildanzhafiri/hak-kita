@@ -17,7 +17,7 @@ export function RencanaSaved() {
           Tekan ikon simpan di kartu program atau di halaman detailnya, lalu programnya muncul di
           sini.
         </p>
-        <ButtonLink href="/program">Temukan program</ButtonLink>
+        <ButtonLink href="/kenali-hakmu">Temukan program</ButtonLink>
       </div>
     );
   }

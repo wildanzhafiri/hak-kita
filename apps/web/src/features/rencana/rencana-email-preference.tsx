@@ -28,7 +28,10 @@ export function RencanaEmailPreference() {
                 : EMAIL_NOTIFICATION_CONTENT.inactive}
           </p>
           {error && (
-            <div role="alert" className="mt-2 flex flex-wrap items-center gap-2 text-sm text-[#b72f35]">
+            <div
+              role="alert"
+              className="mt-2 flex flex-wrap items-center gap-2 text-sm text-[#b72f35]"
+            >
               <span>{error}</span>
               <Button tone="quiet" className="min-h-8 px-1 text-sm" onPress={retry}>
                 {EMAIL_NOTIFICATION_CONTENT.retry}

@@ -52,7 +52,7 @@ export function RencanaStepGuide({ program }: RencanaStepGuideProps) {
           label={`Progres langkah ${program.nama}`}
         />
       </div>
-      <ol className="mt-6 grid gap-4">
+      <ol className="mt-6 grid grid-cols-1 gap-4">
         {steps.map((step, index) => {
           const isDone = progress.completed.includes(index);
           const isStuck = progress.stuck === index;

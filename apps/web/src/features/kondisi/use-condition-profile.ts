@@ -7,7 +7,11 @@ import { useAuth } from '@/hooks/use-auth';
 import { useStoredValue } from '@/hooks/use-stored-value';
 import { EMPTY_PROFILE } from './constants';
 import { CONDITION_ACCOUNT_COPY } from './content';
-import { deleteAccountConditionProfile, loadAccountConditionProfile, saveAccountConditionProfile } from './condition-profile-store';
+import {
+  deleteAccountConditionProfile,
+  loadAccountConditionProfile,
+  saveAccountConditionProfile,
+} from './condition-profile-store';
 import type { UseConditionProfileResult } from './types';
 
 function parseProfile(raw: string | null): Profile {
@@ -52,10 +56,9 @@ export function useConditionProfile(): UseConditionProfileResult {
 
   const isAccountLoading =
     isConfigured && (!isReady || (userId !== null && loadedUserId !== userId));
-  const isSavedToAccount =
-    userId !== null && loadedUserId === userId && accountProfile !== null;
+  const isSavedToAccount = userId !== null && loadedUserId === userId && accountProfile !== null;
   const profile = useMemo(
-    () => (isSavedToAccount ? accountProfile ?? localProfile : localProfile),
+    () => (isSavedToAccount ? (accountProfile ?? localProfile) : localProfile),
     [accountProfile, isSavedToAccount, localProfile],
   );
 

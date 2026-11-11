@@ -76,7 +76,7 @@ export function RencanaObstacleReport({ programId }: RencanaObstacleReportProps)
     <div className="mt-4 border-t border-[#dbe5ef] pt-4">
       <Button
         tone="secondary"
-        className="min-h-9 px-3 text-sm"
+        className="h-auto min-h-9 max-w-full px-3 py-2 text-left text-sm whitespace-normal"
         onPress={() => setIsOpen((value) => !value)}
       >
         {STEP_GUIDE_CONTENT.reportLabel}

@@ -21,7 +21,7 @@ export function RencanaSummary({ isEmailAvailable = false }: RencanaSummaryProps
       {guided.length > 0 && (
         <section
           id="panduan-langkah"
-          className="grid gap-5 scroll-mt-28"
+          className="grid grid-cols-1 gap-5 scroll-mt-28"
           aria-labelledby="panduan-langkah-title"
         >
           <div>

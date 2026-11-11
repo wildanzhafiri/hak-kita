@@ -37,10 +37,12 @@ export async function saveAccountConditionProfile(
   if (!client) return CONDITION_ACCOUNT_COPY.saveError;
 
   try {
-    const { error } = await client.from(CONDITION_PROFILES_TABLE).upsert(
-      { user_id: userId, profile, updated_at: new Date().toISOString() },
-      { onConflict: 'user_id' },
-    );
+    const { error } = await client
+      .from(CONDITION_PROFILES_TABLE)
+      .upsert(
+        { user_id: userId, profile, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id' },
+      );
     return error ? CONDITION_ACCOUNT_COPY.saveError : null;
   } catch {
     return CONDITION_ACCOUNT_COPY.saveError;
@@ -52,10 +54,7 @@ export async function deleteAccountConditionProfile(userId: string): Promise<str
   if (!client) return CONDITION_ACCOUNT_COPY.deleteError;
 
   try {
-    const { error } = await client
-      .from(CONDITION_PROFILES_TABLE)
-      .delete()
-      .eq('user_id', userId);
+    const { error } = await client.from(CONDITION_PROFILES_TABLE).delete().eq('user_id', userId);
     return error ? CONDITION_ACCOUNT_COPY.deleteError : null;
   } catch {
     return CONDITION_ACCOUNT_COPY.deleteError;

@@ -158,7 +158,7 @@ describe('RencanaSummary', () => {
     renderInRencana(<RencanaSummary />);
     expect(screen.getByRole('heading', { name: 'Mulai dari satu program.' })).toBeTruthy();
     expect(screen.getByRole('link', { name: /Jelajahi program/ }).getAttribute('href')).toBe(
-      '/program',
+      '/kenali-hakmu',
     );
   });
 
@@ -170,7 +170,7 @@ describe('RencanaSummary', () => {
     ).toBeTruthy();
     expect(screen.getByText('Dibuka sampai 5 November 2026 (6 hari lagi)')).toBeTruthy();
     expect(screen.getByRole('link', { name: /Lanjutkan berkas/ }).getAttribute('href')).toBe(
-      '/program/kip-kuliah/berkas',
+      '/kenali-hakmu/kip-kuliah/berkas',
     );
   });
 
@@ -203,7 +203,7 @@ describe('RencanaBerkas', () => {
     renderInRencana(<RencanaBerkas />);
     expect(screen.getByText('Belum ada berkas yang kamu siapkan.')).toBeTruthy();
     expect(screen.getByRole('link', { name: /KIP Kuliah/ }).getAttribute('href')).toBe(
-      '/program/kip-kuliah/berkas',
+      '/kenali-hakmu/kip-kuliah/berkas',
     );
   });
 

@@ -1,11 +1,14 @@
 import { todayWIB } from '@hakkita/domain';
 import { RencanaProvider } from '@/features/rencana/rencana-provider';
 import { RencanaShell } from '@/features/rencana/rencana-shell';
-import { loadPrograms, loadWilayahFile } from '@/server/data';
+import { loadPublishedInformation, loadWilayahFile } from '@/server/data';
 import type { RencanakuLayoutProps } from './types';
 
 export default async function RencanakuLayout({ children }: RencanakuLayoutProps) {
-  const [programs, wilayahFile] = await Promise.all([loadPrograms(), loadWilayahFile()]);
+  const [programs, wilayahFile] = await Promise.all([
+    loadPublishedInformation(),
+    loadWilayahFile(),
+  ]);
 
   return (
     <div className="rencana-app">

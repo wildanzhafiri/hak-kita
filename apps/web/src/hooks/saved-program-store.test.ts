@@ -34,7 +34,9 @@ describe('saved program loading', () => {
       .mockResolvedValueOnce({ data: [{ program_id: 'kip-kuliah' }], error: null });
 
     await loadSavedPrograms(userId);
-    expect(getSavedProgramsSnapshot(userId).error).toBe('Simpanan akun belum dapat dimuat. Coba lagi.');
+    expect(getSavedProgramsSnapshot(userId).error).toBe(
+      'Simpanan akun belum dapat dimuat. Coba lagi.',
+    );
 
     await retrySavedPrograms(userId);
     expect(getSavedProgramsSnapshot(userId)).toMatchObject({
@@ -64,7 +66,9 @@ describe('saved program loading', () => {
     query.order.mockResolvedValueOnce({ data: [], error: null });
     await loadSavedPrograms(userId);
 
-    mockClient.from.mockReturnValue({ insert: vi.fn().mockRejectedValue(new Error('Network unavailable')) });
+    mockClient.from.mockReturnValue({
+      insert: vi.fn().mockRejectedValue(new Error('Network unavailable')),
+    });
     await toggleSavedProgram(userId, 'kip-kuliah');
 
     expect(getSavedProgramsSnapshot(userId)).toMatchObject({

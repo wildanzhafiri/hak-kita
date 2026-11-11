@@ -86,7 +86,11 @@ export function ConditionChecker({ programs, wilayah, builtOn }: ConditionChecke
   }
 
   if (isAccountLoading) {
-    return <p className="panel" role="status">{CONDITION_ACCOUNT_COPY.loading}</p>;
+    return (
+      <p className="panel" role="status">
+        {CONDITION_ACCOUNT_COPY.loading}
+      </p>
+    );
   }
 
   if (!question) {
