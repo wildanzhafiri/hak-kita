@@ -7,9 +7,10 @@ export function ButtonLink({
   children,
   secondary = false,
   icon = <ArrowUpRight size={17} />,
+  className = '',
 }: ButtonLinkProps) {
   return (
-    <Link href={href} className={secondary ? 'button secondary' : 'button'}>
+    <Link href={href} className={`${secondary ? 'button secondary' : 'button'} ${className}`}>
       {children}
       {icon}
     </Link>

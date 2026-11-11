@@ -11,17 +11,30 @@ export function SelectField({
   value,
   options,
   isDisabled = false,
+  isLabelVisible = false,
+  isRequired = false,
   onChange,
 }: SelectFieldProps) {
   return (
     <Select
-      className={cn('w-full', className)}
+      className={cn('flex w-full flex-col', isLabelVisible && 'gap-2', className)}
       isDisabled={isDisabled}
       placeholder={placeholder}
       value={value}
       onChange={(selectedValue) => onChange(selectedValue?.toString() ?? '')}
     >
-      <Label className="sr-only">{label}</Label>
+      <Label
+        className={
+          isLabelVisible
+            ? cn(
+                'text-sm font-medium text-[#334155]',
+                isRequired && "after:ml-1 after:text-[#a72b32] after:content-['*']",
+              )
+            : 'sr-only'
+        }
+      >
+        {label}
+      </Label>
       <Select.Trigger className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-[#dce1e6] bg-white px-3 text-left text-sm text-[#25354b] outline-none transition-colors hover:border-[#b9c7d6] focus-visible:border-[#196dcc] focus-visible:ring-2 focus-visible:ring-[#196dcc]/15 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none">
         <Select.Value className="min-w-0 flex-1 truncate" />
         <Select.Indicator className="shrink-0 text-[#687385]">

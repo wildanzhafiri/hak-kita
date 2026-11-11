@@ -5,8 +5,8 @@ export const SIGN_OUT_FAILURE_COPY = 'Kamu belum berhasil keluar. Coba lagi.';
 
 export const ADMIN_NAVIGATION = [
   {
-    href: '/admin/radar',
-    section: 'radar',
+    href: '/admin/validasi',
+    section: 'validation',
     icon: 'clipboard',
     label: 'Validasi Informasi',
   },

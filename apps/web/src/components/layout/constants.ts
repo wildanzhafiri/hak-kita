@@ -25,3 +25,17 @@ export const ADMIN_NAVIGATION_ICONS = {
   files: Files,
   history: History,
 } as const;
+
+export const AUTH_ROUTE_PATHS = [
+  '/masuk',
+  '/daftar',
+  '/lupa-kata-sandi',
+  '/atur-kata-sandi',
+] as const;
+
+export const FOOTER_HIDDEN_PATHS = [
+  '/profil',
+  '/profil/edit',
+  '/selamat-datang',
+  '/kenali-hakmu/rekomendasi',
+] as const;

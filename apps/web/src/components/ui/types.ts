@@ -29,6 +29,7 @@ export interface SelectOption {
 export interface PopoverProps {
   trigger: ReactNode;
   label: string;
+  placement?: 'bottom start' | 'bottom end';
   open?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
   className?: string;
@@ -42,6 +43,8 @@ export interface SelectFieldProps {
   value: string | null;
   options: readonly SelectOption[];
   isDisabled?: boolean;
+  isLabelVisible?: boolean;
+  isRequired?: boolean;
   onChange: (value: string) => void;
 }
 
@@ -101,6 +104,7 @@ export interface ButtonLinkProps {
   children: ReactNode;
   secondary?: boolean;
   icon?: ReactNode;
+  className?: string;
 }
 
 export interface EyebrowProps {
@@ -110,7 +114,7 @@ export interface EyebrowProps {
 }
 
 export interface DataNoteProps {
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 export interface SearchBarProps {

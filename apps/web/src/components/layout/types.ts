@@ -9,6 +9,7 @@ export interface PageShellProps {
   breadcrumbs: BreadcrumbItem[];
   eyebrow?: string;
   compact?: boolean;
+  narrow?: boolean;
   title: string;
   description: string;
   children: ReactNode;
@@ -26,7 +27,7 @@ export interface AdminShellProps {
   children: ReactNode;
 }
 
-export type AdminSection = 'radar' | 'programs' | 'history';
+export type AdminSection = 'validation' | 'programs' | 'history';
 
 export interface AdminSidebarProps {
   activeSection: AdminSection;
@@ -51,9 +52,20 @@ export interface AuthProviderProps {
   children: ReactNode;
 }
 
+export interface SignOutDialogProps {
+  renderTrigger?: (openDialog: () => void) => ReactNode;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+}
+
 export interface AuthNavActionProps {
   currentPath: string;
   variant?: 'inline' | 'sheet';
+  accountMenu?: ReactNode;
+}
+
+export interface HeaderProps {
+  accountMenu?: ReactNode;
 }
 
 export interface MobileNavigationProps {

@@ -35,7 +35,7 @@ export function Footer() {
           <h2 className="mb-[19px] mt-0.5 text-[13px] font-semibold text-[#292b2e] max-[900px]:mb-3.5 max-[900px]:text-xs">
             Untuk Kamu
           </h2>
-          <Link className={footerLinkClassName} href="/periksa-kondisimu">
+          <Link className={footerLinkClassName} href="/kenali-hakmu/rekomendasi">
             Rekomendasi Untukmu
           </Link>
           <Link className={footerLinkClassName} href="/rencanaku">
@@ -55,7 +55,7 @@ export function Footer() {
           <Link className={footerLinkClassName} href="/sumber-data">
             Sumber Informasi
           </Link>
-          <Link className={footerLinkClassName} href="/tentang#privasi">
+          <Link className={footerLinkClassName} href="/privasi">
             Privasi
           </Link>
         </div>

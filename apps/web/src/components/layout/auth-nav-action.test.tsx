@@ -1,90 +1,38 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthNavAction } from './auth-nav-action';
 
-const mocks = vi.hoisted(() => ({
-  replace: vi.fn(),
-  refresh: vi.fn(),
-  signOut: vi.fn(),
-}));
+const mocks = vi.hoisted(() => ({ user: null as { id: string } | null }));
 
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({ replace: mocks.replace, refresh: mocks.refresh }),
-}));
-vi.mock('@/hooks/use-auth', () => ({ useAuth: () => ({ user: { id: 'user-1' } }) }));
-vi.mock('@/lib/supabase/client', () => ({
-  getSupabaseBrowserClient: () => ({ auth: { signOut: mocks.signOut } }),
-}));
-vi.mock('@/components/ui/button', () => ({
-  Button: ({
-    children,
-    onPress,
-    isDisabled,
-  }: {
-    children: React.ReactNode;
-    onPress?: () => void;
-    isDisabled?: boolean;
-  }) => (
-    <button disabled={isDisabled} onClick={onPress} type="button">
-      {children}
-    </button>
-  ),
-}));
-vi.mock('@/components/ui/dialog', () => ({
-  Dialog: ({
-    trigger,
-    open,
-    title,
-    children,
-  }: {
-    trigger: React.ReactNode;
-    open: boolean;
-    title: string;
-    children: React.ReactNode;
-  }) => (
-    <>
-      {trigger}
-      {open && (
-        <div aria-label={title} role="dialog">
-          <h2>{title}</h2>
-          {children}
-        </div>
-      )}
-    </>
-  ),
-}));
+vi.mock('@/hooks/use-auth', () => ({ useAuth: () => ({ user: mocks.user }) }));
 
 describe('AuthNavAction', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    mocks.user = null;
   });
 
-  it('confirms sign out before returning to the home page', async () => {
-    mocks.signOut.mockResolvedValue({ error: null });
+  it('offers sign in to a guest and keeps the page to return to', () => {
     render(<AuthNavAction currentPath="/rencanaku" />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Keluar' }));
-    expect(screen.getByRole('dialog', { name: 'Keluar dari akun?' })).toBeTruthy();
-    expect(mocks.signOut).not.toHaveBeenCalled();
-
-    fireEvent.click(screen.getByRole('button', { name: 'Ya, keluar' }));
-
-    expect(await screen.findByRole('button', { name: 'Sedang keluar…' })).toBeTruthy();
-    await vi.waitFor(() => expect(mocks.replace).toHaveBeenCalledWith('/'));
-    expect(mocks.refresh).toHaveBeenCalledOnce();
-  });
-
-  it('keeps the confirmation open when sign out fails', async () => {
-    mocks.signOut.mockResolvedValue({ error: new Error('failed') });
-    render(<AuthNavAction currentPath="/rencanaku" />);
-
-    fireEvent.click(screen.getByRole('button', { name: 'Keluar' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Ya, keluar' }));
-
-    expect((await screen.findByRole('alert')).textContent).toBe(
-      'Kamu belum berhasil keluar. Coba lagi.',
+    expect(screen.getByRole('link', { name: 'Masuk' }).getAttribute('href')).toBe(
+      '/masuk?next=%2Frencanaku',
     );
-    expect(mocks.replace).not.toHaveBeenCalled();
-    expect(screen.getByRole('dialog', { name: 'Keluar dari akun?' })).toBeTruthy();
+  });
+
+  it('shows the account menu it is given to a signed-in person', () => {
+    mocks.user = { id: 'user-1' };
+    render(<AuthNavAction accountMenu={<p>Menu akun</p>} currentPath="/" />);
+
+    expect(screen.getByText('Menu akun')).toBeTruthy();
+    expect(screen.queryByRole('link', { name: 'Masuk' })).toBeNull();
+  });
+
+  it('leaves the account actions to the mobile menu for a signed-in person', () => {
+    mocks.user = { id: 'user-1' };
+    const { container } = render(
+      <AuthNavAction accountMenu={<p>Menu akun</p>} currentPath="/" variant="sheet" />,
+    );
+
+    expect(container.textContent).toBe('');
   });
 });

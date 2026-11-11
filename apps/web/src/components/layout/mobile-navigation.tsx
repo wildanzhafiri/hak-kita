@@ -2,14 +2,20 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { Bookmark, Menu, X } from 'lucide-react';
+import { Bookmark, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useAuth } from '@/hooks/use-auth';
 import { AuthNavAction } from './auth-nav-action';
 import { MAIN_NAVIGATION, MOBILE_PANEL_CLASSES, SHEET_ACTION_CLASSES } from './constants';
 import { isCurrentPath } from './navigation';
+import { SignOutDialog } from './sign-out-dialog';
 import type { MobileNavigationProps } from './types';
 
+const ACCOUNT_ROW_CLASSES =
+  'flex h-12 items-center rounded-xl px-3.5 text-[15px] font-medium text-[#526173] transition-colors hover:bg-[#f3f8fe] hover:text-[#196dcc] motion-reduce:transition-none';
+
 export function MobileNavigation({ pathname }: MobileNavigationProps) {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -81,13 +87,38 @@ export function MobileNavigation({ pathname }: MobileNavigationProps) {
             );
           })}
         </nav>
-        <div className="flex gap-3 px-5 pb-5 pt-2">
-          <Link className={SHEET_ACTION_CLASSES.secondary} href="/rencanaku">
-            <Bookmark aria-hidden="true" size={17} />
-            Rencanaku
-          </Link>
-          <AuthNavAction currentPath={pathname} variant="sheet" />
-        </div>
+        {user ? (
+          <nav aria-label="Menu akun" className="flex flex-col px-5 pb-4 pt-1">
+            <Link className={ACCOUNT_ROW_CLASSES} href="/profil">
+              Profil Saya
+            </Link>
+            <Link className={ACCOUNT_ROW_CLASSES} href="/rencanaku">
+              Rencanaku
+            </Link>
+            <div className="mt-2 border-t border-[#e1e7ee] pt-2">
+              <SignOutDialog
+                renderTrigger={(openDialog) => (
+                  <button
+                    className="flex h-12 w-full items-center justify-between rounded-xl px-3.5 text-[15px] font-medium text-[#b4232d] transition-colors hover:bg-[#fff0f0] motion-reduce:transition-none"
+                    onClick={openDialog}
+                    type="button"
+                  >
+                    Keluar
+                    <LogOut aria-hidden="true" size={18} />
+                  </button>
+                )}
+              />
+            </div>
+          </nav>
+        ) : (
+          <div className="grid grid-cols-2 gap-3 px-5 pb-5 pt-2">
+            <Link className={SHEET_ACTION_CLASSES.secondary} href="/rencanaku">
+              <Bookmark aria-hidden="true" size={17} />
+              Rencanaku
+            </Link>
+            <AuthNavAction currentPath={pathname} variant="sheet" />
+          </div>
+        )}
       </div>
     </>
   );

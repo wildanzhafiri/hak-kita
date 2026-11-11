@@ -8,8 +8,9 @@ import { MAIN_NAVIGATION } from './constants';
 import { Logo } from './logo';
 import { MobileNavigation } from './mobile-navigation';
 import { isCurrentPath } from './navigation';
+import type { HeaderProps } from './types';
 
-export function Header() {
+export function Header({ accountMenu }: HeaderProps) {
   const pathname = usePathname();
 
   return (
@@ -31,11 +32,15 @@ export function Header() {
             ))}
           </div>
           <div className="nav-actions">
-            <Link className="plan-button" href="/rencanaku">
-              <Bookmark size={16} />
+            <Link
+              aria-current={isCurrentPath(pathname, '/rencanaku') ? 'page' : undefined}
+              className="ml-1 inline-flex h-11 min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-[7px] border border-[#d8e4f2] bg-white px-[15px] text-xs font-medium text-[#1769c2] transition-colors hover:bg-[#f5f8fc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769c2]"
+              href="/rencanaku"
+            >
+              <Bookmark aria-hidden="true" size={18} />
               <span>Rencanaku</span>
             </Link>
-            <AuthNavAction currentPath={pathname} />
+            <AuthNavAction accountMenu={accountMenu} currentPath={pathname} />
           </div>
         </nav>
       </div>

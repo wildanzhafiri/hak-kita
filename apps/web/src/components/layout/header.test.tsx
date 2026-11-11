@@ -14,6 +14,15 @@ afterEach(() => {
 });
 
 describe('Header', () => {
+  it('shows the outlined Rencanaku action as the current page', () => {
+    pathname = '/rencanaku';
+    render(<Header />);
+
+    const planLink = screen.getByRole('link', { name: 'Rencanaku' });
+    expect(planLink.getAttribute('href')).toBe('/rencanaku');
+    expect(planLink.getAttribute('aria-current')).toBe('page');
+  });
+
   it('shows the redesign navigation and marks the current page', () => {
     pathname = '/kenali-hakmu/kip-kuliah';
     render(<Header />);
