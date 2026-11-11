@@ -81,6 +81,8 @@ export const SERVICE_CATEGORY_ORDER = [
 ];
 
 export const RESULT_PAGE_SIZE = 12;
+export const RESULT_PAGINATION_FULL_PAGE_LIMIT = 7;
+export const RESULT_PAGINATION_SIBLING_COUNT = 1;
 
 export const SERVICE_PRIORITY = [
   'ktp-el',

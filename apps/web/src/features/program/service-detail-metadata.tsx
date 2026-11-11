@@ -11,7 +11,11 @@ export function ServiceDetailMetadata({
     { label: SERVICE_DETAIL_CONTENT.audience, value: program.untuk.join(', '), icon: UsersRound },
     { label: SERVICE_DETAIL_CONTENT.provider, value: program.penyelenggara, icon: Building2 },
     { label: SERVICE_DETAIL_CONTENT.coverage, value: namaCakupan, icon: MapPin },
-    { label: SERVICE_DETAIL_CONTENT.kind, value: GERBANG_LABEL[program.tipeGerbang], icon: FileCheck },
+    {
+      label: SERVICE_DETAIL_CONTENT.kind,
+      value: GERBANG_LABEL[program.tipeGerbang],
+      icon: FileCheck,
+    },
   ];
 
   return (

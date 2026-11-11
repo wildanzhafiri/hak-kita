@@ -19,7 +19,11 @@ export function ServiceDetailHeader({ program }: Pick<ServiceDetailProps, 'progr
           </p>
         </div>
         <span className="grid size-[68px] shrink-0 place-items-center rounded-xl border border-[#dbe8f7] bg-[#edf5ff] text-[#1769c2] max-[640px]:size-[54px]">
-          <CategoryIcon aria-hidden="true" className="size-[38px] max-[640px]:size-[30px]" strokeWidth={1.5} />
+          <CategoryIcon
+            aria-hidden="true"
+            className="size-[38px] max-[640px]:size-[30px]"
+            strokeWidth={1.5}
+          />
         </span>
       </div>
     </header>

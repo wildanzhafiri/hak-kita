@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Files, HeartHandshake } from 'lucide-react';
 import { ProgramGrid } from '@/components/program/program-grid';
 import { Button } from '@/components/ui/button';
-import { DataNote } from '@/components/ui/data-note';
 import {
   DEFAULT_SEARCH_PLACEHOLDER,
   SERVICE_CATEGORY_DETAILS,
@@ -138,7 +137,6 @@ export function ProgramList({
               onPageChange={handlePageChange}
             />
           </section>
-          <DataNote />
         </>
       ) : (
         <>
@@ -162,7 +160,6 @@ export function ProgramList({
             pageCount={pageCount}
             onPageChange={handlePageChange}
           />
-          <DataNote />
         </>
       )}
     </>

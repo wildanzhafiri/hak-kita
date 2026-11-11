@@ -29,6 +29,11 @@ export function DetailSourcesSection({ program }: DetailProgramSectionProps) {
               </span>
               <ExternalLink aria-hidden="true" className="mt-1 shrink-0" size={15} />
             </a>
+            {source.kutipan && (
+              <p className="mt-1.5 whitespace-pre-wrap text-[13px] leading-6 text-[#536477] [overflow-wrap:anywhere]">
+                {`“${source.kutipan}”`}
+              </p>
+            )}
           </li>
         ))}
       </ul>
