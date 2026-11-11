@@ -1,26 +1,14 @@
-import { todayWIB } from '@hakkita/domain';
-import { RencanaGuestGate } from '@/features/rencana/rencana-guest-gate';
-import { RencanaProvider } from '@/features/rencana/rencana-provider';
-import { RencanaShell } from '@/features/rencana/rencana-shell';
-import { getCurrentUser } from '@/server/current-user';
-import { loadPublishedInformation, loadWilayahFile } from '@/server/data';
+import { Suspense } from 'react';
+import { RencanaLoading } from '@/features/rencana/rencana-loading';
+import { RencanaWorkspace } from './rencana-workspace';
 import type { RencanakuLayoutProps } from './types';
 
 export const dynamic = 'force-dynamic';
 
-export default async function RencanakuLayout({ children }: RencanakuLayoutProps) {
-  if (!(await getCurrentUser())) return <RencanaGuestGate />;
-
-  const [programs, wilayahFile] = await Promise.all([
-    loadPublishedInformation(),
-    loadWilayahFile(),
-  ]);
-
+export default function RencanakuLayout({ children }: RencanakuLayoutProps) {
   return (
-    <div className="rencana-app">
-      <RencanaProvider programs={programs} wilayah={wilayahFile.wilayah} builtOn={todayWIB()}>
-        <RencanaShell>{children}</RencanaShell>
-      </RencanaProvider>
-    </div>
+    <Suspense fallback={<RencanaLoading />}>
+      <RencanaWorkspace>{children}</RencanaWorkspace>
+    </Suspense>
   );
 }

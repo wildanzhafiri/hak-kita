@@ -78,3 +78,5 @@ export const RENCANA_GATE_COPY = {
   signIn: 'Masuk / Daftar',
   explore: 'Jelajahi program',
 } as const;
+
+export const RENCANA_LOADING_LABEL = 'Memuat Rencanaku';

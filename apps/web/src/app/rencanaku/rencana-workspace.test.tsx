@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import RencanakuLayout from './layout';
+import { RencanaWorkspace } from './rencana-workspace';
 
 const mocks = vi.hoisted(() => ({
   user: null as { id: string; email: string } | null,
@@ -20,7 +20,7 @@ vi.mock('@/features/rencana/rencana-shell', () => ({
   RencanaShell: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
-describe('RencanakuLayout', () => {
+describe('RencanaWorkspace', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.user = null;
@@ -29,7 +29,7 @@ describe('RencanakuLayout', () => {
   });
 
   it('shows the sign-in gate to a guest and never renders the plan or loads its data', async () => {
-    render(await RencanakuLayout({ children: <p>Isi rencana</p> }));
+    render(await RencanaWorkspace({ children: <p>Isi rencana</p> }));
 
     expect(screen.getByText('Masuk untuk melihat Rencanaku')).toBeTruthy();
     expect(screen.queryByText('Isi rencana')).toBeNull();
@@ -38,7 +38,7 @@ describe('RencanakuLayout', () => {
 
   it('shows the plan to a signed-in person', async () => {
     mocks.user = { id: 'user-1', email: 'budi@contoh.id' };
-    render(await RencanakuLayout({ children: <p>Isi rencana</p> }));
+    render(await RencanaWorkspace({ children: <p>Isi rencana</p> }));
 
     expect(screen.getByText('Isi rencana')).toBeTruthy();
     expect(screen.queryByText('Masuk untuk melihat Rencanaku')).toBeNull();
