@@ -1,7 +1,7 @@
-import type { Kategori, Program } from '@hakkita/schema';
-import type { FormEvent } from 'react';
+import type { JenisProgram, Program } from '@hakkita/schema';
+import type { FormEvent, ReactNode } from 'react';
 
-export type ProgramCategoryFilter = Kategori | 'all';
+export type ProgramKindFilter = JenisProgram | 'all';
 
 export interface ProgramListProps {
   programs: Program[];
@@ -12,17 +12,14 @@ export interface ProgramRowProps {
   program: Program;
 }
 
-export interface ProgramCategoryBadgeProps {
-  category: Program['kategori'];
+export interface ProgramKindBadgeProps {
+  kind: JenisProgram;
 }
 
 export interface ProgramDetailProps {
   program: Program;
   canManage: boolean;
-}
-
-export interface ProgramDetailContentProps {
-  program: Program;
+  children?: ReactNode;
 }
 
 export interface ProgramDeleteDialogProps {
@@ -34,21 +31,22 @@ export interface ProgramDeleteDialogProps {
 export interface ProgramEditorProps {
   program?: Program;
   onCancel?: () => void;
+  onSave?: (program: Program) => Promise<string | null>;
+  onSaved?: () => void;
+  hideVerification?: boolean;
 }
 
 export type ProgramEditorTextField = Exclude<
   keyof ProgramEditorDraft,
-  'requirements' | 'steps' | 'additionalSources'
+  'requirements' | 'additionalSources'
 >;
 
-export interface ProgramEditorFieldsProps {
-  draft: ProgramEditorDraft;
-  isIdReadOnly: boolean;
-  onFieldChange: (field: ProgramEditorTextField, value: string) => void;
-  sources: ProgramSourceDraft[];
-  onSourceChange: ProgramEditorSourcesProps['onSourceChange'];
-  onAddSource: () => void;
-  onRemoveSource: (index: number) => void;
+export interface EditorFieldProps {
+  label: string;
+  hint?: string;
+  isRequired?: boolean;
+  className?: string;
+  children: ReactNode;
 }
 
 export interface ProgramEditorFieldGroupProps {
@@ -60,18 +58,16 @@ export interface ProgramEditorIdentityFieldsProps extends ProgramEditorFieldGrou
   isIdReadOnly: boolean;
 }
 
+export interface ProgramEditorSourceFieldsProps
+  extends ProgramEditorFieldGroupProps, ProgramEditorSourcesProps {
+  hideVerification?: boolean;
+}
+
 export interface ProgramEditorRequirementsProps {
   requirements: ProgramRequirementDraft[];
   onRequirementChange: (index: number, field: keyof ProgramRequirementDraft, value: string) => void;
   onAddRequirement: () => void;
   onRemoveRequirement: (index: number) => void;
-}
-
-export interface ProgramEditorStepsProps {
-  steps: string[];
-  onStepChange: (index: number, value: string) => void;
-  onAddStep: () => void;
-  onRemoveStep: (index: number) => void;
 }
 
 export interface ProgramEditorSourcesProps {
@@ -84,6 +80,7 @@ export interface ProgramEditorSourcesProps {
 export interface ProgramSourceDraft {
   url: string;
   type: string;
+  quote: string;
 }
 
 export interface UseProgramEditorResult {
@@ -98,9 +95,6 @@ export interface UseProgramEditorResult {
   ) => void;
   handleAddRequirement: () => void;
   handleRemoveRequirement: (index: number) => void;
-  handleStepChange: (index: number, value: string) => void;
-  handleAddStep: () => void;
-  handleRemoveStep: (index: number) => void;
   handleSourceChange: (index: number, field: keyof ProgramSourceDraft, value: string) => void;
   handleAddSource: () => void;
   handleRemoveSource: (index: number) => void;
@@ -110,6 +104,7 @@ export interface UseProgramEditorResult {
 export interface ProgramRequirementDraft {
   text: string;
   sourceUrl: string;
+  quote: string;
 }
 
 export interface ProgramEditorDraft {
@@ -119,15 +114,18 @@ export interface ProgramEditorDraft {
   category: string;
   organizer: string;
   summary: string;
+  about: string;
+  cost: string;
   audience: string;
   coverageLevel: string;
   coverageCode: string;
   gateType: string;
   requirements: ProgramRequirementDraft[];
-  steps: string[];
+  steps: string;
   documents: string;
   sourceUrl: string;
   sourceType: string;
+  sourceQuote: string;
   additionalSources: ProgramSourceDraft[];
   periodType: string;
   periodOpen: string;
@@ -146,9 +144,58 @@ export interface RadarHistoryProps {
 
 export interface RadarHistoryCandidate {
   id: string;
+  kind: 'news' | 'program';
+  program_id: string | null;
   program_name: string;
   draft_title: string | null;
   status: string;
   reviewed_at: string | null;
   source_url: string;
+}
+
+export interface ProgramUpdateEmailProps {
+  programId: string;
+}
+
+export interface ProgramUpdateEmailPreview {
+  followers: number;
+  recipients: number;
+  changes: string[];
+  subject: string | null;
+  html: string | null;
+  text: string | null;
+  isExample: boolean;
+}
+
+export interface ProgramNewsEmailPreview {
+  subject: string;
+  html: string;
+  text: string;
+  eligibleCount: number;
+}
+
+export interface ProgramNewsDraft {
+  title: string;
+  summary: string;
+  sourceUrl: string;
+  publishedOn: string;
+}
+
+export interface ProgramNewsEmailProps {
+  programId: string;
+}
+
+export interface EmailPreviewFrameProps {
+  summary: string;
+  defaultOpen?: boolean;
+  title: string;
+  html: string | null;
+  text: string | null;
+  textToggle: string;
+}
+
+export interface ProgramFollowerNoticeProps {
+  programId: string;
+  refreshKey: number;
+  hasSavedChange: boolean;
 }

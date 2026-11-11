@@ -2,37 +2,26 @@ import {
   KATEGORI_LAYANAN,
   KATEGORI_PROGRAM,
   JENIS_SUMBER,
-  KATEGORI,
   LEVEL_WILAYAH,
   TIPE_GERBANG,
   TINGKAT_VERIFIKASI,
 } from '@hakkita/schema';
-import type { Kategori } from '@hakkita/schema';
+import type { JenisProgram } from '@hakkita/schema';
 
-export const ADMIN_CATEGORY_BADGE_CLASSES: Record<Kategori, string> = {
-  Pendidikan: 'border-[#c9defe] bg-[#eef5ff] text-[#235ca8]',
-  Beasiswa: 'border-[#ded3ff] bg-[#f4f0ff] text-[#6445a5]',
-  Kesehatan: 'border-[#bde8d3] bg-[#effaf4] text-[#26734d]',
-  'Bantuan Sosial': 'border-[#ffd8bf] bg-[#fff5ed] text-[#a85524]',
-  'Pangan & Gizi': 'border-[#d9e9a8] bg-[#f6fae9] text-[#617d22]',
-  'Pekerjaan & Pelatihan': 'border-[#bce6ef] bg-[#effafd] text-[#247187]',
-  'Usaha & UMKM': 'border-[#f3dda0] bg-[#fff9e8] text-[#8b6715]',
-  Perumahan: 'border-[#d6d9f6] bg-[#f3f3ff] text-[#555b9b]',
-  'Pertanian & Perikanan': 'border-[#bce5df] bg-[#eff9f7] text-[#28776b]',
-  'Layanan Administrasi': 'border-[#f2c7a5] bg-[#fff5ed] text-[#91451d]',
-  'Kependudukan & Dokumen Pribadi': 'border-[#c9defe] bg-[#eef5ff] text-[#235ca8]',
-  'Kendaraan & Transportasi': 'border-[#bce6ef] bg-[#effafd] text-[#247187]',
-  'Kesehatan & Jaminan Sosial': 'border-[#bde8d3] bg-[#effaf4] text-[#26734d]',
-  'Pekerjaan & Usaha': 'border-[#f3dda0] bg-[#fff9e8] text-[#8b6715]',
-  Perpajakan: 'border-[#ded3ff] bg-[#f4f0ff] text-[#6445a5]',
-  'Pendidikan & Dokumen Akademik': 'border-[#c9defe] bg-[#eef5ff] text-[#235ca8]',
-  'Pertanahan & Bangunan': 'border-[#d6d9f6] bg-[#f3f3ff] text-[#555b9b]',
-  'Pengaduan & Informasi Publik': 'border-[#bce5df] bg-[#eff9f7] text-[#28776b]',
+export const ADMIN_KIND_BADGE_CLASSES: Record<JenisProgram, string> = {
+  program: 'border-[#c9defe] bg-[#eef5ff] text-[#235ca8]',
+  layanan: 'border-[#bce5df] bg-[#eff9f7] text-[#28776b]',
 };
 
-export const ADMIN_CATEGORY_FILTER_OPTIONS = [
-  { value: 'all', label: 'Semua kategori' },
-  ...KATEGORI.map((kategori) => ({ value: kategori, label: kategori })),
+export const ADMIN_KIND_LABELS: Record<JenisProgram, string> = {
+  program: 'Program',
+  layanan: 'Layanan',
+};
+
+export const ADMIN_KIND_FILTER_OPTIONS = [
+  { value: 'all', label: 'Semua jenis' },
+  { value: 'program', label: ADMIN_KIND_LABELS.program },
+  { value: 'layanan', label: ADMIN_KIND_LABELS.layanan },
 ];
 
 export const ADMIN_CATEGORY_OPTIONS_BY_KIND = {
@@ -82,3 +71,5 @@ export const ADMIN_VERIFICATION_OPTIONS = [
 ];
 
 export const ADMIN_MAX_ADDITIONAL_SOURCES = 10;
+
+export const ADMIN_PAGE_SIZE = 10;

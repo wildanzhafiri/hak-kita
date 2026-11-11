@@ -14,7 +14,13 @@ export const PROGRAM_ADMIN_COPY = {
 
 export const RADAR_HISTORY_COPY = {
   title: 'Riwayat Aktivitas',
-  description: 'Lihat temuan Radar yang sudah disetujui atau ditolak.',
+  description: 'Lihat keputusan atas kabar program dan program baru yang sudah ditinjau.',
+  newsFinding: 'Kabar program',
+  programFinding: 'Program baru',
+  approvedNews: 'Disetujui',
+  approvedProgram: 'Disetujui dan dipublikasikan',
+  rejected: 'Ditolak',
+  openDraft: 'Lihat informasi',
   emptyTitle: 'Belum ada aktivitas pemeriksaan',
   emptyDescription: 'Keputusan atas temuan Radar akan tercatat di sini.',
 } as const;
@@ -22,7 +28,9 @@ export const RADAR_HISTORY_COPY = {
 export const PROGRAM_DETAIL_COPY = {
   program: 'Program',
   service: 'Layanan',
-  back: 'Kembali ke Kelola Informasi',
+  back: 'Kembali',
+  viewInPortal: 'Lihat di Portal',
+  lastChecked: (kind: string, date: string) => `${kind} · Rujukan terakhir diperiksa: ${date}`,
   summary: 'Ringkasan',
   audience: 'Untuk siapa',
   coverage: 'Cakupan wilayah',
@@ -33,7 +41,7 @@ export const PROGRAM_DETAIL_COPY = {
   source: 'Sumber dan pemeriksaan',
   primarySource: 'Sumber resmi utama',
   publicPage: 'Lihat halaman publik',
-  editAction: 'Ubah informasi',
+  editAction: 'Perbarui Informasi',
   deleteAction: 'Hapus informasi',
   deleteTitle: 'Hapus informasi ini?',
   deleteDescription:
@@ -49,24 +57,35 @@ export const PROGRAM_DETAIL_COPY = {
   kindLabel: 'Jenis informasi',
   categoryLabel: 'Kategori',
   organizerLabel: 'Instansi',
-  summaryLabel: 'Ringkasan',
+  summaryLabel: 'Deskripsi singkat',
+  aboutLabel: 'Ringkasan informasi',
+  aboutHint: 'Opsional. Penjelasan yang sedikit lebih lengkap dari deskripsi singkat.',
+  costLabel: 'Biaya',
+  costHint: 'Opsional. Isi hanya bila sumber resmi menyebut biayanya.',
+  periodHint: 'Opsional. Isi tanggal hanya jika jadwal diumumkan oleh sumber resmi.',
+  additionalSourcesHint:
+    'Tambahkan halaman resmi lain yang mendukung informasi, lengkap dengan kutipannya.',
+  mainSourceQuoteLabel: 'Bukti / kutipan sumber utama (jika tersedia)',
   audienceLabel: 'Untuk siapa',
-  audienceHint: 'Tulis satu kelompok per baris.',
+  audienceHint: 'Satu kelompok per baris.',
   coverageLevelLabel: 'Cakupan wilayah',
   coverageCodeLabel: 'Kode wilayah',
   gateLabel: 'Dasar akses',
   requirementLabel: 'Persyaratan',
   requirementHint:
     'Tulis satu persyaratan per poin. Tautan sumber menunjukkan halaman resmi yang membuktikan persyaratan tersebut.',
+  quoteTitle: 'Bukti / kutipan',
+  quoteLabel: 'Bukti / kutipan (jika tersedia)',
+  quoteHint: 'Salin kalimat dari halaman resmi yang mendukung informasi ini.',
   requirementSourceLabel: 'Tautan bukti persyaratan (opsional)',
   requirementSourceHint:
     'Isi halaman resmi yang menyebut persyaratan ini. Bisa memakai URL sumber utama jika informasinya ada di sana.',
-  stepsLabel: 'Langkah pengurusan',
+  stepsLabel: 'Langkah / prosedur',
   stepLabel: 'Langkah',
-  stepsHint: 'Tulis langkah sesuai urutan pada sumber resmi.',
-  documentsLabel: 'Dokumen yang disebut sumber',
-  documentsHint: 'Tulis satu dokumen per baris.',
-  sourceUrlLabel: 'Sumber resmi utama',
+  stepsHint: 'Satu langkah per baris, sesuai urutan pada sumber resmi.',
+  documentsLabel: 'Dokumen',
+  documentsHint: 'Satu dokumen per baris.',
+  sourceUrlLabel: 'Tautan resmi',
   additionalSourcesLabel: 'Sumber resmi tambahan',
   addSource: 'Tambah sumber resmi',
   removeSource: 'Hapus sumber',
@@ -79,9 +98,9 @@ export const PROGRAM_DETAIL_COPY = {
   requirementsHeading: 'Persyaratan dan sumbernya',
   identityHeading: 'Informasi utama',
   coverageHeading: 'Cakupan dan akses',
-  sourceHeading: 'Sumber resmi',
-  periodHeading: 'Periode program',
-  periodTypeLabel: 'Jenis periode',
+  sourceHeading: 'Sumber Informasi',
+  periodHeading: 'Jadwal pendaftaran',
+  periodTypeLabel: 'Jenis jadwal',
   periodOpenLabel: 'Tanggal mulai',
   periodCloseLabel: 'Tanggal selesai',
   verificationLabel: 'Status pemeriksaan',
@@ -113,4 +132,83 @@ export const PROGRAM_DETAIL_COPY = {
   yearRound: 'Sepanjang tahun',
   dateRange: (openDate: string, closeDate: string) => `${openDate} sampai ${closeDate}`,
   coverageLabel: (level: string, code: string) => `${level} · ${code}`,
+} as const;
+
+export const PROGRAM_UPDATE_EMAIL_COPY = {
+  loading: 'Memuat pratinjau…',
+  loadFailure: 'Pratinjau email belum dapat dimuat.',
+  followers: (count: number) => `${count} pengikut dengan notifikasi email aktif`,
+  recipients: (count: number) => `${count} akan menerima email karena ada perubahan`,
+  changesLabel: 'Perubahan yang akan diberitahukan',
+  nothingToSend:
+    'Belum ada perubahan yang perlu dikabarkan. Semua pengikut sudah menerima versi terbaru.',
+  subjectLabel: 'Subjek',
+  previewToggle: 'Pratinjau email',
+  previewTitle: 'Pratinjau tampilan email',
+  noteLabel: 'Pesan tambahan untuk pengikut (opsional)',
+  noteHint: 'Pesan ini tampil di email di atas tombol rincian program. Maksimal 600 karakter.',
+  refreshPreview: 'Perbarui pratinjau',
+  refreshing: 'Memperbarui pratinjau',
+  noteChanged: 'Pesan tambahan berubah. Perbarui pratinjau dulu sebelum mengirim.',
+  exampleNote:
+    'Ini contoh tampilan email dari isi program sekarang. Belum ada pengikut yang akan menerimanya.',
+  textToggle: 'Lihat versi teks',
+  confirm: (count: number) =>
+    `Saya sudah memeriksa isi perubahan dan siap mengirim email ke ${count} pengikut.`,
+  send: 'Kirim email sekarang',
+  sending: 'Mengirim',
+  result: (sent: number, failed: number) =>
+    `Pengiriman selesai: ${sent} email terkirim, ${failed} gagal.`,
+  sendFailure: 'Email belum berhasil dikirim. Periksa konfigurasi lalu coba lagi.',
+  changeLabels: {
+    periode: 'Periode pendaftaran berubah',
+    dibuka: 'Pendaftaran dibuka',
+    ditutup: 'Pendaftaran ditutup',
+    tenggat: 'Tenggat tinggal tujuh hari atau kurang',
+    syarat: 'Persyaratan berubah',
+    dokumen: 'Daftar dokumen berubah',
+    verifikasi: 'Status pemeriksaan sumber berubah',
+  } as Record<string, string>,
+} as const;
+
+export const PROGRAM_FOLLOWER_NOTICE_COPY = {
+  title: 'Pemberitahuan ke pengikut',
+  description:
+    'Perubahan yang kamu simpan langsung tampil di portal. Pengikut hanya menerima email setelah kamu menekan tombol kirim di sini.',
+  savedNotice:
+    'Perubahan tersimpan dan sudah tampil di portal. Pengikut belum diberi tahu, tinjau emailnya di bawah.',
+  tabsLabel: 'Jenis pemberitahuan',
+  changesTab: 'Perubahan informasi',
+  changesHint:
+    'Untuk perubahan jadwal, persyaratan, dokumen, atau status pemeriksaan. Sistem membandingkan isi sekarang dengan catatan terakhir tiap pengikut.',
+  newsTab: 'Kabar terbaru',
+  newsHint:
+    'Untuk pengumuman di luar isi program, misalnya pendaftaran diperpanjang. Tulis kabarnya dan cantumkan tautan pengumuman resmi.',
+} as const;
+
+export const PROGRAM_NEWS_EMAIL_COPY = {
+  titleLabel: 'Judul kabar',
+  titleHint: 'Minimal 8 karakter, misalnya: Pendaftaran gelombang kedua diperpanjang.',
+  summaryLabel: 'Isi kabar',
+  summaryHint: 'Ringkas dan sesuai pengumuman resmi, 20 sampai 600 karakter.',
+  sourceLabel: 'Tautan pengumuman resmi',
+  sourceHint: 'Wajib https dan berdomain go.id.',
+  dateLabel: 'Tanggal terbit',
+  preview: 'Lihat pratinjau email',
+  previewing: 'Menyiapkan pratinjau',
+  previewToggle: 'Pratinjau email',
+  previewTitle: 'Pratinjau tampilan email',
+  subjectLabel: 'Subjek',
+  recipients: (count: number) =>
+    `${count} pengikut dengan notifikasi email aktif akan menerima kabar ini`,
+  nobody:
+    'Belum ada pengikut dengan notifikasi email aktif. Kabar tidak akan dikirim ke siapa pun.',
+  textToggle: 'Lihat versi teks',
+  confirm: (count: number) =>
+    `Saya sudah memeriksa kabar ini sesuai pengumuman resmi dan siap mengirim email ke ${count} pengikut.`,
+  send: 'Kirim kabar sekarang',
+  sending: 'Mengirim',
+  result: (sent: number, failed: number) =>
+    `Pengiriman selesai: ${sent} email terkirim, ${failed} gagal.`,
+  failure: 'Kabar belum dapat diproses. Periksa isian lalu coba lagi.',
 } as const;
