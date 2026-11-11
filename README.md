@@ -2,6 +2,10 @@
 
 HAKKITA adalah platform yang membantu Warga Negara Indonesia menemukan program pemerintah dan layanan publik yang relevan dengan kebutuhannya. Karena informasinya tersebar di banyak situs, HAKKITA merangkum hal penting seperti instansi, periode, persyaratan, dan langkah yang perlu dilakukan, lengkap dengan rujukan resmi untuk diperiksa. Pengguna juga bisa menyimpan persiapan di Rencanaku dan bertanya lewat asisten pintar "Tanya HAKKITA". HAKKITA membantu menemukan informasi yang berpotensi sesuai; keputusan penerima tetap ada pada instansi pemerintah.
 
+<p align="center">
+  <img src=".github/screenshots/beranda.png" alt="Beranda HAKKITA dengan kolom pencarian program dan layanan publik" width="460">
+</p>
+
 ## Tim
 
 HAKKITA dikembangkan oleh **NGGAK PUNYA NAMA TIM** dari Universitas Brawijaya.
@@ -18,25 +22,56 @@ HAKKITA dikembangkan oleh **NGGAK PUNYA NAMA TIM** dari Universitas Brawijaya.
 
 Di Kenali Hakmu, masyarakat bisa mencari program berdasarkan kata kunci, kategori, wilayah, sasaran, dan jenis manfaat. Saat membuka sebuah program, mereka dapat melihat instansi penyelenggara, periode, persyaratan, langkah pendaftaran, dan tautan sumber untuk memeriksa ketentuannya.
 
+<p align="center">
+  <img src=".github/screenshots/kenali-hakmu.png" alt="Daftar program di Kenali Hakmu dengan pencarian dan filter" width="380">
+  <img src=".github/screenshots/detail-program.png" alt="Halaman detail program KIP Kuliah" width="380">
+</p>
+
 ### Layanan Publik
 
 Saat ingin mengurus dokumen atau keperluan administratif, masyarakat dapat mencari panduannya di Layanan Publik. Setiap panduan menjelaskan persyaratan dan tahapan yang perlu disiapkan sebelum proses dilanjutkan melalui kanal penyedia layanan.
 
+<p align="center">
+  <img src=".github/screenshots/layanan-publik.png" alt="Panduan Layanan Publik dengan kategori dan daftar layanan" width="460">
+</p>
+
 ### Rencanaku
 
-Program dan layanan yang ingin ditindaklanjuti bisa disimpan di Rencanaku. Di sana, masyarakat dapat menandai langkah persiapan yang sudah dilakukan. Untuk program yang diikuti, pengguna juga bisa mengaktifkan email dan menerima kabar setelah admin memeriksa pembaruannya.
+Program dan layanan yang ingin ditindaklanjuti bisa disimpan di Rencanaku. Di sana, masyarakat dapat menandai langkah persiapan yang sudah dilakukan dan bisa mendapatkan bantuan apabila terdapat kendala. Untuk program yang diikuti, pengguna juga bisa mengaktifkan email dan menerima kabar setelah admin memeriksa pembaruannya.
+
+<p align="center">
+  <img src=".github/screenshots/rencanaku-daftar.png" alt="Rencanaku berisi program dan layanan yang disimpan beserta progres persiapan" width="460">
+</p>
+
+<p align="center">
+  <img src=".github/screenshots/rencanaku-panduan.png" alt="Panduan langkah persiapan KIP Kuliah di Rencanaku" width="410">
+  <img src=".github/screenshots/rencanaku-pengingat.png" alt="Pengingat email dan tombol kembali di Rencanaku" width="410">
+</p>
 
 ### Telusuri Anggaran
 
 Melalui Telusuri Anggaran, masyarakat dapat menjelajahi informasi APBN dan APBD. Tab dan filter membantu memilih data yang ingin dilihat; rincian dan sumbernya dapat dibuka untuk mengetahui konteks anggaran. Data APBD mengacu pada portal resmi SIKD.
 
+<p align="center">
+  <img src=".github/screenshots/telusuri-anggaran.png" alt="Telusuri Anggaran dengan data APBN, realisasi, dan alokasi per bidang" width="460">
+</p>
+
 ### Tanya HAKKITA
 
 Tanya HAKKITA adalah asisten AI serbaguna untuk mencari, memahami, dan menindaklanjuti informasi publik. Ceritakan kebutuhanmu: asisten bisa menemukan program yang mungkin relevan, menjelaskan dan membandingkan persyaratan, menjawab pertanyaan tentang anggaran, atau melihat program yang tersimpan di Rencanaku. Jika informasi yang kamu cari belum ada di HAKKITA, asisten bisa menelusuri situs resmi pemerintah, membaca halaman yang relevan, lalu merangkum jawabannya beserta sumber. Jika sudah masuk, kamu juga bisa meminta asisten menyimpan program ke Rencanaku setelah menyetujui tindakan itu. Keputusan kelayakan tetap ada pada pemerintah. Jangan masukkan NIK atau data pribadi ke dalam percakapan.
 
+<p align="center">
+  <img src=".github/screenshots/tanya-hakkita.jpg" alt="Panel Tanya HAKKITA dengan contoh pertanyaan" width="600">
+</p>
+
 ### Admin
 
 Admin menambahkan atau memperbarui data program dan layanan. Agen AI membantu mencari program baru dan memeriksa perubahan di halaman sumber resmi yang terdaftar. Pencarian dan pemantauan bisa dijalankan manual atau dijadwalkan otomatis setiap hari, dan admin dapat mengatur apakah pemantauan aktif. Hasil pencarian langsung masuk ke Validasi Informasi untuk ditinjau: admin membuka sumber, memeriksa temuannya, lalu menyetujui atau menolak informasi tersebut. Admin juga dapat mengirim pemberitahuan kepada pengguna yang mengikuti program setelah memeriksa pratinjau emailnya.
+
+<p align="center">
+  <img src=".github/screenshots/admin-validasi-informasi.png" alt="Validasi Informasi dengan Agen AI yang sedang mencari program baru" width="600">
+  <img src=".github/screenshots/admin-kelola-informasi.png" alt="Kelola Informasi berisi daftar program dan layanan" width="600">
+</p>
 
 Untuk mencoba panel admin, buka [hak-kita.vercel.app/admin](https://hak-kita.vercel.app/admin) dan gunakan akun berikut:
 
