@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { RencanaSummary } from '@/features/rencana/rencana-summary';
+import { RencanaSaved } from '@/features/rencana/rencana-saved';
 
 export const metadata: Metadata = { title: 'Rencanaku' };
 
@@ -12,5 +12,5 @@ export default function RencanakuPage() {
     process.env.CRON_SECRET &&
     process.env.HAKKITA_SITE_URL,
   );
-  return <RencanaSummary isEmailAvailable={isEmailAvailable} />;
+  return <RencanaSaved isEmailAvailable={isEmailAvailable} />;
 }

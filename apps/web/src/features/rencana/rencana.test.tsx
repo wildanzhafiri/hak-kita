@@ -11,12 +11,12 @@ import { BERKAS, BUILT_ON, WILAYAH, makeProgram } from '@/test/fixtures';
 import { DeviceDataPanel } from './device-data-panel';
 import { RencanaBerkas } from './rencana-berkas';
 import { RencanaDeadlines } from './rencana-deadlines';
-import { RencanaNav } from './rencana-nav';
 import { RencanaProvider } from './rencana-provider';
 import { RencanaSaved } from './rencana-saved';
 import { RencanaShell } from './rencana-shell';
 import { RencanaSummary } from './rencana-summary';
-import { useRencanaState } from './rencana-context';
+
+const savedIdsState = vi.hoisted(() => ({ isLoading: false }));
 
 vi.mock('next/navigation', () => ({ usePathname: () => '/rencanaku/berkas' }));
 vi.mock('@/hooks/use-auth', () => ({
@@ -66,7 +66,7 @@ vi.mock('@/hooks/use-saved-ids', async () => {
         ids,
         toggle,
         clear,
-        isLoading: false,
+        isLoading: savedIdsState.isLoading,
         isSaving: false,
         error: null,
       };
@@ -82,6 +82,12 @@ const PROGRAMS = [
     periode: { buka: '2026-02-03', tutup: '2026-11-05' },
   }),
   makeProgram({ id: 'pkh', nama: 'PKH' }),
+  makeProgram({
+    id: 'ktp-el',
+    nama: 'Pengurusan KTP-el',
+    jenis: 'layanan',
+    kategori: 'Kependudukan & Dokumen Pribadi',
+  }),
 ];
 
 function renderInRencana(ui: ReactNode) {
@@ -103,16 +109,8 @@ function saveProgramIds(ids: string[]) {
   window.localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(ids));
 }
 
-function NavWithCounts() {
-  const { entries, saved, deadlines } = useRencanaState();
-  return (
-    <RencanaNav
-      counts={{ berkas: entries.length, tersimpan: saved.length, tenggat: deadlines.length }}
-    />
-  );
-}
-
 beforeEach(() => {
+  savedIdsState.isLoading = false;
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(new Date('2026-10-30T05:00:00Z'));
 });
@@ -230,12 +228,46 @@ describe('RencanaBerkas', () => {
 });
 
 describe('RencanaSaved', () => {
-  it('asks a signed-out visitor to log in before saving a program', () => {
+  it('shows pulsing placeholders instead of the empty state while saved programs load', () => {
+    savedIdsState.isLoading = true;
+    renderInRencana(<RencanaSaved />);
+    expect(screen.getByRole('status', { name: 'Memuat simpanan' })).toBeTruthy();
+    expect(screen.queryByText('Belum ada program yang disimpan')).toBeNull();
+  });
+
+  it('opens the step-by-step preparation guide from a saved program', () => {
     saveProgramIds(['pkh']);
     renderInRencana(<RencanaSaved />);
     expect(screen.getByRole('link', { name: 'PKH' })).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Simpan PKH' }));
-    expect(screen.getByRole('dialog', { name: 'Simpan program ke akunmu' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Atur persiapan' }));
+    expect(screen.getByRole('article', { name: 'Panduan PKH' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Kembali ke Rencanaku' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Lihat detail program' }).getAttribute('href')).toBe(
+      '/kenali-hakmu/pkh',
+    );
+  });
+
+  it('shows saved public services in their own tab', () => {
+    saveProgramIds(['ktp-el']);
+    renderInRencana(<RencanaSaved />);
+    fireEvent.click(screen.getByRole('button', { name: /Layanan Publik/ }));
+    expect(screen.getByRole('link', { name: 'Pengurusan KTP-el' })).toBeTruthy();
+  });
+
+  it('keeps an unbookmarked program visible until the page is refreshed', () => {
+    saveProgramIds(['pkh']);
+    const view = renderInRencana(<RencanaSaved />);
+    fireEvent.click(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }));
+    expect(screen.getByRole('link', { name: 'PKH' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Simpan PKH ke Rencanaku' })).toBeTruthy();
+    expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('[]');
+    fireEvent.click(screen.getByRole('button', { name: 'Simpan PKH ke Rencanaku' }));
+    expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('["pkh"]');
+    fireEvent.click(screen.getByRole('button', { name: 'Hapus PKH dari Rencanaku' }));
+    expect(window.localStorage.getItem(SAVED_STORAGE_KEY)).toBe('[]');
+    view.unmount();
+    renderInRencana(<RencanaSaved />);
+    expect(screen.queryByRole('link', { name: 'PKH' })).toBeNull();
   });
 });
 
@@ -259,31 +291,19 @@ describe('RencanaDeadlines', () => {
   });
 });
 
-describe('RencanaNav', () => {
-  it('marks the current page and shows how many items each menu holds', () => {
-    saveProgramIds(['pkh']);
-    saveBerkas({ ekonomi: 'kip' }, []);
-    renderInRencana(<NavWithCounts />);
-    expect(screen.getByRole('link', { name: /Berkas/ }).getAttribute('aria-current')).toBe('page');
-    expect(screen.getByRole('link', { name: /Ringkasan/ }).getAttribute('aria-current')).toBeNull();
-    expect(screen.getByRole('link', { name: /Tersimpan/ }).textContent).toContain('1');
-    expect(screen.getByRole('link', { name: /Tenggat/ }).textContent).toContain('2');
-  });
-});
-
 describe('RencanaShell', () => {
-  it('shows a page title and personal navigation without a public page banner', () => {
+  it('shows the saved plan without extra section navigation or device data controls', () => {
     renderInRencana(
       <RencanaShell>
         <p>Isi berkas</p>
       </RencanaShell>,
     );
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: 'Berkas yang kamu siapkan' }),
-    ).toBeTruthy();
-    expect(screen.getByRole('navigation', { name: 'List Rencanaku' })).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1, name: 'Rencanaku' })).toBeTruthy();
+    expect(screen.queryByRole('navigation', { name: 'Bagian Rencanaku' })).toBeNull();
+    expect(screen.getByText('Beranda')).toBeTruthy();
     expect(screen.getByText('Isi berkas')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /Kosongkan Rencanaku/ })).toBeNull();
   });
 });
 

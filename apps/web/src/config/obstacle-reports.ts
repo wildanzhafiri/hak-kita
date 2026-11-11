@@ -1,3 +1,0 @@
-export const OBSTACLE_REPORT_RATE_LIMIT = 5;
-
-export const OBSTACLE_REPORT_RATE_WINDOW_MS = 10 * 60 * 1000;

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { RencanaSaved } from '@/features/rencana/rencana-saved';
+import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = { title: 'Program tersimpan di Rencanaku' };
+export const metadata: Metadata = { title: 'Program dan layanan tersimpan di Rencanaku' };
 
 export default function RencanakuTersimpanPage() {
-  return <RencanaSaved />;
+  redirect('/rencanaku');
 }

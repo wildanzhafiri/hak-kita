@@ -1,44 +1,36 @@
-export const RENCANA_SUMMARY_CONTENT = {
-  href: '/rencanaku',
-  title: 'Lanjutkan dari tempat kamu berhenti.',
-  description: 'Berkas, program tersimpan, dan tenggatmu dalam satu tempat.',
-};
-
 export const RENCANA_PAGE_CONTENT = [
-  RENCANA_SUMMARY_CONTENT,
   {
-    href: '/rencanaku/berkas',
-    title: 'Berkas yang kamu siapkan',
-    description: 'Lihat dokumen yang sudah kamu tandai dan lanjutkan persiapannya.',
+    href: '/rencanaku',
+    title: 'Rencanaku',
+    description: 'Simpan program dan layanan pilihanmu agar mudah dibuka kembali.',
+  },
+] as const;
+
+export const SAVED_INFORMATION_TABS = [
+  {
+    id: 'program',
+    label: 'Program',
+    emptyTitle: 'Belum ada program yang disimpan',
+    emptyDescription: 'Simpan program pilihanmu agar mudah dibuka kembali dari Rencanaku.',
+    browseHref: '/kenali-hakmu',
+    browseLabel: 'Jelajahi program',
   },
   {
-    href: '/rencanaku/tersimpan',
-    title: 'Program tersimpan',
-    description: 'Kembali ke program yang ingin kamu pelajari atau urus.',
-  },
-  {
-    href: '/rencanaku/tenggat',
-    title: 'Tenggat program',
-    description: 'Periksa tanggal dari program yang kamu simpan atau siapkan berkasnya.',
+    id: 'layanan',
+    label: 'Layanan Publik',
+    emptyTitle: 'Belum ada layanan yang disimpan',
+    emptyDescription: 'Simpan panduan layanan yang kamu butuhkan agar mudah ditemukan kembali.',
+    browseHref: '/layanan',
+    browseLabel: 'Jelajahi layanan',
   },
 ] as const;
 
 export const STEP_GUIDE_CONTENT = {
   helpUnavailable:
-    'Belum ada panduan kendala khusus untuk langkah ini. Periksa petunjuk terbaru di kanal resmi.',
+    'Belum ada petunjuk khusus untuk kendala ini. Tanya HAKKITA untuk mencari arahan dan sumber yang relevan.',
   helpIntro: 'Pilih kendala berkas yang sesuai. Periksa kembali petunjuk pada sumbernya.',
   sourceLabel: 'Buka kanal resmi',
-  detailsLabel: 'Lihat rincian program',
-  reportLabel: 'Laporkan kendala secara anonim',
-  reportIntro:
-    'Jika petunjuk ini belum membantu, kamu bisa mencatat tahap yang menghambat. Laporan tidak mengubah status pengajuanmu.',
-  reportUnavailable:
-    'Laporan anonim belum dapat dikirim saat ini. Kamu tetap bisa membuka kanal resmi untuk meminta bantuan.',
-  reportConsent: 'Saya setuju mengirim tahap kendala ini sebagai laporan anonim.',
-  reportPrivacy: 'Tanpa nama, NIK, atau dokumen. Wilayah belum dicatat dalam laporan ini.',
-  reportSuccess:
-    'Laporan anonim sudah diterima. Terima kasih sudah membantu menunjukkan tahap yang membingungkan.',
-  reportError: 'Laporan belum berhasil dikirim. Coba lagi nanti.',
+  askAssistant: 'Tanya HAKKITA',
 };
 
 export const FOLLOW_CHANGE_LABELS = {
@@ -75,12 +67,14 @@ export const EMAIL_NOTIFICATION_CONTENT = {
   retry: 'Coba lagi',
 } as const;
 
-export const OBSTACLE_STAGE_OPTIONS = [
-  { value: 'mencari-informasi', label: 'Mencari informasi' },
-  { value: 'memenuhi-persyaratan', label: 'Memenuhi persyaratan' },
-  { value: 'menyiapkan-berkas', label: 'Menyiapkan berkas' },
-  { value: 'mengajukan', label: 'Mengajukan' },
-  { value: 'menunggu-verifikasi', label: 'Menunggu verifikasi' },
-  { value: 'mengikuti-seleksi', label: 'Mengikuti seleksi' },
-  { value: 'menerima-hasil', label: 'Menerima hasil' },
-] as const;
+export const RENCANA_GATE_COPY = {
+  breadcrumb: 'Rencanaku',
+  title: 'Rencanaku',
+  description:
+    'Simpan program dan layanan pilihanmu, siapkan kebutuhan, dan dapatkan pengingat penting.',
+  gateTitle: 'Masuk untuk melihat Rencanaku',
+  gateDescription:
+    'Masuk atau buat akun agar kamu bisa menyimpan program dan layanan, mencatat persiapan, serta mendapatkan pengingat.',
+  signIn: 'Masuk / Daftar',
+  explore: 'Jelajahi program',
+} as const;

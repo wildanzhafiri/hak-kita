@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LucideIcon } from 'lucide-react';
-import type { ObstacleReportStage, Program, Wilayah } from '@hakkita/schema';
+import type { Program, Wilayah } from '@hakkita/schema';
 import type {
   BerkasEntry,
   BerkasReadiness,
@@ -57,21 +56,31 @@ export interface RencanaShellProps {
   children: ReactNode;
 }
 
-export interface RencanaHeaderProps {
-  section: string;
-}
+export type SavedInformationKind = 'program' | 'layanan';
 
-export type RencanaCountKey = 'berkas' | 'tersimpan' | 'tenggat';
-
-export interface RencanaNavItem {
-  href: string;
+export interface SavedInformationTab {
+  id: SavedInformationKind;
   label: string;
-  icon: LucideIcon;
-  count: RencanaCountKey | null;
+  emptyTitle: string;
+  emptyDescription: string;
+  browseHref: string;
+  browseLabel: string;
 }
 
-export interface RencanaNavProps {
-  counts: Record<RencanaCountKey, number>;
+export interface RencanaSavedCardProps {
+  program: Program;
+  isSaved: boolean;
+  onPrepare: (program: Program) => void;
+  onToggleSaved: (program: Program) => void;
+}
+
+export interface RencanaSavedProps {
+  isEmailAvailable?: boolean;
+}
+
+export interface RencanaPreparationProps {
+  program: Program;
+  isEmailAvailable: boolean;
 }
 
 export interface NextStepAction {
@@ -120,20 +129,3 @@ export interface RencanaStepGuideProps {
 export interface RencanaStepHelpProps {
   program: Program;
 }
-
-export interface RencanaObstacleReportProps {
-  programId: string;
-}
-
-export interface RencanaTurnstileProps {
-  siteKey: string;
-  resetKey: number;
-  onToken: (token: string) => void;
-}
-
-export interface ObstacleReportResponse {
-  accepted?: boolean;
-  error?: string;
-}
-
-export type SelectedObstacleStage = ObstacleReportStage | '';

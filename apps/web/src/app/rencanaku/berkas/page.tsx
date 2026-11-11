@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { RencanaBerkas } from '@/features/rencana/rencana-berkas';
+import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = { title: 'Berkas di Rencanaku' };
+export const metadata: Metadata = { title: 'Rencanaku' };
 
 export default function RencanakuBerkasPage() {
-  return <RencanaBerkas />;
+  redirect('/rencanaku');
 }
