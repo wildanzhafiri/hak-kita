@@ -1,10 +1,11 @@
 'use client';
 
 import { Check, ChevronDown } from 'lucide-react';
-import { Label, ListBox, Select } from '@heroui/react';
+import { Label, ListBox, Select, cn } from '@heroui/react';
 import type { SelectFieldProps } from './types';
 
 export function SelectField({
+  className,
   label,
   placeholder,
   value,
@@ -14,7 +15,7 @@ export function SelectField({
 }: SelectFieldProps) {
   return (
     <Select
-      className="w-full"
+      className={cn('w-full', className)}
       isDisabled={isDisabled}
       placeholder={placeholder}
       value={value}

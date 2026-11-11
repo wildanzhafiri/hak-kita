@@ -15,7 +15,9 @@ const DATA_DIR = process.env.HAKKITA_DATA_DIR?.trim() || path.join(ROOT_DIR, 'da
 const PROGRAMS_DIR = path.join(DATA_DIR, 'programs');
 
 function readPrograms(): Program[] {
-  const files = readdirSync(PROGRAMS_DIR).filter((file) => file.endsWith('.yaml')).sort();
+  const files = readdirSync(PROGRAMS_DIR)
+    .filter((file) => file.endsWith('.yaml'))
+    .sort();
   if (files.length === 0) throw new Error('Tidak ada berkas program YAML untuk diimpor');
 
   const programs = files.map((file) => {
@@ -53,22 +55,31 @@ async function main(): Promise<void> {
     throw new Error('NEXT_PUBLIC_SUPABASE_URL dan SUPABASE_SERVICE_ROLE_KEY wajib diatur');
   }
 
-  const response = await fetch(`${url.replace(/\/$/, '')}/rest/v1/programs?on_conflict=id`, {
-    method: 'POST',
-    headers: {
-      apikey: serviceRoleKey,
-      'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates,return=minimal',
-    },
-    body: JSON.stringify(
-      programs.map((record) => ({ id: record.id, record })),
-    ),
-  });
+  const endpoint = url.replace(/\/$/, '');
+  const headers = {
+    apikey: serviceRoleKey,
+    'Content-Type': 'application/json',
+    Prefer: 'resolution=merge-duplicates,return=minimal',
+  };
+  const recordsByKind = {
+    programs: programs.filter((record) => record.jenis === 'program'),
+    public_services: programs.filter((record) => record.jenis === 'layanan'),
+  };
 
-  if (!response.ok) {
-    throw new Error(`Impor Supabase gagal dengan status HTTP ${response.status}`);
+  for (const [table, records] of Object.entries(recordsByKind)) {
+    if (records.length === 0) continue;
+    const response = await fetch(`${endpoint}/rest/v1/${table}?on_conflict=id`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(records.map((record) => ({ id: record.id, record }))),
+    });
+    if (!response.ok) {
+      throw new Error(`Impor ${table} gagal dengan status HTTP ${response.status}`);
+    }
   }
-  console.log(`${programs.length} program berhasil diimpor ke Supabase`);
+  console.log(
+    `${recordsByKind.programs.length} program dan ${recordsByKind.public_services.length} layanan berhasil diimpor ke Supabase`,
+  );
 }
 
 main().catch((error: unknown) => {

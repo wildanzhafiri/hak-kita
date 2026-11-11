@@ -1,18 +1,6 @@
 import type { KnowledgeDocument, Program } from '@hakkita/schema';
+import { RANK_RELATIVE_THRESHOLD, RANK_STOP_WORDS } from './constants';
 import type { ProgramKnowledgePassage, ProgramKnowledgeSearchOptions } from './types';
-
-const SEARCH_STOP_WORDS = new Set([
-  'apa',
-  'bagaimana',
-  'dan',
-  'dari',
-  'di',
-  'ini',
-  'itu',
-  'ke',
-  'untuk',
-  'yang',
-]);
 
 const DEFAULT_RESULT_LIMIT = 5;
 const MAX_RESULT_LIMIT = 10;
@@ -21,7 +9,7 @@ function searchTerms(value: string): string[] {
   return value
     .toLocaleLowerCase('id-ID')
     .split(/[^\p{L}\p{N}]+/u)
-    .filter((term) => term.length > 1 && !SEARCH_STOP_WORDS.has(term));
+    .filter((term) => term.length > 1 && !RANK_STOP_WORDS.has(term));
 }
 
 function scorePassage(passage: ProgramKnowledgePassage, terms: readonly string[]): number {
@@ -95,6 +83,19 @@ export function buildProgramKnowledge(programs: readonly Program[]): ProgramKnow
         text: [document.label, document.catatan].filter(Boolean).join('. '),
         sourceUrl: document.sumberUrl,
       })) ?? [];
+    const steps: ProgramKnowledgePassage[] =
+      program.langkah.length > 0
+        ? [
+            {
+              ...provenance,
+              id: `${program.id}:langkah`,
+              section: 'langkah',
+              title: `Langkah ${program.nama}`,
+              text: program.langkah.map((step, index) => `${index + 1}. ${step}`).join(' '),
+              sourceUrl: program.sumberUtama.url,
+            },
+          ]
+        : [];
     const obstacles: ProgramKnowledgePassage[] =
       program.berkas?.kendala.map((obstacle, index) => ({
         ...provenance,
@@ -105,7 +106,7 @@ export function buildProgramKnowledge(programs: readonly Program[]): ProgramKnow
         sourceUrl: obstacle.sumberUrl,
       })) ?? [];
 
-    return [...requirements, ...documents, ...obstacles];
+    return [...requirements, ...steps, ...documents, ...obstacles];
   });
 }
 
@@ -118,13 +119,16 @@ export function searchProgramKnowledge(
   if (terms.length === 0) return [];
 
   const limit = Math.min(Math.max(options.limit ?? DEFAULT_RESULT_LIMIT, 1), MAX_RESULT_LIMIT);
-  return passages
+  const scored = passages
     .filter((passage) => !options.programId || passage.programId === options.programId)
     .map((passage) => ({ passage, score: scorePassage(passage, terms) }))
     .filter(({ score }) => score > 0)
     .sort(
       (left, right) => right.score - left.score || left.passage.id.localeCompare(right.passage.id),
-    )
+    );
+  const top = scored[0]?.score ?? 0;
+  return scored
+    .filter(({ score }) => score >= top * RANK_RELATIVE_THRESHOLD)
     .slice(0, limit)
     .map(({ passage }) => passage);
 }

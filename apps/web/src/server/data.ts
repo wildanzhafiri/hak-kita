@@ -24,18 +24,35 @@ function throwInvalid(source: string, issues: DataIssue[]): never {
 }
 
 export async function loadPrograms(): Promise<Program[]> {
-  const remotePrograms = await loadProgramRecordsFromDatabase();
-  if (remotePrograms) return remotePrograms;
+  return (await loadPublishedInformation()).filter(
+    (information) => information.jenis === 'program',
+  );
+}
+
+export async function loadPublicServices(): Promise<Program[]> {
+  return (await loadPublishedInformation()).filter(
+    (information) => information.jenis === 'layanan',
+  );
+}
+
+export async function loadPublishedInformation(): Promise<Program[]> {
+  return (await loadAllInformation()).filter((information) => information.verifikasi !== 'belum');
+}
+
+export async function loadAllInformation(): Promise<Program[]> {
+  const remoteInformation = await loadInformationRecordsFromDatabase();
+  if (remoteInformation) return remoteInformation;
 
   const dir = path.join(DATA_DIR, 'programs');
   const files = (await readdir(dir)).filter((f) => f.endsWith('.yaml')).sort();
-  return Promise.all(
+  const programs = await Promise.all(
     files.map(async (file) => {
       const parsed = ProgramSchema.safeParse(parse(await readFile(path.join(dir, file), 'utf8')));
       if (!parsed.success) throwInvalid(`programs/${file}`, parsed.error.issues);
       return parsed.data;
     }),
   );
+  return programs;
 }
 
 export async function loadKnowledgeDocuments(): Promise<KnowledgeDocument[]> {
@@ -71,7 +88,7 @@ async function loadKnowledgeDocumentsFromDatabase(): Promise<KnowledgeDocument[]
     });
     const { data, error } = await databaseClient
       .from('program_knowledge_documents')
-      .select('id,program_id,record')
+      .select('id,program_id,public_service_id,record')
       .order('id');
     if (error) throw error;
     if (data.length === 0) return null;
@@ -81,7 +98,9 @@ async function loadKnowledgeDocumentsFromDatabase(): Promise<KnowledgeDocument[]
     if (
       data.some(
         (row, index) =>
-          row.id !== parsed.data[index]?.id || row.program_id !== parsed.data[index]?.programId,
+          row.id !== parsed.data[index]?.id ||
+          (row.program_id ?? row.public_service_id) !== parsed.data[index]?.programId ||
+          (row.program_id === null) === (row.public_service_id === null),
       )
     ) {
       throw new Error('ID bahan Supabase tidak cocok dengan record');
@@ -92,7 +111,7 @@ async function loadKnowledgeDocumentsFromDatabase(): Promise<KnowledgeDocument[]
   }
 }
 
-async function loadProgramRecordsFromDatabase(): Promise<Program[] | null> {
+async function loadInformationRecordsFromDatabase(): Promise<Program[] | null> {
   if (process.env.DEMO_OFFLINE === 'true') return null;
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -103,15 +122,28 @@ async function loadProgramRecordsFromDatabase(): Promise<Program[] | null> {
     const databaseClient = createClient<Database>(url, serviceRoleKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
-    const { data, error } = await databaseClient.from('programs').select('id, record').order('id');
-    if (error) throw error;
-    if (data.length === 0) return null;
+    const [programsResult, servicesResult] = await Promise.all([
+      databaseClient.from('programs').select('id, record').order('id'),
+      databaseClient.from('public_services').select('id, record').order('id'),
+    ]);
+    if (programsResult.error) throw programsResult.error;
+    if (servicesResult.error) throw servicesResult.error;
+    const data = [
+      ...programsResult.data.map((row) => ({ ...row, expectedKind: 'program' as const })),
+      ...servicesResult.data.map((row) => ({ ...row, expectedKind: 'layanan' as const })),
+    ];
+    if (data.length === 0) return [];
 
     const records = data.map((row) => row.record);
     const parsed = ProgramSchema.array().safeParse(records);
-    if (!parsed.success) throwInvalid('Supabase programs', parsed.error.issues);
-    if (data.some((row, index) => row.id !== parsed.data[index]?.id)) {
-      throw new Error('ID program Supabase tidak cocok dengan record');
+    if (!parsed.success) throwInvalid('Supabase information records', parsed.error.issues);
+    if (
+      data.some(
+        (row, index) =>
+          row.id !== parsed.data[index]?.id || row.expectedKind !== parsed.data[index]?.jenis,
+      )
+    ) {
+      throw new Error('ID atau jenis informasi Supabase tidak cocok dengan record');
     }
     return parsed.data;
   } catch {

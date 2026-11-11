@@ -1,10 +1,10 @@
 import type { Program } from '@hakkita/schema';
-import { KATEGORI_LAYANAN, STALE_AFTER_DAYS } from './constants';
+import { STALE_AFTER_DAYS } from './constants';
 import { checkSumberUtama, isOfficialDomain, isStale } from './source';
 import type { CheckResult, ProgramWithBerkas } from './types';
 
 export function isLayanan(program: Program): boolean {
-  return program.kategori === KATEGORI_LAYANAN;
+  return program.jenis === 'layanan';
 }
 
 export function hasBerkas(program: Program): program is ProgramWithBerkas {
@@ -12,7 +12,7 @@ export function hasBerkas(program: Program): program is ProgramWithBerkas {
 }
 
 export function programPath(program: Program): string {
-  const section = isLayanan(program) ? '/layanan' : '/program';
+  const section = isLayanan(program) ? '/layanan' : '/kenali-hakmu';
   return `${section}/${program.id}`;
 }
 
@@ -32,9 +32,13 @@ export function checkProgram(program: Program, options: { today: string }): Chec
     if (!url.startsWith('https://')) {
       errors.push(`${label}: sumber harus memakai https`);
     } else if (!allowsNonOfficial && !isOfficialDomain(url)) {
-      errors.push(`${label}: sumber harus berdomain .go.id`);
+      errors.push(`${label}: sumber harus berdomain .go.id atau .desa.id`);
     }
   };
+
+  program.sumberTambahan.forEach((source, index) => {
+    checkSourceUrl(`sumberTambahan[${index}]`, source.url);
+  });
 
   program.syarat.forEach((s, i) => {
     if (s.sumberUrl) checkSourceUrl(`syarat[${i}]`, s.sumberUrl);

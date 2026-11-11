@@ -98,3 +98,31 @@ describe('program knowledge', () => {
     expect(searchProgramKnowledge(curated, 'NISN tidak terdaftar')[0]?.id).toBe('faq-kip:nisn');
   });
 });
+
+describe('step passages', () => {
+  const program = makeProgram({
+    id: 'ktp-contoh',
+    nama: 'Penerbitan KTP Contoh',
+    langkah: ['Isi formulir F-1.02.', 'Lampirkan fotokopi KK.'],
+  });
+  const other = makeProgram({
+    id: 'akta-contoh',
+    nama: 'Akta Contoh',
+    langkah: ['Isi formulir F-2.01.'],
+  });
+
+  it('turns program steps into a numbered passage with the main source', () => {
+    const passages = buildProgramKnowledge([program]);
+    const steps = passages.find((passage) => passage.section === 'langkah');
+    expect(steps?.text).toBe('1. Isi formulir F-1.02. 2. Lampirkan fotokopi KK.');
+    expect(steps?.sourceUrl).toBe('https://contoh.go.id/');
+  });
+
+  it('drops filler words and weak matches from a conversational query', () => {
+    const passages = buildProgramKnowledge([program, other]);
+    const results = searchProgramKnowledge(passages, 'aku mau tahu langkah F-1.02', {
+      limit: 5,
+    });
+    expect(results.map((passage) => passage.programId)).toEqual(['ktp-contoh']);
+  });
+});

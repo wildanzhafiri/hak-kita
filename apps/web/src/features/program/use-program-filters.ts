@@ -1,14 +1,15 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import type { Kategori } from '@hakkita/schema';
-import { SERVICE_PRESENTATION } from './constants';
+import { JENJANG, KATEGORI_PROGRAM, MANFAAT, type Kategori } from '@hakkita/schema';
+import { SERVICE_CATEGORY_ORDER } from './constants';
 import {
   KODE_NASIONAL,
   buildWilayahIndex,
   childrenOfWilayah,
   filterPrograms,
-  listKategori,
+  periodStatus,
+  todayWIB,
 } from '@hakkita/domain';
 import type { ProgramFilters, UseProgramFiltersOptions } from './types';
 
@@ -21,31 +22,46 @@ export function useProgramFilters({
   wilayah,
   initialQuery,
   servicePage = false,
+  today = todayWIB(),
 }: UseProgramFiltersOptions): ProgramFilters {
   const [query, setQuery] = useState(initialQuery);
   const [draftQuery, setDraftQuery] = useState(initialQuery);
   const [kategori, setKategori] = useState<string | null>(null);
   const [provinsi, setProvinsi] = useState<string | null>(null);
   const [kabkota, setKabkota] = useState<string | null>(null);
+  const [sasaran, setSasaran] = useState<string[]>([]);
+  const [manfaat, setManfaat] = useState<string[]>([]);
+  const [jenjang, setJenjang] = useState<string | null>(null);
+  const [periodeStatusFilter, setPeriodeStatusFilter] = useState<string | null>(null);
+  const [urutan, setUrutan] = useState('nama');
 
   const index = useMemo(() => buildWilayahIndex(wilayah), [wilayah]);
   const kategoriOptions = useMemo(
     () =>
       servicePage
-        ? [
-            ...new Set(
-              programs.map(
-                (program) => SERVICE_PRESENTATION[program.id]?.category ?? program.kategori,
-              ),
-            ),
-          ].sort((left, right) => left.localeCompare(right, 'id'))
-        : listKategori(programs),
+        ? [...new Set(programs.map((program) => program.kategori))].sort((left, right) => {
+            const leftOrder = SERVICE_CATEGORY_ORDER.indexOf(left);
+            const rightOrder = SERVICE_CATEGORY_ORDER.indexOf(right);
+            return (
+              (leftOrder < 0 ? SERVICE_CATEGORY_ORDER.length : leftOrder) -
+                (rightOrder < 0 ? SERVICE_CATEGORY_ORDER.length : rightOrder) ||
+              left.localeCompare(right, 'id')
+            );
+          })
+        : [...KATEGORI_PROGRAM].sort((left, right) => left.localeCompare(right, 'id')),
     [programs, servicePage],
   );
   const provinsiOptions = useMemo(() => childrenOfWilayah(wilayah, KODE_NASIONAL), [wilayah]);
   const kabkotaOptions = useMemo(
     () => (provinsi ? childrenOfWilayah(wilayah, provinsi) : []),
     [wilayah, provinsi],
+  );
+  const sasaranOptions = useMemo(
+    () =>
+      [...new Set(programs.flatMap((program) => program.untuk))].sort((a, b) =>
+        a.localeCompare(b, 'id'),
+      ),
+    [programs],
   );
 
   const results = useMemo(() => {
@@ -58,13 +74,75 @@ export function useProgramFilters({
       },
       index,
     );
-    return servicePage && kategori
-      ? filtered.filter(
-          (program) =>
-            (SERVICE_PRESENTATION[program.id]?.category ?? program.kategori) === kategori,
-        )
+    const byAudience = sasaran.length
+      ? filtered.filter((program) => sasaran.some((audience) => program.untuk.includes(audience)))
       : filtered;
-  }, [programs, query, kategori, kabkota, provinsi, index, servicePage]);
+    const byBenefit = manfaat.length
+      ? byAudience.filter((program) =>
+          manfaat.some((item) => program.manfaat?.some((own) => own === item)),
+        )
+      : byAudience;
+    const byLevel = jenjang
+      ? byBenefit.filter((program) => program.jenjang?.some((own) => own === jenjang))
+      : byBenefit;
+    const byPeriod = periodeStatusFilter
+      ? byLevel.filter((program) => periodStatus(program.periode, today) === periodeStatusFilter)
+      : byLevel;
+    const sorted = [...byPeriod].sort((left, right) => {
+      if (urutan === 'terbaru') {
+        return (
+          (right.tanggalDiperiksa ?? '').localeCompare(left.tanggalDiperiksa ?? '') ||
+          left.nama.localeCompare(right.nama, 'id')
+        );
+      }
+      if (urutan === 'tenggat') {
+        const leftDeadline = typeof left.periode === 'object' ? left.periode.tutup : '9999-12-31';
+        const rightDeadline =
+          typeof right.periode === 'object' ? right.periode.tutup : '9999-12-31';
+        return (
+          leftDeadline.localeCompare(rightDeadline) || left.nama.localeCompare(right.nama, 'id')
+        );
+      }
+      return left.nama.localeCompare(right.nama, 'id');
+    });
+    return servicePage && kategori
+      ? sorted.filter((program) => program.kategori === kategori)
+      : sorted;
+  }, [
+    programs,
+    query,
+    kategori,
+    kabkota,
+    provinsi,
+    index,
+    servicePage,
+    sasaran,
+    manfaat,
+    jenjang,
+    periodeStatusFilter,
+    today,
+    urutan,
+  ]);
+
+  function clearQuery() {
+    setQuery('');
+    setDraftQuery('');
+  }
+
+  function clearFilters() {
+    clearQuery();
+    setKategori(null);
+    setProvinsi(null);
+    setKabkota(null);
+    setSasaran([]);
+    clearMoreFilters();
+  }
+
+  function clearMoreFilters() {
+    setManfaat([]);
+    setJenjang(null);
+    setPeriodeStatusFilter(null);
+  }
 
   return {
     query,
@@ -72,9 +150,17 @@ export function useProgramFilters({
     kategori,
     provinsi,
     kabkota,
+    sasaran,
+    manfaat,
+    jenjang,
+    periodeStatus: periodeStatusFilter,
+    urutan,
     kategoriOptions,
     provinsiOptions,
     kabkotaOptions,
+    sasaranOptions,
+    manfaatOptions: MANFAAT,
+    jenjangOptions: JENJANG,
     results,
     setDraftQuery,
     submitQuery: () => setQuery(draftQuery.trim()),
@@ -84,12 +170,24 @@ export function useProgramFilters({
       setKabkota(null);
     },
     selectKabkota: (value) => setKabkota(emptyToNull(value)),
+    toggleSasaran: (value) =>
+      setSasaran((current) =>
+        current.includes(value) ? current.filter((item) => item !== value) : [...current, value],
+      ),
+    toggleManfaat: (value) =>
+      setManfaat((current) =>
+        current.includes(value) ? current.filter((item) => item !== value) : [...current, value],
+      ),
+    selectJenjang: (value) => setJenjang(emptyToNull(value)),
+    clearMoreFilters,
+    selectPeriodeStatus: (value) => setPeriodeStatusFilter(emptyToNull(value)),
+    selectUrutan: (value) => setUrutan(value),
+    clearSasaran: () => setSasaran([]),
+    clearQuery,
+    clearFilters,
     reset: () => {
-      setQuery('');
-      setDraftQuery('');
-      setKategori(null);
-      setProvinsi(null);
-      setKabkota(null);
+      clearFilters();
+      setUrutan('nama');
     },
   };
 }

@@ -4,7 +4,15 @@ import { useSearchParams } from 'next/navigation';
 import { ProgramList } from './program-list';
 import type { SearchResultsProps } from './types';
 
-export function SearchResults({ programs, wilayah }: SearchResultsProps) {
+export function SearchResults({ programs, wilayah, today }: SearchResultsProps) {
   const query = useSearchParams().get('q') ?? '';
-  return <ProgramList key={query} initialQuery={query} programs={programs} wilayah={wilayah} />;
+  return (
+    <ProgramList
+      key={query}
+      initialQuery={query}
+      programs={programs}
+      wilayah={wilayah}
+      today={today}
+    />
+  );
 }

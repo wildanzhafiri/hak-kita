@@ -1,7 +1,10 @@
-import { Search } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { SelectField } from '@/components/ui/select-field';
+import { Dialog } from '@/components/ui/dialog';
 import { TextInput } from '@/components/ui/text-input';
+import { ProgramFilterFields } from './program-filter-fields';
+import { ProgramFilterRow } from './program-filter-row';
 import type { ProgramFilterBarProps } from './types';
 
 export function ProgramFilterBar({
@@ -9,92 +12,94 @@ export function ProgramFilterBar({
   placeholder,
   mode = 'filters',
   stacked = false,
+  servicePage = false,
 }: ProgramFilterBarProps) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
   if (mode === 'search') {
     return (
-      <form
-        className="flex min-h-[62px] w-full max-w-[1275px] items-center overflow-hidden rounded-[9px] border border-[#b9c1ca] bg-white focus-within:outline-2 focus-within:outline-[#bed9f8] focus-within:outline-offset-2"
-        onSubmit={(event) => {
-          event.preventDefault();
-          filters.submitQuery();
-        }}
-      >
-        <Search className="ml-[22px] shrink-0 text-[#9099a4]" size={20} />
-        <TextInput
-          className="!min-w-0 !flex-1 !rounded-none !border-0 !bg-transparent !px-3 !py-[18px] !text-[15px] !text-[#292b2e] !shadow-none !outline-none !ring-0 placeholder:!text-[#77808c] focus:!border-0 focus:!shadow-none focus:!ring-0"
-          value={filters.draftQuery}
-          onChange={(event) => filters.setDraftQuery(event.target.value)}
-          placeholder={placeholder}
-          aria-label="Cari"
-        />
-        <Button
-          className="!h-full !min-h-[60px] !min-w-[122px] !shrink-0 !rounded-none !px-5 !text-[17px] max-[480px]:!min-w-[86px]"
-          type="submit"
-        >
-          <Search aria-hidden="true" className="shrink-0" size={18} />
-          Cari
-        </Button>
-      </form>
+      <div className={servicePage ? 'min-w-0' : 'min-w-0 border-b border-[#e1e7ee] pb-[22px]'}>
+        <div className="flex min-w-0 items-center gap-2.5">
+          <form
+            className="flex min-h-[58px] min-w-0 flex-1 items-center overflow-hidden rounded-[9px] border border-[#b9c1ca] bg-white focus-within:outline-2 focus-within:outline-[#bed9f8] focus-within:outline-offset-2"
+            onSubmit={(event) => {
+              event.preventDefault();
+              filters.submitQuery();
+            }}
+          >
+            <Search className="ml-4 shrink-0 text-[#748397] sm:ml-[22px]" size={20} />
+            <TextInput
+              className="!min-w-0 !flex-1 !rounded-none !border-0 !bg-transparent !px-3 !py-4 !text-[15px] !text-[#292b2e] !shadow-none !outline-none !ring-0 placeholder:!text-[#77808c] focus:!border-0 focus:!shadow-none focus:!ring-0"
+              value={filters.draftQuery}
+              onChange={(event) => filters.setDraftQuery(event.target.value)}
+              placeholder={placeholder}
+              aria-label="Cari"
+            />
+            <Button
+              className="!h-[56px] !min-h-[56px] !min-w-[104px] !shrink-0 !rounded-none !px-4 max-[480px]:!min-w-[48px] max-[480px]:!px-0"
+              type="submit"
+            >
+              <Search aria-hidden="true" className="shrink-0" size={18} />
+              <span className="max-[480px]:hidden">Cari</span>
+            </Button>
+          </form>
+          {!servicePage && (
+            <div className="not-max-[640px]:hidden">
+              <Dialog
+                closeLabel="Tutup filter"
+                description="Pilih kategori, wilayah, dan kriteria program."
+                onOpenChange={setFiltersOpen}
+                open={filtersOpen}
+                side
+                mobileSheet
+                title="Filter program"
+                trigger={
+                  <Button
+                    aria-label="Buka filter program"
+                    className="relative size-12 shrink-0 p-0"
+                    tone="secondary"
+                  >
+                    <SlidersHorizontal aria-hidden="true" size={20} />
+                    {filters.kategori ||
+                    filters.provinsi ||
+                    filters.kabkota ||
+                    filters.sasaran.length ||
+                    filters.manfaat.length ||
+                    filters.jenjang ||
+                    filters.periodeStatus ? (
+                      <span
+                        aria-hidden="true"
+                        className="absolute right-2 top-2 size-1.5 rounded-full bg-[#196dcc]"
+                      />
+                    ) : null}
+                  </Button>
+                }
+              >
+                <div className="min-h-0 flex-1 overflow-y-auto">
+                  <ProgramFilterFields filters={filters} layout="sheet" servicePage={false} />
+                  <div className="flex flex-wrap gap-2 px-5 pb-5">
+                    <Button className="flex-1" onPress={filters.clearFilters} tone="secondary">
+                      Reset filter
+                    </Button>
+                    <Button className="flex-1" onPress={() => setFiltersOpen(false)}>
+                      Tampilkan hasil
+                    </Button>
+                  </div>
+                </div>
+              </Dialog>
+            </div>
+          )}
+        </div>
+        {!servicePage && <ProgramFilterRow filters={filters} />}
+      </div>
     );
   }
 
   return (
-    <div
-      className={
-        stacked
-          ? 'grid grid-cols-1 gap-5'
-          : 'grid grid-cols-3 gap-3 max-[760px]:grid-cols-2 max-[480px]:grid-cols-1'
-      }
-    >
-      <div className="flex min-w-0 flex-col gap-2 text-xs font-medium text-[#536477]">
-        <span>{stacked ? 'Kategori Layanan' : 'Kategori'}</span>
-        <SelectField
-          label="Kategori"
-          placeholder="Semua kategori"
-          value={filters.kategori ?? '__all__'}
-          options={[
-            { value: '__all__', label: 'Semua kategori' },
-            ...filters.kategoriOptions.map((kategori) => ({ value: kategori, label: kategori })),
-          ]}
-          onChange={(value) => filters.selectKategori(value === '__all__' ? '' : value)}
-        />
-      </div>
-      <div className="flex min-w-0 flex-col gap-2 text-xs font-medium text-[#536477]">
-        <span>{stacked ? 'Wilayah' : 'Provinsi'}</span>
-        <SelectField
-          label="Provinsi"
-          placeholder="Semua wilayah"
-          value={filters.provinsi ?? '__all__'}
-          options={[
-            { value: '__all__', label: 'Semua wilayah' },
-            ...filters.provinsiOptions.map((wilayah) => ({
-              value: wilayah.kode,
-              label: wilayah.nama,
-            })),
-          ]}
-          onChange={(value) => filters.selectProvinsi(value === '__all__' ? '' : value)}
-        />
-      </div>
-      <div className="flex min-w-0 flex-col gap-2 text-xs font-medium text-[#536477]">
-        <span>Kabupaten atau kota</span>
-        <SelectField
-          label="Kabupaten atau kota"
-          placeholder={filters.provinsi ? 'Semua di provinsi ini' : 'Pilih provinsi dulu'}
-          value={filters.provinsi ? (filters.kabkota ?? '__all__') : null}
-          options={[
-            {
-              value: '__all__',
-              label: filters.provinsi ? 'Semua di provinsi ini' : 'Pilih provinsi dulu',
-            },
-            ...filters.kabkotaOptions.map((wilayah) => ({
-              value: wilayah.kode,
-              label: wilayah.nama,
-            })),
-          ]}
-          isDisabled={filters.kabkotaOptions.length === 0}
-          onChange={(value) => filters.selectKabkota(value === '__all__' ? '' : value)}
-        />
-      </div>
-    </div>
+    <ProgramFilterFields
+      filters={filters}
+      layout={stacked ? 'stacked' : 'sheet'}
+      servicePage={servicePage}
+    />
   );
 }

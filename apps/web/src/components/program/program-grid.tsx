@@ -3,14 +3,14 @@
 import { ProgramCard } from './program-card';
 import type { ProgramGridProps } from './types';
 
-export function ProgramGrid({ programs, horizontal = false, columns = 3 }: ProgramGridProps) {
+export function ProgramGrid({ programs, horizontal = false }: ProgramGridProps) {
   return (
     <div
       aria-label={horizontal ? 'Daftar program pilihan' : undefined}
       className={
         horizontal
           ? 'flex min-w-0 gap-[18px] overflow-x-auto overscroll-x-contain scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden motion-reduce:scroll-auto'
-          : `grid ${columns === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-[22px] max-[760px]:grid-cols-1`
+          : 'grid grid-cols-3 gap-5 max-[1200px]:grid-cols-2 max-[640px]:grid-cols-1'
       }
       role={horizontal ? 'region' : undefined}
       tabIndex={horizontal ? 0 : undefined}

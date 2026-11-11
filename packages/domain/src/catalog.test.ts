@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterPrograms, listKategori } from './catalog';
+import { filterPrograms, listKategori, rankPrograms } from './catalog';
 import { WILAYAH_LIST, makeProgram } from './test-helpers';
 import type { ProgramFilter } from './types';
 import { buildWilayahIndex } from './wilayah';
@@ -45,6 +45,20 @@ describe('filterPrograms', () => {
     expect(filterWith({ query: 'penduduk dki' })).toEqual(['jakarta-d']);
   });
 
+  it('matches the query against service aliases', () => {
+    const service = makeProgram({
+      id: 'kk-e',
+      nama: 'Pengurusan Kartu Keluarga',
+      jenis: 'layanan',
+      kategori: 'Kependudukan & Dokumen Pribadi',
+      alias: ['pecah kk'],
+    });
+    const filter: ProgramFilter = { query: 'pecah kk', kategori: null, wilayah: null };
+    expect(filterPrograms([...programs, service], filter, index).map((p) => p.id)).toEqual([
+      'kk-e',
+    ]);
+  });
+
   it('ignores surrounding whitespace in the query', () => {
     expect(filterWith({ query: '  alfa  ' })).toEqual(['beasiswa-a']);
   });
@@ -78,5 +92,57 @@ describe('filterPrograms', () => {
 describe('listKategori', () => {
   it('returns each category once, sorted', () => {
     expect(listKategori(programs)).toEqual(['Bantuan Sosial', 'Beasiswa', 'Kesehatan']);
+  });
+});
+
+describe('rankPrograms', () => {
+  const sim = makeProgram({
+    id: 'sim-baru',
+    nama: 'Pendaftaran SIM Baru',
+    jenis: 'layanan',
+    kategori: 'Kendaraan & Transportasi',
+    alias: ['bikin sim'],
+  });
+  const renewal = makeProgram({
+    id: 'perpanjangan-sim',
+    nama: 'Perpanjangan SIM',
+    jenis: 'layanan',
+    kategori: 'Kendaraan & Transportasi',
+  });
+  const death = makeProgram({
+    id: 'akta-kematian',
+    nama: 'Pembuatan Akta Kematian',
+    jenis: 'layanan',
+    kategori: 'Kependudukan & Dokumen Pribadi',
+    ringkasan: 'Persyaratan akta kematian baru atau pengganti menurut layanan Dukcapil.',
+  });
+  const building = makeProgram({
+    id: 'pbg-slf',
+    nama: 'Pengajuan PBG dan SLF melalui SIMBG',
+    jenis: 'layanan',
+    kategori: 'Pertanahan & Bangunan',
+  });
+  const services = [death, building, renewal, sim];
+
+  it('keeps the services that match the words people use and drops filler matches', () => {
+    expect(rankPrograms(services, 'bikin SIM baru atau perpanjangan', 5).map((p) => p.id)).toEqual([
+      'sim-baru',
+      'perpanjangan-sim',
+    ]);
+  });
+
+  it('matches whole words, so a short term does not hit longer words', () => {
+    expect(rankPrograms(services, 'sim', 5).map((p) => p.id)).toEqual([
+      'sim-baru',
+      'perpanjangan-sim',
+    ]);
+  });
+
+  it('returns nothing when the query only has filler words', () => {
+    expect(rankPrograms(services, 'apa yang bisa', 5)).toEqual([]);
+  });
+
+  it('respects the result limit', () => {
+    expect(rankPrograms(services, 'sim', 1)).toHaveLength(1);
   });
 });

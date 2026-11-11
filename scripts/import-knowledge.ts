@@ -4,7 +4,7 @@ import path from 'node:path';
 import { loadEnvFile } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
-import { KnowledgeDocumentSchema, type KnowledgeDocument } from '@hakkita/schema';
+import { KnowledgeDocumentSchema, ProgramSchema, type KnowledgeDocument } from '@hakkita/schema';
 
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ENV_FILE = path.join(ROOT_DIR, 'apps', 'web', '.env.local');
@@ -12,6 +12,7 @@ if (existsSync(ENV_FILE)) loadEnvFile(ENV_FILE);
 
 const DATA_DIR = process.env.HAKKITA_DATA_DIR?.trim() || path.join(ROOT_DIR, 'data');
 const KNOWLEDGE_DIR = path.join(DATA_DIR, 'knowledge');
+const INFORMATION_DIR = path.join(DATA_DIR, 'programs');
 
 function readKnowledgeDocuments(): KnowledgeDocument[] {
   const files = readdirSync(KNOWLEDGE_DIR)
@@ -29,6 +30,20 @@ function readKnowledgeDocuments(): KnowledgeDocument[] {
   });
 }
 
+function readInformationKinds(): Map<string, 'program' | 'layanan'> {
+  const files = readdirSync(INFORMATION_DIR)
+    .filter((file) => file.endsWith('.yaml'))
+    .sort();
+  return new Map(
+    files.map((file) => {
+      const raw: unknown = parse(readFileSync(path.join(INFORMATION_DIR, file), 'utf8'));
+      const parsed = ProgramSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`Informasi tidak valid: ${file}`);
+      return [parsed.data.id, parsed.data.jenis] as const;
+    }),
+  );
+}
+
 async function main(): Promise<void> {
   execFileSync(
     process.platform === 'win32' ? 'cmd.exe' : 'pnpm',
@@ -37,6 +52,7 @@ async function main(): Promise<void> {
   );
 
   const documents = readKnowledgeDocuments();
+  const informationKinds = readInformationKinds();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceRoleKey) {
@@ -53,12 +69,17 @@ async function main(): Promise<void> {
         Prefer: 'resolution=merge-duplicates,return=minimal',
       },
       body: JSON.stringify(
-        documents.map((record) => ({
-          id: record.id,
-          program_id: record.programId,
-          record,
-          updated_at: new Date().toISOString(),
-        })),
+        documents.map((record) => {
+          const kind = informationKinds.get(record.programId);
+          if (!kind) throw new Error(`Informasi ${record.programId} tidak ditemukan`);
+          return {
+            id: record.id,
+            program_id: kind === 'program' ? record.programId : null,
+            public_service_id: kind === 'layanan' ? record.programId : null,
+            record,
+            updated_at: new Date().toISOString(),
+          };
+        }),
       ),
     },
   );

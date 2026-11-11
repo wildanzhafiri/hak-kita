@@ -101,7 +101,7 @@ export interface MatchOptions {
   wilayahIndex: WilayahIndex;
 }
 
-export type ProgramKnowledgeSection = 'syarat' | 'berkas' | 'kendala' | 'panduan';
+export type ProgramKnowledgeSection = 'syarat' | 'langkah' | 'berkas' | 'kendala' | 'panduan';
 
 export interface ProgramKnowledgePassage {
   id: string;

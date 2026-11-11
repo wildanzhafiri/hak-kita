@@ -9,6 +9,8 @@ interface TurnstileApi {
     container: HTMLElement,
     options: {
       sitekey: string;
+      action?: string;
+      appearance?: 'always' | 'execute' | 'interaction-only';
       callback: (token: string) => void;
       'expired-callback': () => void;
       'error-callback': () => void;
@@ -23,7 +25,14 @@ declare global {
   }
 }
 
-export function Turnstile({ siteKey, resetKey, label, onToken }: TurnstileProps) {
+export function Turnstile({
+  siteKey,
+  resetKey,
+  label,
+  action,
+  appearance = 'always',
+  onToken,
+}: TurnstileProps) {
   const container = useRef<HTMLDivElement>(null);
   const [isScriptReady, setIsScriptReady] = useState(false);
 
@@ -32,12 +41,14 @@ export function Turnstile({ siteKey, resetKey, label, onToken }: TurnstileProps)
     if (!isScriptReady || !container.current || !turnstile) return;
     const widgetId = turnstile.render(container.current, {
       sitekey: siteKey,
+      action,
+      appearance,
       callback: onToken,
       'expired-callback': () => onToken(''),
       'error-callback': () => onToken(''),
     });
     return () => turnstile.remove(widgetId);
-  }, [isScriptReady, onToken, resetKey, siteKey]);
+  }, [action, appearance, isScriptReady, onToken, resetKey, siteKey]);
 
   return (
     <>

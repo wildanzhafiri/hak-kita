@@ -6,7 +6,7 @@ export const STALE_AFTER_DAYS = 90;
 
 export const KATEGORI_LAYANAN: Kategori = 'Layanan Administrasi';
 
-export const OFFICIAL_DOMAIN = 'go.id';
+export const OFFICIAL_DOMAINS = ['go.id', 'desa.id'] as const;
 
 export const MS_PER_DAY = 86_400_000;
 
@@ -39,3 +39,56 @@ export const DEFAULT_STEPS = [
   'Ikuti alur pengajuan melalui kanal resmi.',
   'Simpan bukti pengurusan dari penyelenggara, jika tersedia.',
 ] as const;
+
+export const RANK_STOP_WORDS = new Set([
+  'apa',
+  'atau',
+  'aku',
+  'saya',
+  'bagaimana',
+  'gimana',
+  'bisa',
+  'buat',
+  'bikin',
+  'cara',
+  'dan',
+  'dari',
+  'dengan',
+  'di',
+  'dong',
+  'ini',
+  'itu',
+  'ke',
+  'mau',
+  'ingin',
+  'minta',
+  'pada',
+  'tolong',
+  'untuk',
+  'yang',
+  'ya',
+  'kah',
+  'lah',
+  'nih',
+  'sih',
+  'mengurus',
+  'urus',
+  'pengurusan',
+  'tahu',
+  'kasih',
+  'ada',
+  'langkah',
+  'syarat',
+  'persyaratan',
+  'berkas',
+  'dokumen',
+  'prosedur',
+  'tahap',
+  'tahapan',
+]);
+export const RANK_MIN_PREFIX_LENGTH = 5;
+export const RANK_NAME_WEIGHT = 5;
+export const RANK_ALIAS_WEIGHT = 4;
+export const RANK_CATEGORY_WEIGHT = 2;
+export const RANK_TEXT_WEIGHT = 1;
+export const RANK_RELATIVE_THRESHOLD = 0.5;

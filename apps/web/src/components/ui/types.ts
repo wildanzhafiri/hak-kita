@@ -2,11 +2,12 @@ import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
+  Ref,
   TextareaHTMLAttributes,
 } from 'react';
 import type { ButtonProps as HeroButtonProps } from '@heroui/react';
 
-export type ButtonTone = 'primary' | 'secondary' | 'quiet' | 'icon' | 'danger';
+export type ButtonTone = 'primary' | 'secondary' | 'quiet' | 'icon' | 'danger' | 'danger-outline';
 
 export interface ButtonProps
   extends
@@ -16,14 +17,26 @@ export interface ButtonProps
 }
 
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement>;
-export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
+export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  ref?: Ref<HTMLTextAreaElement>;
+}
 
 export interface SelectOption {
   value: string;
   label: string;
 }
 
+export interface PopoverProps {
+  trigger: ReactNode;
+  label: string;
+  open?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+  className?: string;
+  children: ReactNode;
+}
+
 export interface SelectFieldProps {
+  className?: string;
   label: string;
   placeholder: string;
   value: string | null;
@@ -46,6 +59,21 @@ export interface ChoiceGroupProps {
   onChange: (value: string) => void;
 }
 
+export interface CheckboxProps {
+  children: ReactNode;
+  isSelected: boolean;
+  isDisabled?: boolean;
+  onChange: (isSelected: boolean) => void;
+}
+
+export interface SwitchProps {
+  label: ReactNode;
+  description?: ReactNode;
+  isSelected: boolean;
+  isDisabled?: boolean;
+  onChange: (isSelected: boolean) => void;
+}
+
 export interface DialogProps {
   trigger: ReactNode;
   open: boolean;
@@ -55,6 +83,7 @@ export interface DialogProps {
   closeLabel: string;
   children: ReactNode;
   side?: boolean;
+  mobileSheet?: boolean;
 }
 
 export interface BreadcrumbEntry {
@@ -71,6 +100,7 @@ export interface ButtonLinkProps {
   href: string;
   children: ReactNode;
   secondary?: boolean;
+  icon?: ReactNode;
 }
 
 export interface EyebrowProps {
@@ -123,5 +153,7 @@ export interface TurnstileProps {
   siteKey: string;
   resetKey: number;
   label: string;
+  action?: string;
+  appearance?: 'always' | 'execute' | 'interaction-only';
   onToken: (token: string) => void;
 }

@@ -4,6 +4,43 @@ export const DETAIL_TABS = [
   { id: 'langkah', label: 'Langkah berikutnya' },
 ] as const;
 
+export const FILTER_CONTENT = {
+  category: 'Kategori',
+  allCategories: 'Semua kategori',
+  province: 'Provinsi',
+  allRegions: 'Semua wilayah',
+  regency: 'Kabupaten atau kota',
+  pickProvinceFirst: 'Pilih provinsi dulu',
+  allInProvince: 'Semua di provinsi ini',
+  regionTitle: 'Pilih wilayah',
+  regionClear: 'Hapus wilayah',
+  regionDone: 'Selesai',
+  target: 'Sasaran penerima',
+  allTargets: 'Semua sasaran',
+  targetTitle: 'Pilih sasaran penerima',
+  targetClear: 'Hapus pilihan',
+  period: 'Periode pendaftaran',
+  allPeriods: 'Semua periode',
+  more: 'Filter lainnya',
+  moreTitle: 'Filter lainnya',
+  moreDescription: 'Persempit hasil berdasarkan informasi program.',
+  moreClose: 'Tutup filter lainnya',
+  moreClear: 'Reset filter tambahan',
+  benefit: 'Jenis manfaat',
+  level: 'Jenjang pendidikan',
+  allLevels: 'Semua jenjang',
+  levelHelp: 'Mengikuti jenjang dalam persyaratan program; periksa detail untuk konteksnya.',
+  moreShow: (count: number) => `Tampilkan ${count} program`,
+  activeLabel: 'Filter aktif',
+  clearAll: 'Hapus semua',
+  removeChip: (label: string) => `Hapus filter ${label}`,
+  searchChip: (query: string) => `Pencarian: ${query}`,
+  resultCount: (count: number) => `${count} program ditemukan`,
+  sort: 'Urutkan',
+  sortPlaceholder: 'Pilih urutan',
+  sortLabel: 'Urutkan program',
+} as const;
+
 export const FOLLOW_PROGRAM_CONTENT = {
   follow: 'Ikuti program',
   unfollow: 'Berhenti mengikuti',
@@ -11,4 +48,24 @@ export const FOLLOW_PROGRAM_CONTENT = {
   promptTitle: 'Masuk untuk mengikuti program',
   promptDescription: 'Masuk atau buat akun agar pembaruan program ini muncul di Rencanaku.',
   offline: 'Fitur mengikuti program memerlukan akun yang terhubung.',
+} as const;
+
+export const SERVICE_DETAIL_CONTENT = {
+  audience: 'Untuk siapa',
+  provider: 'Penyelenggara',
+  coverage: 'Cakupan wilayah',
+  kind: 'Jenis pengurusan',
+  requirementSource: 'Sumber persyaratan',
+  requirements: 'Persyaratan',
+  documents: 'Dokumen yang Perlu Disiapkan',
+  cost: 'Biaya Resmi',
+  steps: 'Langkah Pengurusan',
+  channel: 'Kanal Pelayanan',
+  actionTitle: 'Akses Layanan Resmi',
+  actionDescription:
+    'Lanjutkan melalui kanal penyelenggara untuk memperoleh informasi terbaru atau mengakses layanan yang tersedia.',
+  actionLabel: 'Lihat informasi resmi',
+  overview: 'Ringkasan Layanan',
+  notice: 'Informasi Penting',
+  related: 'Panduan Terkait',
 } as const;

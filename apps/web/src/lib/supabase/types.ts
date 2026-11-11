@@ -1,24 +1,66 @@
-import type { KnowledgeDocument, ObstacleReportStage, Profile, Program } from '@hakkita/schema';
+import type {
+  KnowledgeDocument,
+  ObstacleReportStage,
+  Profile,
+  Program,
+  RadarProgramDraft,
+} from '@hakkita/schema';
 import type { ProgramFollowSnapshot } from '@hakkita/domain';
 
 export interface Database {
   public: {
     Tables: {
+      information_records: {
+        Row: {
+          id: string;
+          kind: 'program' | 'layanan';
+        };
+        Insert: {
+          id: string;
+          kind: 'program' | 'layanan';
+        };
+        Update: {
+          id?: string;
+          kind?: 'program' | 'layanan';
+        };
+        Relationships: [];
+      };
+      user_roles: {
+        Row: {
+          user_id: string;
+          role: 'admin';
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          role: 'admin';
+          created_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          role?: 'admin';
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       program_knowledge_documents: {
         Row: {
           id: string;
-          program_id: string;
+          program_id: string | null;
+          public_service_id: string | null;
           record: KnowledgeDocument;
           updated_at: string;
         };
         Insert: {
           id: string;
-          program_id: string;
+          program_id?: string | null;
+          public_service_id?: string | null;
           record: KnowledgeDocument;
           updated_at?: string;
         };
         Update: {
-          program_id?: string;
+          program_id?: string | null;
+          public_service_id?: string | null;
           record?: KnowledgeDocument;
           updated_at?: string;
         };
@@ -35,6 +77,8 @@ export interface Database {
           last_checked_at: string;
           changed_at: string | null;
           last_error: string | null;
+          source_text: string | null;
+          content_updated_at: string | null;
         };
         Insert: {
           source_url: string;
@@ -46,6 +90,8 @@ export interface Database {
           last_checked_at?: string;
           changed_at?: string | null;
           last_error?: string | null;
+          source_text?: string | null;
+          content_updated_at?: string | null;
         };
         Update: {
           latest_fingerprint?: string;
@@ -54,6 +100,8 @@ export interface Database {
           last_checked_at?: string;
           changed_at?: string | null;
           last_error?: string | null;
+          source_text?: string | null;
+          content_updated_at?: string | null;
         };
         Relationships: [];
       };
@@ -66,6 +114,8 @@ export interface Database {
           source_url: string;
           published_on: string;
           created_at: string;
+          email_text: string | null;
+          extra_source_urls: string[];
         };
         Insert: {
           id?: string;
@@ -75,12 +125,110 @@ export interface Database {
           source_url: string;
           published_on: string;
           created_at?: string;
+          email_text?: string | null;
+          extra_source_urls?: string[];
         };
         Update: {
           title?: string;
           summary?: string;
           source_url?: string;
           published_on?: string;
+          email_text?: string | null;
+          extra_source_urls?: string[];
+        };
+        Relationships: [];
+      };
+      program_radar_candidates: {
+        Row: {
+          id: string;
+          program_id: string;
+          source_url: string;
+          source_fingerprint: string;
+          evidence_quote: string | null;
+          draft_title: string | null;
+          draft_summary: string | null;
+          draft_email_text: string | null;
+          published_on: string | null;
+          status: 'pending' | 'approved' | 'rejected';
+          detected_at: string;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          news_id: string | null;
+        };
+        Insert: {
+          id?: string;
+          program_id: string;
+          source_url: string;
+          source_fingerprint: string;
+          evidence_quote?: string | null;
+          draft_title?: string | null;
+          draft_summary?: string | null;
+          draft_email_text?: string | null;
+          published_on?: string | null;
+          status?: 'pending' | 'approved' | 'rejected';
+          detected_at?: string;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          news_id?: string | null;
+        };
+        Update: {
+          evidence_quote?: string | null;
+          draft_title?: string | null;
+          draft_summary?: string | null;
+          draft_email_text?: string | null;
+          published_on?: string | null;
+          status?: 'pending' | 'approved' | 'rejected';
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          news_id?: string | null;
+        };
+        Relationships: [];
+      };
+      program_radar_program_candidates: {
+        Row: {
+          id: string;
+          record: RadarProgramDraft;
+          status: 'pending' | 'approved' | 'rejected';
+          detected_at: string;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          program_id: string | null;
+        };
+        Insert: {
+          id?: string;
+          record: RadarProgramDraft;
+          status?: 'pending' | 'approved' | 'rejected';
+          detected_at?: string;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          program_id?: string | null;
+        };
+        Update: {
+          record?: RadarProgramDraft;
+          status?: 'pending' | 'approved' | 'rejected';
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          program_id?: string | null;
+        };
+        Relationships: [];
+      };
+      program_radar_settings: {
+        Row: {
+          id: boolean;
+          automatic_discovery_enabled: boolean;
+          monitoring_enabled: boolean;
+          updated_at: string;
+        };
+        Insert: {
+          id?: boolean;
+          automatic_discovery_enabled?: boolean;
+          monitoring_enabled?: boolean;
+          updated_at?: string;
+        };
+        Update: {
+          automatic_discovery_enabled?: boolean;
+          monitoring_enabled?: boolean;
+          updated_at?: string;
         };
         Relationships: [];
       };
@@ -220,6 +368,24 @@ export interface Database {
         };
         Relationships: [];
       };
+      public_services: {
+        Row: {
+          id: string;
+          record: Program;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          record: Program;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          record?: Program;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       saved_programs: {
         Row: {
           created_at: string;
@@ -322,7 +488,31 @@ export interface Database {
         Relationships: [];
       };
     };
-    Functions: Record<string, never>;
+    Functions: {
+      review_program_radar_candidate: {
+        Args: {
+          p_candidate_id: string;
+          p_reviewer_id: string;
+          p_action: 'approve' | 'reject';
+          p_title?: string | null;
+          p_summary?: string | null;
+          p_published_on?: string | null;
+          p_email_text?: string | null;
+          p_extra_source_urls?: string[];
+        };
+        Returns: string | null;
+      };
+      review_program_radar_program_candidate: {
+        Args: {
+          p_candidate_id: string;
+          p_reviewer_id: string;
+          p_action: 'approve' | 'reject';
+          p_program_id?: string | null;
+          p_program_record?: Program | null;
+        };
+        Returns: string | null;
+      };
+    };
     Enums: {
       obstacle_report_stage: ObstacleReportStage;
     };

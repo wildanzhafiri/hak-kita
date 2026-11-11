@@ -20,6 +20,7 @@ import type { ZodIssue } from './types';
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_DIR = process.env.HAKKITA_DATA_DIR?.trim() || path.join(ROOT_DIR, 'data');
 const WILAYAH_FILE = 'wilayah/wilayah.json';
+const GENERIC_STEP_PATTERN = /prosedur setempat|sesuai domisili|di daerahmu|tersedia di daerah|kanal .{0,40}setempat/i;
 const strict = process.argv.includes('--strict');
 const today = todayWIB();
 
@@ -131,8 +132,29 @@ function validatePrograms(index: WilayahIndex | null): Map<string, Program> {
     result.warnings.forEach((m) => reportWarning(label, m));
   }
 
+  for (const [id, program] of programs) {
+    if (program.langkah.length === 0) {
+      reportError(`programs/${id}.yaml`, 'langkah wajib diisi dengan langkah nyata dari sumber resmi');
+    }
+    program.langkah.forEach((step) => {
+      if (GENERIC_STEP_PATTERN.test(step)) {
+        reportError(`programs/${id}.yaml`, `langkah terlalu umum: "${step}"`);
+      }
+    });
+    program.terkait?.forEach((relatedId) => {
+      const related = programs.get(relatedId);
+      if (!related) {
+        reportError(`programs/${id}.yaml`, `terkait "${relatedId}" tidak ditemukan`);
+      } else if (relatedId === id) {
+        reportError(`programs/${id}.yaml`, 'terkait tidak boleh merujuk dirinya sendiri');
+      } else if (related.jenis !== program.jenis) {
+        reportError(`programs/${id}.yaml`, `terkait "${relatedId}" harus berjenis ${program.jenis}`);
+      }
+    });
+  }
+
   console.log(
-    `\n${files.length} program: ${levels.lengkap} lengkap, ${levels.dasar} dasar, ` +
+    `\n${files.length} program:${levels.lengkap} lengkap, ${levels.dasar} dasar, ` +
       `${levels.belum} belum diverifikasi`,
   );
   return programs;

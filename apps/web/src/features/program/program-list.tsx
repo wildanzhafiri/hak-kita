@@ -1,17 +1,20 @@
 'use client';
 
-import { ChevronRight, Files, HeartHandshake, ListFilter } from 'lucide-react';
-import { KATEGORI_STYLE } from '@/components/program/constants';
+import { useState } from 'react';
+import { Files, HeartHandshake } from 'lucide-react';
 import { ProgramGrid } from '@/components/program/program-grid';
 import { Button } from '@/components/ui/button';
 import { DataNote } from '@/components/ui/data-note';
 import {
   DEFAULT_SEARCH_PLACEHOLDER,
-  SERVICE_CATEGORY_ICONS,
-  SERVICE_QUICK_LINK_ORDER,
+  SERVICE_CATEGORY_DETAILS,
+  RESULT_PAGE_SIZE,
 } from './constants';
+import { ProgramActiveFilters } from './program-active-filters';
 import { ProgramFilterBar } from './program-filter-bar';
-import { ServiceQuickLink } from './service-quick-link';
+import { ProgramResultsToolbar } from './program-results-toolbar';
+import { ResultPagination } from './result-pagination';
+import { orderServices } from './service-order';
 import { ServiceResultCard } from './service-result-card';
 import type { ProgramListProps } from './types';
 import { useProgramFilters } from './use-program-filters';
@@ -22,146 +25,143 @@ export function ProgramList({
   initialQuery = '',
   placeholder = DEFAULT_SEARCH_PLACEHOLDER,
   servicePage = false,
+  today,
 }: ProgramListProps) {
-  const filters = useProgramFilters({ programs, wilayah, initialQuery, servicePage });
-  const hasActiveFilters =
-    Boolean(filters.query) ||
-    Boolean(filters.kategori) ||
-    Boolean(filters.provinsi) ||
-    Boolean(filters.kabkota);
-  const serviceQuickLinks = [...filters.results].sort(
-    (a, b) =>
-      SERVICE_QUICK_LINK_ORDER.indexOf(a.id as (typeof SERVICE_QUICK_LINK_ORDER)[number]) -
-      SERVICE_QUICK_LINK_ORDER.indexOf(b.id as (typeof SERVICE_QUICK_LINK_ORDER)[number]),
+  const filters = useProgramFilters({ programs, wilayah, initialQuery, servicePage, today });
+  const filterKey = JSON.stringify([
+    filters.query,
+    filters.kategori,
+    filters.provinsi,
+    filters.kabkota,
+    filters.sasaran,
+    filters.manfaat,
+    filters.jenjang,
+    filters.periodeStatus,
+    filters.urutan,
+  ]);
+  const [pagination, setPagination] = useState({ filterKey, page: 1 });
+  const page = pagination.filterKey === filterKey ? pagination.page : 1;
+  const orderedResults = servicePage ? orderServices(filters.results) : filters.results;
+  const pageCount = Math.max(1, Math.ceil(orderedResults.length / RESULT_PAGE_SIZE));
+  const visiblePage = Math.min(page, pageCount);
+  const visibleResults = orderedResults.slice(
+    (visiblePage - 1) * RESULT_PAGE_SIZE,
+    visiblePage * RESULT_PAGE_SIZE,
   );
+  const firstVisibleResult = filters.results.length ? (visiblePage - 1) * RESULT_PAGE_SIZE + 1 : 0;
+  const lastVisibleResult = Math.min(visiblePage * RESULT_PAGE_SIZE, filters.results.length);
+  const paginationLabel = servicePage
+    ? 'Halaman layanan'
+    : programs.some((program) => program.jenis === 'layanan')
+      ? 'Halaman hasil pencarian'
+      : 'Halaman program';
+  const handlePageChange = (nextPage: number) => setPagination({ filterKey, page: nextPage });
 
   return (
     <>
-      <ProgramFilterBar filters={filters} placeholder={placeholder} mode="search" />
+      <ProgramFilterBar
+        filters={filters}
+        placeholder={placeholder}
+        mode="search"
+        servicePage={servicePage}
+      />
       {servicePage ? (
         <>
-          {!hasActiveFilters && (
-            <div className="mt-9 space-y-9">
-              <section aria-labelledby="service-start-title">
-                <h2
-                  className="mb-4 text-2xl font-semibold tracking-[-0.025em] text-[#292b2e] max-[640px]:text-xl"
-                  id="service-start-title"
-                >
-                  Mulai Dari Layanan Ini
-                </h2>
-                {filters.results.length > 0 ? (
-                  <div className="grid grid-cols-3 gap-x-9 gap-y-1 max-[760px]:grid-cols-2 max-[480px]:grid-cols-1">
-                    {serviceQuickLinks.slice(0, 6).map((program) => (
-                      <ServiceQuickLink key={program.id} program={program} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-[#687385]">
-                    Belum ada layanan yang cocok dengan pencarianmu.
-                  </p>
-                )}
-              </section>
-              <section aria-labelledby="service-categories-title">
-                <h2
-                  className="mb-4 text-2xl font-semibold tracking-[-0.025em] text-[#292b2e] max-[640px]:text-xl"
-                  id="service-categories-title"
-                >
-                  Jelajahi Berdasarkan Kategori
-                </h2>
-                <div className="grid grid-cols-3 gap-x-[30px] max-[760px]:grid-cols-2 max-[480px]:grid-cols-1">
-                  {filters.kategoriOptions.map((kategori) => {
-                    const CategoryIcon = servicePage
-                      ? (SERVICE_CATEGORY_ICONS[kategori] ?? Files)
-                      : KATEGORI_STYLE[kategori as keyof typeof KATEGORI_STYLE].icon;
-                    return (
-                      <Button
-                        className="group !h-auto !min-h-[70px] !w-full !justify-start !gap-3 !rounded-none !border-b !border-[#e1e7ee] !px-0 !py-4 !text-left !text-xs !font-medium !text-[#2674ca] !transition-colors hover:!bg-transparent hover:!text-[#1458a3]"
-                        key={kategori}
-                        tone="quiet"
-                        onPress={() => filters.selectKategori(kategori)}
-                      >
-                        <CategoryIcon
-                          aria-hidden="true"
-                          className="shrink-0 text-[#7b95b7]"
-                          size={20}
-                          strokeWidth={1.6}
-                        />
-                        <span className="min-w-0 flex-1">{kategori}</span>
-                        <ChevronRight
-                          aria-hidden="true"
-                          className="shrink-0 text-[#196dcc]"
-                          size={16}
-                        />
-                      </Button>
-                    );
-                  })}
-                </div>
-              </section>
-            </div>
-          )}
-          <div className="mt-10 grid items-start gap-[42px] border-t border-[#dce1e6] pt-5 lg:grid-cols-[230px_minmax(0,1fr)] max-[900px]:gap-7 max-[760px]:grid-cols-1">
-            <aside>
-              <h2 className="mb-6 flex items-center gap-2.5 text-base font-semibold tracking-[-0.01em] text-[#263347]">
-                <ListFilter aria-hidden="true" size={19} />
-                Filter pencarian
-              </h2>
-              <ProgramFilterBar
-                filters={filters}
-                placeholder={placeholder}
-                mode="filters"
-                stacked
-              />
-            </aside>
-            <section aria-live="polite">
-              <div className="mb-[18px] flex min-h-[26px] items-center gap-2 text-[13px] text-[#7a8490]">
-                <strong className="font-semibold text-[#4d5967]">
-                  {filters.results.length} layanan
-                </strong>
-              </div>
-              {filters.results.length > 0 ? (
-                <div className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1">
-                  {filters.results.map((program) => (
-                    <ServiceResultCard key={program.id} program={program} />
-                  ))}
-                </div>
-              ) : (
-                <div className="empty">
-                  <HeartHandshake size={38} />
-                  <h3>Layanan belum ditemukan.</h3>
-                  <p>Coba gunakan kata kunci lain atau ubah filter yang dipilih.</p>
-                  <Button tone="secondary" onPress={filters.reset}>
-                    Reset filter
+          <section aria-labelledby="service-categories-title" className="mt-9">
+            <h2
+              className="mb-4 text-lg font-semibold tracking-[-0.025em] text-[#253044]"
+              id="service-categories-title"
+            >
+              Jelajahi berdasarkan kategori
+            </h2>
+            <div className="grid grid-cols-4 gap-3 max-[1023px]:grid-cols-2 max-[540px]:grid-cols-1">
+              {filters.kategoriOptions.map((kategori) => {
+                const CategoryIcon =
+                  Object.entries(SERVICE_CATEGORY_DETAILS).find(([name]) => name === kategori)?.[1]
+                    .icon ?? Files;
+                return (
+                  <Button
+                    aria-pressed={filters.kategori === kategori}
+                    className={`!h-auto !min-h-[76px] !w-full !justify-start !gap-3 !rounded-xl !border !px-4 !py-3 !text-left !text-sm !font-medium !text-[#253044] !transition-colors max-[540px]:!min-h-[64px] ${filters.kategori === kategori ? '!border-[#1769c2] !bg-[#eaf3ff]' : '!border-[#e1e9f2] !bg-[#f5f8fc] hover:!border-[#c9dbef] hover:!bg-[#edf5ff]'}`}
+                    key={kategori}
+                    tone="secondary"
+                    onPress={() =>
+                      filters.selectKategori(filters.kategori === kategori ? '' : kategori)
+                    }
+                  >
+                    <CategoryIcon
+                      aria-hidden="true"
+                      className="shrink-0 text-[#1769c2]"
+                      size={21}
+                      strokeWidth={1.6}
+                    />
+                    <span className="min-w-0 flex-1 leading-5">{kategori}</span>
                   </Button>
-                </div>
-              )}
-            </section>
-            <div className="lg:col-span-2">
-              <DataNote />
+                );
+              })}
             </div>
-          </div>
+          </section>
+          <section aria-live="polite" className="mt-8 border-t border-[#e0e7ef] pt-8">
+            <div className="mb-[18px] flex min-w-0 flex-wrap items-center justify-between gap-3">
+              <h2 className="min-w-0 text-2xl leading-[1.3] font-bold text-[#1b304c] max-[640px]:text-xl">
+                {filters.query
+                  ? `Hasil pencarian “${filters.query}”`
+                  : filters.kategori
+                    ? `Layanan ${filters.kategori}`
+                    : 'Semua layanan'}
+              </h2>
+              <p className="m-0 text-right text-sm leading-6 text-[#657386] max-[540px]:w-full max-[540px]:text-left">
+                Menampilkan {firstVisibleResult}–{lastVisibleResult} dari {filters.results.length}{' '}
+                layanan
+              </p>
+            </div>
+            {filters.results.length > 0 ? (
+              <div className="grid grid-cols-3 items-stretch gap-4 max-[1023px]:grid-cols-2 max-[640px]:grid-cols-1">
+                {visibleResults.map((program) => (
+                  <ServiceResultCard key={program.id} program={program} />
+                ))}
+              </div>
+            ) : (
+              <div className="empty">
+                <HeartHandshake size={38} />
+                <h3>Layanan tidak ditemukan.</h3>
+                <p>Coba kata kunci lain atau hapus pilihan kategori untuk memperluas pencarian.</p>
+                <Button tone="secondary" onPress={filters.reset}>
+                  Reset pencarian
+                </Button>
+              </div>
+            )}
+            <ResultPagination
+              ariaLabel={paginationLabel}
+              page={visiblePage}
+              pageCount={pageCount}
+              onPageChange={handlePageChange}
+            />
+          </section>
+          <DataNote />
         </>
       ) : (
         <>
-          <div className="my-[22px]">
-            <ProgramFilterBar filters={filters} placeholder={placeholder} mode="filters" />
-          </div>
-          <div className="mb-[18px] flex min-h-[26px] items-center gap-2 text-[13px] text-[#7a8490]">
-            <strong className="font-semibold text-[#4d5967]">
-              {filters.results.length} program ditemukan
-            </strong>
-          </div>
+          <ProgramActiveFilters filters={filters} />
+          <ProgramResultsToolbar filters={filters} />
           {filters.results.length > 0 ? (
-            <ProgramGrid columns={2} programs={filters.results} />
+            <ProgramGrid programs={visibleResults} />
           ) : (
             <div className="empty">
               <HeartHandshake size={38} />
               <h3>Belum ada hasil yang sesuai.</h3>
-              <p>Coba ubah kategori atau wilayah pencarianmu. Daftar ini masih terus bertambah.</p>
+              <p>Coba ubah kata kunci, kategori, wilayah, atau sasaran penerima.</p>
               <Button tone="secondary" onPress={filters.reset}>
                 Atur ulang filter
               </Button>
             </div>
           )}
+          <ResultPagination
+            ariaLabel={paginationLabel}
+            page={visiblePage}
+            pageCount={pageCount}
+            onPageChange={handlePageChange}
+          />
           <DataNote />
         </>
       )}

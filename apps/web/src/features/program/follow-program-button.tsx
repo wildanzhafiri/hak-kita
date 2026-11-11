@@ -10,7 +10,12 @@ import { useProgramFollows } from '@/hooks/use-program-follows';
 import { FOLLOW_PROGRAM_CONTENT } from './content';
 import type { FollowProgramButtonProps } from './types';
 
-export function FollowProgramButton({ program }: FollowProgramButtonProps) {
+export function FollowProgramButton({
+  program,
+  showDescription = true,
+  actionLabel,
+  actionTone = 'secondary',
+}: FollowProgramButtonProps) {
   const pathname = usePathname();
   const [isPromptOpen, setIsPromptOpen] = useState(false);
   const {
@@ -39,14 +44,16 @@ export function FollowProgramButton({ program }: FollowProgramButtonProps) {
 
   const trigger = (
     <Button
-      tone="secondary"
+      tone={actionTone}
       className="w-full"
       aria-pressed={isFollowing}
       isDisabled={isLoading || busyProgramId !== null || (!!error && isSignedIn)}
       onPress={handlePress}
     >
       {isFollowing ? <BellOff size={17} /> : <Bell size={17} />}
-      {isFollowing ? FOLLOW_PROGRAM_CONTENT.unfollow : FOLLOW_PROGRAM_CONTENT.follow}
+      {isFollowing
+        ? FOLLOW_PROGRAM_CONTENT.unfollow
+        : (actionLabel ?? FOLLOW_PROGRAM_CONTENT.follow)}
     </Button>
   );
 
@@ -77,7 +84,9 @@ export function FollowProgramButton({ program }: FollowProgramButtonProps) {
           )}
         </Dialog>
       )}
-      <p className="m-0 text-xs leading-5 text-[#617087]">{FOLLOW_PROGRAM_CONTENT.description}</p>
+      {showDescription && (
+        <p className="m-0 text-xs leading-5 text-[#617087]">{FOLLOW_PROGRAM_CONTENT.description}</p>
+      )}
       {error && isSignedIn && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[#b72f35]" role="alert">
           <span>{error}</span>

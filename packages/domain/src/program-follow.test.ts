@@ -9,6 +9,7 @@ import {
 const PROGRAM: Program = {
   id: 'contoh',
   nama: 'Program contoh',
+  jenis: 'program',
   kategori: 'Pendidikan',
   penyelenggara: 'Instansi contoh',
   ringkasan: 'Ringkasan untuk menguji perubahan program.',
@@ -20,6 +21,7 @@ const PROGRAM: Program = {
   dokumen: ['Kartu pelajar'],
   periode: { buka: '2026-01-01', tutup: '2026-12-31' },
   sumberUtama: { url: 'https://contoh.go.id/', jenis: 'situs-resmi' },
+  sumberTambahan: [],
   verifikasi: 'dasar',
   tanggalDiperiksa: '2026-11-01',
 };

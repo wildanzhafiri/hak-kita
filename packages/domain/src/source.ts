@@ -1,5 +1,5 @@
 import type { SumberUtama } from '@hakkita/schema';
-import { OFFICIAL_DOMAIN, STALE_AFTER_DAYS } from './constants';
+import { OFFICIAL_DOMAINS, STALE_AFTER_DAYS } from './constants';
 import { daysSince } from './date';
 
 export function hostnameOf(url: string): string | null {
@@ -12,7 +12,10 @@ export function hostnameOf(url: string): string | null {
 
 export function isOfficialDomain(url: string): boolean {
   const host = hostnameOf(url);
-  return host !== null && (host === OFFICIAL_DOMAIN || host.endsWith(`.${OFFICIAL_DOMAIN}`));
+  return (
+    host !== null &&
+    OFFICIAL_DOMAINS.some((domain) => host === domain || host.endsWith(`.${domain}`))
+  );
 }
 
 export function checkSumberUtama(sumber: SumberUtama): string | null {
@@ -20,7 +23,7 @@ export function checkSumberUtama(sumber: SumberUtama): string | null {
   if (sumber.jenis === 'bank-penyalur') return null;
   if (!isOfficialDomain(sumber.url)) {
     const host = hostnameOf(sumber.url) ?? sumber.url;
-    return `Sumber jenis "${sumber.jenis}" harus berdomain .go.id (ditemukan: ${host})`;
+    return `Sumber jenis "${sumber.jenis}" harus berdomain .go.id atau .desa.id (ditemukan: ${host})`;
   }
   return null;
 }

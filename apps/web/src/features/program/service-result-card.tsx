@@ -1,41 +1,28 @@
 import Link from 'next/link';
-import { ArrowRight, Files } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { programPath } from '@hakkita/domain';
 import { SaveButton } from '@/components/program/save-button';
-import { SERVICE_PRESENTATION } from './constants';
 import type { ServiceCardProps } from './types';
 
 export function ServiceResultCard({ program }: ServiceCardProps) {
-  const presentation = SERVICE_PRESENTATION[program.id];
-  const CategoryIcon = presentation?.icon ?? Files;
-
   return (
-    <article className="flex min-h-[330px] min-w-0 flex-col rounded-2xl border border-[#dce1e6] bg-white p-6 transition-colors hover:border-[#b9cde4] max-[640px]:min-h-0 max-[640px]:p-5">
-      <div className="mb-7 flex items-center justify-between gap-4 text-[#7791b2]">
-        <span className="text-[13px] font-semibold text-[#5c78a0]">
-          {presentation?.category ?? program.kategori}
-        </span>
-        <CategoryIcon aria-hidden="true" size={24} strokeWidth={1.7} />
-      </div>
-      <span className="mb-2 text-[11px] text-[#7d8c9c]">Layanan</span>
-      <h2 className="mb-2 text-[21px] font-semibold leading-[1.35] tracking-[-0.025em] text-[#25354b] max-[640px]:text-lg">
-        <Link className="hover:text-[#196dcc]" href={programPath(program)}>
+    <article className="flex min-h-[218px] min-w-0 flex-col rounded-xl border border-[#d3e0ee] bg-white p-5 shadow-[0_3px_12px_rgba(35,59,85,0.08)] transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-[#a9c6e7] hover:shadow-[0_5px_14px_rgba(35,59,85,0.09)] motion-reduce:transition-none max-[640px]:min-h-0 max-[640px]:p-[18px]">
+      <h2 className="mb-1 min-w-0 text-lg leading-[1.45] font-semibold text-[#253044]">
+        <Link className="break-words hover:text-[#196dcc]" href={programPath(program)}>
           {program.nama}
         </Link>
       </h2>
-      <p className="mb-4 line-clamp-1 text-[13px] leading-[1.7] text-[#687385]">
-        {program.penyelenggara}
-      </p>
-      <p className="mb-5 line-clamp-3 text-sm leading-[1.7] text-[#526173]">{program.ringkasan}</p>
-      <div className="mt-auto flex items-center justify-between gap-4 border-t border-[#dce1e6] pt-4">
+      <p className="mb-4 line-clamp-3 text-sm leading-[1.6] text-[#536477]">{program.ringkasan}</p>
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-[#e8edf4] pt-2">
         <Link
-          className="inline-flex items-center gap-2.5 text-[13px] font-semibold text-[#196dcc] hover:text-[#1458a3]"
+          className="inline-flex min-h-11 min-w-0 items-center gap-2.5 text-sm font-semibold text-[#196dcc] hover:text-[#1458a3]"
           href={programPath(program)}
         >
-          Lihat Panduan <ArrowRight aria-hidden="true" size={18} />
+          <span>Lihat panduan</span>{' '}
+          <ArrowRight aria-hidden="true" className="shrink-0" size={18} />
         </Link>
         <SaveButton
-          className="!border-0 !bg-transparent !text-[#196dcc] hover:!bg-[#edf5ff] aria-pressed:!bg-[#edf5ff] aria-pressed:!text-[#196dcc]"
+          className="!shrink-0 !border-0 !bg-transparent !text-[#196dcc] hover:!bg-[#edf5ff] aria-pressed:!bg-[#edf5ff] aria-pressed:!text-[#196dcc]"
           program={program}
         />
       </div>

@@ -1,7 +1,14 @@
 import { z } from 'zod';
 import {
+  KATEGORI_LAYANAN,
+  KATEGORI_PROGRAM,
+  LEGACY_SERVICE_CATEGORY_BY_ID,
+  JENIS_PROGRAM,
   JENIS_SUMBER,
+  JENJANG,
+  KANAL_LAYANAN,
   KATEGORI,
+  MANFAAT,
   PROFILE_GROUPS,
   TINGKAT_VERIFIKASI,
   TIPE_GERBANG,
@@ -55,10 +62,21 @@ export const ProgramSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id: huruf kecil, angka, dan tanda hubung'),
     nama: z.string().min(2),
+    jenis: z.enum(JENIS_PROGRAM).optional(),
     kategori: z.enum(KATEGORI),
     penyelenggara: z.string().min(2),
     ringkasan: z.string().min(10),
     untuk: z.array(z.string().min(2)).min(1),
+    manfaat: z.array(z.enum(MANFAAT)).optional(),
+    jenjang: z.array(z.enum(JENJANG)).optional(),
+    kanal: z.array(z.enum(KANAL_LAYANAN)).min(1).optional(),
+    biaya: z.string().min(3).optional(),
+    tentang: z.string().min(10).optional(),
+    alias: z.array(z.string().min(2)).optional(),
+    terkait: z
+      .array(z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/))
+      .max(6)
+      .optional(),
     cakupan: CakupanSchema,
     tipeGerbang: z.enum(TIPE_GERBANG),
     syarat: z.array(SyaratSchema).min(1),
@@ -67,12 +85,40 @@ export const ProgramSchema = z
     dokumen: z.array(z.string().min(2)).default([]),
     periode: PeriodeSchema.optional(),
     sumberUtama: SumberUtamaSchema,
+    sumberTambahan: z.array(SumberUtamaSchema).max(10).default([]),
     verifikasi: z.enum(TINGKAT_VERIFIKASI),
     tanggalDiperiksa: TanggalSchema.optional(),
     catatan: z.string().optional(),
     berkas: BerkasSchema.optional(),
   })
   .superRefine((p, ctx) => {
+    const jenis = p.jenis ?? (p.kategori === 'Layanan Administrasi' ? 'layanan' : 'program');
+    if (jenis === 'program' && !(KATEGORI_PROGRAM as readonly string[]).includes(p.kategori)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['kategori'],
+        message: 'Kategori harus sesuai dengan jenis program',
+      });
+    }
+    if (
+      jenis === 'layanan' &&
+      p.kategori !== 'Layanan Administrasi' &&
+      !(KATEGORI_LAYANAN as readonly string[]).includes(p.kategori)
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['kategori'],
+        message: 'Kategori harus sesuai dengan jenis layanan',
+      });
+    }
+    const sourceUrls = [p.sumberUtama.url, ...p.sumberTambahan.map((source) => source.url)];
+    if (new Set(sourceUrls).size !== sourceUrls.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['sumberTambahan'],
+        message: 'Setiap sumber harus memiliki tautan yang berbeda',
+      });
+    }
     if (!matchesLevel(p.cakupan.level, p.cakupan.kode)) {
       ctx.addIssue({
         code: 'custom',
@@ -114,4 +160,12 @@ export const ProgramSchema = z
         message: 'periode.buka tidak boleh setelah periode.tutup',
       });
     }
-  });
+  })
+  .transform((program) => ({
+    ...program,
+    jenis: program.jenis ?? (program.kategori === 'Layanan Administrasi' ? 'layanan' : 'program'),
+    kategori:
+      program.kategori === 'Layanan Administrasi'
+        ? (LEGACY_SERVICE_CATEGORY_BY_ID[program.id] ?? program.kategori)
+        : program.kategori,
+  }));

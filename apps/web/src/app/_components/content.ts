@@ -6,9 +6,10 @@ export const PROGRAM_CATALOG_CONTENT = {
     searchPlaceholder: 'Cari program...',
   },
   layanan: {
-    name: 'Jelajahi Layanan',
-    title: 'Mau mengurus apa hari ini?',
-    description: 'Temukan persyaratan, prosedur, biaya, dan kanal resmi berbagai layanan publik.',
-    searchPlaceholder: 'Cari KTP, NPWP, SIM, paspor...',
+    name: 'Layanan Publik',
+    title: 'Panduan Layanan Publik',
+    description:
+      'Temukan informasi persyaratan, dokumen, dan langkah pengurusan layanan yang kamu butuhkan.',
+    searchPlaceholder: 'Mau mengurus apa hari ini?',
   },
 } as const;

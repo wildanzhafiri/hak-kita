@@ -12,27 +12,34 @@ describe('hostnameOf', () => {
 });
 
 describe('isOfficialDomain', () => {
-  it('accepts go.id and its subdomains', () => {
+  it('accepts official government domains and their subdomains', () => {
     expect(isOfficialDomain('https://kemensos.go.id/')).toBe(true);
     expect(isOfficialDomain('https://cekbansos.kemensos.go.id/profil')).toBe(true);
+    expect(isOfficialDomain('https://desasukamaju.desa.id/')).toBe(true);
+    expect(isOfficialDomain('https://layanan.desasukamaju.desa.id/')).toBe(true);
   });
 
   it('rejects unofficial and lookalike domains', () => {
     expect(isOfficialDomain('https://beritabansos.com/')).toBe(false);
     expect(isOfficialDomain('https://kemensos.go.id.palsu.com/')).toBe(false);
     expect(isOfficialDomain('https://notgo.id/')).toBe(false);
+    expect(isOfficialDomain('https://layanan.id/')).toBe(false);
+    expect(isOfficialDomain('https://kampus.ac.id/')).toBe(false);
     expect(isOfficialDomain('bukan-url')).toBe(false);
   });
 });
 
 describe('checkSumberUtama', () => {
-  it('accepts an official site on go.id', () => {
+  it('accepts official government domains', () => {
     expect(checkSumberUtama({ url: 'https://prakerja.go.id/', jenis: 'situs-resmi' })).toBeNull();
+    expect(
+      checkSumberUtama({ url: 'https://desasukamaju.desa.id/', jenis: 'situs-resmi' }),
+    ).toBeNull();
   });
 
   it('rejects an unofficial domain for an official source type', () => {
     expect(checkSumberUtama({ url: 'https://blog.example.com/', jenis: 'situs-resmi' })).toMatch(
-      /\.go\.id/,
+      /\.go\.id.*\.desa\.id/,
     );
   });
 

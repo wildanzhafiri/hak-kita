@@ -16,12 +16,18 @@ describe('ProgramCard', () => {
   it('links programs to the program route', () => {
     render(<ProgramCard program={makeProgram({ id: 'pkh' })} />);
     const link = screen.getByRole('link', { name: 'Program Contoh' });
-    expect(link.getAttribute('href')).toBe('/program/pkh');
+    expect(link.getAttribute('href')).toBe('/kenali-hakmu/pkh');
   });
 
   it('links administrative services to the service route', () => {
     render(
-      <ProgramCard program={makeProgram({ id: 'ktp-el', kategori: 'Layanan Administrasi' })} />,
+      <ProgramCard
+        program={makeProgram({
+          id: 'ktp-el',
+          jenis: 'layanan',
+          kategori: 'Kependudukan & Dokumen Pribadi',
+        })}
+      />,
     );
     const link = screen.getByRole('link', { name: 'Program Contoh' });
     expect(link.getAttribute('href')).toBe('/layanan/ktp-el');

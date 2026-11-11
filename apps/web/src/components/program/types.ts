@@ -9,7 +9,6 @@ export interface ProgramCardProps {
 export interface ProgramGridProps {
   programs: Program[];
   horizontal?: boolean;
-  columns?: 2 | 3;
 }
 
 export interface PeriodChipProps {
@@ -49,4 +48,5 @@ export interface SavePromptProps {
 export interface OfficialSiteLinkProps {
   url: string;
   className: string;
+  label?: string;
 }

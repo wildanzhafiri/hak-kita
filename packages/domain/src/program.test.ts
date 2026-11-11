@@ -42,12 +42,35 @@ describe('ProgramSchema', () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it('rejects duplicate program source URLs', () => {
+    const result = ProgramSchema.safeParse({
+      ...makeProgram(),
+      sumberTambahan: [{ url: 'https://contoh.go.id/', jenis: 'situs-resmi' }],
+    });
+    expect(result.success).toBe(false);
+  });
 });
 
 describe('isLayanan', () => {
-  it('is true only for the administrative service category', () => {
-    expect(isLayanan(makeProgram({ kategori: 'Layanan Administrasi' }))).toBe(true);
+  it('uses the explicit kind to identify services', () => {
+    expect(
+      isLayanan(makeProgram({ jenis: 'layanan', kategori: 'Kependudukan & Dokumen Pribadi' })),
+    ).toBe(true);
     expect(isLayanan(makeProgram({ kategori: 'Pendidikan' }))).toBe(false);
+  });
+
+  it('infers the kind of older records from their existing category', () => {
+    const parsed = ProgramSchema.parse({
+      ...makeProgram(),
+      id: 'ktp-el',
+      jenis: undefined,
+      kategori: 'Layanan Administrasi',
+    });
+
+    expect(parsed.jenis).toBe('layanan');
+    expect(parsed.kategori).toBe('Kependudukan & Dokumen Pribadi');
+    expect(isLayanan(parsed)).toBe(true);
   });
 });
 
@@ -63,16 +86,22 @@ describe('hasBerkas', () => {
 
 describe('programPath', () => {
   it('routes programs to Kenali Hakmu and services to Layanan Publik', () => {
-    expect(programPath(makeProgram({ id: 'pkh' }))).toBe('/program/pkh');
-    expect(programPath(makeProgram({ id: 'ktp-el', kategori: 'Layanan Administrasi' }))).toBe(
-      '/layanan/ktp-el',
-    );
+    expect(programPath(makeProgram({ id: 'pkh' }))).toBe('/kenali-hakmu/pkh');
+    expect(
+      programPath(
+        makeProgram({
+          id: 'ktp-el',
+          jenis: 'layanan',
+          kategori: 'Kependudukan & Dokumen Pribadi',
+        }),
+      ),
+    ).toBe('/layanan/ktp-el');
   });
 });
 
 describe('berkasPath', () => {
   it('appends the berkas segment to the program path', () => {
-    expect(berkasPath(makeProgram({ id: 'kip-kuliah' }))).toBe('/program/kip-kuliah/berkas');
+    expect(berkasPath(makeProgram({ id: 'kip-kuliah' }))).toBe('/kenali-hakmu/kip-kuliah/berkas');
   });
 });
 
@@ -93,6 +122,15 @@ describe('checkProgram', () => {
       syarat: [{ teks: 'Syarat', sumberUrl: 'https://media.example.com/a' }],
     });
     expect(checkProgram(program, { today: TODAY }).errors[0]).toMatch(/syarat\[0\]/);
+  });
+
+  it('fails an unofficial additional source', () => {
+    const program = makeProgram({
+      sumberTambahan: [{ url: 'https://blog.example.com/', jenis: 'situs-resmi' }],
+    });
+    expect(checkProgram(program, { today: TODAY }).errors).toContain(
+      'sumberTambahan[0]: sumber harus berdomain .go.id atau .desa.id',
+    );
   });
 
   it('fails a check date in the future', () => {
@@ -131,7 +169,7 @@ describe('checkProgram', () => {
       },
     });
     const errors = checkProgram(program, { today: TODAY }).errors;
-    expect(errors).toContain('berkas.dokumen[0]: sumber harus berdomain .go.id');
+    expect(errors).toContain('berkas.dokumen[0]: sumber harus berdomain .go.id atau .desa.id');
     expect(errors).toContain('berkas.kendala[0]: sumber harus memakai https');
   });
 });
