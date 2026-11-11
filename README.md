@@ -38,6 +38,13 @@ Tanya HAKKITA adalah asisten AI serbaguna untuk mencari, memahami, dan menindakl
 
 Admin menambahkan atau memperbarui data program dan layanan. Agen AI membantu mencari program baru dan memeriksa perubahan di halaman sumber resmi yang terdaftar. Pencarian dan pemantauan bisa dijalankan manual atau dijadwalkan otomatis setiap hari, dan admin dapat mengatur apakah pemantauan aktif. Hasil pencarian langsung masuk ke Validasi Informasi untuk ditinjau: admin membuka sumber, memeriksa temuannya, lalu menyetujui atau menolak informasi tersebut. Admin juga dapat mengirim pemberitahuan kepada pengguna yang mengikuti program setelah memeriksa pratinjau emailnya.
 
+Untuk mencoba panel admin, buka [hak-kita.vercel.app/admin](https://hak-kita.vercel.app/admin) dan gunakan akun berikut:
+
+| Email                   | Kata sandi |
+| ----------------------- | ---------- |
+| `adminkita@hakkita.com` | `admin123` |
+
+
 Informasi publik dapat dilihat tanpa akun. Masuk diperlukan untuk menyimpan pilihan ke akun, mengikuti program, dan mengaktifkan pemberitahuan email.
 
 ## Menjalankan secara lokal
