@@ -6,11 +6,12 @@ import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { TextInput } from '@/components/ui/text-input';
+import { Logo } from '@/components/layout/logo';
 import { SAVED_PROGRAMS_TABLE } from '@/config/auth';
 import { markSavedProgram } from '@/hooks/saved-program-store';
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import { AUTH_CALLBACK_PATH, MIN_PASSWORD_LENGTH } from './constants';
-import { AUTH_ERROR_COPY, AUTH_FORM_COPY } from './content';
+import { ADMIN_AUTH_COPY, AUTH_ERROR_COPY, AUTH_FORM_COPY } from './content';
 import type { AuthFormProps } from './types';
 
 function authErrorMessage(message: string): string {
@@ -26,7 +27,13 @@ function buildRedirectPath(nextPath: string, saveProgramId: string | null): stri
   return `${AUTH_CALLBACK_PATH}?${params.toString()}`;
 }
 
-export function AuthForm({ mode, nextPath, saveProgramId, initialMessage }: AuthFormProps) {
+export function AuthForm({
+  mode,
+  nextPath,
+  saveProgramId,
+  initialMessage,
+  adminMode,
+}: AuthFormProps) {
   const router = useRouter();
   const copy = AUTH_FORM_COPY[mode];
   const [message, setMessage] = useState<string | null>(initialMessage);
@@ -34,6 +41,7 @@ export function AuthForm({ mode, nextPath, saveProgramId, initialMessage }: Auth
   const isConfigured = isSupabaseConfigured();
   const switchMode = mode === 'login' ? 'daftar' : 'masuk';
   const switchHref = `/${switchMode}?${new URLSearchParams({ next: nextPath, ...(saveProgramId ? { save: saveProgramId } : {}) }).toString()}`;
+  const Heading = adminMode ? 'h1' : 'h2';
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -124,8 +132,17 @@ export function AuthForm({ mode, nextPath, saveProgramId, initialMessage }: Auth
 
   return (
     <section className="mx-auto max-w-[520px] rounded-xl border border-[#dce1e6] bg-white p-7 max-[640px]:p-5">
-      <h2 className="text-2xl font-bold tracking-[-0.03em] text-[#1b304c]">{copy.title}</h2>
-      <p className="mt-2 text-sm leading-6 text-[#617087]">{copy.description}</p>
+      {adminMode && (
+        <div className="mb-6 flex justify-center">
+          <Logo />
+        </div>
+      )}
+      <Heading className="text-2xl font-bold tracking-[-0.03em] text-[#1b304c]">
+        {adminMode ? 'Masuk Admin HAKKITA' : copy.title}
+      </Heading>
+      <p className="mt-2 text-sm leading-6 text-[#617087]">
+        {adminMode ? ADMIN_AUTH_COPY.description : copy.description}
+      </p>
       {!isConfigured ? (
         <p
           className="mt-6 rounded-lg border border-[#dce1e6] bg-[#f5f8fc] p-4 text-sm leading-6 text-[#526173]"
@@ -136,32 +153,30 @@ export function AuthForm({ mode, nextPath, saveProgramId, initialMessage }: Auth
         </p>
       ) : (
         <>
-          <Button
-            className="mt-6 w-full border-[#dce1e6] !bg-white !text-[#25354b] hover:!bg-[#f7f9fc]"
-            isDisabled={isSubmitting}
-            onPress={handleGoogleSignIn}
-            tone="secondary"
-          >
-            <Image src="/google-g-logo.png" alt="" width={20} height={20} />
-            {isSubmitting ? 'Menghubungkan ke Google' : copy.googleLabel}
-          </Button>
-          <div className="my-5 flex items-center gap-3 text-xs text-[#77808c]">
-            <span className="h-px flex-1 bg-[#e2e7ed]" />
-            <span>{copy.emailDivider}</span>
-            <span className="h-px flex-1 bg-[#e2e7ed]" />
-          </div>
-          <form className="grid gap-4" onSubmit={handleSubmit}>
+          {!adminMode && (
+            <>
+              <Button
+                className="mt-6 w-full border-[#dce1e6] !bg-white !text-[#25354b] hover:!bg-[#f7f9fc]"
+                isDisabled={isSubmitting}
+                onPress={handleGoogleSignIn}
+                tone="secondary"
+              >
+                <Image src="/google-g-logo.png" alt="" width={20} height={20} />
+                {isSubmitting ? 'Menghubungkan ke Google' : copy.googleLabel}
+              </Button>
+              <div className="my-5 flex items-center gap-3 text-xs text-[#77808c]">
+                <span className="h-px flex-1 bg-[#e2e7ed]" />
+                <span>{copy.emailDivider}</span>
+                <span className="h-px flex-1 bg-[#e2e7ed]" />
+              </div>
+            </>
+          )}
+          <form className={adminMode ? 'mt-6 grid gap-4' : 'grid gap-4'} onSubmit={handleSubmit}>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-[#25354b]" htmlFor="auth-email">
                 Email
               </label>
-              <TextInput
-                autoComplete="email"
-                id="auth-email"
-                name="email"
-                required
-                type="email"
-              />
+              <TextInput autoComplete="email" id="auth-email" name="email" required type="email" />
             </div>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-[#25354b]" htmlFor="auth-password">
@@ -190,18 +205,34 @@ export function AuthForm({ mode, nextPath, saveProgramId, initialMessage }: Auth
           </form>
         </>
       )}
-      <p className="mt-5 text-center text-sm text-[#617087]">
-        {copy.switchLabel}{' '}
-        <Link
-          className="font-semibold text-[#196dcc] underline underline-offset-4"
-          href={switchHref}
-        >
-          {copy.switchAction}
-        </Link>
-      </p>
-      <p className="mt-4 text-center text-xs leading-5 text-[#77808c]">
-        HAKKITA tidak meminta NIK atau dokumen pribadi.
-      </p>
+      {!adminMode && (
+        <>
+          <p className="mt-5 text-center text-sm text-[#617087]">
+            {copy.switchLabel}{' '}
+            <Link
+              className="font-semibold text-[#196dcc] underline underline-offset-4"
+              href={switchHref}
+            >
+              {copy.switchAction}
+            </Link>
+          </p>
+          {mode === 'login' && (
+            <p className="mt-3 text-center text-sm">
+              <Link
+                className="font-medium text-[#196dcc] underline underline-offset-4"
+                href="/admin/radar"
+              >
+                Masuk sebagai admin
+              </Link>
+            </p>
+          )}
+        </>
+      )}
+      {!adminMode && (
+        <p className="mt-4 text-center text-xs leading-5 text-[#77808c]">
+          HAKKITA tidak meminta NIK atau dokumen pribadi.
+        </p>
+      )}
     </section>
   );
 }

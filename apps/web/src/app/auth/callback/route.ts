@@ -5,6 +5,14 @@ import { SAVED_PROGRAMS_TABLE } from '@/config/auth';
 import { safeAuthPath } from '@/features/auth/safe-auth-path';
 import type { Database } from '@/lib/supabase/types';
 
+function authErrorRedirect(origin: string, error: string, nextPath: string) {
+  const destination = new URL('/masuk', origin);
+  destination.searchParams.set('error', error);
+  destination.searchParams.set('next', nextPath);
+  if (nextPath.startsWith('/admin')) destination.searchParams.set('admin', '1');
+  return NextResponse.redirect(destination);
+}
+
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
@@ -15,11 +23,11 @@ export async function GET(request: NextRequest) {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (providerError) {
-    return NextResponse.redirect(new URL('/masuk?error=oauth', requestUrl.origin));
+    return authErrorRedirect(requestUrl.origin, 'oauth', nextPath);
   }
 
   if (!code || !url || !key) {
-    return NextResponse.redirect(new URL('/masuk?error=callback', requestUrl.origin));
+    return authErrorRedirect(requestUrl.origin, 'callback', nextPath);
   }
 
   const cookieStore = await cookies();
@@ -35,7 +43,7 @@ export async function GET(request: NextRequest) {
   });
 
   const { error } = await supabase.auth.exchangeCodeForSession(code);
-  if (error) return NextResponse.redirect(new URL('/masuk?error=callback', requestUrl.origin));
+  if (error) return authErrorRedirect(requestUrl.origin, 'callback', nextPath);
 
   if (saveProgramId && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(saveProgramId)) {
     const { data } = await supabase.auth.getUser();

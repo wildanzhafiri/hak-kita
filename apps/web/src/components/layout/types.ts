@@ -20,6 +20,23 @@ export interface SiteFrameProps {
   children: ReactNode;
 }
 
+export interface AdminShellProps {
+  adminEmail: string;
+  activeSection: AdminSection;
+  children: ReactNode;
+}
+
+export type AdminSection = 'radar' | 'programs' | 'history';
+
+export interface AdminSidebarProps {
+  activeSection: AdminSection;
+  adminEmail: string;
+  isSigningOut: boolean;
+  signOutError: string | null;
+  onNavigate?: () => void;
+  onSignOut: () => void;
+}
+
 export interface ComingSoonProps {
   breadcrumbs: BreadcrumbItem[];
   eyebrow: string;
@@ -36,4 +53,9 @@ export interface AuthProviderProps {
 
 export interface AuthNavActionProps {
   currentPath: string;
+  variant?: 'inline' | 'sheet';
+}
+
+export interface MobileNavigationProps {
+  pathname: string;
 }

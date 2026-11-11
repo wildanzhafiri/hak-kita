@@ -17,7 +17,9 @@ export async function loadProgramNews(
   while (true) {
     const { data, error } = await client
       .from('program_news')
-      .select('id,program_id,title,summary,source_url,published_on,created_at')
+      .select(
+        'id,program_id,title,summary,source_url,published_on,created_at,email_text,extra_source_urls',
+      )
       .order('created_at')
       .order('id')
       .range(offset, offset + EMAIL_PREFERENCE_PAGE_SIZE - 1);

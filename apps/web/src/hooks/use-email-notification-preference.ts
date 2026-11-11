@@ -60,8 +60,7 @@ export function useEmailNotificationPreference(): UseEmailNotificationPreference
     };
   }, [isReady, reloadVersion, userId]);
 
-  const current =
-    state.userId === userId ? state : { ...EMPTY_STATE, userId, isLoading: !!userId };
+  const current = state.userId === userId ? state : { ...EMPTY_STATE, userId, isLoading: !!userId };
 
   async function setEnabled(enabled: boolean): Promise<void> {
     if (!userId || current.isLoading || current.isSaving || current.error) return;

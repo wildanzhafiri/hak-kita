@@ -16,7 +16,11 @@ vi.mock('@/lib/supabase/client', () => ({
   getSupabaseBrowserClient: () => ({ auth: { signOut: mocks.signOut } }),
 }));
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, onPress, isDisabled }: {
+  Button: ({
+    children,
+    onPress,
+    isDisabled,
+  }: {
     children: React.ReactNode;
     onPress?: () => void;
     isDisabled?: boolean;
@@ -27,7 +31,12 @@ vi.mock('@/components/ui/button', () => ({
   ),
 }));
 vi.mock('@/components/ui/dialog', () => ({
-  Dialog: ({ trigger, open, title, children }: {
+  Dialog: ({
+    trigger,
+    open,
+    title,
+    children,
+  }: {
     trigger: React.ReactNode;
     open: boolean;
     title: string;

@@ -72,7 +72,7 @@ async function main(): Promise<void> {
   }
 
   const response = await fetch(
-    `${endpoint}/rest/v1/program_news?on_conflict=program_id,source_url`,
+    `${endpoint}/rest/v1/program_news?on_conflict=program_id,source_url,published_on,title`,
     {
       method: 'POST',
       headers: { ...headers, Prefer: 'resolution=merge-duplicates,return=minimal' },

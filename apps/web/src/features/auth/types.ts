@@ -5,9 +5,10 @@ export interface AuthFormProps {
   nextPath: string;
   saveProgramId: string | null;
   initialMessage: string | null;
+  adminMode: boolean;
 }
 
 export interface AuthPageProps {
   mode: AuthMode;
-  searchParams: Promise<{ next?: string; save?: string; error?: string }>;
+  searchParams: Promise<{ next?: string; save?: string; error?: string; admin?: string }>;
 }

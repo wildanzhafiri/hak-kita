@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { makeProgram } from '@/test/fixtures';
-import { collectProgramSourceUrls } from './program-source-monitor';
+import { collectProgramSourceTargets, collectProgramSourceUrls } from './program-source-monitor';
 
 vi.mock('server-only', () => ({}));
 
@@ -8,6 +8,7 @@ describe('program source monitoring', () => {
   it('watches unique official links from checked program facts', () => {
     const checked = makeProgram({
       sumberUtama: { url: 'https://contoh.go.id/', jenis: 'situs-resmi' },
+      sumberTambahan: [{ url: 'https://contoh.go.id/panduan', jenis: 'situs-resmi' }],
       syarat: [
         { teks: 'Syarat resmi', sumberUrl: 'https://contoh.go.id/syarat' },
         { teks: 'Syarat tanpa sumber' },
@@ -33,8 +34,13 @@ describe('program source monitoring', () => {
 
     expect(collectProgramSourceUrls([checked, checked, unchecked], documents)).toEqual([
       'https://contoh.go.id/',
-      'https://contoh.go.id/syarat',
       'https://contoh.go.id/panduan',
+      'https://contoh.go.id/syarat',
+    ]);
+    expect([...collectProgramSourceTargets([checked, unchecked], documents)]).toEqual([
+      ['https://contoh.go.id/', [checked]],
+      ['https://contoh.go.id/panduan', [checked]],
+      ['https://contoh.go.id/syarat', [checked]],
     ]);
   });
 });

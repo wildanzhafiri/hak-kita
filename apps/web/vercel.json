@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/program-sources",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/program-discovery",
+      "schedule": "0 4 * * *"
     }
   ]
 }

@@ -5,7 +5,10 @@ export const AUTH_ERROR_COPY = {
   generic: 'Akun belum dapat diproses. Coba lagi sebentar.',
   saveFailed: 'Akun berhasil masuk, tetapi program belum tersimpan. Coba simpan lagi.',
   callback: 'Tautan konfirmasi tidak dapat diproses. Minta email konfirmasi baru lalu coba lagi.',
-  oauth: 'Masuk dengan Google belum berhasil. Periksa pengaturan Google di Supabase lalu coba lagi.',
+  oauth:
+    'Masuk dengan Google belum berhasil. Periksa pengaturan Google di Supabase lalu coba lagi.',
+  admin: 'Akun ini belum memiliki akses admin HAKKITA.',
+  adminSetup: 'Akses admin belum tersedia. Pastikan migrasi role admin sudah diterapkan.',
 } as const;
 
 export const AUTH_FORM_COPY = {
@@ -27,4 +30,9 @@ export const AUTH_FORM_COPY = {
     switchLabel: 'Sudah punya akun?',
     switchAction: 'Masuk',
   },
+} as const;
+
+export const ADMIN_AUTH_COPY = {
+  title: 'Masuk Admin HAKKITA',
+  description: 'Gunakan akun HAKKITA yang telah diberi akses untuk meninjau pembaruan informasi.',
 } as const;

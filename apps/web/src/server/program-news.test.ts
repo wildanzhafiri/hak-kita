@@ -15,6 +15,8 @@ describe('program news email', () => {
       source_url: 'https://contoh.go.id/pengumuman',
       published_on: '2026-11-08',
       created_at: '2026-11-08T10:00:00Z',
+      email_text: null,
+      extra_source_urls: [],
     };
     const key = createProgramNewsEmailId('user-1', news.id);
     const email = buildProgramNewsEmail(
@@ -50,6 +52,8 @@ describe('program news email', () => {
       source_url: program.sumberUtama.url,
       published_on: '2026-11-08',
       created_at: '2026-11-08T10:00:00Z',
+      email_text: null,
+      extra_source_urls: [],
     };
     const email = buildProgramNewsEmail(
       'person@example.com',
@@ -63,5 +67,31 @@ describe('program news email', () => {
     expect(email.text).toContain('Pesan untukmu: Periksa pengumuman sebelum bertindak.');
     expect(email.html).toContain('Pesan untukmu');
     expect(email.html.match(/https:\/\/contoh.go.id\/pengumuman/g)).toHaveLength(1);
+  });
+
+  it('uses the reviewed email copy and includes additional official sources', () => {
+    const program = makeProgram();
+    const email = buildProgramNewsEmail(
+      'person@example.com',
+      program,
+      {
+        id: 'news-3',
+        program_id: program.id,
+        title: 'Jadwal pendaftaran diperbarui',
+        summary: 'Ringkasan untuk halaman program yang sudah diperiksa admin.',
+        email_text: 'Pendaftaran sekarang mengikuti jadwal pada pengumuman terbaru penyelenggara.',
+        source_url: 'https://contoh.go.id/pengumuman',
+        extra_source_urls: ['https://instansi.go.id/jadwal'],
+        published_on: '2026-11-08',
+        created_at: '2026-11-08T10:00:00Z',
+      },
+      'https://hakkita.example',
+      'key',
+    );
+
+    expect(email.text).toContain('Pendaftaran sekarang mengikuti jadwal');
+    expect(email.text).not.toContain('Ringkasan untuk halaman program');
+    expect(email.text).toContain('https://instansi.go.id/jadwal');
+    expect(email.html).toContain('https://instansi.go.id/jadwal');
   });
 });

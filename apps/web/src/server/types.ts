@@ -1,5 +1,5 @@
 import type { ProgramFollowSnapshot } from '@hakkita/domain';
-import type { Program } from '@hakkita/schema';
+import type { Program, RadarProgramDraft, RadarRunEvent } from '@hakkita/schema';
 import type { Database } from '@/lib/supabase/types';
 
 export type EmailPreference = Database['public']['Tables']['program_email_preferences']['Row'];
@@ -7,6 +7,25 @@ export type EmailPreference = Database['public']['Tables']['program_email_prefer
 export type ProgramFollow = Database['public']['Tables']['program_follows']['Row'];
 
 export type ProgramNews = Database['public']['Tables']['program_news']['Row'];
+
+export type RadarCandidate = Database['public']['Tables']['program_radar_candidates']['Row'];
+
+export type RadarAccessState =
+  | { status: 'unconfigured' }
+  | { status: 'anonymous' }
+  | { status: 'forbidden' }
+  | { status: 'authorized'; userId: string; email: string };
+
+export interface RadarCandidateView extends RadarCandidate {
+  program_name: string;
+}
+
+export type RadarProgramCandidate =
+  Database['public']['Tables']['program_radar_program_candidates']['Row'];
+
+export interface RadarProgramCandidateView extends RadarProgramCandidate {
+  record: RadarProgramDraft;
+}
 
 export interface ProgramEmailRunOptions {
   onlyRecipientEmail?: string;
@@ -31,6 +50,32 @@ export interface ProgramSourceFingerprint {
   fingerprint: string;
   etag: string | null;
   lastModified: string | null;
+  contentType: string | null;
+  html: string | null;
+}
+
+export interface RadarTextResponse {
+  body: string;
+  url: string;
+  status: number;
+}
+
+export interface RadarCrawlPage {
+  url: string;
+  depth: number;
+}
+
+export interface RadarOfficialPage {
+  url: string;
+  text: string;
+  fingerprint: string;
+  etag: string | null;
+  lastModified: string | null;
+}
+
+export interface ProgramSourceTarget {
+  sourceUrl: string;
+  programs: Program[];
 }
 
 export interface ProgramSourceMonitorResult {
@@ -39,17 +84,55 @@ export interface ProgramSourceMonitorResult {
   failed: string[];
 }
 
+export interface ProgramDiscoveryResult {
+  searched: number;
+  queued: number;
+  failed: string[];
+}
+
+export type RadarRunReporter = (event: RadarRunEvent) => void;
+
+export interface DiscoverySearchQuery {
+  query: string;
+  label: string;
+}
+
 export interface ApbdBudgetCategory {
   label: string;
   allocation: number;
   realization: number;
 }
 
+export interface ApbdBudgetLine extends ApbdBudgetCategory {
+  realizationPercent: number;
+}
+
+export interface BudgetOption {
+  value: string;
+  label: string;
+}
+
+export interface ApbdBudgetFilters {
+  years: BudgetOption[];
+  periods: BudgetOption[];
+  provinces: BudgetOption[];
+  regions: BudgetOption[];
+  maxPeriod: number;
+}
+
 export interface ApbdBudgetSnapshot {
   year: number;
   period: string;
+  periodNumber: number;
   dataReceived: string;
+  regionLabel: string;
+  sourceUrl: string;
+  totalAllocation: number;
+  totalRealization: number;
+  realizationPercent: number;
   categories: ApbdBudgetCategory[];
+  expenses: ApbdBudgetLine[];
+  revenues: ApbdBudgetLine[];
 }
 
 export interface ProgramEmailMessage {
@@ -96,3 +179,7 @@ export interface ProgramEmailRunResult {
   sent: number;
   failed: number;
 }
+
+export type GatewayLanguageModel = ReturnType<
+  ReturnType<typeof import('@ai-sdk/openai-compatible').createOpenAICompatible>['chatModel']
+>;

@@ -5,5 +5,6 @@ export * from './knowledge.schema';
 export * from './obstacle-report.schema';
 export * from './program.schema';
 export * from './profile.schema';
+export * from './radar.schema';
 export * from './types';
 export * from './wilayah.schema';

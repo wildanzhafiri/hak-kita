@@ -24,7 +24,10 @@ function safeLink(value: string): string {
 function renderDetail(detail: ProgramEmailDetail): string {
   const colors = PROGRAM_EMAIL_COLORS;
   const notes = detail.notes
-    .map((note) => `<li style="margin:7px 0;color:${colors.muted};font-size:15px;line-height:23px;">${escapeHtml(note)}</li>`)
+    .map(
+      (note) =>
+        `<li style="margin:7px 0;color:${colors.muted};font-size:15px;line-height:23px;">${escapeHtml(note)}</li>`,
+    )
     .join('');
   return `<tr><td style="padding:18px 0;border-top:1px solid ${colors.border};vertical-align:top;">
     <p style="margin:0;color:${colors.ink};font-size:16px;font-weight:700;line-height:23px;">${escapeHtml(detail.title)}</p>

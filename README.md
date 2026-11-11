@@ -37,23 +37,25 @@ Buka http://localhost:3000. Tanpa env, halaman publik tetap memakai data YAML/JS
 
 `.env.example` di root repo adalah daftar lengkap nama variabel. Isi hanya nilai untuk layanan yang ingin kamu jalankan.
 
-| Variabel | Dipakai untuk | Jenis |
-| --- | --- | --- |
-| `NEXT_PUBLIC_SUPABASE_URL` | Alamat proyek Supabase | Publik |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Koneksi browser ke Supabase | Publik |
-| `SUPABASE_SERVICE_ROLE_KEY` | Akses server untuk data dan proses akun | Rahasia |
-| `DEMO_OFFLINE` | Isi `true` untuk memaksa fallback YAML/JSON | Opsional |
-| `AI_API_KEY` | Kunci API AI | Rahasia |
-| `AI_GATEWAY_BASE_URL` | URL endpoint AI | Konfigurasi |
-| `AI_GATEWAY_MODEL` | ID model AI | Konfigurasi |
-| `TOOL_APPROVAL_SECRET` | Menandatangani persetujuan tindakan asisten | Rahasia |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Widget Turnstile di browser | Publik |
-| `TURNSTILE_SECRET_KEY` | Verifikasi Turnstile di server | Rahasia |
-| `RESEND_API_KEY` | Mengirim pemberitahuan email | Rahasia |
-| `EMAIL_FROM` | Alamat pengirim yang diverifikasi di Resend | Konfigurasi |
-| `HAKKITA_SITE_URL` | URL utama situs untuk tautan email | Konfigurasi |
-| `CRON_SECRET` | Melindungi endpoint jadwal harian | Rahasia |
-| `HAKKITA_DATA_DIR` | Folder data alternatif untuk skrip impor | Opsional |
+| Variabel                               | Dipakai untuk                                                             | Jenis       |
+| -------------------------------------- | ------------------------------------------------------------------------- | ----------- |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Alamat proyek Supabase                                                    | Publik      |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Koneksi browser ke Supabase                                               | Publik      |
+| `SUPABASE_SERVICE_ROLE_KEY`            | Akses server untuk data dan proses akun                                   | Rahasia     |
+| `DEMO_OFFLINE`                         | Isi `true` untuk memaksa fallback YAML/JSON                               | Opsional    |
+| `AI_API_KEY`                           | Kunci API AI                                                              | Rahasia     |
+| `AI_GATEWAY_BASE_URL`                  | URL endpoint AI                                                           | Konfigurasi |
+| `AI_GATEWAY_MODEL`                     | ID model AI                                                               | Konfigurasi |
+| `RADAR_AI_MODEL`                       | Model untuk menyiapkan draf Radar; bila kosong memakai `AI_GATEWAY_MODEL` | Opsional    |
+| `TAVILY_API_KEY`                       | Pencarian halaman resmi untuk menemukan kandidat program baru             | Rahasia     |
+| `TOOL_APPROVAL_SECRET`                 | Menandatangani persetujuan tindakan asisten                               | Rahasia     |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`       | Widget Turnstile di browser                                               | Publik      |
+| `TURNSTILE_SECRET_KEY`                 | Verifikasi Turnstile di server                                            | Rahasia     |
+| `RESEND_API_KEY`                       | Mengirim pemberitahuan email                                              | Rahasia     |
+| `EMAIL_FROM`                           | Alamat pengirim yang diverifikasi di Resend                               | Konfigurasi |
+| `HAKKITA_SITE_URL`                     | URL utama situs untuk tautan email                                        | Konfigurasi |
+| `CRON_SECRET`                          | Melindungi endpoint jadwal harian                                         | Rahasia     |
+| `HAKKITA_DATA_DIR`                     | Folder data alternatif untuk skrip impor                                  | Opsional    |
 
 Nilai dengan awalan `NEXT_PUBLIC_` memang digunakan browser dan tidak boleh berisi rahasia. Jangan pernah membagikan atau memasukkan kunci rahasia ke variabel tersebut. Aplikasi dan skrip impor membaca satu file `apps/web/.env.local`, jadi tidak perlu membuat salinan kedua di root repo. Di Vercel, masukkan variabel melalui **Project Settings → Environment Variables**, bukan melalui file repo.
 
@@ -70,7 +72,7 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 
 ### Progres saat ini
 
-- **Kenali Hakmu:** Cari program di `/program` berdasarkan wilayah, kategori, atau kata kunci.
+- **Kenali Hakmu:** Cari program di `/kenali-hakmu` berdasarkan wilayah, kategori, atau kata kunci.
 - **Layanan Publik:** Cari panduan di `/layanan` berdasarkan wilayah, kategori, atau kata kunci.
 - **Detail program dan layanan:** Baca ringkasan, persyaratan, dan langkah pengurusan. Halaman program juga mencantumkan sumber dan status verifikasi.
 - **Berkas Siap Bawa:** Untuk KIP Kuliah, lihat daftar hal yang perlu disiapkan sesuai jawaban, catat kendala dan catatan pribadi, lalu cetak daftar pengingatnya. HAKKITA tidak membuat, menerima, atau mengirim dokumen. Saat masuk, jawaban, centang, dan catatan tersimpan di akun; tanpa akun, data berada di perangkat.
@@ -79,14 +81,14 @@ pnpm build && pnpm start    # build produksi lalu jalankan
 - **Ikuti program:** Ikuti program melalui halaman detailnya. Perubahan periode, syarat, atau dokumen yang tercatat pada data terverifikasi ditampilkan di Rencanaku setelah situs diperbarui. Pengguna dapat mengaktifkan pemberitahuan email untuk perubahan tersebut dan kabar resmi yang ditambahkan secara manual jika Supabase, Resend, dan jadwal harian sudah dikonfigurasi.
 - **Periksa Kondisimu:** Jawab pertanyaan untuk melihat program yang mungkin sesuai dengan kriteria, alasan pencocokannya, dan tautan ke kanal resmi. Hasilnya hanya menunjukkan potensi kesesuaian.
 - **Asisten:** Tanyakan program, panduan, atau kabar resmi. Asisten mencari bahan terkurasi saat dibutuhkan, menyertakan sumber, memahami halaman yang sedang dibuka, dan meminta persetujuan sebelum menyimpan program ke akun.
-- **Data program:** KIP Kuliah, PKH, Kartu Prakerja, KTP elektronik, dan KJP Plus DKI Jakarta.
+- **Data program:** 15 program dan layanan terverifikasi, termasuk KIP Kuliah, PKH, KTP elektronik, KJP Plus DKI Jakarta, dan program daerah di Aceh, Kalimantan Timur, Sulawesi Selatan, serta Papua Barat.
 - **Telusuri Anggaran:** Lihat ringkasan APBN terbaru yang dicantumkan beserta periode dan sumbernya, atau buka data APBD di portal resmi SIKD.
 
 ### Fitur mendatang
 
 - **Filter verifikasi:** Sembunyikan program yang belum diverifikasi.
 - **Peta hambatan:** Lihat laporan kendala yang dirangkum menurut wilayah.
-- **Cakupan data:** Tambah kriteria pencocokan serta data program dan wilayah.
+- **Cakupan data:** Tambah kriteria pencocokan dan rincian kabupaten/kota pada data wilayah.
 
 ## Struktur
 
@@ -109,7 +111,10 @@ Sumber yang digunakan sementara untuk data program dan wilayah saat ini:
 - https://kip-kuliah.kemdiktisaintek.go.id/panduan
 - https://kip-kuliah.kemdiktisaintek.go.id/siswa/pendaftaran/baru
 - https://kemensos.go.id/
-- https://www.prakerja.go.id/
+- https://bpsdm.acehprov.go.id/
+- https://pendidikan.gratispol.kaltimprov.go.id/
+- https://beasiswa.sulselprov.go.id/
+- https://papuacerdas.papuabaratprov.go.id/
 - https://dukcapil.kemendagri.go.id/
 - https://jakarta.go.id/
 - https://kemendagri.go.id/
@@ -120,7 +125,11 @@ Ringkasan panduan resmi yang sudah diperiksa tersimpan di `data/knowledge/`. Set
 
 Setelah migrasi `20261109110000_program_source_observations.sql` diterapkan, jalankan `pnpm import:data` lalu `pnpm import:knowledge` untuk mengisi Supabase. YAML tetap menjadi fallback ketika Supabase tidak tersedia. Perintah `pnpm validate:data` memeriksa bahan pencarian sekaligus data program.
 
-Jadwal harian `/api/cron/program-sources` memeriksa apakah respons laman sumber berubah. Pemeriksaan pertama membuat titik pembanding; perubahan berikutnya tercatat di `program_source_observations.changed_at`. Perubahan HTML belum tentu berarti ketentuan berubah. Periksa sumber resmi dan sunting data terkurasi sebelum menjadikan respons baru sebagai titik pembanding. Pemeriksaan ini tidak mengubah syarat program atau mengirim pemberitahuan kepada pengguna secara otomatis.
+Jadwal harian `/api/cron/program-sources` memeriksa apakah respons laman sumber berubah. Pemeriksaan pertama membuat titik pembanding. Perubahan berikutnya dicatat di `program_source_observations.changed_at` dan, setelah migrasi `20261110000000_program_radar_review.sql` diterapkan, masuk ke antrean privat `program_radar_candidates`. AI dapat menyiapkan draf dari halaman HTML bila kunci dan model tersedia. Perubahan HTML belum tentu berarti ketentuan berubah; draf bisa kosong dan selalu perlu diperiksa admin. Radar tidak mengubah syarat program.
+
+Jadwal harian `/api/cron/program-discovery` mencari kandidat program baru melalui Tavily dengan batas domain `.go.id`, membaca halaman resminya, lalu meminta AI menyusun draf yang harus lolos skema program. Pencarian bergilir menurut kategori dan wilayah yang tersedia di `data/wilayah/wilayah.json`. Hasilnya masuk ke tabel privat `program_radar_program_candidates`, tidak tampil ke publik sampai admin menyetujui. Atur `TAVILY_API_KEY`, `AI_API_KEY`, `AI_GATEWAY_BASE_URL`, dan `RADAR_AI_MODEL` untuk menjalankannya. Migrasi `20261110170000_radar_program_discovery.sql` menyiapkan antrean privat dan persetujuan atomik.
+
+Akun Supabase dengan email terverifikasi dan peran `admin` di tabel `user_roles` dapat membuka `/admin/radar`, memeriksa sumber, menyunting judul, ringkasan, isi email dan tautan tambahan, lalu menyetujui atau menolak temuan. Hanya temuan yang disetujui masuk ke `program_news`. Email bagi pengikut program dikirim oleh jadwal email berikutnya, bukan saat tombol persetujuan ditekan. Jangan memasukkan kunci service role atau AI ke variabel `NEXT_PUBLIC_`.
 
 Setelah pemeriksaan manual selesai dan data yang relevan sudah diimpor ulang, pembanding untuk satu URL dapat diterima melalui SQL Editor Supabase:
 

@@ -1,9 +1,14 @@
 import 'server-only';
 import { createHash } from 'node:crypto';
-import { formatDate, programPath } from '@hakkita/domain';
+import { formatDate, isOfficialDomain, programPath } from '@hakkita/domain';
 import type { Program } from '@hakkita/schema';
 import { renderProgramEmailHtml } from './program-email-template';
-import type { ProgramEmailMessage, ProgramEmailNote, ProgramEmailSource, ProgramNews } from './types';
+import type {
+  ProgramEmailMessage,
+  ProgramEmailNote,
+  ProgramEmailSource,
+  ProgramNews,
+} from './types';
 
 export function createProgramNewsEmailId(userId: string, newsId: string): string {
   return createHash('sha256')
@@ -24,9 +29,20 @@ export function buildProgramNewsEmail(
   const sources: ProgramEmailSource[] = [
     { label: 'Baca pengumuman penyelenggara', url: news.source_url },
   ];
+  for (const sourceUrl of new Set(news.extra_source_urls)) {
+    if (
+      sourceUrl !== news.source_url &&
+      sourceUrl.startsWith('https://') &&
+      isOfficialDomain(sourceUrl)
+    ) {
+      sources.push({ label: `Sumber tambahan ${sources.length}`, url: sourceUrl });
+    }
+  }
   if (program.sumberUtama.url !== news.source_url) {
     sources.push({ label: 'Laman resmi program', url: program.sumberUtama.url });
   }
+
+  const emailText = news.email_text?.trim() || news.summary;
 
   return {
     to,
@@ -37,7 +53,7 @@ export function buildProgramNewsEmail(
       news.title,
       `Diterbitkan ${formatDate(news.published_on)}`,
       '',
-      news.summary,
+      emailText,
       ...(note ? ['', `${note.title}: ${note.body}`] : []),
       '',
       ...sources.map((source) => `${source.label}: ${source.url}`),
@@ -52,7 +68,7 @@ export function buildProgramNewsEmail(
       programName: program.nama,
       contextLabel: 'Isi pengumuman',
       contextMeta: `Diterbitkan ${formatDate(news.published_on)}`,
-      contextBody: news.summary,
+      contextBody: emailText,
       note,
       actionLabel: 'Lihat rincian program',
       actionUrl: detailsUrl,

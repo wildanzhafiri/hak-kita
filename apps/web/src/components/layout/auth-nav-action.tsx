@@ -7,10 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { getSupabaseBrowserClient } from '@/lib/supabase/client';
 import { useAuth } from '@/hooks/use-auth';
-import { SIGN_OUT_DIALOG_DESCRIPTION, SIGN_OUT_DIALOG_TITLE, SIGN_OUT_FAILURE_COPY } from './content';
+import { SHEET_ACTION_CLASSES } from './constants';
+import {
+  SIGN_OUT_DIALOG_DESCRIPTION,
+  SIGN_OUT_DIALOG_TITLE,
+  SIGN_OUT_FAILURE_COPY,
+} from './content';
 import type { AuthNavActionProps } from './types';
 
-export function AuthNavAction({ currentPath }: AuthNavActionProps) {
+export function AuthNavAction({ currentPath, variant = 'inline' }: AuthNavActionProps) {
   const router = useRouter();
   const { user } = useAuth();
   const [isConfirming, setIsConfirming] = useState(false);
@@ -20,7 +25,10 @@ export function AuthNavAction({ currentPath }: AuthNavActionProps) {
   if (!user) {
     const search = new URLSearchParams({ next: currentPath });
     return (
-      <Link className="nav-login" href={`/masuk?${search.toString()}`}>
+      <Link
+        className={variant === 'sheet' ? SHEET_ACTION_CLASSES.primary : 'nav-login'}
+        href={`/masuk?${search.toString()}`}
+      >
         Masuk
       </Link>
     );
@@ -62,7 +70,11 @@ export function AuthNavAction({ currentPath }: AuthNavActionProps) {
       title={SIGN_OUT_DIALOG_TITLE}
       trigger={
         <button
-          className="nav-login border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#196dcc]"
+          className={
+            variant === 'sheet'
+              ? SHEET_ACTION_CLASSES.secondary
+              : 'nav-login border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#196dcc]'
+          }
           onClick={() => {
             setHasSignOutFailed(false);
             setIsConfirming(true);

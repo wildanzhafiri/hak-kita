@@ -74,7 +74,10 @@ export async function sendProgramEmailPreview(recipientEmail: string): Promise<v
     buildProgramNewsEmail(
       recipientEmail,
       program,
-      PROGRAM_EMAIL_PREVIEW_NEWS,
+      {
+        ...PROGRAM_EMAIL_PREVIEW_NEWS,
+        extra_source_urls: [...PROGRAM_EMAIL_PREVIEW_NEWS.extra_source_urls],
+      },
       siteUrl,
       randomUUID(),
       PROGRAM_EMAIL_PREVIEW_NEWS.note,

@@ -11,7 +11,6 @@ import {
   resolveProgramEmailBaseline,
 } from './program-email';
 import { sendProgramEmail } from './program-email-sender';
-import { loadProgramNews, sendFollowedProgramNews } from './program-news-notifications';
 import type {
   CurrentEmailProgram,
   EmailPreference,
@@ -38,6 +37,7 @@ async function loadCurrentPrograms(
       if (!parsed.success || parsed.data.id !== row.id) {
         throw new Error('Program database record is invalid');
       }
+      if (parsed.data.verifikasi === 'belum') continue;
       programs.set(row.id, { program: parsed.data, updatedAt: row.updated_at });
     }
     if (data.length < EMAIL_PREFERENCE_PAGE_SIZE) break;
@@ -236,7 +236,6 @@ export async function runProgramEmailNotifications(
   });
   const programs = await loadCurrentPrograms(client);
   if (programs.size === 0) throw new Error('No program records are available for email');
-  const newsByProgram = await loadProgramNews(client);
   const result: ProgramEmailRunResult = { checked: 0, sent: 0, failed: 0 };
   const today = todayWIB();
   let offset = 0;
@@ -281,25 +280,6 @@ export async function runProgramEmailNotifications(
           }
         } catch {
           result.failed += 1;
-        }
-        for (const news of newsByProgram.get(follow.program_id) ?? []) {
-          result.checked += 1;
-          try {
-            if (
-              await sendFollowedProgramNews(
-                client,
-                preference,
-                follow,
-                program.program,
-                news,
-                siteUrl,
-              )
-            ) {
-              result.sent += 1;
-            }
-          } catch {
-            result.failed += 1;
-          }
         }
       }
     }
