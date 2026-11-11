@@ -15,7 +15,10 @@ export function BudgetFilters({
   const regionOptions =
     selectedProvince === '--'
       ? [{ value: '--', label: 'Semua wilayah' }]
-      : [{ value: '--', label: 'Gabungan kabupaten dan kota' }, ...filters.regions.filter((option) => option.value !== '--')];
+      : [
+          { value: '--', label: 'Gabungan kabupaten dan kota' },
+          ...filters.regions.filter((option) => option.value !== '--'),
+        ];
 
   function navigate(year: number, province: string, region?: string) {
     const params = new URLSearchParams({ scope: 'apbd', year: `${year}` });
