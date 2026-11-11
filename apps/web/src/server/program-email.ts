@@ -3,11 +3,16 @@ import { createHash } from 'node:crypto';
 import { formatDate, programPath } from '@hakkita/domain';
 import type { ProgramChange, ProgramFollowSnapshot } from '@hakkita/domain';
 import type { Program } from '@hakkita/schema';
-import { PROGRAM_EMAIL_CHANGE_LABELS, PROGRAM_EMAIL_FOLLOW_COPY } from './content';
+import {
+  PROGRAM_EMAIL_CHANGE_COPY,
+  PROGRAM_EMAIL_CHANGE_LABELS,
+  PROGRAM_EMAIL_FOLLOW_COPY,
+} from './content';
 import { renderProgramEmailHtml } from './program-email-template';
 import type {
   ProgramEmailBaseline,
   ProgramEmailDetail,
+  ProgramEmailNote,
   ProgramEmailMessage,
   ProgramFollow,
 } from './types';
@@ -41,6 +46,7 @@ export function buildProgramEmail(
   previous: ProgramFollowSnapshot,
   siteUrl: string,
   idempotencyKey: string,
+  note?: ProgramEmailNote,
 ): ProgramEmailMessage {
   const detailsUrl = new URL(programPath(program), siteUrl).toString();
   const settingsUrl = new URL('/rencanaku', siteUrl).toString();
@@ -103,6 +109,7 @@ export function buildProgramEmail(
       `Ada pembaruan pada informasi ${program.nama} yang kamu ikuti:`,
       '',
       ...changeLines,
+      ...(note ? ['', `${note.title}: ${note.body}`] : []),
       '',
       `Lihat informasi di HAKKITA: ${detailsUrl}`,
       `Periksa ketentuan terbaru di sumber resmi: ${program.sumberUtama.url}`,
@@ -111,13 +118,12 @@ export function buildProgramEmail(
       `Atur pemberitahuan email di Rencanaku: ${settingsUrl}`,
     ].join('\n'),
     html: renderProgramEmailHtml({
-      heading: `Informasi ${program.nama} berubah`,
-      intro:
-        'Ada perubahan pada informasi program yang kamu ikuti. Lihat ringkasannya di bawah ini.',
+      heading: PROGRAM_EMAIL_CHANGE_COPY.heading,
+      intro: PROGRAM_EMAIL_CHANGE_COPY.intro,
       programName: program.nama,
-      contextLabel: 'Yang berubah',
-      contextTitle: 'Perubahan yang kami catat',
+      contextLabel: PROGRAM_EMAIL_CHANGE_COPY.contextLabel,
       details: changeDetails,
+      note,
       actionLabel: 'Lihat rincian program',
       actionUrl: detailsUrl,
       sources: [{ label: 'Laman resmi program', url: program.sumberUtama.url }],

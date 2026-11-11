@@ -27,6 +27,13 @@ export const PROGRAM_EMAIL_CHANGE_LABELS: Record<ProgramChange, string> = {
   verifikasi: 'Status pemeriksaan sumber berubah',
 };
 
+export const PROGRAM_EMAIL_CHANGE_COPY = {
+  heading: 'Ada pembaruan informasi program',
+  intro: 'Kami mencatat perubahan pada program yang kamu ikuti. Ringkasannya ada di bawah ini.',
+  contextLabel: 'Perubahan yang kami catat',
+  noteTitle: 'Pesan dari tim HAKKITA',
+} as const;
+
 export const PROGRAM_EMAIL_TEMPLATE_COPY = {
   sourceLabel: 'Sumber resmi',
   settingsLabel: 'Atur pemberitahuan email',

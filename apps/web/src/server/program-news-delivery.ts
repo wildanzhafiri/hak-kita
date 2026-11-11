@@ -6,7 +6,7 @@ import { EMAIL_PREFERENCE_PAGE_SIZE } from './constants';
 import { buildProgramNewsEmail, createProgramNewsEmailId } from './program-news';
 import { sendFollowedProgramNews } from './program-news-notifications';
 
-function createDeliveryClient() {
+export function createDeliveryClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key || !process.env.HAKKITA_SITE_URL) throw new Error('Pengiriman email belum siap');
@@ -36,12 +36,14 @@ async function loadApprovedNews(newsId: string) {
   return { client, news, program: parsedProgram.data };
 }
 
-export async function loadProgramNewsEmailPreview(newsId: string) {
-  const { client, news, program } = await loadApprovedNews(newsId);
+export async function countEligibleFollowers(
+  client: ReturnType<typeof createDeliveryClient>,
+  programId: string,
+): Promise<number> {
   const { data: follows, error: followsError } = await client
     .from('program_follows')
     .select('user_id')
-    .eq('program_id', news.program_id);
+    .eq('program_id', programId);
   if (followsError) throw followsError;
   const userIds = [...new Set(follows.map((follow) => follow.user_id))];
   let eligibleCount = 0;
@@ -55,6 +57,12 @@ export async function loadProgramNewsEmailPreview(newsId: string) {
     if (error) throw error;
     eligibleCount += preferences.length;
   }
+  return eligibleCount;
+}
+
+export async function loadProgramNewsEmailPreview(newsId: string) {
+  const { client, news, program } = await loadApprovedNews(newsId);
+  const eligibleCount = await countEligibleFollowers(client, news.program_id);
   const email = buildProgramNewsEmail(
     'pratinjau@hakkita.id',
     program,

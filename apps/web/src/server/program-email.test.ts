@@ -77,6 +77,23 @@ describe('program email notifications', () => {
     expect(email.idempotencyKey).toBe(key);
   });
 
+  it('does not repeat the program name as the heading and adds an admin message', () => {
+    const email = buildProgramEmail(
+      'person@example.com',
+      current,
+      ['syarat'],
+      follow.snapshot,
+      'https://hakkita.example',
+      'key-1',
+      { title: 'Pesan dari tim HAKKITA', body: 'Pendaftaran diperpanjang.' },
+    );
+    expect(email.html).toContain('<h1');
+    expect(email.html).not.toContain(`Informasi ${current.nama} berubah`);
+    expect(email.html).toContain('Ada pembaruan informasi program');
+    expect(email.html).toContain('Pendaftaran diperpanjang.');
+    expect(email.text).toContain('Pesan dari tim HAKKITA: Pendaftaran diperpanjang.');
+  });
+
   it('builds a followed-program message without preview wording', () => {
     const email = buildProgramFollowEmail(
       'person@example.com',

@@ -1,10 +1,16 @@
 import 'server-only';
 import { createClient } from '@supabase/supabase-js';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { createProgramFollowSnapshot, getProgramChanges, todayWIB } from '@hakkita/domain';
+import {
+  createProgramFollowSnapshot,
+  getProgramChanges,
+  todayWIB,
+  type ProgramChange,
+} from '@hakkita/domain';
 import { ProgramSchema } from '@hakkita/schema';
 import type { Database } from '@/lib/supabase/types';
 import { EMAIL_CLAIM_TIMEOUT_MS, EMAIL_PREFERENCE_PAGE_SIZE } from './constants';
+import { PROGRAM_EMAIL_CHANGE_COPY } from './content';
 import {
   buildProgramEmail,
   createProgramEmailId,
@@ -14,10 +20,17 @@ import { sendProgramEmail } from './program-email-sender';
 import type {
   CurrentEmailProgram,
   EmailPreference,
+  ProgramEmailNote,
   ProgramEmailRunOptions,
   ProgramEmailRunResult,
   ProgramFollow,
+  ProgramUpdateEmailPreview,
 } from './types';
+
+function buildAdminNote(body: string | undefined): ProgramEmailNote | undefined {
+  const trimmed = body?.trim();
+  return trimmed ? { title: PROGRAM_EMAIL_CHANGE_COPY.noteTitle, body: trimmed } : undefined;
+}
 
 async function loadCurrentPrograms(
   client: SupabaseClient<Database>,
@@ -97,6 +110,7 @@ async function processFollow(
   currentProgram: CurrentEmailProgram,
   today: string,
   siteUrl: string,
+  note?: ProgramEmailNote,
 ): Promise<boolean> {
   const { program, updatedAt } = currentProgram;
   const currentSnapshot = createProgramFollowSnapshot(program, today);
@@ -193,6 +207,7 @@ async function processFollow(
         baseline.snapshot,
         siteUrl,
         deliveryId,
+        note,
       ),
     );
     const { error: sentError } = await client
@@ -236,6 +251,7 @@ export async function runProgramEmailNotifications(
   });
   const programs = await loadCurrentPrograms(client);
   if (programs.size === 0) throw new Error('No program records are available for email');
+  const note = buildAdminNote(options.note);
   const result: ProgramEmailRunResult = { checked: 0, sent: 0, failed: 0 };
   const today = todayWIB();
   let offset = 0;
@@ -261,10 +277,13 @@ export async function runProgramEmailNotifications(
           continue;
         }
       }
-      const { data: follows, error: followsError } = await client
+      let followsQuery = client
         .from('program_follows')
         .select('user_id,program_id,snapshot,created_at,updated_at')
         .eq('user_id', preference.user_id);
+      if (options.onlyProgramId)
+        followsQuery = followsQuery.eq('program_id', options.onlyProgramId);
+      const { data: follows, error: followsError } = await followsQuery;
       if (followsError) {
         result.failed += 1;
         continue;
@@ -275,7 +294,7 @@ export async function runProgramEmailNotifications(
         if (!program) continue;
         result.checked += 1;
         try {
-          if (await processFollow(client, preference, follow, program, today, siteUrl)) {
+          if (await processFollow(client, preference, follow, program, today, siteUrl, note)) {
             result.sent += 1;
           }
         } catch {
@@ -289,4 +308,117 @@ export async function runProgramEmailNotifications(
   }
 
   return result;
+}
+
+export async function previewProgramUpdate(
+  programId: string,
+  adminNote?: string,
+): Promise<ProgramUpdateEmailPreview> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const siteUrl = process.env.HAKKITA_SITE_URL;
+  if (!url || !serviceRoleKey || !siteUrl) {
+    throw new Error('Program email notifications are not configured');
+  }
+  const client = createClient<Database>(url, serviceRoleKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+  const current = (await loadCurrentPrograms(client)).get(programId);
+  if (!current) throw new Error('Program belum diterbitkan');
+  const today = todayWIB();
+  const currentSnapshot = createProgramFollowSnapshot(current.program, today);
+  const changeSet = new Set<ProgramChange>();
+  let followers = 0;
+  let recipients = 0;
+  let sampleBaseline: ProgramFollow['snapshot'] | null = null;
+  let sampleChanges: ProgramChange[] = [];
+  let offset = 0;
+
+  while (true) {
+    const { data: follows, error } = await client
+      .from('program_follows')
+      .select('user_id,program_id,snapshot,created_at,updated_at')
+      .eq('program_id', programId)
+      .order('user_id')
+      .range(offset, offset + EMAIL_PREFERENCE_PAGE_SIZE - 1);
+    if (error) throw error;
+    const userIds = follows.map((follow) => follow.user_id);
+    if (userIds.length > 0) {
+      const [{ data: preferences, error: preferenceError }, { data: states, error: stateError }] =
+        await Promise.all([
+          client
+            .from('program_email_preferences')
+            .select('user_id,enabled,enabled_at,updated_at')
+            .eq('enabled', true)
+            .in('user_id', userIds),
+          client
+            .from('program_email_state')
+            .select('user_id,snapshot,updated_at')
+            .eq('program_id', programId)
+            .in('user_id', userIds),
+        ]);
+      if (preferenceError) throw preferenceError;
+      if (stateError) throw stateError;
+      const preferenceByUser = new Map(preferences.map((entry) => [entry.user_id, entry]));
+      const stateByUser = new Map(states.map((entry) => [entry.user_id, entry]));
+      for (const follow of follows) {
+        const preference = preferenceByUser.get(follow.user_id);
+        if (!preference) continue;
+        followers += 1;
+        const baseline = resolveProgramEmailBaseline(
+          stateByUser.get(follow.user_id) ?? null,
+          preference.enabled_at,
+          follow,
+          currentSnapshot,
+        );
+        if (baseline.shouldSeed && baseline.snapshot === currentSnapshot) continue;
+        const changes = getProgramChanges(baseline.snapshot, current.program, today);
+        if (changes.length === 0) continue;
+        recipients += 1;
+        changes.forEach((change) => changeSet.add(change));
+        if (!sampleBaseline) {
+          sampleBaseline = baseline.snapshot;
+          sampleChanges = changes;
+        }
+      }
+    }
+    if (follows.length < EMAIL_PREFERENCE_PAGE_SIZE) break;
+    offset += EMAIL_PREFERENCE_PAGE_SIZE;
+  }
+
+  const exampleBaseline: ProgramFollow['snapshot'] = {
+    ...currentSnapshot,
+    periode: null,
+    periodStatus: 'tidak-diketahui',
+    closingSoon: false,
+    syarat: [],
+    dokumen: [],
+  };
+  const isExample = !sampleBaseline;
+  const previewBaseline = sampleBaseline ?? exampleBaseline;
+  const previewChanges = isExample
+    ? getProgramChanges(exampleBaseline, current.program, today)
+    : sampleChanges;
+  const sample =
+    previewChanges.length > 0
+      ? buildProgramEmail(
+          'pratinjau@hakkita.id',
+          current.program,
+          previewChanges,
+          previewBaseline,
+          siteUrl,
+          'preview',
+          buildAdminNote(adminNote),
+        )
+      : null;
+  const logoUrl = new URL('/hakkita-logo.png', siteUrl).toString();
+  return {
+    followers,
+    recipients,
+    changes: [...changeSet],
+    subject: sample?.subject ?? null,
+    html: sample ? sample.html.replace('cid:hakkita-logo', logoUrl) : null,
+    text: sample?.text ?? null,
+    isExample,
+  };
 }
