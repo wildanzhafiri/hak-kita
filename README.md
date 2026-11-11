@@ -46,6 +46,7 @@ Buka http://localhost:3000. Tanpa env, halaman publik tetap memakai data YAML/JS
 | `AI_API_KEY`                           | Kunci API AI                                                              | Rahasia     |
 | `AI_GATEWAY_BASE_URL`                  | URL endpoint AI                                                           | Konfigurasi |
 | `AI_GATEWAY_MODEL`                     | ID model AI                                                               | Konfigurasi |
+| `AI_GATEWAY_FALLBACK_MODEL`            | Daftar model cadangan, dipisahkan koma dan dicoba sesuai urutan           | Opsional    |
 | `RADAR_AI_MODEL`                       | Model untuk menyiapkan draf Radar; bila kosong memakai `AI_GATEWAY_MODEL` | Opsional    |
 | `TAVILY_API_KEY`                       | Pencarian halaman resmi untuk menemukan kandidat program baru             | Rahasia     |
 | `TOOL_APPROVAL_SECRET`                 | Menandatangani persetujuan tindakan asisten                               | Rahasia     |
@@ -56,6 +57,8 @@ Buka http://localhost:3000. Tanpa env, halaman publik tetap memakai data YAML/JS
 | `HAKKITA_SITE_URL`                     | URL utama situs untuk tautan email                                        | Konfigurasi |
 | `CRON_SECRET`                          | Melindungi endpoint jadwal harian                                         | Rahasia     |
 | `HAKKITA_DATA_DIR`                     | Folder data alternatif untuk skrip impor                                  | Opsional    |
+
+`AI_GATEWAY_FALLBACK_MODEL` menerima beberapa ID model yang dipisahkan koma dan dicoba berurutan. Urutan lokal yang disarankan setelah model utama adalah `claude-opus-4-6-thinking,gpt-5.6-sol,qwen3.8-max-0902,gemini-3.8-flash-high`: utamakan reasoning dan kualitas draft, lalu kemampuan tool calling serta structured output untuk Radar. Harga bukan dasar utama urutan. ID tersebut mengikuti katalog gateway yang dipakai; kecocokan tiap alias tetap bergantung pada ketersediaan dan kompatibilitas gateway. Semua model tetap menggunakan `AI_GATEWAY_BASE_URL` dan `AI_API_KEY` yang sama; daftar ini membantu saat model tertentu bermasalah, bukan saat gateway atau kuncinya tidak tersedia.
 
 Nilai dengan awalan `NEXT_PUBLIC_` memang digunakan browser dan tidak boleh berisi rahasia. Jangan pernah membagikan atau memasukkan kunci rahasia ke variabel tersebut. Aplikasi dan skrip impor membaca satu file `apps/web/.env.local`, jadi tidak perlu membuat salinan kedua di root repo. Di Vercel, masukkan variabel melalui **Project Settings → Environment Variables**, bukan melalui file repo.
 
