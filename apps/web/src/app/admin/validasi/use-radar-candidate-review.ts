@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import type { RadarReviewRequest } from '@hakkita/schema';
 import type { RadarCandidateCardProps } from './types';
 
@@ -47,8 +47,7 @@ export function useRadarCandidateReview({ candidate, onReviewed }: RadarCandidat
     }
   }
 
-  function handleApprove(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function approve() {
     if (!isConfirmed || isBusy) return;
     void submitReview({
       action: 'approve',
@@ -87,7 +86,7 @@ export function useRadarCandidateReview({ candidate, onReviewed }: RadarCandidat
     setIsRejectOpen,
     isBusy,
     error,
-    handleApprove,
+    approve,
     rejectCandidate,
   };
 }

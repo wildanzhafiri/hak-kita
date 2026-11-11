@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { RADAR_CONTROLS_ENDPOINT } from './constants';
 import { RADAR_RUN_COPY } from './content';
+import { useRadarRunContext } from './radar-run-context';
 import { RadarRunPanel } from './radar-run-panel';
 import type { RadarControlsProps, RadarSettingAction } from './types';
-import { useRadarRun } from './use-radar-run';
 
 function isRadarSettings(value: unknown): value is RadarControlsProps['initialSettings'] {
   return (
@@ -24,9 +25,17 @@ export function RadarControls({ initialSettings }: RadarControlsProps) {
   const [settings, setSettings] = useState(initialSettings);
   const [busyAction, setBusyAction] = useState<RadarSettingAction | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const { state: run, elapsedSeconds, start, stop, dismiss } = useRadarRun();
+  const { state: run, elapsedSeconds, start, stop, dismiss } = useRadarRunContext();
+  const router = useRouter();
+  const previousStatus = useRef(run?.status);
   const isRunning = run?.status === 'running';
   const isBusy = busyAction !== null || isRunning;
+
+  useEffect(() => {
+    const wasRunning = previousStatus.current === 'running';
+    previousStatus.current = run?.status;
+    if (wasRunning && run?.status === 'done') router.refresh();
+  }, [run?.status, router]);
 
   async function submitSetting(action: RadarSettingAction, enabled: boolean) {
     setBusyAction(action);
@@ -72,7 +81,7 @@ export function RadarControls({ initialSettings }: RadarControlsProps) {
       <div className="grid gap-5 sm:grid-cols-2 sm:gap-8">
         <Switch
           label="Pencarian program otomatis"
-          description="Terjadwal sekali sehari. Bisa memakai Tavily atau menjelajahi sumber resmi yang sudah terdaftar."
+          description="Terjadwal sekali sehari."
           isSelected={settings.automatic_discovery_enabled}
           isDisabled={isBusy}
           onChange={(enabled) => void submitSetting('automatic_discovery', enabled)}

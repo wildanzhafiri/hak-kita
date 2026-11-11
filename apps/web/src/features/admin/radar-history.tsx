@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { RADAR_HISTORY_COPY } from './content';
 import type { RadarHistoryProps } from './types';
@@ -41,7 +42,9 @@ export function RadarHistory({ candidates }: RadarHistoryProps) {
                 <tr className="border-t border-[#e8eef5]" key={candidate.id}>
                   <td className="px-5 py-4 font-medium text-[#253044]">{candidate.program_name}</td>
                   <td className="max-w-[32ch] px-5 py-4 text-[#475569]">
-                    {candidate.draft_title ?? 'Temuan Radar'}
+                    {candidate.kind === 'program'
+                      ? RADAR_HISTORY_COPY.programFinding
+                      : (candidate.draft_title ?? RADAR_HISTORY_COPY.newsFinding)}
                   </td>
                   <td className="px-5 py-4">
                     <span
@@ -51,13 +54,17 @@ export function RadarHistory({ candidates }: RadarHistoryProps) {
                           : 'inline-flex rounded-md border border-[#f1cdcd] bg-[#fff2f2] px-2.5 py-1 text-xs font-semibold text-[#a32e2e]'
                       }
                     >
-                      {candidate.status === 'approved' ? 'Disetujui' : 'Ditolak'}
+                      {candidate.status !== 'approved'
+                        ? RADAR_HISTORY_COPY.rejected
+                        : candidate.kind === 'program'
+                          ? RADAR_HISTORY_COPY.approvedProgram
+                          : RADAR_HISTORY_COPY.approvedNews}
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-5 py-4 text-[#64748b]">
                     {formatReviewDate(candidate.reviewed_at)} WIB
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="flex flex-wrap items-center gap-x-4 px-5 py-4">
                     <a
                       aria-label={`Buka sumber ${candidate.program_name}`}
                       className="inline-flex min-h-10 items-center gap-2 font-semibold text-[#1769c2] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769c2]"
@@ -67,6 +74,16 @@ export function RadarHistory({ candidates }: RadarHistoryProps) {
                     >
                       Sumber <ExternalLink aria-hidden="true" size={14} />
                     </a>
+                    {candidate.kind === 'program' &&
+                      candidate.status === 'approved' &&
+                      candidate.program_id && (
+                        <Link
+                          className="inline-flex min-h-10 items-center font-semibold text-[#1769c2] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769c2]"
+                          href={`/admin/informasi/${candidate.program_id}`}
+                        >
+                          {RADAR_HISTORY_COPY.openDraft}
+                        </Link>
+                      )}
                   </td>
                 </tr>
               ))}

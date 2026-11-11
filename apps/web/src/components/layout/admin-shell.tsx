@@ -75,7 +75,7 @@ export function AdminShell({ adminEmail, activeSection, children }: AdminShellPr
               <Menu aria-hidden="true" size={20} />
             </Button>
             <p className="truncate text-sm font-semibold text-[#26364b]">
-              {activeSection === 'radar'
+              {activeSection === 'validation'
                 ? 'Validasi Informasi'
                 : activeSection === 'programs'
                   ? 'Kelola Informasi'

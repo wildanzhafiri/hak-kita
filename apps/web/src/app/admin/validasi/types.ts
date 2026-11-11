@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { RadarRunEvent, RadarRunKind } from '@hakkita/schema';
+import type { JenisProgram, Program, RadarRunEvent, RadarRunKind } from '@hakkita/schema';
 import type { RadarCandidateView, RadarProgramCandidateView } from '@/server/types';
 import type { Database } from '@/lib/supabase/types';
 
@@ -111,22 +111,18 @@ export interface RadarRunHandle {
   dismiss: () => void;
 }
 
-export interface RadarReviewProps {
-  initialCandidates: RadarCandidateView[];
-  initialProgramCandidates: RadarProgramCandidateView[];
-  initialSettings: RadarSettings;
-}
-
 export interface RadarControlsProps {
   initialSettings: RadarSettings;
 }
 
-export interface RadarProgramCandidatesProps {
-  initialCandidates: RadarProgramCandidateView[];
+export interface ValidationDetailRouteContext {
+  params: Promise<{ id: string }>;
 }
 
 export interface RadarCandidateCardProps {
   candidate: RadarCandidateView;
+  program?: Program | null;
+  regionName?: string;
   onReviewed: (candidateId: string, newsId?: string) => void;
 }
 
@@ -142,10 +138,86 @@ export interface RadarEmailPreviewResult {
   eligibleCount: number;
 }
 
-export interface RadarCandidateContextProps {
-  candidate: RadarCandidateView;
-}
-
 export interface AdminAccessProps {
   initialMessage: string | null;
+}
+
+export type ValidationFinding = 'new' | 'update';
+
+export interface ValidationItem {
+  id: string;
+  finding: ValidationFinding;
+  kind: JenisProgram;
+  name: string;
+  summary: string;
+  detectedAt: string;
+}
+
+export interface ValidationQueueProps {
+  items: ValidationItem[];
+}
+
+export interface ValidationMetricsProps {
+  items: ValidationItem[];
+}
+
+export interface RadarNewsReviewProps {
+  candidate: RadarCandidateView;
+  program: Program | null;
+  regionName: string;
+}
+
+export interface RadarRunSnapshot {
+  id: string;
+  state: RadarRunState;
+  finishedAt: string | null;
+}
+
+export interface ValidationSectionProps {
+  title: string;
+  children: ReactNode;
+}
+
+export interface ValidationPreviewRow {
+  label: string;
+  values: string[];
+}
+
+export interface ValidationPreviewProps {
+  rows: ValidationPreviewRow[];
+}
+
+export interface ValidationSource {
+  label: string;
+  url: string;
+  quotes: string[];
+  foundAt?: string;
+}
+
+export interface ValidationFullInfoProps {
+  rows: ValidationPreviewRow[];
+}
+
+export interface ProgramPreviewRows {
+  primary: ValidationPreviewRow[];
+  detail: ValidationPreviewRow[];
+}
+
+export interface ValidationSourcesProps {
+  sources: ValidationSource[];
+}
+
+export interface ValidationActionsProps {
+  isConfirmed: boolean;
+  isBusy: boolean;
+  error: string | null;
+  onConfirmChange: (isConfirmed: boolean) => void;
+  onApprove: () => void;
+  onEdit: () => void;
+  onReject: () => void;
+}
+
+export interface RadarProgramReviewProps {
+  candidate: RadarProgramCandidateView;
+  regionName: string;
 }

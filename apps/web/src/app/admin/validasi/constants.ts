@@ -11,6 +11,7 @@ import {
 import type { RadarAgentStatus, RadarRunPhase, RadarSourceTone, RadarTone } from './types';
 
 export const RADAR_CONTROLS_ENDPOINT = '/api/admin/radar/controls';
+export const RADAR_RUNS_ENDPOINT = '/api/admin/radar/runs';
 
 export const RADAR_DISCOVERY_PHASES = ['search', 'read', 'draft', 'check'] as const;
 
@@ -61,3 +62,5 @@ export const RADAR_AGENT_RAIL_CLASSES: Record<RadarAgentStatus, string> = {
 
 export const MAX_RADAR_SOURCES = 12;
 export const SECONDS_PER_MINUTE = 60;
+
+export const VALIDATION_PAGE_SIZE = 10;

@@ -5,6 +5,7 @@ import { AUTH_ERROR_COPY } from '@/features/auth/content';
 import { RADAR_HISTORY_COPY } from '@/features/admin/content';
 import { RadarHistory } from '@/features/admin/radar-history';
 import { getRadarAccessState } from '@/server/admin-access';
+import { loadReviewedDiscoveredPrograms } from '@/server/radar-program-discovery';
 import { loadReviewedRadarCandidates } from '@/server/radar-review';
 
 export const dynamic = 'force-dynamic';
@@ -27,7 +28,23 @@ export default async function AdminHistoryPage() {
     return <AdminAccess initialMessage={initialMessage} />;
   }
 
-  const candidates = await loadReviewedRadarCandidates();
+  const [newsCandidates, programCandidates] = await Promise.all([
+    loadReviewedRadarCandidates(),
+    loadReviewedDiscoveredPrograms(),
+  ]);
+  const candidates = [
+    ...newsCandidates.map((candidate) => ({ ...candidate, kind: 'news' as const })),
+    ...programCandidates.map((candidate) => ({
+      id: candidate.id,
+      kind: 'program' as const,
+      program_id: candidate.program_id,
+      program_name: candidate.record.program.nama,
+      draft_title: null,
+      status: candidate.status,
+      reviewed_at: candidate.reviewed_at,
+      source_url: candidate.record.program.sumberUtama.url,
+    })),
+  ].sort((left, right) => (right.reviewed_at ?? '').localeCompare(left.reviewed_at ?? ''));
 
   return (
     <AdminShell activeSection="history" adminEmail={access.email}>
