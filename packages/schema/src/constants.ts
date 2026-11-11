@@ -49,7 +49,7 @@ export const JENJANG = [
 
 export const KANAL_LAYANAN = ['online', 'offline'] as const;
 
-export const TIPE_GERBANG =['desil', 'kategori', 'prosedur'] as const;
+export const TIPE_GERBANG = ['desil', 'kategori', 'prosedur'] as const;
 
 export const JENIS_SUMBER = ['peraturan', 'situs-resmi', 'portal-data', 'bank-penyalur'] as const;
 
@@ -78,8 +78,6 @@ export const PROFILE_GROUPS = [
   'pelaku-usaha',
 ] as const;
 
-export const AGE_BANDS = ['di-bawah-18', '18-24', '25-59', '60-ke-atas'] as const;
-
 export const OBSTACLE_REPORT_STAGES = [
   'mencari-informasi',
   'memenuhi-persyaratan',
@@ -106,3 +104,24 @@ export const RADAR_SOURCE_OUTCOMES = ['unchanged', 'changed', 'baseline', 'faile
 
 export const MAX_ASSISTANT_MESSAGE_COUNT = 12;
 export const MAX_ASSISTANT_USER_TEXT_LENGTH = 2_000;
+
+export const AKTIVITAS_PROFIL = [
+  'pelajar',
+  'mahasiswa',
+  'bekerja',
+  'mencari-kerja',
+  'usaha',
+  'lainnya',
+] as const;
+
+export const JENJANG_PENDIDIKAN_PROFIL = [
+  'sd',
+  'smp',
+  'sma',
+  'diploma',
+  'sarjana',
+  'pascasarjana',
+] as const;
+
+export const NAMA_PROFIL_MAKS = 60;
+export const AKTIVITAS_LAIN_MAKS = 100;

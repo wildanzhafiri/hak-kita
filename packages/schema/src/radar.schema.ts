@@ -97,6 +97,11 @@ export const RadarProgramReviewRequestSchema = z.discriminatedUnion('action', [
     candidateId: z.uuid(),
     program: ProgramSchema,
   }),
+  z.object({
+    action: z.literal('update'),
+    candidateId: z.uuid(),
+    program: ProgramSchema,
+  }),
 ]);
 
 export const RadarSearchResponseSchema = z.object({
@@ -115,5 +120,9 @@ export const RadarAdminControlSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('run_discovery') }),
   z.object({ action: z.literal('run_monitoring') }),
 ]);
+
+export const RadarRunStartSchema = z.object({ kind: z.enum(['discovery', 'monitoring']) });
+
+export const RadarRunActionSchema = z.object({ action: z.enum(['stop', 'dismiss']) });
 
 export const RadarEmailSendSchema = z.object({ newsId: z.uuid() });

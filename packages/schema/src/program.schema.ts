@@ -35,6 +35,7 @@ export const SumberUtamaSchema = z.object({
   url: z.url(),
   jenis: z.enum(JENIS_SUMBER),
   dasarHukum: z.string().optional(),
+  kutipan: z.string().optional(),
 });
 
 export const CakupanSchema = z.object({

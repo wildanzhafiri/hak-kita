@@ -39,7 +39,15 @@ export const AssistantBudgetQuerySchema = z.object({ year: z.literal(2026) });
 export const AssistantPlanQuerySchema = z.object({});
 
 export const AssistantPageQuerySchema = z.object({
-  page: z.enum(['beranda', 'program', 'layanan', 'anggaran', 'rencanaku', 'kondisi', 'bantuan']),
+  page: z.enum([
+    'beranda',
+    'program',
+    'layanan',
+    'anggaran',
+    'rencanaku',
+    'rekomendasi',
+    'bantuan',
+  ]),
 });
 
 export const AssistantSaveProgramQuerySchema = z.object({ programId: ProgramIdSchema });

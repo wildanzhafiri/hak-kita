@@ -3,6 +3,7 @@ export * from './berkas.schema';
 export * from './constants';
 export * from './knowledge.schema';
 export * from './obstacle-report.schema';
+export * from './program-news.schema';
 export * from './program.schema';
 export * from './profile.schema';
 export * from './radar.schema';

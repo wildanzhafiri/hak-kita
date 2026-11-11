@@ -1,6 +1,7 @@
 import type { z } from 'zod';
 import type {
-  AGE_BANDS,
+  AKTIVITAS_PROFIL,
+  JENJANG_PENDIDIKAN_PROFIL,
   JENIS_SUMBER,
   JENIS_PROGRAM,
   KATEGORI_LAYANAN,
@@ -34,7 +35,7 @@ import type {
   SumberUtamaSchema,
   SyaratSchema,
 } from './program.schema';
-import type { ProfileSchema } from './profile.schema';
+import type { PreferensiProfilSchema, ProfilPenggunaSchema } from './profile.schema';
 import type {
   RadarDraftSchema,
   RadarProgramDraftSchema,
@@ -65,7 +66,10 @@ export type SumberTambahan = SumberUtama;
 export type Cakupan = z.infer<typeof CakupanSchema>;
 export type Program = z.infer<typeof ProgramSchema>;
 export type Kriteria = z.infer<typeof KriteriaSchema>;
-export type Profile = z.infer<typeof ProfileSchema>;
+export type PreferensiProfil = z.infer<typeof PreferensiProfilSchema>;
+export type ProfilPengguna = z.infer<typeof ProfilPenggunaSchema>;
+export type AktivitasProfil = (typeof AKTIVITAS_PROFIL)[number];
+export type JenjangPendidikanProfil = (typeof JENJANG_PENDIDIKAN_PROFIL)[number];
 export type KnowledgeDocument = z.infer<typeof KnowledgeDocumentSchema>;
 export type RadarDraft = z.infer<typeof RadarDraftSchema>;
 export type RadarProgramDraft = z.infer<typeof RadarProgramDraftSchema>;
@@ -77,7 +81,6 @@ export type RadarRunKind = (typeof RADAR_RUN_KINDS)[number];
 export type RadarSkipReason = (typeof RADAR_SKIP_REASONS)[number];
 export type RadarSourceOutcome = (typeof RADAR_SOURCE_OUTCOMES)[number];
 export type ProfileGroup = (typeof PROFILE_GROUPS)[number];
-export type AgeBand = (typeof AGE_BANDS)[number];
 export type ObstacleReportStage = (typeof OBSTACLE_REPORT_STAGES)[number];
 
 export type Wilayah = z.infer<typeof WilayahSchema>;
