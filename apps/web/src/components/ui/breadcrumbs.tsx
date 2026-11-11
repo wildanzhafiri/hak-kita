@@ -8,7 +8,7 @@ export function Breadcrumbs({ label, items }: BreadcrumbsProps) {
   return (
     <HeroBreadcrumbs
       aria-label={label}
-      className="flex min-w-0 items-center gap-2 pt-5 text-xs text-[#687385]"
+      className="flex min-w-0 items-center gap-2 pt-5 text-[12px] text-[#687385]"
       separator={<ChevronRight aria-hidden="true" size={13} />}
     >
       {items.map(({ label: itemLabel, href }, index) => (
