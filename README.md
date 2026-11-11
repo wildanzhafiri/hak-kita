@@ -13,7 +13,7 @@ HAKKITA dikembangkan oleh **NGGAK PUNYA NAMA TIM** dari Universitas Brawijaya.
 | Anggota                 | Peran           |
 | ----------------------- | --------------- |
 | Vannya Ade Gunawan      | Product Manager |
-| Choirotul Lutfia        | UI/UX Desainer  |
+| Choirotul Lutfia        | UI/UX Designer  |
 | Muhammad Wildan Zhafiri | Developer       |
 
 ## Fitur
