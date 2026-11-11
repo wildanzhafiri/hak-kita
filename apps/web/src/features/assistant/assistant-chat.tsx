@@ -1,167 +1,155 @@
 'use client';
 
-import { ArrowUp, LoaderCircle, MessageCircle, RotateCcw, ShieldCheck } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Modal } from '@heroui/react';
+import { MessageSquareText, MessagesSquare, RotateCcw, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog } from '@/components/ui/dialog';
-import { TextAreaInput } from '@/components/ui/text-area';
+import { AssistantComposer } from './assistant-composer';
 import { AssistantMessage } from './assistant-message';
-import { ASSISTANT_ERROR_COPY, ASSISTANT_PRIVACY_NOTE, ASSISTANT_PROMPTS } from './content';
+import { AssistantWelcome } from './assistant-welcome';
+import { ASSISTANT_COPY, ASSISTANT_LOADING_COPY } from './content';
 import { useAssistantChat } from './use-assistant-chat';
 
 export function AssistantChat() {
+  const pathname = usePathname();
+  if (pathname.startsWith('/admin')) return null;
+  return <AssistantChatPanel />;
+}
+
+function AssistantChatPanel() {
   const {
+    user,
     isOpen,
     setIsOpen,
     input,
     setInput,
+    turnstileSiteKey,
+    turnstileToken,
+    setTurnstileToken,
+    turnstileResetKey,
     listRef,
     messages,
     isBusy,
+    isWaitingForTurnstile,
     isMessageLimitReached,
     canSend,
-    pageLabel,
+    pageTopic,
     error,
     handleSubmit,
     handleKeyDown,
     handleApproval,
     handleNewConversation,
+    submitText,
   } = useAssistantChat();
 
   return (
-    <Dialog
-      closeLabel="Tutup asisten"
-      description="Tanya program dan layanan publik"
-      onOpenChange={setIsOpen}
-      open={isOpen}
-      side
-      title="Tanya HAKKITA"
-      trigger={
-        <Button
-          aria-label="Buka asisten HAKKITA"
-          className="fixed bottom-[max(20px,env(safe-area-inset-bottom))] right-5 z-40 min-h-12 rounded-full px-5 text-sm shadow-[0_8px_26px_#17395b36] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none sm:bottom-7 sm:right-7"
-          onPress={() => setIsOpen(true)}
+    <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Button
+        aria-label={ASSISTANT_COPY.open}
+        className="fixed bottom-[max(20px,env(safe-area-inset-bottom))] right-4 z-40 size-12 min-h-12 rounded-full p-0 text-sm shadow-[0_8px_26px_#17395b36] sm:bottom-7 sm:right-7 sm:size-auto sm:min-h-12 sm:px-5"
+        onPress={() => setIsOpen(true)}
+      >
+        <MessageSquareText aria-hidden="true" size={20} />
+        <span className="hidden sm:inline">Tanya HAKKITA</span>
+      </Button>
+      <Modal.Backdrop
+        className="fixed inset-0 z-50 flex animate-none items-end justify-end bg-[#182a40]/30 p-6 backdrop-blur-[2px] transition-opacity duration-300 ease-out data-[entering]:opacity-0 data-[exiting]:opacity-0 motion-reduce:transition-none max-[640px]:p-0"
+        isDismissable
+      >
+        <Modal.Container
+          className="h-[min(660px,calc(100dvh-48px))] w-full max-w-[440px] origin-bottom-right animate-none p-0 transition-[opacity,translate,scale] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-[entering]:translate-y-5 data-[entering]:scale-95 data-[entering]:opacity-0 data-[exiting]:translate-y-3 data-[exiting]:scale-95 data-[exiting]:opacity-0 motion-reduce:transition-none max-[640px]:h-dvh max-[640px]:max-w-none"
+          placement="auto"
+          scroll="inside"
         >
-          <MessageCircle aria-hidden="true" size={19} /> Tanya HAKKITA
-        </Button>
-      }
-    >
-      <div className="flex min-h-0 flex-1 flex-col">
-        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#e1e7ee] bg-white px-5 py-2.5 md:px-8">
-          <span className="inline-flex min-w-0 items-center gap-1.5 truncate text-xs text-[#607189]">
-            <ShieldCheck aria-hidden="true" className="text-[#196dcc]" size={15} />
-            {pageLabel ? `Konteks: ${pageLabel}` : 'Bersumber dari kanal resmi'}
-          </span>
-          {messages.length > 0 && (
-            <Button
-              aria-label="Percakapan baru"
-              className="size-8"
-              onPress={handleNewConversation}
-              tone="icon"
-            >
-              <RotateCcw aria-hidden="true" size={16} />
-            </Button>
-          )}
-        </div>
-
-        <div
-          aria-label="Percakapan"
-          aria-live="polite"
-          className="min-h-0 flex-1 space-y-7 overflow-y-auto overscroll-contain bg-white px-5 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-8 md:py-8"
-          ref={listRef}
-        >
-          {messages.length === 0 ? (
-            <div className="grid max-w-[580px] gap-5 py-5 motion-safe:animate-[assistant-reveal_260ms_ease-out_both]">
-              <div className="grid size-11 place-items-center rounded-xl bg-[#e5f1fe] text-[#196dcc]">
-                <MessageCircle aria-hidden="true" size={21} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold tracking-tight text-[#1b304c]">
-                  Apa yang ingin kamu ketahui?
-                </h2>
-                <p className="mt-2 max-w-[35ch] text-sm leading-6 text-[#607189]">
-                  Tanya tentang halaman ini, cari program lain, atau minta bantuan memahami sumber
-                  resmi.
+          <Modal.Dialog
+            aria-label={ASSISTANT_COPY.title}
+            className="flex h-full w-full max-w-none flex-col overflow-hidden rounded-2xl border border-[#e1e9f2] bg-white p-0 text-[#25354b] shadow-[0_18px_48px_#25304433] max-[640px]:rounded-none max-[640px]:border-0"
+          >
+            <header className="flex shrink-0 items-center gap-2.5 border-b border-[#e1e9f2] bg-white py-3.5 pl-4 pr-2.5 max-[640px]:pt-[max(14px,env(safe-area-inset-top))]">
+              <span className="grid size-10 shrink-0 place-items-center rounded-[11px] bg-[#edf5ff] text-[#1769c2]">
+                <MessagesSquare aria-hidden="true" size={22} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <Modal.Heading className="m-0 text-base font-semibold leading-snug text-[#253044]">
+                  {ASSISTANT_COPY.title}
+                </Modal.Heading>
+                <p className="mb-0 mt-0.5 text-xs leading-4 text-[#64748b]">
+                  {ASSISTANT_COPY.subtitle}
                 </p>
               </div>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {ASSISTANT_PROMPTS.map((prompt) => (
-                  <Button
-                    className="min-h-0 justify-start rounded-xl px-3.5 py-3 text-left text-sm font-medium"
-                    key={prompt}
-                    onPress={() => setInput(prompt)}
-                    tone="secondary"
-                  >
-                    {prompt}
-                  </Button>
-                ))}
-              </div>
-              <p className="max-w-[60ch] text-xs leading-5 text-[#728095]">
-                {ASSISTANT_PRIVACY_NOTE}
-              </p>
-            </div>
-          ) : (
-            messages.map((message) => (
-              <AssistantMessage
-                isApprovalReady={!isBusy}
-                key={message.id}
-                message={message}
-                onApproval={handleApproval}
-                onNavigate={() => setIsOpen(false)}
-              />
-            ))
-          )}
-          {isBusy && (
-            <p className="inline-flex items-center gap-2 text-xs text-[#607189]">
-              <LoaderCircle
-                aria-hidden="true"
-                className="animate-spin motion-reduce:animate-none"
-                size={15}
-              />
-              Sedang mencari jawaban…
-            </p>
-          )}
-        </div>
+              {messages.length > 0 && (
+                <Button
+                  aria-label={ASSISTANT_COPY.newConversation}
+                  className="size-11"
+                  isDisabled={isBusy}
+                  onPress={handleNewConversation}
+                  tone="icon"
+                >
+                  <RotateCcw aria-hidden="true" size={18} />
+                </Button>
+              )}
+              <Modal.CloseTrigger
+                aria-label={ASSISTANT_COPY.close}
+                className="static grid size-11 shrink-0 place-items-center rounded-lg bg-transparent text-[#64748b] transition-colors hover:bg-[#edf5ff] hover:text-[#1769c2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769c2] motion-reduce:transition-none"
+              >
+                <X aria-hidden="true" size={21} />
+              </Modal.CloseTrigger>
+            </header>
 
-        <form
-          className="shrink-0 border-t border-[#e1e7ee] bg-white px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 md:px-8 md:pb-6"
-          onSubmit={handleSubmit}
-        >
-          <label className="sr-only" htmlFor="assistant-message">
-            Tulis pertanyaan
-          </label>
-          <div className="assistant-message-input flex items-end gap-2 rounded-xl border border-[#cbd7e4] bg-white p-2 shadow-[0_2px_8px_#17395b0a] focus-within:border-[#196dcc] focus-within:ring-2 focus-within:ring-[#196dcc]/10">
-            <TextAreaInput
-              className="max-h-32 min-h-10 flex-1 resize-none border-0 px-2 py-2 shadow-none focus:ring-0 focus-visible:outline-none"
-              id="assistant-message"
-              maxLength={2_000}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Tanya tentang program atau halaman ini..."
-              rows={1}
-              value={input}
-            />
-            <Button
-              aria-label="Kirim pesan"
-              className="size-10 shrink-0 rounded-lg p-0"
-              isDisabled={!canSend}
-              type="submit"
+            <div
+              aria-label={ASSISTANT_COPY.conversation}
+              aria-live="polite"
+              className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain bg-[#f8fafc] px-4 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              ref={listRef}
             >
-              <ArrowUp aria-hidden="true" size={18} />
-            </Button>
-          </div>
-          <p className="mt-2 hidden text-[11px] leading-4 text-[#728095] sm:block">
-            Enter untuk mengirim, Shift+Enter untuk baris baru.
-          </p>
-          {isMessageLimitReached && (
-            <p className="mt-2 text-xs text-[#68788d]">Mulai percakapan baru untuk melanjutkan.</p>
-          )}
-          {error && (
-            <p className="mt-2 text-sm text-[#b72f35]" role="alert">
-              {ASSISTANT_ERROR_COPY}
-            </p>
-          )}
-        </form>
-      </div>
-    </Dialog>
+              {messages.length === 0 ? (
+                <AssistantWelcome onPrompt={submitText} topic={pageTopic} />
+              ) : (
+                messages.map((message, index) => (
+                  <AssistantMessage
+                    isApprovalReady={!isBusy}
+                    isStreaming={isBusy && index === messages.length - 1}
+                    key={message.id}
+                    message={message}
+                    onApproval={handleApproval}
+                    onNavigate={() => setIsOpen(false)}
+                  />
+                ))
+              )}
+              {isBusy && (
+                <div
+                  aria-label={ASSISTANT_LOADING_COPY}
+                  className="inline-flex items-center gap-2.5 text-sm text-[#607189]"
+                  role="status"
+                >
+                  <span aria-hidden="true" className="inline-flex items-center gap-1">
+                    <span className="size-1.5 rounded-full bg-[#196dcc] motion-safe:animate-pulse motion-reduce:animate-none" />
+                    <span className="size-1.5 rounded-full bg-[#196dcc] [animation-delay:180ms] motion-safe:animate-pulse motion-reduce:animate-none" />
+                    <span className="size-1.5 rounded-full bg-[#196dcc] [animation-delay:360ms] motion-safe:animate-pulse motion-reduce:animate-none" />
+                  </span>
+                  <span>{ASSISTANT_LOADING_COPY}</span>
+                </div>
+              )}
+            </div>
+
+            <AssistantComposer
+              canSend={canSend}
+              hasError={Boolean(error)}
+              input={input}
+              isGuest={!user}
+              isMessageLimitReached={isMessageLimitReached}
+              isWaitingForTurnstile={isWaitingForTurnstile}
+              onInputChange={setInput}
+              onKeyDown={handleKeyDown}
+              onSubmit={handleSubmit}
+              onTurnstileToken={setTurnstileToken}
+              turnstileResetKey={turnstileResetKey}
+              turnstileSiteKey={turnstileSiteKey}
+              turnstileToken={turnstileToken}
+            />
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 }

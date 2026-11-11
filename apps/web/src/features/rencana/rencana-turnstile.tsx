@@ -8,6 +8,7 @@ export function RencanaTurnstile({ siteKey, resetKey, onToken }: RencanaTurnstil
       onToken={onToken}
       resetKey={resetKey}
       siteKey={siteKey}
+      action="obstacle_report"
     />
   );
 }

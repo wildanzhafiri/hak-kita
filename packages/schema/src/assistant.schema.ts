@@ -16,11 +16,20 @@ export const AssistantRequestSchema = z.object({
     )
     .min(1)
     .max(MAX_ASSISTANT_MESSAGE_COUNT),
-  currentPath: z.string().max(180).regex(/^\/[a-z0-9/-]*$/).optional(),
+  currentPath: z
+    .string()
+    .max(180)
+    .regex(/^\/[a-z0-9/-]*$/)
+    .optional(),
+  turnstileToken: z.string().min(1).max(2048).optional(),
 });
 
 export const AssistantCatalogQuerySchema = z.object({
   query: z.string().trim().min(2).max(160),
+});
+
+export const AssistantPageReadQuerySchema = z.object({
+  url: z.string().trim().url().max(500),
 });
 
 export const AssistantNewsQuerySchema = z.object({ programId: ProgramIdSchema.optional() });

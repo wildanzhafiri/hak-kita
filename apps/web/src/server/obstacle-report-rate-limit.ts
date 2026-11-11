@@ -1,5 +1,8 @@
 import 'server-only';
-import { OBSTACLE_REPORT_RATE_LIMIT, OBSTACLE_REPORT_RATE_WINDOW_MS } from '@/config/obstacle-reports';
+import {
+  OBSTACLE_REPORT_RATE_LIMIT,
+  OBSTACLE_REPORT_RATE_WINDOW_MS,
+} from '@/config/obstacle-reports';
 
 interface RateWindow {
   count: number;

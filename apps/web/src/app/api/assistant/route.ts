@@ -1,6 +1,12 @@
 import { createServerClient } from '@supabase/ssr';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { convertToModelMessages, stepCountIs, streamText, validateUIMessages } from 'ai';
+import {
+  convertToModelMessages,
+  smoothStream,
+  stepCountIs,
+  streamText,
+  validateUIMessages,
+} from 'ai';
 import { cookies } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
 import { AssistantRequestSchema, MAX_ASSISTANT_USER_TEXT_LENGTH } from '@hakkita/schema';
@@ -8,12 +14,15 @@ import type { Database } from '@/lib/supabase/types';
 import { createAssistantTools, getAssistantPageContext } from '@/server/assistant';
 import { checkAssistantRateLimit } from '@/server/assistant-rate-limit';
 import { ASSISTANT_INSTRUCTIONS } from '@/server/content';
+import { createFallbackModel } from '@/server/fallback-model';
+import { verifyTurnstileToken } from '@/server/turnstile';
 
 const REQUEST_BODY_LIMIT = 60_000;
+const ASSISTANT_MAX_STEPS = 8;
+const ASSISTANT_STREAM_DELAY_MS = 18;
 
 function getClientKey(request: NextRequest): string {
-  const forwardedFor = request.headers.get('x-real-ip') ?? request.headers.get('x-forwarded-for');
-  return forwardedFor?.split(',')[0]?.trim().slice(0, 100) || 'unknown';
+  return request.headers.get('x-real-ip')?.trim().slice(0, 100) || 'unknown';
 }
 
 export async function POST(request: NextRequest) {
@@ -46,16 +55,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Pesan tidak valid.' }, { status: 400 });
   }
 
-  const apiKey = process.env.AI_API_KEY;
-  const baseURL = process.env.AI_GATEWAY_BASE_URL;
-  const model = process.env.AI_GATEWAY_MODEL;
-  const approvalSecret = process.env.TOOL_APPROVAL_SECRET;
   const databaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!apiKey || !baseURL || !model || !approvalSecret) {
-    return NextResponse.json({ error: 'Asisten belum dikonfigurasi.' }, { status: 503 });
-  }
-
   let accountClient: ReturnType<typeof createServerClient<Database>> | null = null;
   let userId: string | null = null;
   if (databaseUrl && publishableKey) {
@@ -69,6 +70,45 @@ export async function POST(request: NextRequest) {
     });
     const { data } = await accountClient.auth.getUser();
     userId = data.user?.id ?? null;
+  }
+
+  if (!userId) {
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    if (!turnstileSecret) {
+      return NextResponse.json({ error: 'Verifikasi keamanan belum tersedia.' }, { status: 503 });
+    }
+    if (!parsed.data.turnstileToken) {
+      return NextResponse.json(
+        { error: 'Selesaikan verifikasi keamanan untuk mengirim pesan.' },
+        { status: 400 },
+      );
+    }
+    const verification = await verifyTurnstileToken({
+      token: parsed.data.turnstileToken,
+      secret: turnstileSecret,
+      hostname: request.nextUrl.hostname,
+      action: 'assistant_chat',
+    });
+    if (verification === 'unavailable') {
+      return NextResponse.json(
+        { error: 'Verifikasi keamanan belum dapat dilakukan. Coba lagi.' },
+        { status: 503 },
+      );
+    }
+    if (verification !== 'valid') {
+      return NextResponse.json(
+        { error: 'Verifikasi keamanan gagal. Coba ulangi.' },
+        { status: 400 },
+      );
+    }
+  }
+
+  const apiKey = process.env.AI_API_KEY;
+  const baseURL = process.env.AI_GATEWAY_BASE_URL;
+  const model = process.env.AI_GATEWAY_MODEL;
+  const approvalSecret = process.env.TOOL_APPROVAL_SECRET;
+  if (!apiKey || !baseURL || !model || !approvalSecret) {
+    return NextResponse.json({ error: 'Asisten belum dikonfigurasi.' }, { status: 503 });
   }
 
   try {
@@ -91,9 +131,16 @@ export async function POST(request: NextRequest) {
     }
 
     const gateway = createOpenAICompatible({ name: 'menvora', baseURL, apiKey });
+    const fallbackModels = (process.env.AI_GATEWAY_FALLBACK_MODEL ?? '')
+      .split(',')
+      .map((name) => name.trim())
+      .filter((name) => name && name !== model);
     const pageContext = await getAssistantPageContext(parsed.data.currentPath);
     const result = streamText({
-      model: gateway.chatModel(model),
+      model: createFallbackModel([
+        gateway.chatModel(model),
+        ...fallbackModels.map((name) => gateway.chatModel(name)),
+      ]),
       system: userId
         ? `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}`
         : `${ASSISTANT_INSTRUCTIONS}\n\n${pageContext}\n\nPengguna belum masuk. Jawab pertanyaan umum dari data publik seperti biasa tanpa meminta pengguna masuk. Jangan panggil getMyPlan atau saveProgramToPlan dan jangan menyiratkan bahwa kamu dapat melihat data akun pengguna. Jika ditanya tentang Rencanaku atau data akun lain, jelaskan bahwa kamu tidak dapat mengaksesnya sebelum pengguna masuk. Menyimpan program ke Rencanaku juga memerlukan akun.`,
@@ -101,7 +148,11 @@ export async function POST(request: NextRequest) {
       tools,
       toolApproval: { saveProgramToPlan: 'user-approval' },
       experimental_toolApprovalSecret: approvalSecret,
-      stopWhen: stepCountIs(5),
+      stopWhen: stepCountIs(ASSISTANT_MAX_STEPS),
+      experimental_transform: smoothStream({
+        delayInMs: ASSISTANT_STREAM_DELAY_MS,
+        chunking: 'word',
+      }),
       abortSignal: request.signal,
     });
 

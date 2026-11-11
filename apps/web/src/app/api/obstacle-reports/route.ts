@@ -3,14 +3,12 @@ import { ObstacleReportSchema } from '@hakkita/schema';
 import { NextResponse, type NextRequest } from 'next/server';
 import type { Database } from '@/lib/supabase/types';
 import { checkObstacleReportRateLimit } from '@/server/obstacle-report-rate-limit';
+import { verifyTurnstileToken } from '@/server/turnstile';
 
-interface TurnstileResponse {
-  success: boolean;
-}
+const REQUEST_BODY_LIMIT = 10_000;
 
 function getClientKey(request: NextRequest): string {
-  const forwardedFor = request.headers.get('x-real-ip') ?? request.headers.get('x-forwarded-for');
-  return forwardedFor?.split(',')[0]?.trim().slice(0, 100) || 'unknown';
+  return request.headers.get('x-real-ip')?.trim().slice(0, 100) || 'unknown';
 }
 
 export async function POST(request: NextRequest) {
@@ -24,7 +22,11 @@ export async function POST(request: NextRequest) {
 
   let body: unknown;
   try {
-    body = await request.json();
+    const text = await request.text();
+    if (new TextEncoder().encode(text).byteLength > REQUEST_BODY_LIMIT) {
+      return NextResponse.json({ error: 'Isi laporan terlalu panjang.' }, { status: 413 });
+    }
+    body = JSON.parse(text);
   } catch {
     return NextResponse.json({ error: 'Isi laporan tidak valid.' }, { status: 400 });
   }
@@ -41,26 +43,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Pengiriman laporan belum tersedia.' }, { status: 503 });
   }
 
-  const turnstileBody = new URLSearchParams({
+  const verification = await verifyTurnstileToken({
+    token: parsed.data.turnstileToken,
     secret: turnstileSecret,
-    response: parsed.data.turnstileToken,
+    hostname: request.nextUrl.hostname,
+    action: 'obstacle_report',
   });
-
-  let turnstile: TurnstileResponse;
-  try {
-    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: turnstileBody,
-      signal: AbortSignal.timeout(5_000),
-    });
-    if (!response.ok) throw new Error('Turnstile verification unavailable');
-    turnstile = (await response.json()) as TurnstileResponse;
-  } catch {
-    return NextResponse.json({ error: 'Verifikasi belum dapat dilakukan. Coba lagi nanti.' }, { status: 503 });
+  if (verification === 'unavailable') {
+    return NextResponse.json(
+      { error: 'Verifikasi belum dapat dilakukan. Coba lagi nanti.' },
+      { status: 503 },
+    );
   }
-
-  if (turnstile.success !== true) {
+  if (verification !== 'valid') {
     return NextResponse.json({ error: 'Verifikasi gagal. Coba ulangi.' }, { status: 400 });
   }
 
@@ -80,7 +75,10 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch {
-    return NextResponse.json({ error: 'Laporan belum dapat disimpan. Coba lagi nanti.' }, { status: 503 });
+    return NextResponse.json(
+      { error: 'Laporan belum dapat disimpan. Coba lagi nanti.' },
+      { status: 503 },
+    );
   }
 
   return NextResponse.json({ accepted: true }, { status: 201 });

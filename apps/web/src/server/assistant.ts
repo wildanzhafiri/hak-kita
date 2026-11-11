@@ -2,11 +2,12 @@ import 'server-only';
 import { createClient } from '@supabase/supabase-js';
 import { tool } from 'ai';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { isOfficialDomain, programPath } from '@hakkita/domain';
+import { isOfficialDomain, programPath, rankPrograms } from '@hakkita/domain';
 import {
   AssistantBudgetQuerySchema,
   AssistantCatalogQuerySchema,
   AssistantNewsQuerySchema,
+  AssistantPageReadQuerySchema,
   AssistantPageQuerySchema,
   AssistantPlanQuerySchema,
   AssistantSaveProgramQuerySchema,
@@ -14,54 +15,66 @@ import {
 import type { Program } from '@hakkita/schema';
 import type { Database } from '@/lib/supabase/types';
 import { loadApbdBudgetSnapshot } from './budget';
-import { ASSISTANT_PAGE_LINKS } from './constants';
-import { loadPrograms } from './data';
+import {
+  ASSISTANT_PAGE_LINKS,
+  OFFICIAL_EXTRACT_URL,
+  OFFICIAL_PAGE_TEXT_LIMIT,
+  OFFICIAL_SEARCH_RESULT_LIMIT,
+  OFFICIAL_SEARCH_URL,
+  OFFICIAL_SNIPPET_LIMIT,
+  OFFICIAL_WEB_TIMEOUT_MS,
+} from './constants';
+import { loadPrograms, loadPublishedInformation } from './data';
 import { findProgramKnowledge } from './program-knowledge';
 
 const MAX_CATALOG_RESULTS = 5;
 const NEWS_RESULT_LIMIT = 5;
 
-function scoreProgram(program: Program, terms: readonly string[]): number {
-  const name = program.nama.toLocaleLowerCase('id-ID');
-  const category = program.kategori.toLocaleLowerCase('id-ID');
-  const text = [program.ringkasan, ...program.untuk].join(' ').toLocaleLowerCase('id-ID');
-  return terms.reduce(
-    (score, term) =>
-      score +
-      (name.includes(term) ? 5 : 0) +
-      (category.includes(term) ? 3 : 0) +
-      (text.includes(term) ? 1 : 0),
-    0,
-  );
+function findCatalogMatches(programs: readonly Program[], query: string) {
+  return rankPrograms(programs, query, MAX_CATALOG_RESULTS).map((program) => ({
+    id: program.id,
+    href: programPath(program),
+    name: program.nama,
+    category: program.kategori,
+    summary: program.ringkasan,
+    scope: program.cakupan.level === 'nasional' ? 'Nasional' : program.cakupan.kode,
+    verification: program.verifikasi,
+    checkedOn: program.tanggalDiperiksa ?? null,
+    sourceUrl: program.sumberUtama.url,
+  }));
 }
 
-function findCatalogMatches(programs: readonly Program[], query: string) {
-  const terms = query
-    .toLocaleLowerCase('id-ID')
-    .split(/[^\p{L}\p{N}]+/u)
-    .filter((term) => term.length > 1);
+function isOfficialHttpsUrl(value: unknown): value is string {
+  return typeof value === 'string' && value.startsWith('https://') && isOfficialDomain(value);
+}
 
-  if (terms.length === 0) return [];
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
 
-  return programs
-    .map((program) => ({ program, score: scoreProgram(program, terms) }))
-    .filter(({ score }) => score > 0)
-    .sort(
-      (left, right) =>
-        right.score - left.score || left.program.nama.localeCompare(right.program.nama, 'id-ID'),
-    )
-    .slice(0, MAX_CATALOG_RESULTS)
-    .map(({ program }) => ({
-      id: program.id,
-      href: programPath(program),
-      name: program.nama,
-      category: program.kategori,
-      summary: program.ringkasan,
-      scope: program.cakupan.level === 'nasional' ? 'Nasional' : program.cakupan.kode,
-      verification: program.verifikasi,
-      checkedOn: program.tanggalDiperiksa ?? null,
-      sourceUrl: program.sumberUtama.url,
-    }));
+async function callOfficialWeb(
+  url: string,
+  body: Record<string, unknown>,
+  abortSignal: AbortSignal | undefined,
+): Promise<Record<string, unknown> | null> {
+  const apiKey = process.env.TAVILY_API_KEY;
+  if (!apiKey) return null;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: AbortSignal.any([
+        AbortSignal.timeout(OFFICIAL_WEB_TIMEOUT_MS),
+        ...(abortSignal ? [abortSignal] : []),
+      ]),
+    });
+    if (!response.ok) return null;
+    const parsed: unknown = await response.json();
+    return isRecord(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
 }
 
 function createNewsDatabaseClient(): SupabaseClient<Database> | null {
@@ -89,7 +102,7 @@ export function createAssistantTools(
         'Ambil syarat, langkah, periode, dan daftar berkas dari satu halaman program atau layanan HAKKITA.',
       inputSchema: AssistantSaveProgramQuerySchema,
       execute: async ({ programId }) => {
-        const program = (await loadPrograms()).find((entry) => entry.id === programId);
+        const program = (await loadPublishedInformation()).find((entry) => entry.id === programId);
         if (!program) return { available: false };
         return {
           available: true,
@@ -102,6 +115,9 @@ export function createAssistantTools(
             sourceUrl: requirement.sumberUrl ?? null,
           })),
           steps: program.langkah,
+          cost: program.biaya ?? null,
+          channels: program.kanal ?? [],
+          about: program.tentang ?? null,
           documents:
             program.berkas?.dokumen.map((document) => ({
               label: document.label,
@@ -127,7 +143,7 @@ export function createAssistantTools(
       description: 'Cari program bantuan atau layanan publik dari katalog HAKKITA.',
       inputSchema: AssistantCatalogQuerySchema,
       execute: async ({ query }) => {
-        const programs = await loadPrograms();
+        const programs = await loadPublishedInformation();
         return { results: findCatalogMatches(programs, query) };
       },
     }),
@@ -146,6 +162,68 @@ export function createAssistantTools(
             checkedOn: passage.checkedOn,
             verification: passage.verification,
           })),
+        };
+      },
+    }),
+    searchOfficialWeb: tool({
+      description:
+        'Cari di situs resmi pemerintah (.go.id dan .desa.id) untuk pertanyaan layanan publik, program, atau aturan yang tidak ada di katalog HAKKITA. Hasilnya belum diperiksa HAKKITA.',
+      inputSchema: AssistantCatalogQuerySchema,
+      execute: async ({ query }, { abortSignal }) => {
+        const data = await callOfficialWeb(
+          OFFICIAL_SEARCH_URL,
+          {
+            query,
+            search_depth: 'advanced',
+            max_results: OFFICIAL_SEARCH_RESULT_LIMIT,
+            include_domains: ['go.id', 'desa.id'],
+            include_domains_mode: 'restrict',
+            country: 'indonesia',
+            language: 'id',
+          },
+          abortSignal,
+        );
+        if (!data || !Array.isArray(data.results)) return { available: false, results: [] };
+        return {
+          available: true,
+          verifiedByHakkita: false,
+          results: data.results.flatMap((result: unknown) => {
+            if (!isRecord(result) || !isOfficialHttpsUrl(result.url)) return [];
+            return [
+              {
+                title: typeof result.title === 'string' ? result.title : 'Sumber resmi',
+                sourceUrl: result.url,
+                snippet:
+                  typeof result.content === 'string'
+                    ? result.content.slice(0, OFFICIAL_SNIPPET_LIMIT)
+                    : '',
+              },
+            ];
+          }),
+        };
+      },
+    }),
+    readOfficialPage: tool({
+      description:
+        'Baca isi satu halaman situs resmi pemerintah (.go.id atau .desa.id), biasanya dari hasil searchOfficialWeb, untuk mengambil langkah, syarat, atau biaya yang tertulis di sana.',
+      inputSchema: AssistantPageReadQuerySchema,
+      execute: async ({ url }, { abortSignal }) => {
+        if (!isOfficialHttpsUrl(url)) return { available: false, reason: 'Hanya situs resmi .go.id atau .desa.id.' };
+        const data = await callOfficialWeb(
+          OFFICIAL_EXTRACT_URL,
+          { urls: [url], extract_depth: 'advanced', format: 'markdown', include_images: false },
+          abortSignal,
+        );
+        const first = data && Array.isArray(data.results) ? data.results[0] : null;
+        if (!isRecord(first) || typeof first.raw_content !== 'string' || !isOfficialHttpsUrl(first.url)) {
+          return { available: false, reason: 'Halaman tidak dapat dibaca.' };
+        }
+        return {
+          available: true,
+          verifiedByHakkita: false,
+          title: typeof first.title === 'string' ? first.title : 'Sumber resmi',
+          sourceUrl: first.url,
+          text: first.raw_content.slice(0, OFFICIAL_PAGE_TEXT_LIMIT),
         };
       },
     }),
@@ -218,7 +296,7 @@ export function createAssistantTools(
         ]);
         if (savedError || progressError) return { available: false, programs: [] };
 
-        const programs = await loadPrograms();
+        const programs = await loadPublishedInformation();
         const savedIds = new Set(savedPrograms.map((entry) => entry.program_id));
         const progressByProgram = new Map(progress.map((entry) => [entry.program_id, entry]));
         return {
@@ -275,7 +353,7 @@ export async function getAssistantPageContext(currentPath: string | undefined): 
       section === 'kenali-hakmu' ||
       section === 'urus-kebutuhanmu')
   ) {
-    const program = (await loadPrograms()).find((entry) => entry.id === id);
+    const program = (await loadPublishedInformation()).find((entry) => entry.id === id);
     if (program) {
       const pageKind = segments.includes('berkas') ? 'halaman berkas' : 'halaman rincian';
       return `Pengguna sedang melihat ${pageKind} ${program.nama}. ID program: ${program.id}. Ringkasan: ${program.ringkasan}. Sumber utama: ${program.sumberUtama.url}. Gunakan tools untuk menjawab rincian yang belum ada di konteks ini.`;

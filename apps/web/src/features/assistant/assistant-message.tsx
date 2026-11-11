@@ -38,10 +38,10 @@ function getToolDestinations(output: unknown): AssistantDestination[] {
   return candidates.flatMap((candidate) => {
     if (!isRecord(candidate) || typeof candidate.href !== 'string') return [];
     if (
-      !/^\/(program|layanan)\/[a-z0-9-]+$/.test(candidate.href) &&
+      !/^\/(kenali-hakmu|program|layanan)\/[a-z0-9-]+$/.test(candidate.href) &&
       ![
         '/',
-        '/program',
+        '/kenali-hakmu',
         '/layanan',
         '/anggaran',
         '/rencanaku',
@@ -68,6 +68,7 @@ export function AssistantMessage({
   message,
   onApproval,
   isApprovalReady,
+  isStreaming = false,
   onNavigate,
 }: AssistantMessageProps) {
   const isAssistant = message.role === 'assistant';
@@ -84,6 +85,15 @@ export function AssistantMessage({
     ).values(),
   ].slice(0, 3);
 
+  const hasVisibleContent = message.parts.some(
+    (part) =>
+      (part.type === 'text' && part.text.trim() !== '') ||
+      getApproval(part) !== null ||
+      (part.type === 'tool-saveProgramToPlan' && part.state === 'output-available'),
+  );
+  if (isAssistant && isStreaming && !hasVisibleContent) return null;
+  const showReferences = !isStreaming;
+
   return (
     <article
       className={`flex motion-safe:animate-[assistant-reveal_260ms_ease-out_both] ${isAssistant ? 'justify-start' : 'justify-end'}`}
@@ -91,8 +101,8 @@ export function AssistantMessage({
       <div
         className={
           isAssistant
-            ? 'w-full max-w-[640px] min-w-0 border-l-2 border-[#b8d4f2] pl-4 md:pl-5'
-            : 'max-w-[90%] min-w-0 rounded-2xl rounded-br-md bg-[#eaf3fd] px-4 py-3 text-sm leading-6 text-[#1b304c] md:max-w-[78%] md:px-5'
+            ? 'min-w-0 max-w-[94%] rounded-2xl rounded-tl-md border border-[#e8eef5] bg-white px-4 py-3'
+            : 'min-w-0 max-w-[86%] rounded-2xl rounded-br-md border border-[#deebfb] bg-[#edf5ff] px-4 py-3 text-sm leading-6 text-[#1b304c]'
         }
       >
         <div className="space-y-3">
@@ -166,7 +176,7 @@ export function AssistantMessage({
 
             return null;
           })}
-          {destinations.length > 0 && (
+          {showReferences && destinations.length > 0 && (
             <div className="border-t border-[#e8edf2] pt-3">
               <p className="mb-2 text-xs font-semibold text-[#617087]">Buka di HAKKITA</p>
               <div className="grid gap-1.5">
@@ -177,26 +187,26 @@ export function AssistantMessage({
                     key={destination.href}
                     onClick={onNavigate}
                   >
-                    <span>{destination.label}</span>
+                    <span className="min-w-0 [overflow-wrap:anywhere]">{destination.label}</span>
                     <ArrowRight aria-hidden="true" className="shrink-0" size={16} />
                   </Link>
                 ))}
               </div>
             </div>
           )}
-          {sources.length > 0 && (
+          {showReferences && sources.length > 0 && (
             <div className="border-t border-[#e8edf2] pt-3">
               <p className="mb-1.5 text-xs font-semibold text-[#617087]">Sumber resmi</p>
-              <ul className="grid gap-1.5">
+              <ul className="grid min-w-0 gap-1.5">
                 {sources.map((source) => (
-                  <li key={source.url}>
+                  <li className="min-w-0" key={source.url}>
                     <a
-                      className="inline-flex items-start gap-1 text-xs font-medium leading-5 text-[#196dcc] underline decoration-[#c7dbf2] underline-offset-2 hover:decoration-[#196dcc]"
+                      className="inline-flex max-w-full items-start gap-1 text-xs font-medium leading-5 text-[#196dcc] underline decoration-[#c7dbf2] underline-offset-2 hover:decoration-[#196dcc]"
                       href={source.url}
                       rel="noreferrer"
                       target="_blank"
                     >
-                      {source.label}{' '}
+                      <span className="min-w-0 [overflow-wrap:anywhere]">{source.label}</span>
                       <ArrowUpRight aria-hidden="true" className="mt-0.5 shrink-0" size={13} />
                     </a>
                   </li>
