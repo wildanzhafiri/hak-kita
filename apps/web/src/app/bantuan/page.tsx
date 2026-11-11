@@ -1,28 +1,31 @@
 import type { Metadata } from 'next';
-import { FaqAccordion } from '@/components/ui/faq-accordion';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/layout/page-shell';
-import { HOME_FAQ_ITEMS } from '@/features/home/content';
+import { FaqAccordion } from '@/components/ui/faq-accordion';
+import { BANTUAN_FAQ_ITEMS, BANTUAN_PAGE_CONTENT } from './content';
 
-const DESCRIPTION = 'Jawaban tentang HAKKITA, informasi program, dan panduan layanan publik.';
-
-export const metadata: Metadata = { title: 'Pusat Bantuan', description: DESCRIPTION };
+export const metadata: Metadata = {
+  title: 'Pusat Bantuan',
+  description: BANTUAN_PAGE_CONTENT.description,
+};
 
 export default function BantuanPage() {
   return (
     <PageShell
       breadcrumbs={[{ label: 'Pusat Bantuan' }]}
-      eyebrow="BANTUAN HAKKITA"
-      title="Pertanyaan yang sering diajukan"
-      description={DESCRIPTION}
+      narrow
+      title={BANTUAN_PAGE_CONTENT.title}
+      description={BANTUAN_PAGE_CONTENT.description}
     >
-      <div className="grid gap-12 py-8 max-[700px]:gap-9 max-[700px]:py-5">
-        <section aria-labelledby="faq-heading" className="max-w-[850px]">
-          <h2 className="mb-3 text-xl font-semibold tracking-tight text-[#25354b]" id="faq-heading">
-            Pertanyaan yang sering diajukan
-          </h2>
-          <FaqAccordion items={HOME_FAQ_ITEMS} />
-        </section>
-      </div>
+      <FaqAccordion items={BANTUAN_FAQ_ITEMS} />
+      <Link
+        className="mt-8 inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-[#196dcc] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#196dcc]"
+        href="/program"
+      >
+        {BANTUAN_PAGE_CONTENT.browseLink}
+        <ArrowRight aria-hidden="true" size={18} />
+      </Link>
     </PageShell>
   );
 }
