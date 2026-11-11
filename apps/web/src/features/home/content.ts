@@ -80,10 +80,10 @@ export const HOME_FAQ_ITEMS = [
 ] satisfies readonly FaqItem[];
 
 export const PROGRAM_FINDER_PROMO = {
-  title: 'Bingung Memilih Program Yang Sesuai?',
+  title: 'Bingung memilih program yang sesuai?',
   description:
-    'Lengkapi profil dan preferensimu agar HAKKITA dapat menyarankan program yang relevan dengan kebutuhanmu.',
-  action: 'Lihat rekomendasi untukmu',
+    'Jawab beberapa pertanyaan singkat untuk menemukan program yang relevan dengan kebutuhanmu.',
+  action: 'Cari program untukmu',
 } as const;
 
 export const TRANSPARENCY_PREVIEW = {

@@ -87,6 +87,8 @@ export interface DialogProps {
   children: ReactNode;
   side?: boolean;
   mobileSheet?: boolean;
+  wide?: boolean;
+  isTitleHidden?: boolean;
 }
 
 export interface BreadcrumbEntry {

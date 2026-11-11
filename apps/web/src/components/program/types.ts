@@ -4,6 +4,7 @@ import type { Program, TingkatVerifikasi } from '@hakkita/schema';
 
 export interface ProgramCardProps {
   program: Program;
+  children?: ReactNode;
 }
 
 export interface ProgramGridProps {

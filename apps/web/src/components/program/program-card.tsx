@@ -6,7 +6,7 @@ import { KATEGORI_IMAGE } from './constants';
 import { SaveButton } from './save-button';
 import type { ProgramCardProps } from './types';
 
-export function ProgramCard({ program }: ProgramCardProps) {
+export function ProgramCard({ program, children }: ProgramCardProps) {
   const href = programPath(program);
   return (
     <article className="program-card">
@@ -21,6 +21,7 @@ export function ProgramCard({ program }: ProgramCardProps) {
           <Link href={href}>{program.nama}</Link>
         </h3>
         <p>{program.ringkasan}</p>
+        {children}
         <div className="card-foot">
           <Link className="text-link" href={href}>
             Lihat Program <ArrowRight size={17} />
