@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroSection programs={programs} />
+      <HeroSection programs={[...programs, ...services]} />
       <HomepageIntroduction />
       <ProgramCategories />
       <ProgramFinderPromo />

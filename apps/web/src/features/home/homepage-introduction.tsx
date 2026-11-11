@@ -1,15 +1,27 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { HOME_CONTAINER_CLASSES, HOME_HEADING_CLASSES } from './constants';
+
+const HALO_CLASSES =
+  "relative isolate mx-auto mb-[30px] max-w-[780px] text-center before:pointer-events-none before:absolute before:-inset-x-3 before:-bottom-6 before:-top-10 before:-z-10 before:opacity-40 before:blur-[28px] before:content-[''] before:[background:radial-gradient(ellipse_at_28%_40%,#a8cef5b3_0%,#c9e1fa66_35%,transparent_65%),radial-gradient(ellipse_at_74%_48%,#f6d7b899_0%,#fbe9d866_35%,transparent_68%)]";
+
+const FEATURE_CLASSES =
+  'flex min-w-0 flex-col overflow-hidden rounded-[14px] border p-6 transition-[border-color,box-shadow,transform] duration-[160ms] hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgb(37_48_68_/_8%)] focus-within:-translate-y-0.5 focus-within:shadow-[0_8px_22px_rgb(37_48_68_/_8%)] motion-reduce:transform-none motion-reduce:transition-none';
+
+const FEATURE_LINK_CLASSES =
+  'mt-3.5 inline-flex min-h-[30px] w-fit items-center gap-2.5 text-[13px] font-semibold text-[#196dcc] hover:underline';
 
 export function HomepageIntroduction() {
   return (
-    <section className="bg-white py-16 max-[640px]:py-11">
-      <div className="container">
-        <div className="mx-auto mb-[30px] max-w-[780px] text-center">
+    <section className="bg-white py-16 max-[900px]:py-16 max-[640px]:py-11">
+      <div className={HOME_CONTAINER_CLASSES}>
+        <div className={HALO_CLASSES}>
           <p className="mb-3.5 text-[11px] font-semibold tracking-[0.12em] text-[#196dcc]">
             MENGENAL HAKKITA
           </p>
-          <h2 className="mx-auto mb-[18px] max-w-[720px] text-[clamp(27px,2.5vw,34px)] font-bold leading-[1.35] tracking-[-0.025em] [text-wrap:balance]">
+          <h2
+            className={`mx-auto mb-[18px] max-w-[720px] [text-wrap:balance] ${HOME_HEADING_CLASSES}`}
+          >
             Lebih Mudah Menemukan Informasi,{' '}
             <span className="text-[#196dcc]">Lebih Jelas Menentukan Langkah.</span>
           </h2>
@@ -19,7 +31,9 @@ export function HomepageIntroduction() {
           </p>
         </div>
         <div className="mx-auto grid max-w-[920px] grid-cols-2 gap-5 max-[640px]:grid-cols-1">
-          <article className="flex min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e0e8f2] bg-[linear-gradient(135deg,#f0f6fd_0%,#f8fbff_60%,#fff_100%)] p-6">
+          <article
+            className={`${FEATURE_CLASSES} border-[#cfdded] bg-[linear-gradient(135deg,#f0f6fd_0%,#f8fbff_60%,#fff_100%)] hover:border-[#9dbfe5] focus-within:border-[#9dbfe5]`}
+          >
             <span className="mb-3.5 inline-flex w-fit items-center rounded-full border border-[#cbdcf0] bg-white/70 px-2.5 py-[5px] text-[10px] font-semibold tracking-[0.08em] text-[#196dcc]">
               PROGRAM &amp; KESEMPATAN
             </span>
@@ -30,14 +44,13 @@ export function HomepageIntroduction() {
               Temukan informasi bantuan, beasiswa, peluang karier, dan berbagai program yang sesuai
               dengan kebutuhanmu.
             </p>
-            <Link
-              className="mt-3.5 inline-flex min-h-[30px] w-fit items-center gap-2.5 text-[13px] font-semibold text-[#196dcc]"
-              href="/kenali-hakmu"
-            >
+            <Link className={FEATURE_LINK_CLASSES} href="/kenali-hakmu">
               Jelajahi Program <ArrowRight size={17} />
             </Link>
           </article>
-          <article className="flex min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#ebe5db] bg-[linear-gradient(135deg,#fffaf4_0%,#fdfcfb_60%,#f5f9fe_100%)] p-6">
+          <article
+            className={`${FEATURE_CLASSES} border-[#e4dbcc] bg-[linear-gradient(135deg,#fffaf4_0%,#fdfcfb_60%,#f5f9fe_100%)] hover:border-[#cbbda7] focus-within:border-[#cbbda7]`}
+          >
             <span className="mb-3.5 inline-flex w-fit items-center rounded-full border border-[#e5dccf] bg-white/70 px-2.5 py-[5px] text-[10px] font-semibold tracking-[0.08em] text-[#8a643e]">
               PANDUAN PENGURUSAN
             </span>
@@ -48,10 +61,7 @@ export function HomepageIntroduction() {
               Ketahui persyaratan, prosedur, dan cara mengurus layanan publik melalui panduan yang
               tersedia.
             </p>
-            <Link
-              className="mt-3.5 inline-flex min-h-[30px] w-fit items-center gap-2.5 text-[13px] font-semibold text-[#196dcc]"
-              href="/layanan"
-            >
+            <Link className={FEATURE_LINK_CLASSES} href="/layanan">
               Lihat Layanan <ArrowRight size={17} />
             </Link>
           </article>

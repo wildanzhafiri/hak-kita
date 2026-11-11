@@ -2308,15 +2308,15 @@ a.button.on-dark:hover {
 }
 .program-card-body {
   display: flex;
-  min-height: 245px;
+  min-height: 0;
   flex: 1;
   flex-direction: column;
-  padding: 20px 22px 18px;
+  padding: 18px;
 }
 .program-card .card-top {
   justify-content: flex-start;
   gap: 0;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .program-card .category {
   border: 1px solid #c7dbf2;
@@ -2325,9 +2325,11 @@ a.button.on-dark:hover {
   font-size: 11px;
 }
 .program-card h3 {
-  margin: 4px 0 8px;
-  font-size: 19px;
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 700;
   line-height: 1.35;
+  letter-spacing: -0.035em;
 }
 .program-card p {
   font-size: 13px;
@@ -2335,7 +2337,15 @@ a.button.on-dark:hover {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
+}
+@media (max-width: 640px) {
+  .program-card-body {
+    padding: 16px;
+  }
+  .program-card h3 {
+    font-size: 19px;
+  }
 }
 .program-card .card-meta {
   display: none;

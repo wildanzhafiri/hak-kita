@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { HOME_PERSONALIZATION_COPY as COPY } from '@/features/profil/content';
 import type { HomePersonalizationProps } from './types';
 
-const LINK_CLASSES = 'font-semibold text-[#196dcc] hover:underline';
+const LINK_CLASSES = 'font-medium text-[#196dcc] hover:underline';
 
 export function HomePersonalization({ mode }: HomePersonalizationProps) {
   if (mode === 'ready') {

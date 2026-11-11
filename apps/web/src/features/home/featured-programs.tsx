@@ -10,6 +10,11 @@ import { ProgramGrid } from '@/components/program/program-grid';
 import { useAuth } from '@/hooks/use-auth';
 import { HOME_PERSONALIZATION_COPY as PERSONAL_COPY } from '@/features/profil/content';
 import { useProfile } from '@/features/profil/use-profile';
+import {
+  HOME_CONTAINER_CLASSES,
+  HOME_HEADING_CLASSES,
+  HOME_SECTION_LINK_CLASSES,
+} from './constants';
 import { HomePersonalization } from './home-personalization';
 import type { FeaturedProgramsProps, PersonalPicks } from './types';
 
@@ -54,21 +59,18 @@ export function FeaturedPrograms({ programs }: FeaturedProgramsProps) {
   const isPersonal = personal.length > 0;
 
   return (
-    <section className="bg-white pb-[7px] pt-8 max-[640px]:py-8">
-      <div className="container">
-        <div className="mb-[30px] flex items-end justify-between gap-6 max-[640px]:mb-[26px] max-[640px]:flex-wrap">
+    <section className="bg-white pb-20 pt-8 max-[900px]:pb-16 max-[767px]:pt-7 max-[640px]:pb-[50px]">
+      <div className={HOME_CONTAINER_CLASSES}>
+        <div className="mb-[30px] flex items-start justify-between gap-6 max-[640px]:mb-[26px] max-[640px]:flex-wrap max-[640px]:gap-4">
           <div>
-            <h2 className="text-[clamp(26px,3vw,36px)] font-bold tracking-[-0.035em]">
+            <h2 className={HOME_HEADING_CLASSES}>
               {isPersonal ? PERSONAL_COPY.personalHeading : PERSONAL_COPY.generalHeading}
             </h2>
-            <p className="mt-2.5 text-[15px] text-[#687385]">
+            <p className="mt-2.5 text-[13px] leading-[1.9] text-[#758292] max-[640px]:text-xs">
               {isLoadingProfile ? DEFAULT_DESCRIPTION : <HomePersonalization mode={mode} />}
             </p>
           </div>
-          <Link
-            className="inline-flex shrink-0 items-center gap-2.5 text-sm font-semibold text-[#196dcc]"
-            href="/kenali-hakmu"
-          >
+          <Link className={HOME_SECTION_LINK_CLASSES} href="/kenali-hakmu">
             Lihat semua program <ArrowRight size={19} />
           </Link>
         </div>

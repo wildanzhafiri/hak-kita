@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import { HOME_CONTAINER_CLASSES } from './constants';
 import { TRANSPARENCY_PREVIEW } from './content';
 
 const LINK_CLASSES =
@@ -13,9 +14,11 @@ export function TransparencyPreview() {
   return (
     <section
       aria-labelledby="transparency-title"
-      className="bg-white py-20 max-[900px]:py-16 max-[640px]:py-[50px]"
+      className="pb-0 pt-20 max-[900px]:pt-16 max-[640px]:pt-[50px]"
     >
-      <div className="container grid grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)] items-center gap-12! rounded-[18px] border border-transparent [background:linear-gradient(112deg,#f7f5ef_0%,#f5f6f3_42%,#edf5ff_100%)_padding-box,linear-gradient(112deg,#e8dfcf_0%,#d5deea_48%,#b8cfe9_100%)_border-box] px-8 py-11 shadow-[0_4px_14px_rgba(35,59,85,0.075)] max-[1023px]:gap-8! max-[1023px]:py-10 max-[800px]:grid-cols-1 max-[800px]:gap-[22px]! max-[640px]:gap-5! max-[640px]:px-6 max-[640px]:py-8">
+      <div
+        className={`${HOME_CONTAINER_CLASSES} grid grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)] items-center gap-12! rounded-[18px] border border-transparent [background:linear-gradient(112deg,#f7f5ef_0%,#f5f6f3_42%,#edf5ff_100%)_padding-box,linear-gradient(112deg,#e8dfcf_0%,#d5deea_48%,#b8cfe9_100%)_border-box] px-8 py-11 shadow-[0_4px_14px_rgba(35,59,85,0.075)] max-[1023px]:gap-8! max-[1023px]:py-10 max-[800px]:grid-cols-1 max-[800px]:gap-[22px]! max-[640px]:gap-5! max-[640px]:px-6 max-[640px]:py-8`}
+      >
         <div className="grid min-w-0 grid-cols-[96px_minmax(0,1fr)] items-start gap-x-5! gap-y-1! max-[640px]:grid-cols-[72px_minmax(0,1fr)] max-[640px]:gap-x-3!">
           <Image
             alt=""
@@ -25,7 +28,7 @@ export function TransparencyPreview() {
             width={112}
           />
           <h2
-            className="col-start-2 m-0 max-w-[440px] self-center text-balance text-[28px] font-bold leading-[1.27] tracking-[-0.025em] text-[#21599f] max-[640px]:text-[25px]"
+            className="col-start-2 m-0 max-w-[440px] self-center text-balance text-[30px] font-bold capitalize leading-[1.27] tracking-[-0.025em] text-[#21599f] max-[640px]:text-[25px]"
             id="transparency-title"
           >
             {TRANSPARENCY_PREVIEW.title}
