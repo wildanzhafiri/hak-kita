@@ -14,7 +14,7 @@ export function ProgramBenefitField({ filters }: ProgramFiltersProps) {
           key={manfaat}
           onChange={() => filters.toggleManfaat(manfaat)}
         >
-          {manfaat}
+          <span className="font-normal">{manfaat}</span>
         </Checkbox>
       ))}
     </fieldset>
