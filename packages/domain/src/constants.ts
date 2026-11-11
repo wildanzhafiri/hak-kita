@@ -118,3 +118,35 @@ export const RECOMMENDATION_GROUP_WEIGHT = 2;
 export const RECOMMENDATION_LEVEL_WEIGHT = 1;
 export const RECOMMENDATION_LOCAL_WEIGHT = 1;
 export const RECOMMENDATION_CLOSED_PENALTY = 2;
+
+export const AUDIENCE_RULES = [
+  { label: 'Mahasiswa', pattern: /mahasiswa/i },
+  { label: 'Lulusan Baru', pattern: /lulusan/i },
+  { label: 'Pelajar', pattern: /peserta didik|siswa|pelajar/i },
+  { label: 'Pencari Kerja', pattern: /pencari kerja|mencari kerja|ingin bekerja/i },
+  { label: 'Pekerja', pattern: /pekerja|tenaga kerja|karyawan|buruh/i },
+  { label: 'Pelaku UMKM', pattern: /usaha|bisnis|umkm|wirausaha/i },
+  { label: 'Petani', pattern: /petani|nelayan|pertanian/i },
+  { label: 'Lansia', pattern: /lansia|lanjut usia/i },
+  { label: 'Penyandang Disabilitas', pattern: /disabilitas/i },
+  {
+    label: 'Keluarga',
+    pattern: /keluarga|orang tua|wali|penghasilan rendah|desil|miskin/i,
+  },
+] as const;
+
+export const AUDIENCE_DEFAULT = 'Masyarakat Umum';
+
+export const AUDIENCE_OPTIONS: readonly string[] = [
+  'Pelajar',
+  'Mahasiswa',
+  'Lulusan Baru',
+  'Pencari Kerja',
+  'Pekerja',
+  'Keluarga',
+  'Pelaku UMKM',
+  'Petani',
+  'Lansia',
+  'Penyandang Disabilitas',
+  AUDIENCE_DEFAULT,
+];

@@ -1,3 +1,4 @@
+export * from './audience';
 export * from './berkas';
 export * from './catalog';
 export * from './constants';
